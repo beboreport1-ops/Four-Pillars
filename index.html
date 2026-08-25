@@ -64,6 +64,23 @@ main{padding:0 16px 90px;max-width:1000px;margin:0 auto}
 .pray.done{background:rgba(167,139,250,.18);border-color:var(--soul);color:var(--tx)}
 .pray.now{box-shadow:0 0 0 1px var(--gold)}
 .pray.future{opacity:.45}
+.phero{background:linear-gradient(135deg,#131a26,#161f2e);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px;position:relative;overflow:hidden}
+.phero:after{content:'';position:absolute;top:-40px;inset-inline-end:-30px;width:130px;height:130px;border-radius:50%;opacity:.11}
+.phero .pe{font-size:30px}
+.phero h2{font-size:18px;margin:4px 0 2px}
+.phero .sub{font-size:12px;color:var(--dim)}
+.pstats{display:flex;gap:18px;margin-top:12px}
+.pstats div span{display:block}
+.pstats .v{font-size:19px;font-weight:800}
+.pstats .k{font-size:11px;color:var(--dim)}
+.pgoal{height:8px;background:var(--card2);border-radius:5px;overflow:hidden;margin-top:12px}
+.pgoal div{height:100%;border-radius:5px;transition:width .5s}
+.pgoaltx{font-size:11px;color:var(--dim);margin-top:5px}
+.qadd{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.qadd button{background:var(--card2);border:1px solid var(--line);border-radius:20px;padding:8px 13px;font-size:12px;font-weight:600}
+.qadd button:active{transform:scale(.96)}
+.qadd .pts{color:var(--gold);font-size:11px}
+.wkentries{margin-top:2px}
 .hcard{background:linear-gradient(135deg,#131a26,#161f2e);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:14px}
 .hcard h2{font-size:14px;margin-bottom:10px}
 .wrow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:6px}
@@ -228,8 +245,10 @@ main{padding:0 16px 90px;max-width:1000px;margin:0 auto}
 </nav>
 <main>
   <div id="view-sched">
+    <div class="pfilter" id="pfilter"></div>
     <div id="questcard"></div>
     <div id="goalcard"></div>
+    <div id="pillarpanel"></div>
     <div id="healthcard"></div>
     <div class="vtoggle">
       <button id="vt-week" class="on" onclick="setView('week')"></button>
@@ -238,7 +257,6 @@ main{padding:0 16px 90px;max-width:1000px;margin:0 auto}
       <span class="spacer"></span>
       <button class="todaybtn" onclick="goToday()"></button>
     </div>
-    <div class="pfilter" id="pfilter"></div>
     <div class="weeknav">
       <button class="iconbtn" onclick="nav(-1)">&#8592;</button>
       <b id="navlbl"></b>
@@ -270,6 +288,7 @@ newpass:'New Password',setnew:'Set a new password for your account',updatepw:'Up
 sched:'Schedule',stats:'Stats',week:'Week',month:'Month',year:'Year',today:'Today',
 quest:'Today\u2019s Quest',pillars:'pillars',all:'All',
 study:'Studying',gym:'Health',social:'Social',soul:'Soul',
+quickadd:'Quick log',thisweek:'This week',recent:'Recent',viewall:'All pillars',nothingweek:'Nothing logged this week yet.',
 health:'Health Today',water:'Water',calories:'Calories',protein:'Protein',addmeal:'Add meal',meal:'Meal',
 kcal:'kcal',grams:'g',bottles:'bottles',bottle:'bottle',bottlesize:'Bottle size (ml)',
 caloriegoal:'Daily calories goal',proteingoal:'Daily protein goal (g)',watergoal:'Daily water goal (ml)',
@@ -309,6 +328,7 @@ newpass:'\u0643\u0644\u0645\u0629 \u0645\u0631\u0648\u0631 \u062C\u062F\u064A\u0
 sched:'\u0627\u0644\u062C\u062F\u0648\u0644',stats:'\u0627\u0644\u0625\u062D\u0635\u0627\u0621\u0627\u062A',week:'\u0623\u0633\u0628\u0648\u0639',month:'\u0634\u0647\u0631',year:'\u0633\u0646\u0629',today:'\u0627\u0644\u064A\u0648\u0645',
 quest:'\u0645\u0647\u0645\u0629 \u0627\u0644\u064A\u0648\u0645',pillars:'\u0623\u0631\u0643\u0627\u0646',all:'\u0627\u0644\u0643\u0644',
 study:'\u0627\u0644\u062F\u0631\u0627\u0633\u0629',gym:'\u0627\u0644\u0635\u062D\u0629',social:'\u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639\u064A',soul:'\u0627\u0644\u0631\u0648\u062D',
+quickadd:'\u062A\u0633\u062C\u064A\u0644 \u0633\u0631\u064A\u0639',thisweek:'\u0647\u0630\u0627 \u0627\u0644\u0623\u0633\u0628\u0648\u0639',recent:'\u0627\u0644\u0623\u062E\u064A\u0631',viewall:'\u0643\u0644 \u0627\u0644\u0623\u0631\u0643\u0627\u0646',nothingweek:'\u0644\u0627 \u064A\u0648\u062C\u062F \u062A\u0633\u062C\u064A\u0644 \u0647\u0630\u0627 \u0627\u0644\u0623\u0633\u0628\u0648\u0639.',
 health:'\u0635\u062D\u0629 \u0627\u0644\u064A\u0648\u0645',water:'\u0627\u0644\u0645\u0627\u0621',calories:'\u0627\u0644\u0633\u0639\u0631\u0627\u062A',protein:'\u0627\u0644\u0628\u0631\u0648\u062A\u064A\u0646',addmeal:'\u0625\u0636\u0627\u0641\u0629 \u0648\u062C\u0628\u0629',meal:'\u0648\u062C\u0628\u0629',
 kcal:'\u0633\u0639\u0631\u0629',grams:'\u062C\u0645',bottles:'\u0632\u062C\u0627\u062C\u0627\u062A',bottle:'\u0632\u062C\u0627\u062C\u0629',bottlesize:'\u062D\u062C\u0645 \u0627\u0644\u0632\u062C\u0627\u062C\u0629 (\u0645\u0644)',
 caloriegoal:'\u0647\u062F\u0641 \u0627\u0644\u0633\u0639\u0631\u0627\u062A \u0627\u0644\u064A\u0648\u0645\u064A',proteingoal:'\u0647\u062F\u0641 \u0627\u0644\u0628\u0631\u0648\u062A\u064A\u0646 (\u062C\u0645)',watergoal:'\u0647\u062F\u0641 \u0627\u0644\u0645\u0627\u0621 (\u0645\u0644)',
@@ -827,6 +847,7 @@ async function saveMeal(){
 }
 function renderHealth(){
   var el=document.getElementById('healthcard');if(!el)return;
+  if(pFilter!=='gym'){el.innerHTML='';return}
   var ds=today(),n=nut(ds);
   var bm=bottleMl(),gb=goalBottles(),have=Math.round(n.water_ml/bm);
   var show=Math.max(gb,have);
@@ -846,6 +867,59 @@ function renderHealth(){
   h+='</div>';
   h+='<div class="hbtns"><button onclick="openMeal()">\uD83C\uDF7D\uFE0F '+T('addmeal')+'</button><button onclick="openGym()">\uD83C\uDFCB\uFE0F '+T('addset')+'</button></div>';
   h+='</div>';
+  el.innerHTML=h;
+}
+
+/* ---------- pillar pages ---------- */
+async function quickLog(tid){
+  var t=types.find(function(x){return x.id===tid});if(!t)return;
+  var r=await dbInsert('activity_entries',[{pillar:t.pillar,title:t.name,entry_date:today(),status:'done',points_awarded:t.points,activity_type_id:t.id}]);
+  entries=r.data.concat(entries);saveCache();
+  offToast(r,'+'+t.points+' XP '+PIL[t.pillar].em+' '+t.name);
+  checkLevelUp();render();
+}
+function renderPillar(){
+  var el=document.getElementById('pillarpanel');if(!el)return;
+  if(pFilter==='all'){el.innerHTML='';return}
+  var p=pFilter,ws=weekStart(new Date());
+  var pxp=pillarXP(p),pl=lvlOf(pxp),base=xpForLvl(pl),next=xpForLvl(pl+1);
+  var g=cfg.goals[p]||0,dn=pillarDaysInWeek(p,ws),wx=weekXP(ws,p);
+  var h='<div class="phero" style="border-color:'+PIL[p].hex+'55"><span class="pe">'+PIL[p].em+'</span>'+
+  '<h2>'+pnm(p)+'</h2><div class="sub">'+T('lvl')+' '+pl+' \u00B7 '+rankOf(pl)+'</div>'+
+  '<div class="pstats">'+
+  '<div><span class="v" style="color:'+PIL[p].hex+'">'+pxp+'</span><span class="k">'+T('totalxp')+'</span></div>'+
+  '<div><span class="v">\uD83D\uDD25 '+streak(p)+'</span><span class="k">'+T('streak')+'</span></div>'+
+  '<div><span class="v">'+wx+'</span><span class="k">'+T('thisweek')+'</span></div>'+
+  '</div>';
+  if(g){
+    h+='<div class="pgoal"><div style="width:'+Math.min(100,Math.round(dn/g*100))+'%;background:'+PIL[p].hex+'"></div></div>'+
+    '<div class="pgoaltx">'+T('weekgoals')+': '+dn+'/'+g+(dn>=g?' \u2705 '+T('goalmet'):'')+'</div>';
+  }else{
+    h+='<div class="pgoal"><div style="width:'+Math.min(100,Math.round((pxp-base)/(next-base)*100))+'%;background:'+PIL[p].hex+'"></div></div>'+
+    '<div class="pgoaltx">'+(next-pxp)+' XP \u2192 '+T('lvl')+' '+(pl+1)+'</div>';
+  }
+  var opts=types.filter(function(t){return t.pillar===p&&t.active});
+  if(opts.length){
+    h+='<div class="pgoaltx" style="margin-top:14px">'+T('quickadd')+'</div><div class="qadd">';
+    opts.forEach(function(t){h+='<button onclick="quickLog(\''+t.id+'\')">'+esc(t.name)+' <span class="pts">+'+t.points+'</span></button>'});
+    h+='</div>';
+  }
+  h+='</div>';
+  if(p==='soul'){
+    var td=today();
+    h+='<div class="hcard"><h2>\uD83D\uDD4B '+T('prayercal')+' \u00B7 '+T('today')+'</h2><div class="prayrow">';
+    PRAYERS.forEach(function(pr){
+      var e=entries.find(function(x){return x.entry_date===td&&x.pillar==='soul'&&x.title===pr[0]&&x.status==='done'});
+      var cls='pray'+(e?' done':'');
+      var tm=prayerTimes&&prayerTimes[pr[0]]?'<span class="tm">'+prayerTimes[pr[0]]+'</span>':'';
+      h+='<button class="'+cls+'" onclick="togglePrayer(\''+pr[0]+'\')">'+(e?'\u2705 ':'')+(lang==='ar'?pr[1]:pr[0])+tm+'</button>';
+    });
+    h+='</div>';
+    var qp=quranPages(),qg=cfg.quran_goal||604;
+    h+='<div class="wmeta" style="margin-top:14px"><span>\uD83D\uDCD6 '+T('quran')+'</span><span><b>'+qp+'</b> / '+qg+' '+T('pages')+'</span></div>';
+    h+='<div class="pgoal"><div style="width:'+Math.min(100,Math.round(qp/qg*100))+'%;background:var(--soul)"></div></div>';
+    h+='<div class="hbtns" style="margin-top:12px"><button onclick="openQuran()">\uD83D\uDCD6 '+T('logread')+'</button></div></div>';
+  }
   el.innerHTML=h;
 }
 
@@ -880,7 +954,7 @@ function showLevelUp(l){
 function setAccent(p){document.documentElement.style.setProperty('--accent',p==='all'?'#4f9cf9':PIL[p].hex)}
 
 /* ---------- render ---------- */
-function render(){renderHeader();renderQuest();renderGoals();renderHealth();renderFilter();if(tab==='sched')renderSched();else renderStats()}
+function render(){renderHeader();renderQuest();renderGoals();renderPillar();renderHealth();renderFilter();if(tab==='sched')renderSched();else renderStats()}
 function renderHeader(){
   var xp=totalXP(),l=lvlOf(xp),base=xpForLvl(l),next=xpForLvl(l+1);
   document.getElementById('hlvl').textContent='LV '+l+' \u00B7 '+rankOf(l);
@@ -888,6 +962,7 @@ function renderHeader(){
   document.getElementById('hxpt').textContent=xp+' XP \u00B7 '+(next-xp)+'\u2192LV'+(l+1);
 }
 function renderQuest(){
+  if(pFilter!=='all'){document.getElementById('questcard').innerHTML='';return}
   var td=today();
   var doneP=PKEYS.filter(function(p){return doneEntries().some(function(e){return e.pillar===p&&e.entry_date===td})});
   var h='<div class="quest"><div class="qtop"><h2>\u2694\uFE0F '+T('quest')+'</h2><span class="qcount">'+doneP.length+'/4 '+T('pillars')+'</span></div>';
@@ -920,6 +995,7 @@ function renderQuest(){
   document.getElementById('questcard').innerHTML=h;
 }
 function renderGoals(){
+  if(pFilter!=='all'){document.getElementById('goalcard').innerHTML='';return}
   var ws=weekStart(new Date());
   var h='<div class="section"><h2>\uD83C\uDFAF '+T('weekgoals')+'</h2>';
   PKEYS.forEach(function(p){
@@ -931,13 +1007,14 @@ function renderGoals(){
   document.getElementById('goalcard').innerHTML=h;
 }
 function renderFilter(){
-  var h='<button onclick="setFilter(\'all\')" style="'+(pFilter==='all'?'border-color:var(--accent);color:var(--tx)':'')+'">'+T('all')+'</button>';
+  var h='<button onclick="setFilter(\'all\')" style="'+(pFilter==='all'?'border-color:var(--accent);color:var(--tx);background:var(--card2)':'')+'">\u2726 '+T('viewall')+'</button>';
   PKEYS.forEach(function(p){
-    h+='<button onclick="setFilter(\''+p+'\')" style="'+(pFilter===p?'border-color:'+PIL[p].hex+';color:var(--tx)':'')+'">'+PIL[p].em+' '+pnm(p)+'</button>';
+    var on=pFilter===p;
+    h+='<button onclick="setFilter(\''+p+'\')" style="'+(on?'border-color:'+PIL[p].hex+';color:var(--tx);background:'+PIL[p].hex+'22':'')+'">'+PIL[p].em+' '+pnm(p)+'</button>';
   });
   document.getElementById('pfilter').innerHTML=h;
 }
-function setFilter(p){pFilter=p;setAccent(p);renderFilter();renderSched()}
+function setFilter(p){pFilter=p;setAccent(p);renderQuest();renderGoals();renderPillar();renderHealth();renderFilter();renderSched();window.scrollTo({top:0,behavior:'smooth'})}
 function visible(e){return pFilter==='all'||e.pillar===pFilter}
 function setTab(t){tab=t;
   document.getElementById('tab-sched').classList.toggle('on',t==='sched');
