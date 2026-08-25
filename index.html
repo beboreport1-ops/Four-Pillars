@@ -505,6 +505,7 @@ async function loadPrayerTimes(force){
     if(j&&j.data&&j.data.timings){
       prayerTimes={};
       PRAYERS.forEach(function(p){prayerTimes[p[0]]=j.data.timings[p[0]]});
+      if(j.data.meta&&j.data.meta.timezone){cfg.tz=j.data.meta.timezone;localStorage.setItem('fp_tz',cfg.tz)}
       localStorage.setItem(key,JSON.stringify(prayerTimes));
       renderQuest();
     }
@@ -514,7 +515,17 @@ async function redetect(){
   var ok=await detectLocation(false);
   if(ok){prayerTimes=null;await loadPrayerTimes(true);render()}
 }
-function minsNow(){var d=new Date();return d.getHours()*60+d.getMinutes()}
+function minsNow(){
+  var tz=cfg.tz||localStorage.getItem('fp_tz');
+  if(tz){
+    try{
+      var s=new Intl.DateTimeFormat('en-GB',{timeZone:tz,hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date());
+      var p=s.split(':');
+      return parseInt(p[0],10)*60+parseInt(p[1],10);
+    }catch(e){}
+  }
+  var d=new Date();return d.getHours()*60+d.getMinutes();
+}
 function toMins(hm){var p=hm.split(':');return parseInt(p[0])*60+parseInt(p[1])}
 function nextPrayer(){
   if(!prayerTimes)return null;
