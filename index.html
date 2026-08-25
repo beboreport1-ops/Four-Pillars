@@ -272,6 +272,7 @@ delq:'Delete activity?',delm:'Remove <b>{t}</b> from {d}?',dellost:' You\u2019ll
 remq:'Remove activity type?',remm:'Remove <b>{t}</b> (+{p})? Past entries and XP stay \u2014 you just won\u2019t see it when adding new ones.',
 welcome:'Welcome',obtag:'Let\u2019s set up your four pillars',obnext:'Next',obdone:'Start',oblang:'Pick your language',obcity:'Your city (for prayer times)',obgoals:'How many days a week for each pillar?',
 install:'Install app',installed:'Added to home screen',
+autoloc:'Detect my location',gpsloc:'Use GPS (precise)',locfail:'Couldn\u2019t detect location \u2014 set your city manually.',locdenied:'Location permission denied.',gpsok:'Location updated',locnow:'Location',
 saved:'Saved',deleted:'Deleted',added:'Added',removed:'Removed',err:'Couldn\u2019t save',nameFirst:'Type a name first',
 backplan:'back to planned',unlogged:'unlogged',
 strongest:'Strongest',weakest:'Needs work',vslast:'vs last week',
@@ -305,6 +306,7 @@ delq:'\u062D\u0630\u0641 \u0627\u0644\u0646\u0634\u0627\u0637\u061F',delm:'\u062
 remq:'\u0625\u0632\u0627\u0644\u0629 \u0646\u0648\u0639 \u0627\u0644\u0646\u0634\u0627\u0637\u061F',remm:'\u0625\u0632\u0627\u0644\u0629 <b>{t}</b> (+{p})\u061F \u0627\u0644\u0633\u062C\u0644\u0627\u062A \u0648\u0627\u0644\u0646\u0642\u0627\u0637 \u0627\u0644\u0633\u0627\u0628\u0642\u0629 \u062A\u0628\u0642\u0649.',
 welcome:'\u0623\u0647\u0644\u0627\u064B',obtag:'\u0644\u0646\u062C\u0647\u0651\u0632 \u0623\u0631\u0643\u0627\u0646\u0643 \u0627\u0644\u0623\u0631\u0628\u0639\u0629',obnext:'\u0627\u0644\u062A\u0627\u0644\u064A',obdone:'\u0627\u0628\u062F\u0623',oblang:'\u0627\u062E\u062A\u0631 \u0644\u063A\u062A\u0643',obcity:'\u0645\u062F\u064A\u0646\u062A\u0643 (\u0644\u0645\u0648\u0627\u0642\u064A\u062A \u0627\u0644\u0635\u0644\u0627\u0629)',obgoals:'\u0643\u0645 \u064A\u0648\u0645 \u0641\u064A \u0627\u0644\u0623\u0633\u0628\u0648\u0639 \u0644\u0643\u0644 \u0631\u0643\u0646\u061F',
 install:'\u062A\u062B\u0628\u064A\u062A \u0627\u0644\u062A\u0637\u0628\u064A\u0642',installed:'\u062A\u0645\u062A \u0627\u0644\u0625\u0636\u0627\u0641\u0629 \u0644\u0644\u0634\u0627\u0634\u0629 \u0627\u0644\u0631\u0626\u064A\u0633\u064A\u0629',
+autoloc:'\u062A\u062D\u062F\u064A\u062F \u0645\u0648\u0642\u0639\u064A \u062A\u0644\u0642\u0627\u0626\u064A\u0627\u064B',gpsloc:'\u0627\u0633\u062A\u062E\u062F\u0627\u0645 GPS (\u062F\u0642\u064A\u0642)',locfail:'\u062A\u0639\u0630\u0631 \u062A\u062D\u062F\u064A\u062F \u0627\u0644\u0645\u0648\u0642\u0639 \u2014 \u0627\u0643\u062A\u0628 \u0645\u062F\u064A\u0646\u062A\u0643 \u064A\u062F\u0648\u064A\u0627\u064B.',locdenied:'\u062A\u0645 \u0631\u0641\u0636 \u0625\u0630\u0646 \u0627\u0644\u0645\u0648\u0642\u0639.',gpsok:'\u062A\u0645 \u062A\u062D\u062F\u064A\u062B \u0627\u0644\u0645\u0648\u0642\u0639',locnow:'\u0627\u0644\u0645\u0648\u0642\u0639',
 saved:'\u062A\u0645 \u0627\u0644\u062D\u0641\u0638',deleted:'\u062A\u0645 \u0627\u0644\u062D\u0630\u0641',added:'\u062A\u0645\u062A \u0627\u0644\u0625\u0636\u0627\u0641\u0629',removed:'\u062A\u0645\u062A \u0627\u0644\u0625\u0632\u0627\u0644\u0629',err:'\u062A\u0639\u0630\u0631 \u0627\u0644\u062D\u0641\u0638',nameFirst:'\u0627\u0643\u062A\u0628 \u0627\u0633\u0645\u0627\u064B \u0623\u0648\u0644\u0627\u064B',
 backplan:'\u0639\u0627\u062F \u0644\u0644\u062A\u062E\u0637\u064A\u0637',unlogged:'\u062A\u0645 \u0627\u0644\u0625\u0644\u063A\u0627\u0621',
 strongest:'\u0627\u0644\u0623\u0642\u0648\u0649',weakest:'\u064A\u062D\u062A\u0627\u062C \u0639\u0645\u0644',vslast:'\u0645\u0642\u0627\u0631\u0646\u0629 \u0628\u0627\u0644\u0645\u0627\u0636\u064A',
@@ -325,7 +327,7 @@ var WD={en:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],ar:['\u0623\u062D\u062F',
 
 /* ---------- state ---------- */
 var types=[],entries=[],notes={},quran=[],gymSets=[],user=null;
-var cfg={lang:'en',city:'Riyadh',country:'Saudi Arabia',goals:{study:5,gym:4,social:3,soul:7},freezes:{},season_start:null,season_target:1500,quran_goal:604,onboarded:false};
+var cfg={lang:'en',city:'Riyadh',country:'Saudi Arabia',lat:null,lon:null,goals:{study:5,gym:4,social:3,soul:7},freezes:{},season_start:null,season_target:1500,quran_goal:604,onboarded:false};
 var tab='sched',view='week',anchor=new Date(),selDay=null,signup=false,curP='study',prevLvl=null,pFilter='all',prayerTimes=null,deferredPrompt=null;
 
 function dstr(d){var y=d.getFullYear(),m=('0'+(d.getMonth()+1)).slice(-2),dd=('0'+d.getDate()).slice(-2);return y+'-'+m+'-'+dd}
@@ -458,12 +460,47 @@ async function saveCfg(patch){
 }
 
 /* ---------- prayer times ---------- */
-async function loadPrayerTimes(){
-  var key='fp_pt_'+cfg.city+'_'+today();
-  var c=localStorage.getItem(key);
-  if(c){try{prayerTimes=JSON.parse(c);renderQuest();return}catch(e){}}
+async function detectLocation(silent){
   try{
-    var u='https://api.aladhan.com/v1/timingsByCity?city='+encodeURIComponent(cfg.city)+'&country='+encodeURIComponent(cfg.country)+'&method=4';
+    var r=await fetch('https://ipwho.is/');
+    var j=await r.json();
+    if(j&&j.success){
+      var patch={city:j.city||cfg.city,country:j.country||cfg.country,lat:j.latitude,lon:j.longitude};
+      cfg.lat=patch.lat;cfg.lon=patch.lon;
+      localStorage.setItem('fp_geo',JSON.stringify({lat:patch.lat,lon:patch.lon,city:patch.city,country:patch.country}));
+      if(user)await saveCfg({city:patch.city,country:patch.country});
+      if(!silent)toast('\uD83D\uDCCD '+patch.city+', '+patch.country);
+      return true;
+    }
+  }catch(e){}
+  if(!silent)toast(T('locfail'));
+  return false;
+}
+function gpsLocate(){
+  if(!navigator.geolocation){toast(T('locfail'));return}
+  toast('\uD83D\uDCCD ...');
+  navigator.geolocation.getCurrentPosition(async function(pos){
+    cfg.lat=pos.coords.latitude;cfg.lon=pos.coords.longitude;
+    localStorage.setItem('fp_geo',JSON.stringify({lat:cfg.lat,lon:cfg.lon,city:cfg.city,country:cfg.country}));
+    prayerTimes=null;await loadPrayerTimes(true);
+    toast('\uD83D\uDCCD '+T('gpsok'));
+  },function(){toast(T('locdenied'))},{timeout:8000});
+}
+async function loadPrayerTimes(force){
+  var geo=null;
+  try{geo=JSON.parse(localStorage.getItem('fp_geo')||'null')}catch(e){}
+  if(geo&&geo.lat!=null){cfg.lat=geo.lat;cfg.lon=geo.lon}
+  if(cfg.lat==null){await detectLocation(true);try{geo=JSON.parse(localStorage.getItem('fp_geo')||'null')}catch(e){}}
+  var tag=cfg.lat!=null?(Math.round(cfg.lat*100)+'_'+Math.round(cfg.lon*100)):cfg.city;
+  var key='fp_pt_'+tag+'_'+today();
+  if(!force){
+    var c=localStorage.getItem(key);
+    if(c){try{prayerTimes=JSON.parse(c);renderQuest();return}catch(e){}}
+  }
+  try{
+    var u=cfg.lat!=null
+      ?'https://api.aladhan.com/v1/timings?latitude='+cfg.lat+'&longitude='+cfg.lon+'&method=4'
+      :'https://api.aladhan.com/v1/timingsByCity?city='+encodeURIComponent(cfg.city)+'&country='+encodeURIComponent(cfg.country)+'&method=4';
     var r=await fetch(u);var j=await r.json();
     if(j&&j.data&&j.data.timings){
       prayerTimes={};
@@ -472,6 +509,10 @@ async function loadPrayerTimes(){
       renderQuest();
     }
   }catch(e){}
+}
+async function redetect(){
+  var ok=await detectLocation(false);
+  if(ok){prayerTimes=null;await loadPrayerTimes(true);render()}
 }
 function minsNow(){var d=new Date();return d.getHours()*60+d.getMinutes()}
 function toMins(hm){var p=hm.split(':');return parseInt(p[0])*60+parseInt(p[1])}
@@ -1120,6 +1161,9 @@ function openMenu(){
 function openPrefs(){
   var h='<h2>\uD83C\uDF9B '+T('prefs')+'</h2>'+
   '<label>'+T('lang')+'</label><select id="plang"><option value="en"'+(lang==='en'?' selected':'')+'>English</option><option value="ar"'+(lang==='ar'?' selected':'')+'>\u0627\u0644\u0639\u0631\u0628\u064A\u0629</option></select>'+
+  '<label>'+T('locnow')+'</label>'+
+  '<button class="menuitem" onclick="closeModal();redetect()">\uD83C\uDF10 '+T('autoloc')+'</button>'+
+  '<button class="menuitem" onclick="closeModal();gpsLocate()">\uD83D\uDCCD '+T('gpsloc')+'</button>'+
   '<label>'+T('city')+'</label><input id="pcity" value="'+esc(cfg.city)+'">'+
   '<label>'+T('country')+'</label><input id="pcountry" value="'+esc(cfg.country)+'">'+
   '<label>'+T('goals')+'</label>';
@@ -1141,7 +1185,8 @@ async function savePrefs(){
     quran_goal:parseInt(document.getElementById('pquran').value)||604});
   if(!ok)return;
   lang=nl;localStorage.setItem('fp_lang',lang);applyLang();
-  prayerTimes=null;loadPrayerTimes();
+  if(document.getElementById('pcity')){cfg.lat=null;cfg.lon=null;localStorage.removeItem('fp_geo')}
+  prayerTimes=null;loadPrayerTimes(true);
   toast(T('saved'));closeModal();render();
 }
 function openTypes(){
@@ -1186,6 +1231,7 @@ function onboard(step){
     '<button class="main" onclick="obStep(0)">'+T('obnext')+'</button>';
   }else if(step===1){
     h='<h1>\uD83D\uDD4B</h1><p>'+T('obcity')+'</p>'+
+    '<button class="alt" style="border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:12px" onclick="obDetect()">\uD83C\uDF10 '+T('autoloc')+'</button>'+
     '<input id="ob_city" value="'+esc(cfg.city)+'" placeholder="'+T('city')+'">'+
     '<input id="ob_country" value="'+esc(cfg.country)+'" placeholder="'+T('country')+'">'+
     '<button class="main" onclick="obStep(1)">'+T('obnext')+'</button>';
@@ -1198,6 +1244,14 @@ function onboard(step){
     h+='<button class="main" style="margin-top:10px" onclick="obStep(2)">'+T('obdone')+'</button>';
   }
   b.innerHTML=h;
+}
+async function obDetect(){
+  var ok=await detectLocation(false);
+  if(ok){
+    try{var g=JSON.parse(localStorage.getItem('fp_geo')||'null');
+      if(g){document.getElementById('ob_city').value=g.city||'';document.getElementById('ob_country').value=g.country||''}
+    }catch(e){}
+  }
 }
 async function obStep(step){
   if(step===0){lang=document.getElementById('ob_lang').value;localStorage.setItem('fp_lang',lang);applyLang();onboard(1)}
