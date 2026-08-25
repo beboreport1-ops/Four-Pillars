@@ -130,6 +130,9 @@ main{padding:0 18px 90px;max-width:1000px;margin:0 auto}
 .typerow .t{flex:1}
 .typerow .p{color:var(--gold);font-weight:700;font-size:12px}
 .typerow button{background:none;border:none;font-size:14px}
+.mrow .danger{background:#b91c1c;color:#fff}
+.confmsg{font-size:14px;color:var(--dim);line-height:1.5}
+.confmsg b{color:var(--tx)}
 #toast{position:fixed;bottom:96px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--card2);border:1px solid var(--gold);color:var(--tx);border-radius:12px;padding:10px 18px;font-size:14px;font-weight:700;opacity:0;transition:all .3s;z-index:200;pointer-events:none;white-space:nowrap}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 #lvlup{position:fixed;inset:0;background:rgba(11,15,23,.9);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:300;text-align:center}
@@ -220,7 +223,11 @@ async function doAuth(){
   }else{r=await sb.auth.signInWithPassword({email:em,password:pw});if(!r.error){init();return}}
   msg.textContent=r.error.message;
 }
-async function logout(){await sb.auth.signOut();location.reload()}
+function logout(){
+  confirmBox('Sign out?','You\u2019ll need your email and password to get back in. Your data stays safe.','Sign out',async function(){
+    await sb.auth.signOut();location.reload();
+  });
+}
 async function forgotPw(){
   var em=document.getElementById('em').value.trim();
   var msg=document.getElementById('authmsg');
@@ -333,6 +340,16 @@ function toast(msg){
   t.textContent=msg;t.classList.add('show');
   clearTimeout(t._tm);t._tm=setTimeout(function(){t.classList.remove('show')},1800);
 }
+var _confirmFn=null;
+function confirmBox(title,msg,okLabel,fn){
+  _confirmFn=fn;
+  var m=document.getElementById('modal'),c=document.getElementById('mboxc');
+  c.innerHTML='<h2>'+title+'</h2><p class="confmsg">'+msg+'</p>'+
+  '<div class="mrow"><button class="no" onclick="closeModal()">Cancel</button>'+
+  '<button class="danger" onclick="runConfirm()">'+okLabel+'</button></div>';
+  m.classList.remove('hidden');
+}
+function runConfirm(){var f=_confirmFn;_confirmFn=null;closeModal();if(f)f()}
 function checkLevelUp(){
   var l=lvlOf(totalXP());
   if(prevLvl!==null&&l>prevLvl)showLevelUp(l);
@@ -379,13 +396,16 @@ async function togglePrayer(name){
   var td=today();
   var e=entries.find(function(x){return x.entry_date===td&&x.pillar==='soul'&&x.title===name&&x.status==='done'});
   if(e){
-    await sb.from('activity_entries').delete().eq('id',e.id);
+    var r=await sb.from('activity_entries').delete().eq('id',e.id);
+    if(r.error){toast('Couldn\u2019t save \u2014 '+r.error.message);return}
     entries=entries.filter(function(x){return x.id!==e.id});
+    toast('\u2212'+e.points_awarded+' XP \u00B7 '+name+' unlogged');
   }else{
     var t=types.find(function(x){return x.pillar==='soul'&&x.name===name&&x.active});
     var pts=t?t.points:10;
-    var r=await sb.from('activity_entries').insert({pillar:'soul',title:name,entry_date:td,status:'done',points_awarded:pts,activity_type_id:t?t.id:null}).select();
-    if(r.data)entries=entries.concat(r.data);
+    var r2=await sb.from('activity_entries').insert({pillar:'soul',title:name,entry_date:td,status:'done',points_awarded:pts,activity_type_id:t?t.id:null}).select();
+    if(r2.error){toast('Couldn\u2019t save \u2014 '+r2.error.message);return}
+    if(r2.data)entries=entries.concat(r2.data);
     toast('+'+pts+' XP \uD83D\uDD4C '+name);
   }
   checkLevelUp();render();
@@ -466,14 +486,20 @@ function entHtml(e){
 async function toggleDone(id){
   var e=entries.find(function(x){return x.id===id});if(!e)return;
   var ns=e.status==='done'?'planned':'done';
-  await sb.from('activity_entries').update({status:ns}).eq('id',id);
+  var r=await sb.from('activity_entries').update({status:ns}).eq('id',id);
+  if(r.error){toast('Couldn\u2019t save \u2014 '+r.error.message);return}
   e.status=ns;
-  if(ns==='done')toast('+'+e.points_awarded+' XP '+PIL[e.pillar].em+' '+e.title);
+  toast(ns==='done'?'+'+e.points_awarded+' XP '+PIL[e.pillar].em+' '+e.title:'\u2212'+e.points_awarded+' XP \u00B7 back to planned');
   checkLevelUp();render();
 }
-async function delEntry(id){
-  await sb.from('activity_entries').delete().eq('id',id);
-  entries=entries.filter(function(x){return x.id!==id});render();
+function delEntry(id){
+  var e=entries.find(function(x){return x.id===id});if(!e)return;
+  confirmBox('Delete activity?','Remove <b>'+esc(e.title)+'</b> from '+e.entry_date+'?'+(e.status==='done'?' You\u2019ll lose the '+e.points_awarded+' XP it earned.':''),'Delete',async function(){
+    await sb.from('activity_entries').delete().eq('id',id);
+    entries=entries.filter(function(x){return x.id!==id});
+    toast('Deleted \u2014 '+e.title);
+    render();
+  });
 }
 
 var BADGES=[
@@ -624,8 +650,10 @@ async function saveAdd(){
     rows.push({pillar:curP,title:title,entry_date:dstr(d),status:i===0?st:'planned',points_awarded:pts,activity_type_id:tid});
   }
   var r=await sb.from('activity_entries').insert(rows).select();
+  if(r.error){toast('Couldn\u2019t add \u2014 '+r.error.message);return}
   if(r.data)entries=r.data.concat(entries);
-  if(st==='done')toast('+'+pts+' XP '+PIL[curP].em+' '+title);
+  if(n>1)toast('Added '+n+'\u00D7 '+PIL[curP].em+' '+title);
+  else toast(st==='done'?'+'+pts+' XP '+PIL[curP].em+' '+title:'Planned \u00B7 '+PIL[curP].em+' '+title);
   closeModal();checkLevelUp();render();
 }
 function openEdit(id){
@@ -645,8 +673,10 @@ async function saveEdit(id){
     points_awarded:parseInt(document.getElementById('epts').value)||e.points_awarded,
     entry_date:document.getElementById('edate').value||e.entry_date,
     status:document.getElementById('estat').value};
-  await sb.from('activity_entries').update(up).eq('id',id);
+  var r=await sb.from('activity_entries').update(up).eq('id',id);
+  if(r.error){toast('Couldn\u2019t save \u2014 '+r.error.message);return}
   Object.assign(e,up);
+  toast('Saved \u2014 '+up.title);
   closeModal();checkLevelUp();render();
 }
 function openDayModal(ds){
@@ -675,15 +705,21 @@ function openTypes(){
 }
 async function addType(){
   var p=document.getElementById('ntp').value,n=document.getElementById('ntn').value.trim(),pt=parseInt(document.getElementById('ntpts').value)||10;
-  if(!n)return;
+  if(!n){toast('Type a name first');return}
   var r=await sb.from('activity_types').insert({pillar:p,name:n,points:pt}).select();
+  if(r.error){toast('Couldn\u2019t add \u2014 '+r.error.message);return}
   if(r.data)types=types.concat(r.data);
+  toast('Added \u2014 '+n+' (+'+pt+')');
   openTypes();
 }
-async function delType(id){
-  await sb.from('activity_types').update({active:false}).eq('id',id);
-  var t=types.find(function(x){return x.id===id});if(t)t.active=false;
-  openTypes();
+function delType(id){
+  var t=types.find(function(x){return x.id===id});if(!t)return;
+  confirmBox('Remove activity type?','Remove <b>'+esc(t.name)+'</b> (+'+t.points+') from your '+PIL[t.pillar].nm+' list? Past entries and XP stay \u2014 you just won\u2019t see it when adding new ones.','Remove',async function(){
+    await sb.from('activity_types').update({active:false}).eq('id',id);
+    t.active=false;
+    toast('Removed \u2014 '+t.name);
+    openTypes();
+  });
 }
 function closeModal(){document.getElementById('modal').classList.add('hidden')}
 document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal()});
