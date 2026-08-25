@@ -152,6 +152,7 @@ main{padding:0 18px 90px;max-width:1000px;margin:0 auto}
     <input id="pw" type="password" placeholder="Password">
     <button class="main" id="authbtn" onclick="doAuth()">Sign In</button>
     <button class="alt" id="authswap" onclick="swapAuth()">New here? Create account</button>
+    <button class="alt" onclick="forgotPw()" style="margin-top:2px">Forgot password?</button>
     <div id="authmsg"></div>
   </div>
 </div>
@@ -220,6 +221,31 @@ async function doAuth(){
   msg.textContent=r.error.message;
 }
 async function logout(){await sb.auth.signOut();location.reload()}
+async function forgotPw(){
+  var em=document.getElementById('em').value.trim();
+  var msg=document.getElementById('authmsg');
+  if(!em){msg.textContent='Type your email above first, then tap Forgot password.';return}
+  msg.textContent='...';
+  var r=await sb.auth.resetPasswordForEmail(em,{redirectTo:location.origin+location.pathname});
+  msg.textContent=r.error?r.error.message:'Reset link sent \u2014 check your email.';
+}
+function showRecover(){
+  document.getElementById('app').classList.add('hidden');
+  document.getElementById('auth').classList.remove('hidden');
+  var box=document.querySelector('.authbox');
+  box.innerHTML='<h1>\uD83D\uDD11 New Password</h1><p>Set a new password for your account</p><input id="npw" type="password" placeholder="New password (min 6 chars)"><button class="main" onclick="saveNewPw()">Update Password</button><div id="authmsg"></div>';
+}
+async function saveNewPw(){
+  var pw=document.getElementById('npw').value;
+  var msg=document.getElementById('authmsg');
+  if(pw.length<6){msg.textContent='Password must be at least 6 characters.';return}
+  msg.textContent='...';
+  var r=await sb.auth.updateUser({password:pw});
+  if(r.error){msg.textContent=r.error.message;return}
+  msg.textContent='Password updated!';
+  setTimeout(function(){location.href=location.pathname},700);
+}
+sb.auth.onAuthStateChange(function(ev){if(ev==='PASSWORD_RECOVERY')showRecover()});
 
 async function init(){
   var s=await sb.auth.getSession();
@@ -661,7 +687,7 @@ async function delType(id){
 }
 function closeModal(){document.getElementById('modal').classList.add('hidden')}
 document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal()});
-init();
+if(location.hash.indexOf('type=recovery')>=0)showRecover();else init();
 </script>
 </body>
 </html>
