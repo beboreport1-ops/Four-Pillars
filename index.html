@@ -1,41 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0b0f17">
 <title>Four Pillars</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{--bg:#0b0f17;--card:#131a26;--card2:#1a2332;--line:#232f42;--tx:#e8eefb;--dim:#8494ad;
---study:#4f9cf9;--gym:#ff6b4a;--social:#34d399;--soul:#a78bfa;--gold:#fbbf24}
+--study:#4f9cf9;--gym:#ff6b4a;--social:#34d399;--soul:#a78bfa;--gold:#fbbf24;--accent:#4f9cf9}
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
-body{background:var(--bg);color:var(--tx);min-height:100vh}
-button{cursor:pointer;font-family:inherit}
+body{background:var(--bg);color:var(--tx);min-height:100vh;-webkit-tap-highlight-color:transparent}
+html[dir=rtl] body{font-family:'Segoe UI',Tahoma,system-ui,sans-serif}
+button{cursor:pointer;font-family:inherit;color:inherit}
 .hidden{display:none!important}
 #auth{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
 .authbox{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:32px;width:100%;max-width:380px}
 .authbox h1{font-size:26px;margin-bottom:6px;text-align:center}
 .authbox p{color:var(--dim);text-align:center;margin-bottom:20px;font-size:14px}
 .authbox input{width:100%;background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:12px 14px;color:var(--tx);font-size:15px;margin-bottom:12px}
-.authbox .main{width:100%;background:var(--study);border:none;border-radius:10px;padding:12px;color:#fff;font-size:15px;font-weight:600}
-.authbox .alt{width:100%;background:none;border:none;color:var(--dim);margin-top:12px;font-size:13px}
+.authbox .main{width:100%;background:var(--accent);border:none;border-radius:10px;padding:12px;color:#fff;font-size:15px;font-weight:600}
+.authbox .alt{width:100%;background:none;border:none;color:var(--dim);margin-top:10px;font-size:13px}
 #authmsg{color:var(--gold);font-size:13px;text-align:center;margin-top:10px;min-height:18px}
-header{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(11,15,23,.92);backdrop-filter:blur(8px);z-index:50}
-header h1{font-size:18px}
+.langtoggle{position:fixed;top:14px;inset-inline-end:14px;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:6px 12px;font-size:13px;font-weight:700;z-index:80}
+header{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(11,15,23,.94);backdrop-filter:blur(8px);z-index:50}
+header .logo{font-size:18px}
 .lvlbadge{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#1a1200;font-weight:800;border-radius:8px;padding:3px 10px;font-size:13px;white-space:nowrap}
-.xpwrap{flex:1;max-width:220px}
+.xpwrap{flex:1;min-width:60px}
 .xpbar{height:8px;background:var(--card2);border-radius:6px;overflow:hidden}
 .xpbar div{height:100%;background:linear-gradient(90deg,#fbbf24,#f59e0b);border-radius:6px;transition:width .4s}
-.xptxt{font-size:11px;color:var(--dim);margin-top:3px}
-.iconbtn{background:var(--card2);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:6px 10px;font-size:13px}
-nav{display:flex;gap:8px;padding:12px 18px}
+.xptxt{font-size:11px;color:var(--dim);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.iconbtn{background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:13px}
+nav{display:flex;gap:8px;padding:12px 16px}
 nav button{flex:1;background:var(--card);border:1px solid var(--line);color:var(--dim);border-radius:10px;padding:10px;font-size:14px;font-weight:600}
-nav button.on{background:var(--card2);color:var(--tx);border-color:#3b82f6}
-main{padding:0 18px 90px;max-width:1000px;margin:0 auto}
+nav button.on{background:var(--card2);color:var(--tx);border-color:var(--accent)}
+main{padding:0 16px 90px;max-width:1000px;margin:0 auto}
+.section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+.section h2{font-size:15px;margin-bottom:12px}
+.muted{color:var(--dim);font-size:13px;line-height:1.5}
 .quest{background:linear-gradient(135deg,#131a26,#151d30);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:14px}
-.quest .qtop{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.quest h2{font-size:14px}
-.quest .qcount{font-size:12px;color:var(--gold);font-weight:700}
+.qtop{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:8px}
+.qtop h2{font-size:14px}
+.qcount{font-size:12px;color:var(--gold);font-weight:700;white-space:nowrap}
 .qchips{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
 .qchip{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:8px 4px;text-align:center;font-size:11px;color:var(--dim);transition:all .3s}
 .qchip .qe{font-size:18px;display:block;filter:grayscale(1);opacity:.5;transition:all .3s}
@@ -43,12 +53,21 @@ main{padding:0 18px 90px;max-width:1000px;margin:0 auto}
 .qchip.done .qe{filter:none;opacity:1;transform:scale(1.1)}
 .qbar{height:6px;background:var(--card2);border-radius:4px;overflow:hidden;margin-bottom:12px}
 .qbar div{height:100%;background:linear-gradient(90deg,#a78bfa,#fbbf24);border-radius:4px;transition:width .5s}
+.nextpray{font-size:12px;color:var(--soul);text-align:center;margin-bottom:8px;font-weight:600}
 .prayrow{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
-.pray{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:7px 2px;text-align:center;color:var(--dim);font-size:11px;line-height:1.3}
-.pray small{display:block;font-size:10px;opacity:.7}
+.pray{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:7px 2px;text-align:center;color:var(--dim);font-size:11px;line-height:1.35}
+.pray small{display:block;font-size:10px;opacity:.75}
+.pray .tm{display:block;font-size:10px;color:var(--gold);font-weight:700}
 .pray.done{background:rgba(167,139,250,.18);border-color:var(--soul);color:var(--tx)}
-.pray.done small{color:var(--soul)}
-.grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px}
+.pray.now{box-shadow:0 0 0 1px var(--gold)}
+.pray.future{opacity:.45}
+.goalrow{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.goalrow .gi{width:96px;font-size:13px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.goalrow .tr{flex:1;height:12px;background:var(--card2);border-radius:6px;overflow:hidden}
+.goalrow .tr div{height:100%;border-radius:6px;transition:width .5s}
+.goalrow .vl{width:52px;text-align:end;font-size:12px;font-weight:700}
+.goalrow.hit .vl{color:var(--gold)}
+.grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:14px}
 .pcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;position:relative;overflow:hidden}
 .pcard .em{font-size:22px}
 .pcard h3{font-size:14px;margin:6px 0 2px}
@@ -56,19 +75,23 @@ main{padding:0 18px 90px;max-width:1000px;margin:0 auto}
 .pcard .ppts{font-size:20px;font-weight:800;margin-top:4px}
 .pcard .pbar{height:6px;background:var(--card2);border-radius:4px;margin-top:8px;overflow:hidden}
 .pcard .pbar div{height:100%;border-radius:4px}
-.pcard .stk{position:absolute;top:12px;right:12px;font-size:12px;background:var(--card2);border-radius:8px;padding:3px 8px}
-.statrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:16px}
+.pcard .stk{position:absolute;top:12px;inset-inline-end:12px;font-size:12px;background:var(--card2);border-radius:8px;padding:3px 8px}
+.statrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:14px}
 .mini{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center}
 .mini .big{font-size:24px;font-weight:800}
 .mini .lbl{font-size:12px;color:var(--dim);margin-top:2px}
-.section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:16px}
-.section h2{font-size:15px;margin-bottom:12px}
 .barrow{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-.barrow .nm{width:90px;font-size:13px;color:var(--dim)}
+.barrow .nm{width:100px;font-size:13px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .barrow .tr{flex:1;height:14px;background:var(--card2);border-radius:7px;overflow:hidden}
 .barrow .tr div{height:100%;border-radius:7px;transition:width .5s}
-.barrow .vl{width:60px;text-align:right;font-size:13px;font-weight:700}
-#radar{display:block;margin:0 auto;max-width:100%}
+.barrow .vl{width:64px;text-align:end;font-size:13px;font-weight:700}
+.cmp{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:13px}
+.cmp .nm{width:100px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cmp .tw{flex:1;display:flex;gap:4px;align-items:center}
+.cmp .bar{height:10px;border-radius:5px}
+.cmp .dl{width:60px;text-align:end;font-weight:700;font-size:12px}
+.up{color:#34d399}.down{color:#ff6b4a}.same{color:var(--dim)}
+#radar,#seasonring{display:block;margin:0 auto;max-width:100%}
 .badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px}
 .badge{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:10px 6px;text-align:center}
 .badge .be{font-size:24px;display:block;margin-bottom:4px}
@@ -80,108 +103,122 @@ main{padding:0 18px 90px;max-width:1000px;margin:0 auto}
 .rec{background:var(--card2);border-radius:10px;padding:10px;text-align:center}
 .rec .rv{font-size:17px;font-weight:800}
 .rec .rl{font-size:11px;color:var(--dim);margin-top:2px}
-.vtoggle{display:flex;gap:6px;margin-bottom:14px}
-.vtoggle button{background:var(--card);border:1px solid var(--line);color:var(--dim);border-radius:8px;padding:7px 16px;font-size:13px;font-weight:600}
-.vtoggle button.on{background:#1d4ed8;color:#fff;border-color:#1d4ed8}
+.pcal{overflow-x:auto;padding-bottom:4px}
+.pcal table{border-collapse:separate;border-spacing:2px}
+.pcal td{padding:0}
+.pcal .lbl{font-size:10px;color:var(--dim);padding-inline-end:6px;white-space:nowrap}
+.pcal .cell{width:13px;height:13px;border-radius:3px;background:var(--card2)}
+.pcal .cell.on{background:var(--soul)}
+.pcal .cell.tdy{box-shadow:0 0 0 1px var(--gold)}
+.pcal .dnum{font-size:8px;color:var(--dim);text-align:center}
+.vtoggle{display:flex;gap:6px;margin-bottom:12px;align-items:center}
+.vtoggle button{background:var(--card);border:1px solid var(--line);color:var(--dim);border-radius:8px;padding:7px 14px;font-size:13px;font-weight:600}
+.vtoggle button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
 .vtoggle .spacer{flex:1}
+.vtoggle .todaybtn{border-color:var(--gold);color:var(--gold)}
+.pfilter{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;padding-bottom:2px}
+.pfilter button{background:var(--card);border:1px solid var(--line);color:var(--dim);border-radius:20px;padding:6px 13px;font-size:12px;font-weight:600;white-space:nowrap}
 .weeknav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:8px}
 .weeknav b{font-size:14px;text-align:center;flex:1}
 .wk{display:flex;gap:8px;align-items:stretch;min-height:340px}
-.day{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px;flex:1;min-width:0;display:flex;flex-direction:column;transition:flex .3s;cursor:pointer}
+.day{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px;flex:1;min-width:0;display:flex;flex-direction:column;transition:flex .3s,border-color .2s;cursor:pointer}
 .day.today{flex:3.2;border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
-.day.sel{flex:3.2;border-color:#3b82f6}
+.day.sel{flex:3.2;border-color:var(--accent)}
+.day.dragover{border-color:var(--gold);background:var(--card2)}
 .day .dh{font-size:11px;color:var(--dim);text-align:center}
 .day .dn{font-size:16px;font-weight:800;text-align:center;margin-bottom:6px}
 .day.today .dn{color:var(--gold)}
 .day .dots{display:flex;gap:3px;justify-content:center;flex-wrap:wrap}
 .dot{width:7px;height:7px;border-radius:50%}
 .dot.planned{opacity:.35}
+.day .frz{font-size:10px;text-align:center;color:var(--soul)}
 .day .list{display:none;flex:1;overflow-y:auto;margin-top:4px}
 .day.today .list,.day.sel .list{display:block}
 .day.today .dots,.day.sel .dots{display:none}
-.ent{display:flex;align-items:center;gap:6px;background:var(--card2);border-radius:8px;padding:6px 8px;margin-bottom:6px;font-size:12px}
+.day .empty{font-size:11px;color:var(--dim);text-align:center;padding:12px 4px;line-height:1.5}
+.ent{display:flex;align-items:center;gap:5px;background:var(--card2);border-radius:8px;padding:6px 8px;margin-bottom:6px;font-size:12px}
 .ent .t{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer}
 .ent.done .t{text-decoration:line-through;opacity:.6}
 .ent .pt{font-size:11px;color:var(--gold);font-weight:700}
-.ent button{background:none;border:none;font-size:14px}
+.ent button{background:none;border:none;font-size:14px;padding:0 1px}
 .addday{width:100%;background:var(--card2);border:1px dashed var(--line);color:var(--dim);border-radius:8px;padding:6px;font-size:12px;margin-top:auto}
+.dnote{width:100%;background:transparent;border:none;border-top:1px solid var(--line);color:var(--dim);font-size:11px;padding:6px 2px;margin-top:4px;resize:none}
 .mgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
 .mgrid .mh{font-size:11px;color:var(--dim);text-align:center;padding:4px 0}
 .mc{aspect-ratio:1;background:var(--card);border:1px solid var(--line);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer;position:relative}
 .mc.today{border-color:var(--gold)}
+.mc .nt{position:absolute;bottom:2px;inset-inline-end:3px;font-size:8px}
 .ygrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
 .ym{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
 .ym h4{font-size:12px;color:var(--dim);margin-bottom:6px;text-align:center}
 .ydays{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
 .yd{aspect-ratio:1;border-radius:2px;background:var(--card2)}
-#fab{position:fixed;bottom:22px;right:22px;width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#1d4ed8);color:#fff;border:none;font-size:26px;box-shadow:0 8px 24px rgba(29,78,216,.5);z-index:60}
+#fab{position:fixed;bottom:22px;inset-inline-end:22px;width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#1d4ed8);color:#fff;border:none;font-size:26px;box-shadow:0 8px 24px rgba(29,78,216,.5);z-index:60}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:100;padding:16px}
-.mbox{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;width:100%;max-width:420px;max-height:88vh;overflow-y:auto}
+.mbox{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;width:100%;max-width:440px;max-height:88vh;overflow-y:auto}
 .mbox h2{font-size:16px;margin-bottom:14px}
 .mbox label{font-size:12px;color:var(--dim);display:block;margin:10px 0 4px}
-.mbox input,.mbox select{width:100%;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:10px;color:var(--tx);font-size:14px}
+.mbox input,.mbox select,.mbox textarea{width:100%;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:10px;color:var(--tx);font-size:14px;font-family:inherit}
 .pillsel{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
-.pillsel button{background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:8px 4px;color:var(--tx);font-size:12px}
+.pillsel button{background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:8px 4px;font-size:12px}
 .mrow{display:flex;gap:8px;margin-top:16px}
 .mrow button{flex:1;border:none;border-radius:10px;padding:11px;font-size:14px;font-weight:600}
-.mrow .ok{background:#1d4ed8;color:#fff}
+.mrow .ok{background:var(--accent);color:#fff}
 .mrow .no{background:var(--card2);color:var(--dim)}
+.mrow .danger{background:#b91c1c;color:#fff}
+.confmsg{font-size:14px;color:var(--dim);line-height:1.5}
+.confmsg b{color:var(--tx)}
 .typerow{display:flex;align-items:center;gap:8px;background:var(--card2);border-radius:8px;padding:8px 10px;margin-bottom:6px;font-size:13px}
 .typerow .t{flex:1}
 .typerow .p{color:var(--gold);font-weight:700;font-size:12px}
 .typerow button{background:none;border:none;font-size:14px}
-.mrow .danger{background:#b91c1c;color:#fff}
-.confmsg{font-size:14px;color:var(--dim);line-height:1.5}
-.confmsg b{color:var(--tx)}
-#toast{position:fixed;bottom:96px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--card2);border:1px solid var(--gold);color:var(--tx);border-radius:12px;padding:10px 18px;font-size:14px;font-weight:700;opacity:0;transition:all .3s;z-index:200;pointer-events:none;white-space:nowrap}
+.menuitem{display:flex;align-items:center;gap:10px;background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:8px;font-size:14px;width:100%;text-align:start}
+.daypick{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.daypick button{background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:8px 2px;font-size:11px}
+#toast{position:fixed;bottom:96px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--card2);border:1px solid var(--gold);border-radius:12px;padding:10px 18px;font-size:14px;font-weight:700;opacity:0;transition:all .3s;z-index:200;pointer-events:none;max-width:90vw;text-align:center}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-#lvlup{position:fixed;inset:0;background:rgba(11,15,23,.9);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:300;text-align:center}
+#lvlup{position:fixed;inset:0;background:rgba(11,15,23,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:300;text-align:center;overflow:hidden}
 #lvlup .lt{font-size:14px;letter-spacing:4px;color:var(--gold)}
 #lvlup .ln{font-size:56px;font-weight:900;background:linear-gradient(135deg,#fbbf24,#f59e0b);-webkit-background-clip:text;background-clip:text;color:transparent}
 #lvlup .lr{font-size:18px;color:var(--dim);margin-top:4px}
-#lvlup button{margin-top:24px;background:#1d4ed8;color:#fff;border:none;border-radius:10px;padding:12px 32px;font-size:15px;font-weight:700}
-.conf{position:absolute;top:-20px;font-size:20px;animation:fall linear forwards}
-@keyframes fall{to{transform:translateY(110vh) rotate(360deg)}}
+#lvlup button{margin-top:24px;background:var(--accent);color:#fff;border:none;border-radius:10px;padding:12px 32px;font-size:15px;font-weight:700}
+.conf{position:absolute;top:-24px;font-size:20px;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(115vh) rotate(360deg)}}
+#install{position:fixed;bottom:22px;inset-inline-start:22px;background:var(--card2);border:1px solid var(--gold);color:var(--gold);border-radius:12px;padding:10px 14px;font-size:13px;font-weight:700;z-index:60}
 @media (prefers-reduced-motion: reduce){.conf{display:none}*{transition:none!important;animation:none!important}}
-@media(max-width:640px){.wk{flex-direction:column;min-height:auto}.day{flex:none!important}.day .list{display:block}.day .dots{display:none}.xpwrap{max-width:120px}}
+@media(max-width:640px){.wk{flex-direction:column;min-height:auto}.day{flex:none!important}.day .list{display:block}.day .dots{display:none}.xpwrap{max-width:110px}}
 </style>
 </head>
 <body>
+<button class="langtoggle" onclick="toggleLang()" id="langbtn">ع</button>
+
 <div id="auth">
-  <div class="authbox">
-    <h1>&#9889; Four Pillars</h1>
-    <p>Level up your life: Study &bull; Gym &bull; Social &bull; Soul</p>
-    <input id="em" type="email" placeholder="Email">
-    <input id="pw" type="password" placeholder="Password">
-    <button class="main" id="authbtn" onclick="doAuth()">Sign In</button>
-    <button class="alt" id="authswap" onclick="swapAuth()">New here? Create account</button>
-    <button class="alt" onclick="forgotPw()" style="margin-top:2px">Forgot password?</button>
-    <div id="authmsg"></div>
-  </div>
+  <div class="authbox" id="authbox"></div>
 </div>
 
 <div id="app" class="hidden">
 <header>
-  <h1>&#9889;</h1>
+  <span class="logo">&#9889;</span>
   <span class="lvlbadge" id="hlvl">LV 1</span>
   <div class="xpwrap"><div class="xpbar"><div id="hxp" style="width:0%"></div></div><div class="xptxt" id="hxpt"></div></div>
-  <button class="iconbtn" onclick="openTypes()" title="Manage activities">&#9881;</button>
-  <button class="iconbtn" onclick="logout()" title="Sign out">&#10162;</button>
+  <button class="iconbtn" onclick="openMenu()">&#9881;</button>
 </header>
 <nav>
-  <button id="tab-sched" class="on" onclick="setTab('sched')">&#128197; Schedule</button>
-  <button id="tab-stats" onclick="setTab('stats')">&#128202; Stats</button>
+  <button id="tab-sched" class="on" onclick="setTab('sched')">&#128197; <span id="lbl-sched"></span></button>
+  <button id="tab-stats" onclick="setTab('stats')">&#128202; <span id="lbl-stats"></span></button>
 </nav>
 <main>
   <div id="view-sched">
     <div id="questcard"></div>
+    <div id="goalcard"></div>
     <div class="vtoggle">
-      <button id="vt-week" class="on" onclick="setView('week')">Week</button>
-      <button id="vt-month" onclick="setView('month')">Month</button>
-      <button id="vt-year" onclick="setView('year')">Year</button>
+      <button id="vt-week" class="on" onclick="setView('week')"></button>
+      <button id="vt-month" onclick="setView('month')"></button>
+      <button id="vt-year" onclick="setView('year')"></button>
       <span class="spacer"></span>
-      <button onclick="goToday()" style="background:var(--card);border:1px solid var(--gold);color:var(--gold);border-radius:8px;padding:7px 14px;font-size:13px;font-weight:600">Today</button>
+      <button class="todaybtn" onclick="goToday()"></button>
     </div>
+    <div class="pfilter" id="pfilter"></div>
     <div class="weeknav">
       <button class="iconbtn" onclick="nav(-1)">&#8592;</button>
       <b id="navlbl"></b>
@@ -192,6 +229,7 @@ main{padding:0 18px 90px;max-width:1000px;margin:0 auto}
   <div id="view-stats" class="hidden"></div>
 </main>
 <button id="fab" onclick="openAdd(null)">+</button>
+<button id="install" class="hidden" onclick="doInstall()"></button>
 </div>
 
 <div id="modal" class="modal hidden"><div class="mbox" id="mboxc"></div></div>
@@ -202,97 +240,265 @@ main{padding:0 18px 90px;max-width:1000px;margin:0 auto}
 var SB_URL='https://evdrwoaoqzndoxlklauw.supabase.co';
 var SB_KEY='sb_publishable_1j7DNEG0ZaKeTvNu2PZeig_LdmreCJ2';
 var sb=window.supabase.createClient(SB_URL,SB_KEY);
-var PIL={study:{nm:'Studying',em:'\uD83D\uDCDA',hex:'#4f9cf9'},gym:{nm:'Gym',em:'\uD83D\uDCAA',hex:'#ff6b4a'},social:{nm:'Social',em:'\uD83D\uDC65',hex:'#34d399'},soul:{nm:'Soul',em:'\uD83D\uDD4C',hex:'#a78bfa'}};
+
+/* ---------- i18n ---------- */
+var L={
+en:{title:'Four Pillars',tag:'Level up your life: Study \u00B7 Gym \u00B7 Social \u00B7 Soul',
+signin:'Sign In',create:'Create Account',newhere:'New here? Create account',haveacc:'Have an account? Sign in',forgot:'Forgot password?',email:'Email',pass:'Password',
+checkmail:'Check your email to confirm, then sign in.',resetsent:'Reset link sent \u2014 check your email.',typeemail:'Type your email above first, then tap Forgot password.',
+newpass:'New Password',setnew:'Set a new password for your account',updatepw:'Update Password',pwshort:'Password must be at least 6 characters.',pwdone:'Password updated!',
+sched:'Schedule',stats:'Stats',week:'Week',month:'Month',year:'Year',today:'Today',
+quest:'Today\u2019s Quest',pillars:'pillars',all:'All',
+study:'Studying',gym:'Gym',social:'Social',soul:'Soul',
+weekgoals:'Weekly Goals',goalmet:'Goal met',ontrack:'on track',
+add:'Add Activity',pillar:'Pillar',activity:'Activity',date:'Date',status:'Status',
+done:'Done (award points now)',planned:'Planned',repeat:'Repeat weekly (same weekday)',norepeat:'No repeat',forwk:'For {n} weeks',
+custom:'Custom...',ctitle:'Custom title',points:'Points',save:'Save',cancel:'Cancel',close:'Close',del:'Delete',remove:'Remove',
+edit:'Edit Activity',title:'Title',move:'Move to day',
+settings:'Settings',manage:'Manage Activities',prefs:'Preferences',signout:'Sign out',addnew:'Add new',actname:'Activity name',
+lang:'Language',city:'City',country:'Country',goals:'Weekly goals per pillar',seasontarget:'Season XP target',qurangoal:'Quran goal (pages)',startseason:'Start new season',
+totalxp:'Total XP',perfstreak:'Perfect Day Streak',actsdone:'Activities Done',xptoday:'XP Today',
+radar:'Pillar Radar',balance:'Pillar Balance',achievements:'Achievements',records:'Records',last14:'Last 14 Days',
+season:'Season',dayleft:'days left',seasondone:'Season complete!',
+quran:'Quran Progress',pages:'pages',logread:'Log reading',surah:'Surah (optional)',juz:'Juz (optional)',khatma:'to khatma',
+gymlog:'Gym Log',exercise:'Exercise',sets:'Sets',reps:'Reps',weight:'Weight (kg)',addset:'Add exercise',pr:'PR',
+notes:'Reflection',noteph:'How did today go?',
+recap:'This Week',compare:'This Week vs Last',prayercal:'Prayer Calendar',
+freeze:'Streak freeze',freezeused:'Freeze used this week',freezeon:'Freeze this day',frozen:'Frozen \u2014 streak safe',
+nextpray:'{p} in {t}',prayernow:'{p} now',
+emptyday:'Nothing planned. Tap + Add to start.',
+signoutq:'Sign out?',signoutm:'You\u2019ll need your email and password to get back in. Your data stays safe.',
+delq:'Delete activity?',delm:'Remove <b>{t}</b> from {d}?',dellost:' You\u2019ll lose the {p} XP it earned.',
+remq:'Remove activity type?',remm:'Remove <b>{t}</b> (+{p})? Past entries and XP stay \u2014 you just won\u2019t see it when adding new ones.',
+welcome:'Welcome',obtag:'Let\u2019s set up your four pillars',obnext:'Next',obdone:'Start',oblang:'Pick your language',obcity:'Your city (for prayer times)',obgoals:'How many days a week for each pillar?',
+install:'Install app',installed:'Added to home screen',
+saved:'Saved',deleted:'Deleted',added:'Added',removed:'Removed',err:'Couldn\u2019t save',nameFirst:'Type a name first',
+backplan:'back to planned',unlogged:'unlogged',
+strongest:'Strongest',weakest:'Needs work',vslast:'vs last week',
+lvl:'Level',bestday:'Best day',activedays:'Active days',longest:'Longest',streak:'streak'},
+ar:{title:'\u0627\u0644\u0623\u0631\u0643\u0627\u0646 \u0627\u0644\u0623\u0631\u0628\u0639\u0629',tag:'\u0637\u0648\u0651\u0631 \u0646\u0641\u0633\u0643: \u0627\u0644\u062F\u0631\u0627\u0633\u0629 \u00B7 \u0627\u0644\u0646\u0627\u062F\u064A \u00B7 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639\u064A \u00B7 \u0627\u0644\u0631\u0648\u062D',
+signin:'\u062A\u0633\u062C\u064A\u0644 \u0627\u0644\u062F\u062E\u0648\u0644',create:'\u0625\u0646\u0634\u0627\u0621 \u062D\u0633\u0627\u0628',newhere:'\u062D\u0633\u0627\u0628 \u062C\u062F\u064A\u062F\u061F \u0623\u0646\u0634\u0626 \u062D\u0633\u0627\u0628',haveacc:'\u0644\u062F\u064A\u0643 \u062D\u0633\u0627\u0628\u061F \u0633\u062C\u0651\u0644 \u0627\u0644\u062F\u062E\u0648\u0644',forgot:'\u0646\u0633\u064A\u062A \u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631\u061F',email:'\u0627\u0644\u0628\u0631\u064A\u062F \u0627\u0644\u0625\u0644\u0643\u062A\u0631\u0648\u0646\u064A',pass:'\u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631',
+checkmail:'\u062A\u062D\u0642\u0642 \u0645\u0646 \u0628\u0631\u064A\u062F\u0643 \u0644\u0644\u062A\u0623\u0643\u064A\u062F\u060C \u062B\u0645 \u0633\u062C\u0651\u0644 \u0627\u0644\u062F\u062E\u0648\u0644.',resetsent:'\u062A\u0645 \u0625\u0631\u0633\u0627\u0644 \u0631\u0627\u0628\u0637 \u0627\u0644\u0627\u0633\u062A\u0639\u0627\u062F\u0629 \u2014 \u062A\u062D\u0642\u0642 \u0645\u0646 \u0628\u0631\u064A\u062F\u0643.',typeemail:'\u0627\u0643\u062A\u0628 \u0628\u0631\u064A\u062F\u0643 \u0623\u0648\u0644\u0627\u064B \u062B\u0645 \u0627\u0636\u063A\u0637 \u0646\u0633\u064A\u062A \u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631.',
+newpass:'\u0643\u0644\u0645\u0629 \u0645\u0631\u0648\u0631 \u062C\u062F\u064A\u062F\u0629',setnew:'\u0639\u064A\u0651\u0646 \u0643\u0644\u0645\u0629 \u0645\u0631\u0648\u0631 \u062C\u062F\u064A\u062F\u0629 \u0644\u062D\u0633\u0627\u0628\u0643',updatepw:'\u062A\u062D\u062F\u064A\u062B \u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631',pwshort:'\u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631 6 \u0623\u062D\u0631\u0641 \u0639\u0644\u0649 \u0627\u0644\u0623\u0642\u0644.',pwdone:'\u062A\u0645 \u062A\u062D\u062F\u064A\u062B \u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631!',
+sched:'\u0627\u0644\u062C\u062F\u0648\u0644',stats:'\u0627\u0644\u0625\u062D\u0635\u0627\u0621\u0627\u062A',week:'\u0623\u0633\u0628\u0648\u0639',month:'\u0634\u0647\u0631',year:'\u0633\u0646\u0629',today:'\u0627\u0644\u064A\u0648\u0645',
+quest:'\u0645\u0647\u0645\u0629 \u0627\u0644\u064A\u0648\u0645',pillars:'\u0623\u0631\u0643\u0627\u0646',all:'\u0627\u0644\u0643\u0644',
+study:'\u0627\u0644\u062F\u0631\u0627\u0633\u0629',gym:'\u0627\u0644\u0646\u0627\u062F\u064A',social:'\u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639\u064A',soul:'\u0627\u0644\u0631\u0648\u062D',
+weekgoals:'\u0623\u0647\u062F\u0627\u0641 \u0627\u0644\u0623\u0633\u0628\u0648\u0639',goalmet:'\u062A\u0645 \u0627\u0644\u0647\u062F\u0641',ontrack:'\u0639\u0644\u0649 \u0627\u0644\u0645\u0633\u0627\u0631',
+add:'\u0625\u0636\u0627\u0641\u0629 \u0646\u0634\u0627\u0637',pillar:'\u0627\u0644\u0631\u0643\u0646',activity:'\u0627\u0644\u0646\u0634\u0627\u0637',date:'\u0627\u0644\u062A\u0627\u0631\u064A\u062E',status:'\u0627\u0644\u062D\u0627\u0644\u0629',
+done:'\u0645\u0646\u062C\u0632 (\u0627\u062D\u062A\u0633\u0627\u0628 \u0627\u0644\u0646\u0642\u0627\u0637)',planned:'\u0645\u062E\u0637\u0637',repeat:'\u062A\u0643\u0631\u0627\u0631 \u0623\u0633\u0628\u0648\u0639\u064A',norepeat:'\u0628\u062F\u0648\u0646 \u062A\u0643\u0631\u0627\u0631',forwk:'\u0644\u0645\u062F\u0629 {n} \u0623\u0633\u0627\u0628\u064A\u0639',
+custom:'\u0645\u062E\u0635\u0635...',ctitle:'\u0639\u0646\u0648\u0627\u0646 \u0645\u062E\u0635\u0635',points:'\u0627\u0644\u0646\u0642\u0627\u0637',save:'\u062D\u0641\u0638',cancel:'\u0625\u0644\u063A\u0627\u0621',close:'\u0625\u063A\u0644\u0627\u0642',del:'\u062D\u0630\u0641',remove:'\u0625\u0632\u0627\u0644\u0629',
+edit:'\u062A\u0639\u062F\u064A\u0644 \u0627\u0644\u0646\u0634\u0627\u0637',title:'\u0627\u0644\u0639\u0646\u0648\u0627\u0646',move:'\u0646\u0642\u0644 \u0625\u0644\u0649 \u064A\u0648\u0645',
+settings:'\u0627\u0644\u0625\u0639\u062F\u0627\u062F\u0627\u062A',manage:'\u0625\u062F\u0627\u0631\u0629 \u0627\u0644\u0623\u0646\u0634\u0637\u0629',prefs:'\u0627\u0644\u062A\u0641\u0636\u064A\u0644\u0627\u062A',signout:'\u062A\u0633\u062C\u064A\u0644 \u0627\u0644\u062E\u0631\u0648\u062C',addnew:'\u0625\u0636\u0627\u0641\u0629 \u062C\u062F\u064A\u062F',actname:'\u0627\u0633\u0645 \u0627\u0644\u0646\u0634\u0627\u0637',
+lang:'\u0627\u0644\u0644\u063A\u0629',city:'\u0627\u0644\u0645\u062F\u064A\u0646\u0629',country:'\u0627\u0644\u062F\u0648\u0644\u0629',goals:'\u0623\u0647\u062F\u0627\u0641 \u0623\u0633\u0628\u0648\u0639\u064A\u0629 \u0644\u0643\u0644 \u0631\u0643\u0646',seasontarget:'\u0647\u062F\u0641 \u0646\u0642\u0627\u0637 \u0627\u0644\u0645\u0648\u0633\u0645',qurangoal:'\u0647\u062F\u0641 \u0627\u0644\u0642\u0631\u0622\u0646 (\u0635\u0641\u062D\u0627\u062A)',startseason:'\u0628\u062F\u0621 \u0645\u0648\u0633\u0645 \u062C\u062F\u064A\u062F',
+totalxp:'\u0645\u062C\u0645\u0648\u0639 \u0627\u0644\u0646\u0642\u0627\u0637',perfstreak:'\u0633\u0644\u0633\u0644\u0629 \u0627\u0644\u064A\u0648\u0645 \u0627\u0644\u0645\u062B\u0627\u0644\u064A',actsdone:'\u0627\u0644\u0623\u0646\u0634\u0637\u0629 \u0627\u0644\u0645\u0646\u062C\u0632\u0629',xptoday:'\u0646\u0642\u0627\u0637 \u0627\u0644\u064A\u0648\u0645',
+radar:'\u0631\u0627\u062F\u0627\u0631 \u0627\u0644\u0623\u0631\u0643\u0627\u0646',balance:'\u062A\u0648\u0627\u0632\u0646 \u0627\u0644\u0623\u0631\u0643\u0627\u0646',achievements:'\u0627\u0644\u0625\u0646\u062C\u0627\u0632\u0627\u062A',records:'\u0627\u0644\u0623\u0631\u0642\u0627\u0645 \u0627\u0644\u0642\u064A\u0627\u0633\u064A\u0629',last14:'\u0622\u062E\u0631 14 \u064A\u0648\u0645',
+season:'\u0627\u0644\u0645\u0648\u0633\u0645',dayleft:'\u064A\u0648\u0645 \u0645\u062A\u0628\u0642\u064D',seasondone:'\u0627\u0643\u062A\u0645\u0644 \u0627\u0644\u0645\u0648\u0633\u0645!',
+quran:'\u062A\u0642\u062F\u0645 \u0627\u0644\u0642\u0631\u0622\u0646',pages:'\u0635\u0641\u062D\u0629',logread:'\u062A\u0633\u062C\u064A\u0644 \u0642\u0631\u0627\u0621\u0629',surah:'\u0627\u0644\u0633\u0648\u0631\u0629 (\u0627\u062E\u062A\u064A\u0627\u0631\u064A)',juz:'\u0627\u0644\u062C\u0632\u0621 (\u0627\u062E\u062A\u064A\u0627\u0631\u064A)',khatma:'\u0644\u0644\u062E\u062A\u0645\u0629',
+gymlog:'\u0633\u062C\u0644 \u0627\u0644\u0646\u0627\u062F\u064A',exercise:'\u0627\u0644\u062A\u0645\u0631\u064A\u0646',sets:'\u0645\u062C\u0645\u0648\u0639\u0627\u062A',reps:'\u062A\u0643\u0631\u0627\u0631\u0627\u062A',weight:'\u0627\u0644\u0648\u0632\u0646 (\u0643\u062C\u0645)',addset:'\u0625\u0636\u0627\u0641\u0629 \u062A\u0645\u0631\u064A\u0646',pr:'\u0631\u0642\u0645 \u0642\u064A\u0627\u0633\u064A',
+notes:'\u062A\u0623\u0645\u0644 \u0627\u0644\u064A\u0648\u0645',noteph:'\u0643\u064A\u0641 \u0643\u0627\u0646 \u064A\u0648\u0645\u0643\u061F',
+recap:'\u0647\u0630\u0627 \u0627\u0644\u0623\u0633\u0628\u0648\u0639',compare:'\u0647\u0630\u0627 \u0627\u0644\u0623\u0633\u0628\u0648\u0639 \u0645\u0642\u0627\u0628\u0644 \u0627\u0644\u0645\u0627\u0636\u064A',prayercal:'\u062A\u0642\u0648\u064A\u0645 \u0627\u0644\u0635\u0644\u0627\u0629',
+freeze:'\u062A\u062C\u0645\u064A\u062F \u0627\u0644\u0633\u0644\u0633\u0644\u0629',freezeused:'\u062A\u0645 \u0627\u0633\u062A\u062E\u062F\u0627\u0645 \u0627\u0644\u062A\u062C\u0645\u064A\u062F \u0647\u0630\u0627 \u0627\u0644\u0623\u0633\u0628\u0648\u0639',freezeon:'\u062A\u062C\u0645\u064A\u062F \u0647\u0630\u0627 \u0627\u0644\u064A\u0648\u0645',frozen:'\u0645\u062C\u0645\u0651\u062F \u2014 \u0627\u0644\u0633\u0644\u0633\u0644\u0629 \u0622\u0645\u0646\u0629',
+nextpray:'{p} \u0628\u0639\u062F {t}',prayernow:'{p} \u0627\u0644\u0622\u0646',
+emptyday:'\u0644\u0627 \u064A\u0648\u062C\u062F \u0645\u062E\u0637\u0637. \u0627\u0636\u063A\u0637 + \u0644\u0644\u0625\u0636\u0627\u0641\u0629.',
+signoutq:'\u062A\u0633\u062C\u064A\u0644 \u0627\u0644\u062E\u0631\u0648\u062C\u061F',signoutm:'\u0633\u062A\u062D\u062A\u0627\u062C \u0628\u0631\u064A\u062F\u0643 \u0648\u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631 \u0644\u0644\u0639\u0648\u062F\u0629. \u0628\u064A\u0627\u0646\u0627\u062A\u0643 \u0645\u062D\u0641\u0648\u0638\u0629.',
+delq:'\u062D\u0630\u0641 \u0627\u0644\u0646\u0634\u0627\u0637\u061F',delm:'\u062D\u0630\u0641 <b>{t}</b> \u0645\u0646 {d}\u061F',dellost:' \u0633\u062A\u0641\u0642\u062F {p} \u0646\u0642\u0637\u0629.',
+remq:'\u0625\u0632\u0627\u0644\u0629 \u0646\u0648\u0639 \u0627\u0644\u0646\u0634\u0627\u0637\u061F',remm:'\u0625\u0632\u0627\u0644\u0629 <b>{t}</b> (+{p})\u061F \u0627\u0644\u0633\u062C\u0644\u0627\u062A \u0648\u0627\u0644\u0646\u0642\u0627\u0637 \u0627\u0644\u0633\u0627\u0628\u0642\u0629 \u062A\u0628\u0642\u0649.',
+welcome:'\u0623\u0647\u0644\u0627\u064B',obtag:'\u0644\u0646\u062C\u0647\u0651\u0632 \u0623\u0631\u0643\u0627\u0646\u0643 \u0627\u0644\u0623\u0631\u0628\u0639\u0629',obnext:'\u0627\u0644\u062A\u0627\u0644\u064A',obdone:'\u0627\u0628\u062F\u0623',oblang:'\u0627\u062E\u062A\u0631 \u0644\u063A\u062A\u0643',obcity:'\u0645\u062F\u064A\u0646\u062A\u0643 (\u0644\u0645\u0648\u0627\u0642\u064A\u062A \u0627\u0644\u0635\u0644\u0627\u0629)',obgoals:'\u0643\u0645 \u064A\u0648\u0645 \u0641\u064A \u0627\u0644\u0623\u0633\u0628\u0648\u0639 \u0644\u0643\u0644 \u0631\u0643\u0646\u061F',
+install:'\u062A\u062B\u0628\u064A\u062A \u0627\u0644\u062A\u0637\u0628\u064A\u0642',installed:'\u062A\u0645\u062A \u0627\u0644\u0625\u0636\u0627\u0641\u0629 \u0644\u0644\u0634\u0627\u0634\u0629 \u0627\u0644\u0631\u0626\u064A\u0633\u064A\u0629',
+saved:'\u062A\u0645 \u0627\u0644\u062D\u0641\u0638',deleted:'\u062A\u0645 \u0627\u0644\u062D\u0630\u0641',added:'\u062A\u0645\u062A \u0627\u0644\u0625\u0636\u0627\u0641\u0629',removed:'\u062A\u0645\u062A \u0627\u0644\u0625\u0632\u0627\u0644\u0629',err:'\u062A\u0639\u0630\u0631 \u0627\u0644\u062D\u0641\u0638',nameFirst:'\u0627\u0643\u062A\u0628 \u0627\u0633\u0645\u0627\u064B \u0623\u0648\u0644\u0627\u064B',
+backplan:'\u0639\u0627\u062F \u0644\u0644\u062A\u062E\u0637\u064A\u0637',unlogged:'\u062A\u0645 \u0627\u0644\u0625\u0644\u063A\u0627\u0621',
+strongest:'\u0627\u0644\u0623\u0642\u0648\u0649',weakest:'\u064A\u062D\u062A\u0627\u062C \u0639\u0645\u0644',vslast:'\u0645\u0642\u0627\u0631\u0646\u0629 \u0628\u0627\u0644\u0645\u0627\u0636\u064A',
+lvl:'\u0627\u0644\u0645\u0633\u062A\u0648\u0649',bestday:'\u0623\u0641\u0636\u0644 \u064A\u0648\u0645',activedays:'\u0623\u064A\u0627\u0645 \u0646\u0634\u0637\u0629',longest:'\u0623\u0637\u0648\u0644',streak:'\u0633\u0644\u0633\u0644\u0629'}};
+var lang=localStorage.getItem('fp_lang')||'en';
+function T(k,vars){
+  var s=(L[lang]&&L[lang][k])||L.en[k]||k;
+  if(vars)Object.keys(vars).forEach(function(v){s=s.split('{'+v+'}').join(vars[v])});
+  return s;
+}
+var RANKS={en:['Novice','Apprentice','Fighter','Warrior','Knight','Champion','Master','Grandmaster','Legend','Mythic'],
+ar:['\u0645\u0628\u062A\u062F\u0626','\u0645\u062A\u062F\u0631\u0628','\u0645\u0642\u0627\u062A\u0644','\u0645\u062D\u0627\u0631\u0628','\u0641\u0627\u0631\u0633','\u0628\u0637\u0644','\u0645\u0639\u0644\u0645','\u0623\u0633\u062A\u0627\u0630','\u0623\u0633\u0637\u0648\u0631\u0629','\u062E\u0631\u0627\u0641\u064A']};
+var PIL={study:{em:'\uD83D\uDCDA',hex:'#4f9cf9'},gym:{em:'\uD83D\uDCAA',hex:'#ff6b4a'},social:{em:'\uD83D\uDC65',hex:'#34d399'},soul:{em:'\uD83D\uDD4C',hex:'#a78bfa'}};
 var PKEYS=['study','gym','social','soul'];
-var RANKS=['Novice','Apprentice','Fighter','Warrior','Knight','Champion','Master','Grandmaster','Legend','Mythic'];
+function pnm(p){return T(p)}
 var PRAYERS=[['Fajr','\u0627\u0644\u0641\u062C\u0631'],['Dhuhr','\u0627\u0644\u0638\u0647\u0631'],['Asr','\u0627\u0644\u0639\u0635\u0631'],['Maghrib','\u0627\u0644\u0645\u063A\u0631\u0628'],['Isha','\u0627\u0644\u0639\u0634\u0627\u0621']];
-var types=[],entries=[],user=null;
-var tab='sched',view='week',anchor=new Date(),selDay=null,signup=false,curP='study',prevLvl=null;
+var WD={en:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],ar:['\u0623\u062D\u062F','\u0625\u062B\u0646','\u062B\u0644\u0627','\u0623\u0631\u0628','\u062E\u0645\u064A','\u062C\u0645\u0639','\u0633\u0628\u062A']};
+
+/* ---------- state ---------- */
+var types=[],entries=[],notes={},quran=[],gymSets=[],user=null;
+var cfg={lang:'en',city:'Riyadh',country:'Saudi Arabia',goals:{study:5,gym:4,social:3,soul:7},freezes:{},season_start:null,season_target:1500,quran_goal:604,onboarded:false};
+var tab='sched',view='week',anchor=new Date(),selDay=null,signup=false,curP='study',prevLvl=null,pFilter='all',prayerTimes=null,deferredPrompt=null;
 
 function dstr(d){var y=d.getFullYear(),m=('0'+(d.getMonth()+1)).slice(-2),dd=('0'+d.getDate()).slice(-2);return y+'-'+m+'-'+dd}
 function today(){return dstr(new Date())}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function weekKey(ds){var d=new Date(ds+'T00:00:00');d.setDate(d.getDate()-d.getDay());return dstr(d)}
+function addDays(ds,n){var d=new Date(ds+'T00:00:00');d.setDate(d.getDate()+n);return dstr(d)}
 
-function swapAuth(){signup=!signup;document.getElementById('authbtn').textContent=signup?'Create Account':'Sign In';document.getElementById('authswap').textContent=signup?'Have an account? Sign in':'New here? Create account'}
+/* ---------- language ---------- */
+function applyLang(){
+  document.documentElement.lang=lang;
+  document.documentElement.dir=lang==='ar'?'rtl':'ltr';
+  document.getElementById('langbtn').textContent=lang==='ar'?'EN':'\u0639';
+  document.title=T('title');
+  document.getElementById('lbl-sched').textContent=T('sched');
+  document.getElementById('lbl-stats').textContent=T('stats');
+  document.getElementById('vt-week').textContent=T('week');
+  document.getElementById('vt-month').textContent=T('month');
+  document.getElementById('vt-year').textContent=T('year');
+  document.querySelector('.todaybtn').textContent=T('today');
+  document.getElementById('install').textContent='\u2B07 '+T('install');
+}
+async function toggleLang(){
+  lang=lang==='ar'?'en':'ar';
+  localStorage.setItem('fp_lang',lang);
+  applyLang();
+  if(user){cfg.lang=lang;await sb.from('settings').upsert({user_id:user.id,lang:lang});render()}
+  else renderAuth();
+}
+
+/* ---------- auth ---------- */
+function renderAuth(){
+  var b=document.getElementById('authbox');
+  b.innerHTML='<h1>\u26A1 '+T('title')+'</h1><p>'+T('tag')+'</p>'+
+  '<input id="em" type="email" placeholder="'+T('email')+'">'+
+  '<input id="pw" type="password" placeholder="'+T('pass')+'">'+
+  '<button class="main" id="authbtn" onclick="doAuth()">'+(signup?T('create'):T('signin'))+'</button>'+
+  '<button class="alt" onclick="swapAuth()">'+(signup?T('haveacc'):T('newhere'))+'</button>'+
+  '<button class="alt" onclick="forgotPw()">'+T('forgot')+'</button>'+
+  '<div id="authmsg"></div>';
+}
+function swapAuth(){signup=!signup;renderAuth()}
 async function doAuth(){
   var em=document.getElementById('em').value.trim(),pw=document.getElementById('pw').value;
   var msg=document.getElementById('authmsg');msg.textContent='...';
   var r;
   if(signup){r=await sb.auth.signUp({email:em,password:pw});
-    if(!r.error){if(r.data.session){init()}else{msg.textContent='Check your email to confirm, then sign in.'}return}
+    if(!r.error){if(r.data.session){init()}else{msg.textContent=T('checkmail')}return}
   }else{r=await sb.auth.signInWithPassword({email:em,password:pw});if(!r.error){init();return}}
   msg.textContent=r.error.message;
 }
-function logout(){
-  confirmBox('Sign out?','You\u2019ll need your email and password to get back in. Your data stays safe.','Sign out',async function(){
-    await sb.auth.signOut();location.reload();
-  });
-}
 async function forgotPw(){
-  var em=document.getElementById('em').value.trim();
-  var msg=document.getElementById('authmsg');
-  if(!em){msg.textContent='Type your email above first, then tap Forgot password.';return}
+  var em=document.getElementById('em').value.trim(),msg=document.getElementById('authmsg');
+  if(!em){msg.textContent=T('typeemail');return}
   msg.textContent='...';
   var r=await sb.auth.resetPasswordForEmail(em,{redirectTo:location.origin+location.pathname});
-  msg.textContent=r.error?r.error.message:'Reset link sent \u2014 check your email.';
+  msg.textContent=r.error?r.error.message:T('resetsent');
 }
 function showRecover(){
   document.getElementById('app').classList.add('hidden');
   document.getElementById('auth').classList.remove('hidden');
-  var box=document.querySelector('.authbox');
-  box.innerHTML='<h1>\uD83D\uDD11 New Password</h1><p>Set a new password for your account</p><input id="npw" type="password" placeholder="New password (min 6 chars)"><button class="main" onclick="saveNewPw()">Update Password</button><div id="authmsg"></div>';
+  document.getElementById('authbox').innerHTML='<h1>\uD83D\uDD11 '+T('newpass')+'</h1><p>'+T('setnew')+'</p><input id="npw" type="password" placeholder="'+T('pass')+'"><button class="main" onclick="saveNewPw()">'+T('updatepw')+'</button><div id="authmsg"></div>';
 }
 async function saveNewPw(){
-  var pw=document.getElementById('npw').value;
-  var msg=document.getElementById('authmsg');
-  if(pw.length<6){msg.textContent='Password must be at least 6 characters.';return}
+  var pw=document.getElementById('npw').value,msg=document.getElementById('authmsg');
+  if(pw.length<6){msg.textContent=T('pwshort');return}
   msg.textContent='...';
   var r=await sb.auth.updateUser({password:pw});
   if(r.error){msg.textContent=r.error.message;return}
-  msg.textContent='Password updated!';
+  msg.textContent=T('pwdone');
   setTimeout(function(){location.href=location.pathname},700);
 }
-sb.auth.onAuthStateChange(function(ev){if(ev==='PASSWORD_RECOVERY')showRecover()});
+function logout(){
+  confirmBox(T('signoutq'),T('signoutm'),T('signout'),async function(){await sb.auth.signOut();location.reload()});
+}
 
+/* ---------- load ---------- */
 async function init(){
   var s=await sb.auth.getSession();
-  if(!s.data.session)return;
+  if(!s.data.session){renderAuth();return}
   user=s.data.session.user;
   document.getElementById('auth').classList.add('hidden');
   document.getElementById('app').classList.remove('hidden');
   await loadAll();
   if(types.length===0)await seed();
   prevLvl=lvlOf(totalXP());
+  applyLang();
+  if(!cfg.onboarded){onboard(0);return}
   render();
+  loadPrayerTimes();
 }
 async function loadAll(){
-  var t=await sb.from('activity_types').select('*').order('created_at');
-  types=t.data||[];
-  var e=await sb.from('activity_entries').select('*').order('entry_date');
-  entries=e.data||[];
+  var res=await Promise.all([
+    sb.from('activity_types').select('*').order('created_at'),
+    sb.from('activity_entries').select('*').order('entry_date'),
+    sb.from('settings').select('*').eq('user_id',user.id).maybeSingle(),
+    sb.from('day_notes').select('*'),
+    sb.from('quran_log').select('*').order('entry_date'),
+    sb.from('gym_sets').select('*').order('entry_date')
+  ]);
+  types=res[0].data||[];entries=res[1].data||[];
+  if(res[2].data){
+    var s=res[2].data;
+    cfg.lang=s.lang||'en';cfg.city=s.city||'Riyadh';cfg.country=s.country||'Saudi Arabia';
+    cfg.goals=s.goals||cfg.goals;cfg.freezes=s.freezes||{};
+    cfg.season_start=s.season_start;cfg.season_target=s.season_target||1500;
+    cfg.quran_goal=s.quran_goal||604;cfg.onboarded=!!s.onboarded;
+    if(!localStorage.getItem('fp_lang'))lang=cfg.lang;
+  }else{
+    await sb.from('settings').insert({user_id:user.id});
+    cfg.season_start=today();
+  }
+  notes={};(res[3].data||[]).forEach(function(n){notes[n.entry_date]=n.note});
+  quran=res[4].data||[];gymSets=res[5].data||[];
 }
 async function seed(){
   var defs=[['study','Study Session',20],['study','Homework',15],['study','Review Notes',10],
   ['gym','Workout',25],['gym','Cardio',15],
   ['social','Hangout with Friends',15],['social','Family Time',10],['social','Meet Someone New',20],
   ['soul','Fajr',10],['soul','Dhuhr',10],['soul','Asr',10],['soul','Maghrib',10],['soul','Isha',10],['soul','Quran Reading',15],['soul','Dhikr',5]];
-  var rows=defs.map(function(d){return{pillar:d[0],name:d[1],points:d[2]}});
-  await sb.from('activity_types').insert(rows);
-  var t=await sb.from('activity_types').select('*').order('created_at');
-  types=t.data||[];
+  await sb.from('activity_types').insert(defs.map(function(d){return{pillar:d[0],name:d[1],points:d[2]}}));
+  var t=await sb.from('activity_types').select('*').order('created_at');types=t.data||[];
+}
+async function saveCfg(patch){
+  Object.assign(cfg,patch);
+  var row={user_id:user.id};Object.keys(patch).forEach(function(k){row[k]=patch[k]});
+  var r=await sb.from('settings').upsert(row);
+  if(r.error)toast(T('err')+' \u2014 '+r.error.message);
+  return !r.error;
 }
 
+/* ---------- prayer times ---------- */
+async function loadPrayerTimes(){
+  var key='fp_pt_'+cfg.city+'_'+today();
+  var c=localStorage.getItem(key);
+  if(c){try{prayerTimes=JSON.parse(c);renderQuest();return}catch(e){}}
+  try{
+    var u='https://api.aladhan.com/v1/timingsByCity?city='+encodeURIComponent(cfg.city)+'&country='+encodeURIComponent(cfg.country)+'&method=4';
+    var r=await fetch(u);var j=await r.json();
+    if(j&&j.data&&j.data.timings){
+      prayerTimes={};
+      PRAYERS.forEach(function(p){prayerTimes[p[0]]=j.data.timings[p[0]]});
+      localStorage.setItem(key,JSON.stringify(prayerTimes));
+      renderQuest();
+    }
+  }catch(e){}
+}
+function minsNow(){var d=new Date();return d.getHours()*60+d.getMinutes()}
+function toMins(hm){var p=hm.split(':');return parseInt(p[0])*60+parseInt(p[1])}
+function nextPrayer(){
+  if(!prayerTimes)return null;
+  var n=minsNow(),cur=null,nxt=null;
+  for(var i=0;i<PRAYERS.length;i++){
+    var nm=PRAYERS[i][0],m=toMins(prayerTimes[nm]);
+    if(m<=n)cur=nm;
+    if(m>n&&!nxt)nxt={name:nm,mins:m-n};
+  }
+  return{cur:cur,next:nxt};
+}
+
+/* ---------- xp / streaks ---------- */
 function doneEntries(){return entries.filter(function(e){return e.status==='done'})}
 function pillarXP(p){return doneEntries().filter(function(e){return e.pillar===p}).reduce(function(a,e){return a+e.points_awarded},0)}
 function totalXP(){return doneEntries().reduce(function(a,e){return a+e.points_awarded},0)}
 function lvlOf(xp){return Math.floor(Math.sqrt(xp/60))+1}
 function xpForLvl(l){return 60*(l-1)*(l-1)}
-function rankOf(l){return RANKS[Math.min(RANKS.length-1,Math.floor((l-1)/3))]}
+function rankOf(l){var r=RANKS[lang]||RANKS.en;return r[Math.min(r.length-1,Math.floor((l-1)/3))]}
+function isFrozen(ds){return !!cfg.freezes[ds]}
 function daySet(p){var s={};doneEntries().forEach(function(e){if(!p||e.pillar===p)s[e.entry_date]=1});return s}
 function streak(p){
   var s=daySet(p),d=new Date(),n=0;
-  if(!s[dstr(d)])d.setDate(d.getDate()-1);
-  while(s[dstr(d)]){n++;d.setDate(d.getDate()-1)}
+  if(!s[dstr(d)]&&!isFrozen(dstr(d)))d.setDate(d.getDate()-1);
+  while(s[dstr(d)]||isFrozen(dstr(d))){if(s[dstr(d)])n++;d.setDate(d.getDate()-1)}
   return n;
 }
 function longestStreak(p){
@@ -300,21 +506,23 @@ function longestStreak(p){
   if(!dates.length)return 0;
   var best=1,cur=1;
   for(var i=1;i<dates.length;i++){
-    var a=new Date(dates[i-1]+'T00:00:00'),b=new Date(dates[i]+'T00:00:00');
-    if((b-a)===86400000){cur++;if(cur>best)best=cur}else cur=1;
+    var gap=(new Date(dates[i]+'T00:00:00')-new Date(dates[i-1]+'T00:00:00'))/86400000;
+    var ok=gap===1;
+    if(!ok&&gap>1){ok=true;for(var g=1;g<gap;g++)if(!isFrozen(addDays(dates[i-1],g)))ok=false}
+    if(ok){cur++;if(cur>best)best=cur}else cur=1;
   }
   return best;
 }
 function perfectDaySet(){
-  var sets=PKEYS.map(function(p){return daySet(p)});
-  var all={};doneEntries().forEach(function(e){all[e.entry_date]=1});
-  var s={};Object.keys(all).forEach(function(ds){if(sets.every(function(x){return x[ds]}))s[ds]=1});
+  var sets=PKEYS.map(function(p){return daySet(p)}),all={},s={};
+  doneEntries().forEach(function(e){all[e.entry_date]=1});
+  Object.keys(all).forEach(function(ds){if(sets.every(function(x){return x[ds]}))s[ds]=1});
   return s;
 }
 function perfectStreak(){
   var s=perfectDaySet(),d=new Date(),n=0;
-  if(!s[dstr(d)])d.setDate(d.getDate()-1);
-  while(s[dstr(d)]){n++;d.setDate(d.getDate()-1)}
+  if(!s[dstr(d)]&&!isFrozen(dstr(d)))d.setDate(d.getDate()-1);
+  while(s[dstr(d)]||isFrozen(dstr(d))){if(s[dstr(d)])n++;d.setDate(d.getDate()-1)}
   return n;
 }
 function longestPerfect(){
@@ -322,34 +530,53 @@ function longestPerfect(){
   if(!dates.length)return 0;
   var best=1,cur=1;
   for(var i=1;i<dates.length;i++){
-    var a=new Date(dates[i-1]+'T00:00:00'),b=new Date(dates[i]+'T00:00:00');
-    if((b-a)===86400000){cur++;if(cur>best)best=cur}else cur=1;
+    var gap=(new Date(dates[i]+'T00:00:00')-new Date(dates[i-1]+'T00:00:00'))/86400000;
+    if(gap===1){cur++;if(cur>best)best=cur}else cur=1;
   }
   return best;
 }
 function dayPoints(ds){return doneEntries().filter(function(e){return e.entry_date===ds}).reduce(function(a,e){return a+e.points_awarded},0)}
-function bestDay(){
-  var m={};doneEntries().forEach(function(e){m[e.entry_date]=(m[e.entry_date]||0)+e.points_awarded});
-  var bd=null,bv=0;Object.keys(m).forEach(function(k){if(m[k]>bv){bv=m[k];bd=k}});
-  return{date:bd,xp:bv};
-}
+function bestDay(){var m={},bd=null,bv=0;doneEntries().forEach(function(e){m[e.entry_date]=(m[e.entry_date]||0)+e.points_awarded});
+  Object.keys(m).forEach(function(k){if(m[k]>bv){bv=m[k];bd=k}});return{date:bd,xp:bv}}
 function activeDays(){return Object.keys(daySet(null)).length}
+function weekStart(d){var x=new Date(d);x.setDate(x.getDate()-x.getDay());return dstr(x)}
+function pillarDaysInWeek(p,wkStart){
+  var s=daySet(p),n=0;
+  for(var i=0;i<7;i++)if(s[addDays(wkStart,i)])n++;
+  return n;
+}
+function weekXP(wkStart,p){
+  var n=0;for(var i=0;i<7;i++){var ds=addDays(wkStart,i);
+    n+=doneEntries().filter(function(e){return e.entry_date===ds&&(!p||e.pillar===p)}).reduce(function(a,e){return a+e.points_awarded},0)}
+  return n;
+}
+function seasonXP(){
+  if(!cfg.season_start)return 0;
+  return doneEntries().filter(function(e){return e.entry_date>=cfg.season_start}).reduce(function(a,e){return a+e.points_awarded},0);
+}
+function seasonDaysLeft(){
+  if(!cfg.season_start)return 30;
+  var end=new Date(cfg.season_start+'T00:00:00');end.setDate(end.getDate()+30);
+  return Math.max(0,Math.ceil((end-new Date())/86400000));
+}
+function quranPages(){return quran.reduce(function(a,q){return a+q.pages},0)}
 
+/* ---------- ui helpers ---------- */
 function toast(msg){
   var t=document.getElementById('toast');
   t.textContent=msg;t.classList.add('show');
-  clearTimeout(t._tm);t._tm=setTimeout(function(){t.classList.remove('show')},1800);
+  clearTimeout(t._tm);t._tm=setTimeout(function(){t.classList.remove('show')},1900);
 }
 var _confirmFn=null;
 function confirmBox(title,msg,okLabel,fn){
   _confirmFn=fn;
-  var m=document.getElementById('modal'),c=document.getElementById('mboxc');
-  c.innerHTML='<h2>'+title+'</h2><p class="confmsg">'+msg+'</p>'+
-  '<div class="mrow"><button class="no" onclick="closeModal()">Cancel</button>'+
+  document.getElementById('mboxc').innerHTML='<h2>'+title+'</h2><p class="confmsg">'+msg+'</p>'+
+  '<div class="mrow"><button class="no" onclick="closeModal()">'+T('cancel')+'</button>'+
   '<button class="danger" onclick="runConfirm()">'+okLabel+'</button></div>';
-  m.classList.remove('hidden');
+  document.getElementById('modal').classList.remove('hidden');
 }
 function runConfirm(){var f=_confirmFn;_confirmFn=null;closeModal();if(f)f()}
+function closeModal(){document.getElementById('modal').classList.add('hidden')}
 function checkLevelUp(){
   var l=lvlOf(totalXP());
   if(prevLvl!==null&&l>prevLvl)showLevelUp(l);
@@ -357,61 +584,84 @@ function checkLevelUp(){
 }
 function showLevelUp(l){
   var o=document.getElementById('lvlup');
-  var h='<div class="lt">LEVEL UP</div><div class="ln">LV '+l+'</div><div class="lr">'+rankOf(l)+'</div><button onclick="document.getElementById(\'lvlup\').classList.add(\'hidden\')">Keep Going</button>';
+  var h='<div class="lt">'+(lang==='ar'?'\u0645\u0633\u062A\u0648\u0649 \u062C\u062F\u064A\u062F':'LEVEL UP')+'</div><div class="ln">LV '+l+'</div><div class="lr">'+rankOf(l)+'</div><button onclick="document.getElementById(\'lvlup\').classList.add(\'hidden\')">'+(lang==='ar'?'\u0648\u0627\u0635\u0644':'Keep Going')+'</button>';
   var em=['\u2B50','\uD83C\uDF89','\u2728','\uD83D\uDD25','\uD83C\uDFC6'];
-  for(var i=0;i<24;i++){
-    h+='<span class="conf" style="left:'+Math.random()*100+'%;animation-duration:'+(1.6+Math.random()*1.8)+'s;animation-delay:'+Math.random()*0.6+'s">'+em[i%5]+'</span>';
-  }
+  for(var i=0;i<24;i++)h+='<span class="conf" style="left:'+Math.random()*100+'%;animation-duration:'+(1.6+Math.random()*1.8)+'s;animation-delay:'+Math.random()*.6+'s">'+em[i%5]+'</span>';
   o.innerHTML=h;o.classList.remove('hidden');
 }
+function setAccent(p){document.documentElement.style.setProperty('--accent',p==='all'?'#4f9cf9':PIL[p].hex)}
 
-function render(){renderHeader();renderQuest();if(tab==='sched')renderSched();else renderStats()}
+/* ---------- render ---------- */
+function render(){renderHeader();renderQuest();renderGoals();renderFilter();if(tab==='sched')renderSched();else renderStats()}
 function renderHeader(){
   var xp=totalXP(),l=lvlOf(xp),base=xpForLvl(l),next=xpForLvl(l+1);
-  var pct=Math.min(100,Math.round((xp-base)/(next-base)*100));
   document.getElementById('hlvl').textContent='LV '+l+' \u00B7 '+rankOf(l);
-  document.getElementById('hxp').style.width=pct+'%';
-  document.getElementById('hxpt').textContent=xp+' XP \u00B7 '+(next-xp)+' to LV '+(l+1);
+  document.getElementById('hxp').style.width=Math.min(100,Math.round((xp-base)/(next-base)*100))+'%';
+  document.getElementById('hxpt').textContent=xp+' XP \u00B7 '+(next-xp)+'\u2192LV'+(l+1);
 }
 function renderQuest(){
-  var q=document.getElementById('questcard');
   var td=today();
   var doneP=PKEYS.filter(function(p){return doneEntries().some(function(e){return e.pillar===p&&e.entry_date===td})});
-  var h='<div class="quest"><div class="qtop"><h2>\u2694\uFE0F Today\u2019s Quest</h2><span class="qcount">'+doneP.length+'/4 pillars</span></div>';
+  var h='<div class="quest"><div class="qtop"><h2>\u2694\uFE0F '+T('quest')+'</h2><span class="qcount">'+doneP.length+'/4 '+T('pillars')+'</span></div>';
   h+='<div class="qchips">';
   PKEYS.forEach(function(p){
     var on=doneP.indexOf(p)>=0;
-    h+='<div class="qchip'+(on?' done':'')+'"'+(on?' style="border-color:'+PIL[p].hex+'"':'')+'><span class="qe">'+PIL[p].em+'</span>'+PIL[p].nm+'</div>';
+    h+='<div class="qchip'+(on?' done':'')+'"'+(on?' style="border-color:'+PIL[p].hex+'"':'')+'><span class="qe">'+PIL[p].em+'</span>'+pnm(p)+'</div>';
   });
   h+='</div><div class="qbar"><div style="width:'+(doneP.length*25)+'%"></div></div>';
+  var np=nextPrayer();
+  if(np&&np.next){
+    var ai=PRAYERS.findIndex(function(x){return x[0]===np.next.name});
+    var nm=lang==='ar'?PRAYERS[ai][1]:np.next.name;
+    var hh=Math.floor(np.next.mins/60),mm=np.next.mins%60;
+    h+='<div class="nextpray">\uD83D\uDD4B '+T('nextpray',{p:nm,t:(hh?hh+'h ':'')+mm+'m'})+'</div>';
+  }
   h+='<div class="prayrow">';
   PRAYERS.forEach(function(pr){
     var e=entries.find(function(x){return x.entry_date===td&&x.pillar==='soul'&&x.title===pr[0]&&x.status==='done'});
-    h+='<button class="pray'+(e?' done':'')+'" onclick="togglePrayer(\''+pr[0]+'\')">'+(e?'\u2705 ':'')+pr[0]+'<small>'+pr[1]+'</small></button>';
+    var cls='pray'+(e?' done':'');
+    var tm='';
+    if(prayerTimes&&prayerTimes[pr[0]]){
+      tm='<span class="tm">'+prayerTimes[pr[0]]+'</span>';
+      if(toMins(prayerTimes[pr[0]])>minsNow()&&!e)cls+=' future';
+      if(np&&np.cur===pr[0]&&!e)cls+=' now';
+    }
+    h+='<button class="'+cls+'" onclick="togglePrayer(\''+pr[0]+'\')">'+(e?'\u2705 ':'')+(lang==='ar'?pr[1]:pr[0])+(lang==='ar'?'':'<small>'+pr[1]+'</small>')+tm+'</button>';
   });
   h+='</div></div>';
-  q.innerHTML=h;
+  document.getElementById('questcard').innerHTML=h;
 }
-async function togglePrayer(name){
-  var td=today();
-  var e=entries.find(function(x){return x.entry_date===td&&x.pillar==='soul'&&x.title===name&&x.status==='done'});
-  if(e){
-    var r=await sb.from('activity_entries').delete().eq('id',e.id);
-    if(r.error){toast('Couldn\u2019t save \u2014 '+r.error.message);return}
-    entries=entries.filter(function(x){return x.id!==e.id});
-    toast('\u2212'+e.points_awarded+' XP \u00B7 '+name+' unlogged');
-  }else{
-    var t=types.find(function(x){return x.pillar==='soul'&&x.name===name&&x.active});
-    var pts=t?t.points:10;
-    var r2=await sb.from('activity_entries').insert({pillar:'soul',title:name,entry_date:td,status:'done',points_awarded:pts,activity_type_id:t?t.id:null}).select();
-    if(r2.error){toast('Couldn\u2019t save \u2014 '+r2.error.message);return}
-    if(r2.data)entries=entries.concat(r2.data);
-    toast('+'+pts+' XP \uD83D\uDD4C '+name);
-  }
-  checkLevelUp();render();
+function renderGoals(){
+  var ws=weekStart(new Date());
+  var h='<div class="section"><h2>\uD83C\uDFAF '+T('weekgoals')+'</h2>';
+  PKEYS.forEach(function(p){
+    var g=cfg.goals[p]||0,d=pillarDaysInWeek(p,ws);
+    var pct=g?Math.min(100,Math.round(d/g*100)):0;
+    h+='<div class="goalrow'+(g&&d>=g?' hit':'')+'"><span class="gi">'+PIL[p].em+' '+pnm(p)+'</span><div class="tr"><div style="width:'+pct+'%;background:'+PIL[p].hex+'"></div></div><span class="vl">'+d+'/'+g+(g&&d>=g?' \u2705':'')+'</span></div>';
+  });
+  h+='</div>';
+  document.getElementById('goalcard').innerHTML=h;
 }
-function setTab(t){tab=t;document.getElementById('tab-sched').classList.toggle('on',t==='sched');document.getElementById('tab-stats').classList.toggle('on',t==='stats');document.getElementById('view-sched').classList.toggle('hidden',t!=='sched');document.getElementById('view-stats').classList.toggle('hidden',t!=='stats');render()}
-function setView(v){view=v;anchor=new Date();selDay=null;['week','month','year'].forEach(function(x){document.getElementById('vt-'+x).classList.toggle('on',x===v)});renderSched()}
+function renderFilter(){
+  var h='<button onclick="setFilter(\'all\')" style="'+(pFilter==='all'?'border-color:var(--accent);color:var(--tx)':'')+'">'+T('all')+'</button>';
+  PKEYS.forEach(function(p){
+    h+='<button onclick="setFilter(\''+p+'\')" style="'+(pFilter===p?'border-color:'+PIL[p].hex+';color:var(--tx)':'')+'">'+PIL[p].em+' '+pnm(p)+'</button>';
+  });
+  document.getElementById('pfilter').innerHTML=h;
+}
+function setFilter(p){pFilter=p;setAccent(p);renderFilter();renderSched()}
+function visible(e){return pFilter==='all'||e.pillar===pFilter}
+function setTab(t){tab=t;
+  document.getElementById('tab-sched').classList.toggle('on',t==='sched');
+  document.getElementById('tab-stats').classList.toggle('on',t==='stats');
+  document.getElementById('view-sched').classList.toggle('hidden',t!=='sched');
+  document.getElementById('view-stats').classList.toggle('hidden',t!=='stats');
+  render();
+}
+function setView(v){view=v;anchor=new Date();selDay=null;
+  ['week','month','year'].forEach(function(x){document.getElementById('vt-'+x).classList.toggle('on',x===v)});
+  renderSched();
+}
 function goToday(){anchor=new Date();selDay=null;renderSched()}
 function nav(dir){
   if(view==='week')anchor.setDate(anchor.getDate()+7*dir);
@@ -419,49 +669,51 @@ function nav(dir){
   else anchor.setFullYear(anchor.getFullYear()+dir);
   selDay=null;renderSched();
 }
+function locale(){return lang==='ar'?'ar':'en'}
 
 function renderSched(){
   var b=document.getElementById('schedbody'),lbl=document.getElementById('navlbl');
-  var h='';var i;var d;var ds;var dd;var pts;var al;var days;
+  var h='',i,d,ds,dd,pts,al,days;
   if(view==='week'){
     var st=new Date(anchor);st.setDate(st.getDate()-st.getDay());
     var en=new Date(st);en.setDate(en.getDate()+6);
-    lbl.textContent=st.toLocaleDateString('en',{month:'short',day:'numeric'})+' - '+en.toLocaleDateString('en',{month:'short',day:'numeric',year:'numeric'});
+    lbl.textContent=st.toLocaleDateString(locale(),{month:'short',day:'numeric'})+' \u2013 '+en.toLocaleDateString(locale(),{month:'short',day:'numeric'});
     h='<div class="wk">';
     for(i=0;i<7;i++){
       d=new Date(st);d.setDate(d.getDate()+i);ds=dstr(d);
       var isT=ds===today(),isS=selDay===ds;
-      var de=entries.filter(function(e){return e.entry_date===ds});
-      h+='<div class="day'+(isT?' today':'')+(isS&&!isT?' sel':'')+'" onclick="pick(\''+ds+'\')">';
-      h+='<div class="dh">'+d.toLocaleDateString('en',{weekday:'short'})+'</div>';
+      var de=entries.filter(function(e){return e.entry_date===ds&&visible(e)});
+      h+='<div class="day'+(isT?' today':'')+(isS&&!isT?' sel':'')+'" data-d="'+ds+'" ondragover="dragOver(event,this)" ondragleave="this.classList.remove(\'dragover\')" ondrop="dropOn(event,\''+ds+'\')" onclick="pick(\''+ds+'\')">';
+      h+='<div class="dh">'+WD[lang][d.getDay()]+'</div>';
       h+='<div class="dn">'+d.getDate()+(isT?' \u2B50':'')+'</div>';
+      if(isFrozen(ds))h+='<div class="frz">\u2744\uFE0F</div>';
       h+='<div class="dots">'+de.map(function(e){return '<span class="dot '+(e.status==='planned'?'planned':'')+'" style="background:'+PIL[e.pillar].hex+'"></span>'}).join('')+'</div>';
-      h+='<div class="list">'+de.map(entHtml).join('')+'</div>';
-      h+='<button class="addday" onclick="event.stopPropagation();openAdd(\''+ds+'\')">+ Add</button>';
+      h+='<div class="list">'+(de.length?de.map(entHtml).join(''):'<div class="empty">'+T('emptyday')+'</div>')+'</div>';
+      if(isT||isS)h+='<textarea class="dnote" rows="2" placeholder="'+T('noteph')+'" onclick="event.stopPropagation()" onchange="saveNote(\''+ds+'\',this.value)">'+esc(notes[ds]||'')+'</textarea>';
+      h+='<button class="addday" onclick="event.stopPropagation();openAdd(\''+ds+'\')">+ '+T('add')+'</button>';
       h+='</div>';
     }
-    h+='</div>';b.innerHTML=h;
+    h+='</div>';
   }else if(view==='month'){
-    var mxp=0;
-    days=new Date(anchor.getFullYear(),anchor.getMonth()+1,0).getDate();
+    var mxp=0;days=new Date(anchor.getFullYear(),anchor.getMonth()+1,0).getDate();
     for(dd=1;dd<=days;dd++)mxp+=dayPoints(dstr(new Date(anchor.getFullYear(),anchor.getMonth(),dd)));
-    lbl.textContent=anchor.toLocaleDateString('en',{month:'long',year:'numeric'})+' \u00B7 '+mxp+' XP';
+    lbl.textContent=anchor.toLocaleDateString(locale(),{month:'long',year:'numeric'})+' \u00B7 '+mxp+' XP';
     var f=new Date(anchor.getFullYear(),anchor.getMonth(),1);
     h='<div class="mgrid">';
-    ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(function(w){h+='<div class="mh">'+w+'</div>'});
+    WD[lang].forEach(function(w){h+='<div class="mh">'+w+'</div>'});
     for(i=0;i<f.getDay();i++)h+='<div></div>';
     for(dd=1;dd<=days;dd++){
       ds=dstr(new Date(anchor.getFullYear(),anchor.getMonth(),dd));
       pts=dayPoints(ds);al=pts===0?0:Math.min(.85,.15+pts/120);
-      h+='<div class="mc'+(ds===today()?' today':'')+'" style="background:rgba(79,156,249,'+al+')" onclick="openDayModal(\''+ds+'\')">'+dd+'</div>';
+      h+='<div class="mc'+(ds===today()?' today':'')+'" style="background:rgba(79,156,249,'+al+')" onclick="openDayModal(\''+ds+'\')">'+dd+(notes[ds]?'<span class="nt">\uD83D\uDCDD</span>':'')+(isFrozen(ds)?'<span class="nt">\u2744\uFE0F</span>':'')+'</div>';
     }
-    h+='</div>';b.innerHTML=h;
+    h+='</div>';
   }else{
     lbl.textContent=String(anchor.getFullYear());
     h='<div class="ygrid">';
     for(var m=0;m<12;m++){
       days=new Date(anchor.getFullYear(),m+1,0).getDate();
-      h+='<div class="ym"><h4>'+new Date(anchor.getFullYear(),m,1).toLocaleDateString('en',{month:'short'})+'</h4><div class="ydays">';
+      h+='<div class="ym"><h4>'+new Date(anchor.getFullYear(),m,1).toLocaleDateString(locale(),{month:'short'})+'</h4><div class="ydays">';
       for(dd=1;dd<=days;dd++){
         ds=dstr(new Date(anchor.getFullYear(),m,dd));
         pts=dayPoints(ds);al=pts===0?0:Math.min(.9,.2+pts/120);
@@ -469,203 +721,311 @@ function renderSched(){
       }
       h+='</div></div>';
     }
-    h+='</div>';b.innerHTML=h;
+    h+='</div>';
   }
+  b.innerHTML=h;
 }
 function pick(ds){selDay=selDay===ds?null:ds;renderSched()}
 function entHtml(e){
   var chk=e.status==='done'?'\u2705':'\u2B1C';
-  return '<div class="ent '+e.status+'">'+
+  return '<div class="ent '+e.status+'" draggable="true" ondragstart="dragStart(event,\''+e.id+'\')">'+
   '<button onclick="event.stopPropagation();toggleDone(\''+e.id+'\')">'+chk+'</button>'+
   '<span style="font-size:13px">'+PIL[e.pillar].em+'</span>'+
   '<span class="t" onclick="event.stopPropagation();openEdit(\''+e.id+'\')">'+esc(e.title)+'</span>'+
   '<span class="pt">+'+e.points_awarded+'</span>'+
+  '<button onclick="event.stopPropagation();openMove(\''+e.id+'\')">\u21C4</button>'+
   '<button onclick="event.stopPropagation();delEntry(\''+e.id+'\')">\uD83D\uDDD1</button>'+
   '</div>';
 }
+
+/* ---------- actions ---------- */
 async function toggleDone(id){
   var e=entries.find(function(x){return x.id===id});if(!e)return;
   var ns=e.status==='done'?'planned':'done';
   var r=await sb.from('activity_entries').update({status:ns}).eq('id',id);
-  if(r.error){toast('Couldn\u2019t save \u2014 '+r.error.message);return}
+  if(r.error){toast(T('err')+' \u2014 '+r.error.message);return}
   e.status=ns;
-  toast(ns==='done'?'+'+e.points_awarded+' XP '+PIL[e.pillar].em+' '+e.title:'\u2212'+e.points_awarded+' XP \u00B7 back to planned');
+  toast(ns==='done'?'+'+e.points_awarded+' XP '+PIL[e.pillar].em+' '+e.title:'\u2212'+e.points_awarded+' XP \u00B7 '+T('backplan'));
   checkLevelUp();render();
 }
 function delEntry(id){
   var e=entries.find(function(x){return x.id===id});if(!e)return;
-  confirmBox('Delete activity?','Remove <b>'+esc(e.title)+'</b> from '+e.entry_date+'?'+(e.status==='done'?' You\u2019ll lose the '+e.points_awarded+' XP it earned.':''),'Delete',async function(){
+  var m=T('delm',{t:esc(e.title),d:e.entry_date})+(e.status==='done'?T('dellost',{p:e.points_awarded}):'');
+  confirmBox(T('delq'),m,T('del'),async function(){
     await sb.from('activity_entries').delete().eq('id',id);
     entries=entries.filter(function(x){return x.id!==id});
-    toast('Deleted \u2014 '+e.title);
-    render();
+    toast(T('deleted')+' \u2014 '+e.title);render();
   });
 }
+async function togglePrayer(name){
+  var td=today();
+  var e=entries.find(function(x){return x.entry_date===td&&x.pillar==='soul'&&x.title===name&&x.status==='done'});
+  if(e){
+    var r=await sb.from('activity_entries').delete().eq('id',e.id);
+    if(r.error){toast(T('err'));return}
+    entries=entries.filter(function(x){return x.id!==e.id});
+    toast('\u2212'+e.points_awarded+' XP \u00B7 '+name+' '+T('unlogged'));
+  }else{
+    var t=types.find(function(x){return x.pillar==='soul'&&x.name===name&&x.active});
+    var pts=t?t.points:10;
+    var r2=await sb.from('activity_entries').insert({pillar:'soul',title:name,entry_date:td,status:'done',points_awarded:pts,activity_type_id:t?t.id:null}).select();
+    if(r2.error){toast(T('err'));return}
+    if(r2.data)entries=entries.concat(r2.data);
+    toast('+'+pts+' XP \uD83D\uDD4C '+name);
+  }
+  checkLevelUp();render();
+}
+async function saveNote(ds,v){
+  var r=await sb.from('day_notes').upsert({user_id:user.id,entry_date:ds,note:v});
+  if(r.error){toast(T('err'));return}
+  notes[ds]=v;toast(T('saved'));
+}
 
+/* drag & drop */
+var dragId=null;
+function dragStart(ev,id){dragId=id;ev.dataTransfer.effectAllowed='move'}
+function dragOver(ev,el){ev.preventDefault();el.classList.add('dragover')}
+async function dropOn(ev,ds){
+  ev.preventDefault();
+  document.querySelectorAll('.day').forEach(function(d){d.classList.remove('dragover')});
+  if(!dragId)return;
+  await moveEntry(dragId,ds);dragId=null;
+}
+async function moveEntry(id,ds){
+  var e=entries.find(function(x){return x.id===id});if(!e||e.entry_date===ds)return;
+  var r=await sb.from('activity_entries').update({entry_date:ds}).eq('id',id);
+  if(r.error){toast(T('err'));return}
+  e.entry_date=ds;toast(T('saved')+' \u2192 '+ds);render();
+}
+function openMove(id){
+  var e=entries.find(function(x){return x.id===id});if(!e)return;
+  var st=new Date(e.entry_date+'T00:00:00');st.setDate(st.getDate()-st.getDay());
+  var h='<h2>'+T('move')+'</h2><p class="confmsg">'+esc(e.title)+'</p><div class="daypick" style="margin-top:12px">';
+  for(var i=0;i<7;i++){
+    var d=new Date(st);d.setDate(d.getDate()+i);var ds=dstr(d);
+    h+='<button onclick="closeModal();moveEntry(\''+id+'\',\''+ds+'\')">'+WD[lang][d.getDay()]+'<br><b>'+d.getDate()+'</b></button>';
+  }
+  h+='</div><label>'+T('date')+'</label><input type="date" id="mvdate" value="'+e.entry_date+'">'+
+  '<div class="mrow"><button class="no" onclick="closeModal()">'+T('cancel')+'</button><button class="ok" onclick="var v=document.getElementById(\'mvdate\').value;closeModal();moveEntry(\''+id+'\',v)">'+T('save')+'</button></div>';
+  document.getElementById('mboxc').innerHTML=h;
+  document.getElementById('modal').classList.remove('hidden');
+}
+
+/* ---------- stats ---------- */
 var BADGES=[
-  {id:'first',em:'\uD83C\uDF31',nm:'First Step',ds:'Complete 1 activity',ck:function(){return doneEntries().length>=1}},
-  {id:'acts50',em:'\u26A1',nm:'Grinder',ds:'50 activities done',ck:function(){return doneEntries().length>=50}},
-  {id:'acts100',em:'\uD83C\uDFAF',nm:'Centurion',ds:'100 activities done',ck:function(){return doneEntries().length>=100}},
-  {id:'acts250',em:'\uD83D\uDCAB',nm:'Relentless',ds:'250 activities done',ck:function(){return doneEntries().length>=250}},
-  {id:'xp500',em:'\uD83E\uDD49',nm:'Rising',ds:'Earn 500 XP',ck:function(){return totalXP()>=500}},
-  {id:'xp1000',em:'\uD83E\uDD48',nm:'Ascending',ds:'Earn 1,000 XP',ck:function(){return totalXP()>=1000}},
-  {id:'xp5000',em:'\uD83E\uDD47',nm:'Elite',ds:'Earn 5,000 XP',ck:function(){return totalXP()>=5000}},
-  {id:'perf1',em:'\uD83C\uDF1F',nm:'Perfect Day',ds:'All 4 pillars in one day',ck:function(){return Object.keys(perfectDaySet()).length>=1}},
-  {id:'perf7',em:'\uD83D\uDD25',nm:'On Fire',ds:'7-day perfect streak',ck:function(){return longestPerfect()>=7}},
-  {id:'strk7',em:'\uD83D\uDCC5',nm:'Committed',ds:'7-day streak (any pillar)',ck:function(){return PKEYS.some(function(p){return longestStreak(p)>=7})}},
-  {id:'strk30',em:'\uD83D\uDC8E',nm:'Unbreakable',ds:'30-day streak (any pillar)',ck:function(){return PKEYS.some(function(p){return longestStreak(p)>=30})}},
-  {id:'balance',em:'\u2696\uFE0F',nm:'Well-Rounded',ds:'Level 3 in all pillars',ck:function(){return PKEYS.every(function(p){return lvlOf(pillarXP(p))>=3})}}
+  {em:'\uD83C\uDF31',en:'First Step',ar:'\u0627\u0644\u062E\u0637\u0648\u0629 \u0627\u0644\u0623\u0648\u0644\u0649',den:'Complete 1 activity',dar:'\u0623\u0643\u0645\u0644 \u0646\u0634\u0627\u0637\u0627\u064B \u0648\u0627\u062D\u062F\u0627\u064B',ck:function(){return doneEntries().length>=1}},
+  {em:'\u26A1',en:'Grinder',ar:'\u0645\u062C\u062A\u0647\u062F',den:'50 activities',dar:'50 \u0646\u0634\u0627\u0637',ck:function(){return doneEntries().length>=50}},
+  {em:'\uD83C\uDFAF',en:'Centurion',ar:'\u0627\u0644\u0645\u0626\u0629',den:'100 activities',dar:'100 \u0646\u0634\u0627\u0637',ck:function(){return doneEntries().length>=100}},
+  {em:'\uD83D\uDCAB',en:'Relentless',ar:'\u0644\u0627 \u064A\u062A\u0648\u0642\u0641',den:'250 activities',dar:'250 \u0646\u0634\u0627\u0637',ck:function(){return doneEntries().length>=250}},
+  {em:'\uD83E\uDD49',en:'Rising',ar:'\u0635\u0627\u0639\u062F',den:'500 XP',dar:'500 \u0646\u0642\u0637\u0629',ck:function(){return totalXP()>=500}},
+  {em:'\uD83E\uDD48',en:'Ascending',ar:'\u0645\u062A\u0642\u062F\u0645',den:'1,000 XP',dar:'1000 \u0646\u0642\u0637\u0629',ck:function(){return totalXP()>=1000}},
+  {em:'\uD83E\uDD47',en:'Elite',ar:'\u0646\u062E\u0628\u0629',den:'5,000 XP',dar:'5000 \u0646\u0642\u0637\u0629',ck:function(){return totalXP()>=5000}},
+  {em:'\uD83C\uDF1F',en:'Perfect Day',ar:'\u064A\u0648\u0645 \u0645\u062B\u0627\u0644\u064A',den:'All 4 pillars in a day',dar:'\u0627\u0644\u0623\u0631\u0643\u0627\u0646 \u0627\u0644\u0623\u0631\u0628\u0639\u0629 \u0641\u064A \u064A\u0648\u0645',ck:function(){return Object.keys(perfectDaySet()).length>=1}},
+  {em:'\uD83D\uDD25',en:'On Fire',ar:'\u0645\u0634\u062A\u0639\u0644',den:'7-day perfect streak',dar:'7 \u0623\u064A\u0627\u0645 \u0645\u062B\u0627\u0644\u064A\u0629',ck:function(){return longestPerfect()>=7}},
+  {em:'\uD83D\uDCC5',en:'Committed',ar:'\u0645\u0644\u062A\u0632\u0645',den:'7-day streak',dar:'\u0633\u0644\u0633\u0644\u0629 7 \u0623\u064A\u0627\u0645',ck:function(){return PKEYS.some(function(p){return longestStreak(p)>=7})}},
+  {em:'\uD83D\uDC8E',en:'Unbreakable',ar:'\u0644\u0627 \u064A\u0646\u0643\u0633\u0631',den:'30-day streak',dar:'\u0633\u0644\u0633\u0644\u0629 30 \u064A\u0648\u0645',ck:function(){return PKEYS.some(function(p){return longestStreak(p)>=30})}},
+  {em:'\u2696\uFE0F',en:'Well-Rounded',ar:'\u0645\u062A\u0648\u0627\u0632\u0646',den:'Level 3 in all pillars',dar:'\u0645\u0633\u062A\u0648\u0649 3 \u0641\u064A \u0643\u0644 \u0631\u0643\u0646',ck:function(){return PKEYS.every(function(p){return lvlOf(pillarXP(p))>=3})}},
+  {em:'\uD83D\uDCD6',en:'Reader',ar:'\u0642\u0627\u0631\u0626',den:'100 Quran pages',dar:'100 \u0635\u0641\u062D\u0629 \u0642\u0631\u0622\u0646',ck:function(){return quranPages()>=100}},
+  {em:'\uD83D\uDD4B',en:'Khatma',ar:'\u062E\u062A\u0645\u0629',den:'Finish the Quran',dar:'\u062E\u062A\u0645 \u0627\u0644\u0642\u0631\u0622\u0646',ck:function(){return quranPages()>=cfg.quran_goal}},
+  {em:'\uD83C\uDFCB\uFE0F',en:'Iron',ar:'\u062D\u062F\u064A\u062F',den:'25 logged exercises',dar:'25 \u062A\u0645\u0631\u064A\u0646 \u0645\u0633\u062C\u0644',ck:function(){return gymSets.length>=25}}
 ];
-
 function renderStats(){
-  var v=document.getElementById('view-stats');
-  var xp=totalXP();var i;
+  var v=document.getElementById('view-stats'),i;
+  var xp=totalXP();
   var h='<div class="statrow">';
-  h+='<div class="mini"><div class="big" style="color:var(--gold)">'+xp+'</div><div class="lbl">Total XP</div></div>';
-  h+='<div class="mini"><div class="big">\uD83D\uDD25 '+perfectStreak()+'</div><div class="lbl">Perfect Day Streak</div></div>';
-  h+='<div class="mini"><div class="big">'+doneEntries().length+'</div><div class="lbl">Activities Done</div></div>';
-  h+='<div class="mini"><div class="big">'+dayPoints(today())+'</div><div class="lbl">XP Today</div></div>';
+  h+='<div class="mini"><div class="big" style="color:var(--gold)">'+xp+'</div><div class="lbl">'+T('totalxp')+'</div></div>';
+  h+='<div class="mini"><div class="big">\uD83D\uDD25 '+perfectStreak()+'</div><div class="lbl">'+T('perfstreak')+'</div></div>';
+  h+='<div class="mini"><div class="big">'+doneEntries().length+'</div><div class="lbl">'+T('actsdone')+'</div></div>';
+  h+='<div class="mini"><div class="big">'+dayPoints(today())+'</div><div class="lbl">'+T('xptoday')+'</div></div>';
   h+='</div>';
+  /* season */
+  var sxp=seasonXP(),tgt=cfg.season_target||1500,dl=seasonDaysLeft();
+  h+='<div class="section"><h2>\uD83C\uDFC1 '+T('season')+'</h2><canvas id="seasonring" width="180" height="180"></canvas>'+
+  '<p class="muted" style="text-align:center">'+sxp+' / '+tgt+' XP \u00B7 '+dl+' '+T('dayleft')+'</p>'+
+  '<div class="mrow"><button class="no" onclick="newSeason()">'+T('startseason')+'</button></div></div>';
+  /* pillars */
   h+='<div class="grid4">';
   PKEYS.forEach(function(p){
     var pxp=pillarXP(p),pl=lvlOf(pxp),base=xpForLvl(pl),next=xpForLvl(pl+1);
-    var pct=Math.min(100,Math.round((pxp-base)/(next-base)*100));
-    h+='<div class="pcard"><span class="stk">\uD83D\uDD25 '+streak(p)+'</span><div class="em">'+PIL[p].em+'</div><h3>'+PIL[p].nm+'</h3><div class="plvl">Level '+pl+' \u00B7 '+rankOf(pl)+'</div><div class="ppts">'+pxp+' XP</div><div class="pbar"><div style="width:'+pct+'%;background:'+PIL[p].hex+'"></div></div></div>';
+    h+='<div class="pcard"><span class="stk">\uD83D\uDD25 '+streak(p)+'</span><div class="em">'+PIL[p].em+'</div><h3>'+pnm(p)+'</h3><div class="plvl">'+T('lvl')+' '+pl+' \u00B7 '+rankOf(pl)+'</div><div class="ppts">'+pxp+' XP</div><div class="pbar"><div style="width:'+Math.min(100,Math.round((pxp-base)/(next-base)*100))+'%;background:'+PIL[p].hex+'"></div></div></div>';
   });
   h+='</div>';
-  h+='<div class="section"><h2>\uD83C\uDFAE Pillar Radar</h2><canvas id="radar" width="320" height="280"></canvas></div>';
+  h+='<div class="section"><h2>\uD83C\uDFAE '+T('radar')+'</h2><canvas id="radar" width="320" height="290"></canvas></div>';
+  /* recap */
+  var ws=weekStart(new Date()),lw=addDays(ws,-7);
+  var tw=weekXP(ws),lwx=weekXP(lw);
+  var order=PKEYS.slice().sort(function(a,b){return weekXP(ws,b)-weekXP(ws,a)});
+  h+='<div class="section"><h2>\uD83D\uDCCB '+T('recap')+'</h2>';
+  h+='<p class="muted">'+tw+' XP \u00B7 '+T('strongest')+': '+PIL[order[0]].em+' '+pnm(order[0])+' \u00B7 '+T('weakest')+': '+PIL[order[3]].em+' '+pnm(order[3])+'</p>';
+  h+='<p class="muted" style="margin-top:6px">'+T('vslast')+': <span class="'+(tw>lwx?'up':tw<lwx?'down':'same')+'">'+(tw>=lwx?'\u25B2 +':'\u25BC ')+(tw-lwx)+' XP</span></p></div>';
+  /* compare */
+  h+='<div class="section"><h2>\u2696\uFE0F '+T('compare')+'</h2>';
+  var mxw=Math.max.apply(null,PKEYS.map(function(p){return Math.max(weekXP(ws,p),weekXP(lw,p))}).concat([1]));
+  PKEYS.forEach(function(p){
+    var a=weekXP(ws,p),b=weekXP(lw,p),d=a-b;
+    h+='<div class="cmp"><span class="nm">'+PIL[p].em+' '+pnm(p)+'</span><span class="tw">'+
+    '<span class="bar" style="width:'+Math.max(2,a/mxw*100)+'%;background:'+PIL[p].hex+'"></span>'+
+    '<span class="bar" style="width:'+Math.max(2,b/mxw*100)+'%;background:var(--card2)"></span></span>'+
+    '<span class="dl '+(d>0?'up':d<0?'down':'same')+'">'+(d>0?'+':'')+d+'</span></div>';
+  });
+  h+='</div>';
+  /* balance */
   var mx=Math.max.apply(null,PKEYS.map(pillarXP).concat([1]));
-  h+='<div class="section"><h2>\u2694\uFE0F Pillar Balance</h2>';
+  h+='<div class="section"><h2>\uD83D\uDCCA '+T('balance')+'</h2>';
   PKEYS.forEach(function(p){
-    var pxp=pillarXP(p);
-    h+='<div class="barrow"><span class="nm">'+PIL[p].em+' '+PIL[p].nm+'</span><div class="tr"><div style="width:'+Math.round(pxp/mx*100)+'%;background:'+PIL[p].hex+'"></div></div><span class="vl">'+pxp+'</span></div>';
+    h+='<div class="barrow"><span class="nm">'+PIL[p].em+' '+pnm(p)+'</span><div class="tr"><div style="width:'+Math.round(pillarXP(p)/mx*100)+'%;background:'+PIL[p].hex+'"></div></div><span class="vl">'+pillarXP(p)+'</span></div>';
   });
   h+='</div>';
-  h+='<div class="section"><h2>\uD83C\uDFC6 Achievements</h2><div class="badges">';
+  /* quran */
+  var qp=quranPages(),qg=cfg.quran_goal||604;
+  h+='<div class="section"><h2>\uD83D\uDCD6 '+T('quran')+'</h2>';
+  h+='<div class="barrow"><span class="nm">'+qp+' '+T('pages')+'</span><div class="tr"><div style="width:'+Math.min(100,Math.round(qp/qg*100))+'%;background:var(--soul)"></div></div><span class="vl">'+Math.max(0,qg-qp)+'</span></div>';
+  h+='<p class="muted">'+Math.max(0,qg-qp)+' '+T('pages')+' '+T('khatma')+'</p>';
+  h+='<div class="mrow"><button class="ok" onclick="openQuran()">'+T('logread')+'</button></div></div>';
+  /* gym */
+  h+='<div class="section"><h2>\uD83C\uDFCB\uFE0F '+T('gymlog')+'</h2>';
+  if(gymSets.length){
+    var byEx={};
+    gymSets.forEach(function(g){if(!byEx[g.exercise]||g.weight>byEx[g.exercise].weight)byEx[g.exercise]=g});
+    h+='<div class="recs">';
+    Object.keys(byEx).slice(0,8).forEach(function(k){
+      h+='<div class="rec"><div class="rv">'+byEx[k].weight+'kg</div><div class="rl">'+T('pr')+' \u00B7 '+esc(k)+'</div></div>';
+    });
+    h+='</div>';
+  }else h+='<p class="muted">'+T('emptyday')+'</p>';
+  h+='<div class="mrow"><button class="ok" onclick="openGym()">'+T('addset')+'</button></div></div>';
+  /* prayer calendar */
+  h+='<div class="section"><h2>\uD83D\uDD4B '+T('prayercal')+'</h2><div class="pcal">'+prayerCalHtml()+'</div></div>';
+  /* achievements */
+  h+='<div class="section"><h2>\uD83C\uDFC6 '+T('achievements')+'</h2><div class="badges">';
   BADGES.forEach(function(b){
-    var un=b.ck();
-    h+='<div class="badge '+(un?'unlocked':'locked')+'"><span class="be">'+b.em+'</span><div class="bn">'+b.nm+'</div><div class="bd">'+b.ds+'</div></div>';
+    h+='<div class="badge '+(b.ck()?'unlocked':'locked')+'"><span class="be">'+b.em+'</span><div class="bn">'+(lang==='ar'?b.ar:b.en)+'</div><div class="bd">'+(lang==='ar'?b.dar:b.den)+'</div></div>';
   });
   h+='</div></div>';
+  /* records */
   var bd=bestDay();
-  h+='<div class="section"><h2>\uD83D\uDCDC Records</h2><div class="recs">';
-  PKEYS.forEach(function(p){
-    h+='<div class="rec"><div class="rv">'+PIL[p].em+' '+longestStreak(p)+'d</div><div class="rl">Longest '+PIL[p].nm+' streak</div></div>';
-  });
-  h+='<div class="rec"><div class="rv">\uD83C\uDF1F '+longestPerfect()+'d</div><div class="rl">Longest perfect streak</div></div>';
-  h+='<div class="rec"><div class="rv">'+(bd.date?bd.xp+' XP':'\u2014')+'</div><div class="rl">Best day'+(bd.date?' ('+bd.date+')':'')+'</div></div>';
-  h+='<div class="rec"><div class="rv">'+activeDays()+'</div><div class="rl">Active days</div></div>';
+  h+='<div class="section"><h2>\uD83D\uDCDC '+T('records')+'</h2><div class="recs">';
+  PKEYS.forEach(function(p){h+='<div class="rec"><div class="rv">'+PIL[p].em+' '+longestStreak(p)+'d</div><div class="rl">'+T('longest')+' '+pnm(p)+'</div></div>'});
+  h+='<div class="rec"><div class="rv">\uD83C\uDF1F '+longestPerfect()+'d</div><div class="rl">'+T('longest')+' '+T('perfstreak')+'</div></div>';
+  h+='<div class="rec"><div class="rv">'+(bd.date?bd.xp+' XP':'\u2014')+'</div><div class="rl">'+T('bestday')+(bd.date?' \u00B7 '+bd.date:'')+'</div></div>';
+  h+='<div class="rec"><div class="rv">'+activeDays()+'</div><div class="rl">'+T('activedays')+'</div></div>';
   h+='</div></div>';
-  h+='<div class="section"><h2>\uD83D\uDCC8 Last 14 Days</h2><div style="display:flex;gap:4px;align-items:flex-end;height:110px">';
+  /* 14 days */
+  h+='<div class="section"><h2>\uD83D\uDCC8 '+T('last14')+'</h2><div style="display:flex;gap:4px;align-items:flex-end;height:110px">';
   var vals=[],labs=[];
-  for(i=13;i>=0;i--){var d=new Date();d.setDate(d.getDate()-i);vals.push(dayPoints(dstr(d)));labs.push(d.getDate())}
+  for(i=13;i>=0;i--){var dd2=new Date();dd2.setDate(dd2.getDate()-i);vals.push(dayPoints(dstr(dd2)));labs.push(dd2.getDate())}
   var vm=Math.max.apply(null,vals.concat([1]));
-  for(i=0;i<14;i++){
-    h+='<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end"><div style="width:100%;border-radius:4px 4px 0 0;background:linear-gradient(180deg,#fbbf24,#b45309);height:'+Math.max(3,Math.round(vals[i]/vm*80))+'%"></div><span style="font-size:9px;color:var(--dim)">'+labs[i]+'</span></div>';
-  }
+  for(i=0;i<14;i++)h+='<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end"><div style="width:100%;border-radius:4px 4px 0 0;background:linear-gradient(180deg,#fbbf24,#b45309);height:'+Math.max(3,Math.round(vals[i]/vm*80))+'%"></div><span style="font-size:9px;color:var(--dim)">'+labs[i]+'</span></div>';
   h+='</div></div>';
   v.innerHTML=h;
-  drawRadar();
+  drawRadar();drawSeason();
+}
+function prayerCalHtml(){
+  var y=anchor.getFullYear(),m=anchor.getMonth();
+  var days=new Date(y,m+1,0).getDate();
+  var h='<table><tr><td class="lbl"></td>';
+  for(var d=1;d<=days;d++)h+='<td class="dnum">'+(d%5===0||d===1?d:'')+'</td>';
+  h+='</tr>';
+  PRAYERS.forEach(function(pr){
+    h+='<tr><td class="lbl">'+(lang==='ar'?pr[1]:pr[0])+'</td>';
+    for(var d=1;d<=days;d++){
+      var ds=dstr(new Date(y,m,d));
+      var on=entries.some(function(e){return e.entry_date===ds&&e.pillar==='soul'&&e.title===pr[0]&&e.status==='done'});
+      h+='<td><div class="cell'+(on?' on':'')+(ds===today()?' tdy':'')+'"></div></td>';
+    }
+    h+='</tr>';
+  });
+  return h+'</table>';
 }
 function drawRadar(){
   var cv=document.getElementById('radar');if(!cv)return;
-  var ctx=cv.getContext('2d');
-  var W=cv.width,H=cv.height,cx=W/2,cy=H/2+6,R=Math.min(W,H)/2-46;
+  var ctx=cv.getContext('2d'),W=cv.width,H=cv.height,cx=W/2,cy=H/2+4,R=Math.min(W,H)/2-52;
   ctx.clearRect(0,0,W,H);
   var mx=Math.max.apply(null,PKEYS.map(pillarXP).concat([1]));
   var ang=function(i){return -Math.PI/2+i*Math.PI/2};
   for(var ring=1;ring<=4;ring++){
     ctx.beginPath();
-    for(var i=0;i<=4;i++){
-      var a=ang(i%4),r=R*ring/4;
-      var x=cx+Math.cos(a)*r,y=cy+Math.sin(a)*r;
-      if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
-    }
+    for(var i=0;i<=4;i++){var a=ang(i%4),r=R*ring/4,x=cx+Math.cos(a)*r,y=cy+Math.sin(a)*r;i?ctx.lineTo(x,y):ctx.moveTo(x,y)}
     ctx.strokeStyle='rgba(35,47,66,.9)';ctx.stroke();
   }
-  for(var i=0;i<4;i++){
-    var a=ang(i);
-    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+Math.cos(a)*R,cy+Math.sin(a)*R);
-    ctx.strokeStyle='rgba(35,47,66,.9)';ctx.stroke();
-  }
+  for(var i=0;i<4;i++){var a=ang(i);ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+Math.cos(a)*R,cy+Math.sin(a)*R);ctx.strokeStyle='rgba(35,47,66,.9)';ctx.stroke()}
   ctx.beginPath();
-  for(var i=0;i<=4;i++){
-    var p=PKEYS[i%4],a=ang(i%4);
-    var r=R*(pillarXP(p)/mx);
-    var x=cx+Math.cos(a)*r,y=cy+Math.sin(a)*r;
-    if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
-  }
-  ctx.fillStyle='rgba(79,156,249,.22)';ctx.fill();
-  ctx.strokeStyle='#4f9cf9';ctx.lineWidth=2;ctx.stroke();ctx.lineWidth=1;
+  for(var i=0;i<=4;i++){var p=PKEYS[i%4],a=ang(i%4),r=R*(pillarXP(p)/mx),x=cx+Math.cos(a)*r,y=cy+Math.sin(a)*r;i?ctx.lineTo(x,y):ctx.moveTo(x,y)}
+  ctx.fillStyle='rgba(79,156,249,.22)';ctx.fill();ctx.strokeStyle='#4f9cf9';ctx.lineWidth=2;ctx.stroke();ctx.lineWidth=1;
   for(var i=0;i<4;i++){
-    var p=PKEYS[i],a=ang(i);
-    var r=R*(pillarXP(p)/mx);
-    ctx.beginPath();ctx.arc(cx+Math.cos(a)*r,cy+Math.sin(a)*r,4,0,7);
-    ctx.fillStyle=PIL[p].hex;ctx.fill();
+    var p=PKEYS[i],a=ang(i),r=R*(pillarXP(p)/mx);
+    ctx.beginPath();ctx.arc(cx+Math.cos(a)*r,cy+Math.sin(a)*r,4,0,7);ctx.fillStyle=PIL[p].hex;ctx.fill();
     ctx.fillStyle='#8494ad';ctx.font='12px Segoe UI';ctx.textAlign='center';
-    var lx=cx+Math.cos(a)*(R+24),ly=cy+Math.sin(a)*(R+24)+4;
-    ctx.fillText(PIL[p].em+' '+PIL[p].nm,lx,ly);
+    ctx.fillText(PIL[p].em+' '+pnm(p),cx+Math.cos(a)*(R+26),cy+Math.sin(a)*(R+26)+4);
   }
 }
+function drawSeason(){
+  var cv=document.getElementById('seasonring');if(!cv)return;
+  var ctx=cv.getContext('2d'),cx=90,cy=90,R=68;
+  ctx.clearRect(0,0,180,180);
+  var pct=Math.min(1,seasonXP()/(cfg.season_target||1500));
+  ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.strokeStyle='#1a2332';ctx.lineWidth=14;ctx.stroke();
+  ctx.beginPath();ctx.arc(cx,cy,R,-Math.PI/2,-Math.PI/2+Math.PI*2*pct);
+  var g=ctx.createLinearGradient(0,0,180,180);g.addColorStop(0,'#fbbf24');g.addColorStop(1,'#f59e0b');
+  ctx.strokeStyle=g;ctx.lineWidth=14;ctx.lineCap='round';ctx.stroke();
+  ctx.fillStyle='#e8eefb';ctx.font='bold 26px Segoe UI';ctx.textAlign='center';
+  ctx.fillText(Math.round(pct*100)+'%',cx,cy+9);
+}
+function newSeason(){
+  confirmBox(T('startseason'),T('season')+' \u2192 '+today(),T('startseason'),async function(){
+    await saveCfg({season_start:today()});toast(T('saved'));render();
+  });
+}
 
+/* ---------- modals ---------- */
 function openAdd(ds){
-  var m=document.getElementById('modal'),c=document.getElementById('mboxc');
-  var h='<h2>Add Activity</h2>';
-  h+='<label>Pillar</label><div class="pillsel" id="psel">';
-  PKEYS.forEach(function(p){h+='<button data-p="'+p+'" onclick="selP(\''+p+'\')">'+PIL[p].em+'<br>'+PIL[p].nm+'</button>'});
-  h+='</div>';
-  h+='<label>Activity</label><select id="atype" onchange="custChk()"></select>';
-  h+='<div id="custwrap" class="hidden"><label>Custom title</label><input id="ctitle" placeholder="e.g. Read 20 pages"><label>Points</label><input id="cpts" type="number" value="10"></div>';
-  h+='<label>Date</label><input id="adate" type="date" value="'+(ds||today())+'">';
-  h+='<label>Status</label><select id="astat"><option value="done">Done (award points now)</option><option value="planned">Planned</option></select>';
-  h+='<label>Repeat weekly (same weekday)</label><select id="arep"><option value="0">No repeat</option><option value="2">For 2 weeks</option><option value="4">For 4 weeks</option><option value="8">For 8 weeks</option><option value="12">For 12 weeks</option></select>';
-  h+='<div class="mrow"><button class="no" onclick="closeModal()">Cancel</button><button class="ok" onclick="saveAdd()">Save</button></div>';
-  c.innerHTML=h;m.classList.remove('hidden');
-  selP('study');
+  var h='<h2>'+T('add')+'</h2><label>'+T('pillar')+'</label><div class="pillsel" id="psel">';
+  PKEYS.forEach(function(p){h+='<button data-p="'+p+'" onclick="selP(\''+p+'\')">'+PIL[p].em+'<br>'+pnm(p)+'</button>'});
+  h+='</div><label>'+T('activity')+'</label><select id="atype" onchange="custChk()"></select>';
+  h+='<div id="custwrap" class="hidden"><label>'+T('ctitle')+'</label><input id="ctitle"><label>'+T('points')+'</label><input id="cpts" type="number" value="10"></div>';
+  h+='<label>'+T('date')+'</label><input id="adate" type="date" value="'+(ds||today())+'">';
+  h+='<label>'+T('status')+'</label><select id="astat"><option value="done">'+T('done')+'</option><option value="planned">'+T('planned')+'</option></select>';
+  h+='<label>'+T('repeat')+'</label><select id="arep"><option value="0">'+T('norepeat')+'</option>'+
+  [2,4,8,12].map(function(n){return '<option value="'+n+'">'+T('forwk',{n:n})+'</option>'}).join('')+'</select>';
+  h+='<div class="mrow"><button class="no" onclick="closeModal()">'+T('cancel')+'</button><button class="ok" onclick="saveAdd()">'+T('save')+'</button></div>';
+  document.getElementById('mboxc').innerHTML=h;
+  document.getElementById('modal').classList.remove('hidden');
+  selP(pFilter==='all'?'study':pFilter);
 }
 function custChk(){document.getElementById('custwrap').classList.toggle('hidden',document.getElementById('atype').value!=='__custom')}
 function selP(p){
   curP=p;
   document.querySelectorAll('#psel button').forEach(function(b){
     var on=b.getAttribute('data-p')===p;
-    b.style.borderColor=on?PIL[p].hex:'var(--line)';
-    b.style.borderWidth=on?'2px':'1px';
+    b.style.borderColor=on?PIL[p].hex:'var(--line)';b.style.borderWidth=on?'2px':'1px';
   });
   var sel=document.getElementById('atype');
-  var opts=types.filter(function(t){return t.pillar===p&&t.active});
-  sel.innerHTML=opts.map(function(t){return '<option value="'+t.id+'">'+esc(t.name)+' (+'+t.points+')</option>'}).join('')+'<option value="__custom">Custom...</option>';
+  sel.innerHTML=types.filter(function(t){return t.pillar===p&&t.active}).map(function(t){return '<option value="'+t.id+'">'+esc(t.name)+' (+'+t.points+')</option>'}).join('')+'<option value="__custom">'+T('custom')+'</option>';
   document.getElementById('custwrap').classList.add('hidden');
 }
 async function saveAdd(){
-  var tv=document.getElementById('atype').value;
-  var ds=document.getElementById('adate').value;
-  var st=document.getElementById('astat').value;
-  var rep=parseInt(document.getElementById('arep').value)||0;
+  var tv=document.getElementById('atype').value,ds=document.getElementById('adate').value;
+  var st=document.getElementById('astat').value,rep=parseInt(document.getElementById('arep').value)||0;
   var title,pts,tid=null;
-  if(tv==='__custom'){title=document.getElementById('ctitle').value.trim()||'Activity';pts=parseInt(document.getElementById('cpts').value)||10}
+  if(tv==='__custom'){title=document.getElementById('ctitle').value.trim()||T('activity');pts=parseInt(document.getElementById('cpts').value)||10}
   else{var t=types.find(function(x){return x.id===tv});title=t.name;pts=t.points;tid=t.id}
   var rows=[],n=Math.max(1,rep);
-  for(var i=0;i<n;i++){
-    var d=new Date(ds+'T00:00:00');d.setDate(d.getDate()+7*i);
-    rows.push({pillar:curP,title:title,entry_date:dstr(d),status:i===0?st:'planned',points_awarded:pts,activity_type_id:tid});
-  }
+  for(var i=0;i<n;i++)rows.push({pillar:curP,title:title,entry_date:addDays(ds,7*i),status:i===0?st:'planned',points_awarded:pts,activity_type_id:tid});
   var r=await sb.from('activity_entries').insert(rows).select();
-  if(r.error){toast('Couldn\u2019t add \u2014 '+r.error.message);return}
+  if(r.error){toast(T('err')+' \u2014 '+r.error.message);return}
   if(r.data)entries=r.data.concat(entries);
-  if(n>1)toast('Added '+n+'\u00D7 '+PIL[curP].em+' '+title);
-  else toast(st==='done'?'+'+pts+' XP '+PIL[curP].em+' '+title:'Planned \u00B7 '+PIL[curP].em+' '+title);
+  toast(n>1?T('added')+' '+n+'\u00D7 '+title:(st==='done'?'+'+pts+' XP '+PIL[curP].em+' '+title:T('added')+' \u00B7 '+title));
   closeModal();checkLevelUp();render();
 }
 function openEdit(id){
   var e=entries.find(function(x){return x.id===id});if(!e)return;
-  var m=document.getElementById('modal'),c=document.getElementById('mboxc');
-  var h='<h2>Edit Activity</h2>';
-  h+='<label>Title</label><input id="etitle" value="'+esc(e.title)+'">';
-  h+='<label>Points</label><input id="epts" type="number" value="'+e.points_awarded+'">';
-  h+='<label>Date</label><input id="edate" type="date" value="'+e.entry_date+'">';
-  h+='<label>Status</label><select id="estat"><option value="done"'+(e.status==='done'?' selected':'')+'>Done</option><option value="planned"'+(e.status==='planned'?' selected':'')+'>Planned</option></select>';
-  h+='<div class="mrow"><button class="no" onclick="closeModal()">Cancel</button><button class="ok" onclick="saveEdit(\''+id+'\')">Save</button></div>';
-  c.innerHTML=h;m.classList.remove('hidden');
+  var h='<h2>'+T('edit')+'</h2><label>'+T('title')+'</label><input id="etitle" value="'+esc(e.title)+'">'+
+  '<label>'+T('points')+'</label><input id="epts" type="number" value="'+e.points_awarded+'">'+
+  '<label>'+T('date')+'</label><input id="edate" type="date" value="'+e.entry_date+'">'+
+  '<label>'+T('status')+'</label><select id="estat"><option value="done"'+(e.status==='done'?' selected':'')+'>'+(lang==='ar'?'\u0645\u0646\u062C\u0632':'Done')+'</option><option value="planned"'+(e.status==='planned'?' selected':'')+'>'+T('planned')+'</option></select>'+
+  '<div class="mrow"><button class="no" onclick="closeModal()">'+T('cancel')+'</button><button class="ok" onclick="saveEdit(\''+id+'\')">'+T('save')+'</button></div>';
+  document.getElementById('mboxc').innerHTML=h;
+  document.getElementById('modal').classList.remove('hidden');
 }
 async function saveEdit(id){
   var e=entries.find(function(x){return x.id===id});if(!e)return;
@@ -674,55 +1034,218 @@ async function saveEdit(id){
     entry_date:document.getElementById('edate').value||e.entry_date,
     status:document.getElementById('estat').value};
   var r=await sb.from('activity_entries').update(up).eq('id',id);
-  if(r.error){toast('Couldn\u2019t save \u2014 '+r.error.message);return}
-  Object.assign(e,up);
-  toast('Saved \u2014 '+up.title);
-  closeModal();checkLevelUp();render();
+  if(r.error){toast(T('err'));return}
+  Object.assign(e,up);toast(T('saved'));closeModal();checkLevelUp();render();
 }
 function openDayModal(ds){
-  var m=document.getElementById('modal'),c=document.getElementById('mboxc');
   var de=entries.filter(function(e){return e.entry_date===ds});
-  var h='<h2>'+new Date(ds+'T00:00:00').toLocaleDateString('en',{weekday:'long',month:'long',day:'numeric'})+'</h2>';
-  h+=de.length?de.map(entHtml).join(''):'<p style="color:var(--dim);font-size:13px">Nothing yet.</p>';
-  h+='<div class="mrow"><button class="no" onclick="closeModal()">Close</button><button class="ok" onclick="closeModal();openAdd(\''+ds+'\')">+ Add</button></div>';
-  c.innerHTML=h;m.classList.remove('hidden');
+  var frozenWk=Object.keys(cfg.freezes).some(function(k){return weekKey(k)===weekKey(ds)});
+  var h='<h2>'+new Date(ds+'T00:00:00').toLocaleDateString(locale(),{weekday:'long',month:'long',day:'numeric'})+'</h2>';
+  h+=de.length?de.map(entHtml).join(''):'<p class="confmsg">'+T('emptyday')+'</p>';
+  h+='<label>'+T('notes')+'</label><textarea rows="3" placeholder="'+T('noteph')+'" onchange="saveNote(\''+ds+'\',this.value)">'+esc(notes[ds]||'')+'</textarea>';
+  h+='<label>'+T('freeze')+'</label>';
+  if(isFrozen(ds))h+='<button class="menuitem" onclick="unfreeze(\''+ds+'\')">\u2744\uFE0F '+T('frozen')+'</button>';
+  else if(frozenWk)h+='<p class="muted">'+T('freezeused')+'</p>';
+  else h+='<button class="menuitem" onclick="freezeDay(\''+ds+'\')">\u2744\uFE0F '+T('freezeon')+'</button>';
+  h+='<div class="mrow"><button class="no" onclick="closeModal()">'+T('close')+'</button><button class="ok" onclick="closeModal();openAdd(\''+ds+'\')">+ '+T('add')+'</button></div>';
+  document.getElementById('mboxc').innerHTML=h;
+  document.getElementById('modal').classList.remove('hidden');
+}
+async function freezeDay(ds){
+  var f=Object.assign({},cfg.freezes);f[ds]=true;
+  if(await saveCfg({freezes:f})){toast('\u2744\uFE0F '+T('frozen'));closeModal();render()}
+}
+async function unfreeze(ds){
+  var f=Object.assign({},cfg.freezes);delete f[ds];
+  if(await saveCfg({freezes:f})){toast(T('removed'));closeModal();render()}
+}
+function openQuran(){
+  var h='<h2>\uD83D\uDCD6 '+T('logread')+'</h2><label>'+T('date')+'</label><input id="qd" type="date" value="'+today()+'">'+
+  '<label>'+T('pages')+'</label><input id="qp" type="number" value="5">'+
+  '<label>'+T('surah')+'</label><input id="qs">'+
+  '<label>'+T('juz')+'</label><input id="qj" type="number" min="1" max="30">'+
+  '<div class="mrow"><button class="no" onclick="closeModal()">'+T('cancel')+'</button><button class="ok" onclick="saveQuran()">'+T('save')+'</button></div>';
+  document.getElementById('mboxc').innerHTML=h;
+  document.getElementById('modal').classList.remove('hidden');
+}
+async function saveQuran(){
+  var row={entry_date:document.getElementById('qd').value,pages:parseInt(document.getElementById('qp').value)||0,
+    surah:document.getElementById('qs').value.trim(),juz:parseInt(document.getElementById('qj').value)||null};
+  var r=await sb.from('quran_log').insert(row).select();
+  if(r.error){toast(T('err')+' \u2014 '+r.error.message);return}
+  quran=quran.concat(r.data||[]);
+  var t=types.find(function(x){return x.pillar==='soul'&&x.name==='Quran Reading'&&x.active});
+  var pts=t?t.points:15;
+  var e=await sb.from('activity_entries').insert({pillar:'soul',title:'Quran '+row.pages+'p',entry_date:row.entry_date,status:'done',points_awarded:pts,activity_type_id:t?t.id:null}).select();
+  if(e.data)entries=entries.concat(e.data);
+  toast('+'+pts+' XP \uD83D\uDCD6 '+row.pages+' '+T('pages'));
+  closeModal();checkLevelUp();render();
+}
+function openGym(){
+  var h='<h2>\uD83C\uDFCB\uFE0F '+T('addset')+'</h2><label>'+T('date')+'</label><input id="gd" type="date" value="'+today()+'">'+
+  '<label>'+T('exercise')+'</label><input id="ge" placeholder="Bench Press">'+
+  '<label>'+T('sets')+'</label><input id="gs" type="number" value="3">'+
+  '<label>'+T('reps')+'</label><input id="gr" type="number" value="10">'+
+  '<label>'+T('weight')+'</label><input id="gw" type="number" value="0" step="0.5">'+
+  '<div class="mrow"><button class="no" onclick="closeModal()">'+T('cancel')+'</button><button class="ok" onclick="saveGym()">'+T('save')+'</button></div>';
+  document.getElementById('mboxc').innerHTML=h;
+  document.getElementById('modal').classList.remove('hidden');
+}
+async function saveGym(){
+  var ex=document.getElementById('ge').value.trim();
+  if(!ex){toast(T('nameFirst'));return}
+  var row={entry_date:document.getElementById('gd').value,exercise:ex,
+    sets:parseInt(document.getElementById('gs').value)||3,reps:parseInt(document.getElementById('gr').value)||10,
+    weight:parseFloat(document.getElementById('gw').value)||0};
+  var prev=gymSets.filter(function(g){return g.exercise===ex}).reduce(function(a,g){return Math.max(a,g.weight)},0);
+  var r=await sb.from('gym_sets').insert(row).select();
+  if(r.error){toast(T('err')+' \u2014 '+r.error.message);return}
+  gymSets=gymSets.concat(r.data||[]);
+  var t=types.find(function(x){return x.pillar==='gym'&&x.name==='Workout'&&x.active});
+  var pts=Math.max(5,Math.round((t?t.points:25)*Math.min(1.5,row.sets*row.reps/30)));
+  var e=await sb.from('activity_entries').insert({pillar:'gym',title:ex+' '+row.sets+'\u00D7'+row.reps,entry_date:row.entry_date,status:'done',points_awarded:pts,activity_type_id:t?t.id:null}).select();
+  if(e.data)entries=entries.concat(e.data);
+  toast(row.weight>prev&&prev>0?'\uD83C\uDFC6 '+T('pr')+'! +'+pts+' XP':'+'+pts+' XP \uD83C\uDFCB\uFE0F '+ex);
+  closeModal();checkLevelUp();render();
+}
+function openMenu(){
+  var h='<h2>\u2699 '+T('settings')+'</h2>'+
+  '<button class="menuitem" onclick="openTypes()">\uD83D\uDCCB '+T('manage')+'</button>'+
+  '<button class="menuitem" onclick="openPrefs()">\uD83C\uDF9B '+T('prefs')+'</button>'+
+  '<button class="menuitem" onclick="closeModal();logout()">\u2192 '+T('signout')+'</button>'+
+  '<div class="mrow"><button class="no" onclick="closeModal()">'+T('close')+'</button></div>';
+  document.getElementById('mboxc').innerHTML=h;
+  document.getElementById('modal').classList.remove('hidden');
+}
+function openPrefs(){
+  var h='<h2>\uD83C\uDF9B '+T('prefs')+'</h2>'+
+  '<label>'+T('lang')+'</label><select id="plang"><option value="en"'+(lang==='en'?' selected':'')+'>English</option><option value="ar"'+(lang==='ar'?' selected':'')+'>\u0627\u0644\u0639\u0631\u0628\u064A\u0629</option></select>'+
+  '<label>'+T('city')+'</label><input id="pcity" value="'+esc(cfg.city)+'">'+
+  '<label>'+T('country')+'</label><input id="pcountry" value="'+esc(cfg.country)+'">'+
+  '<label>'+T('goals')+'</label>';
+  PKEYS.forEach(function(p){
+    h+='<div class="goalrow"><span class="gi">'+PIL[p].em+' '+pnm(p)+'</span><input type="number" min="0" max="7" id="g_'+p+'" value="'+(cfg.goals[p]||0)+'" style="width:70px"></div>';
+  });
+  h+='<label>'+T('seasontarget')+'</label><input id="pseason" type="number" value="'+(cfg.season_target||1500)+'">'+
+  '<label>'+T('qurangoal')+'</label><input id="pquran" type="number" value="'+(cfg.quran_goal||604)+'">'+
+  '<div class="mrow"><button class="no" onclick="closeModal()">'+T('cancel')+'</button><button class="ok" onclick="savePrefs()">'+T('save')+'</button></div>';
+  document.getElementById('mboxc').innerHTML=h;
+  document.getElementById('modal').classList.remove('hidden');
+}
+async function savePrefs(){
+  var g={};PKEYS.forEach(function(p){g[p]=parseInt(document.getElementById('g_'+p).value)||0});
+  var nl=document.getElementById('plang').value;
+  var ok=await saveCfg({lang:nl,city:document.getElementById('pcity').value.trim()||'Riyadh',
+    country:document.getElementById('pcountry').value.trim()||'Saudi Arabia',goals:g,
+    season_target:parseInt(document.getElementById('pseason').value)||1500,
+    quran_goal:parseInt(document.getElementById('pquran').value)||604});
+  if(!ok)return;
+  lang=nl;localStorage.setItem('fp_lang',lang);applyLang();
+  prayerTimes=null;loadPrayerTimes();
+  toast(T('saved'));closeModal();render();
 }
 function openTypes(){
-  var m=document.getElementById('modal'),c=document.getElementById('mboxc');
-  var h='<h2>Manage Activities</h2>';
+  var h='<h2>\uD83D\uDCCB '+T('manage')+'</h2>';
   PKEYS.forEach(function(p){
-    h+='<label>'+PIL[p].em+' '+PIL[p].nm+'</label>';
+    h+='<label>'+PIL[p].em+' '+pnm(p)+'</label>';
     types.filter(function(t){return t.pillar===p&&t.active}).forEach(function(t){
       h+='<div class="typerow"><span class="t">'+esc(t.name)+'</span><span class="p">+'+t.points+'</span><button onclick="delType(\''+t.id+'\')">\uD83D\uDDD1</button></div>';
     });
   });
-  h+='<label>Add new</label>';
-  h+='<select id="ntp">'+PKEYS.map(function(p){return '<option value="'+p+'">'+PIL[p].nm+'</option>'}).join('')+'</select>';
-  h+='<input id="ntn" placeholder="Activity name" style="margin-top:6px">';
-  h+='<input id="ntpts" type="number" value="10" style="margin-top:6px">';
-  h+='<div class="mrow"><button class="no" onclick="closeModal()">Close</button><button class="ok" onclick="addType()">Add</button></div>';
-  c.innerHTML=h;m.classList.remove('hidden');
+  h+='<label>'+T('addnew')+'</label><select id="ntp">'+PKEYS.map(function(p){return '<option value="'+p+'">'+pnm(p)+'</option>'}).join('')+'</select>'+
+  '<input id="ntn" placeholder="'+T('actname')+'" style="margin-top:6px"><input id="ntpts" type="number" value="10" style="margin-top:6px">'+
+  '<div class="mrow"><button class="no" onclick="closeModal()">'+T('close')+'</button><button class="ok" onclick="addType()">'+T('add')+'</button></div>';
+  document.getElementById('mboxc').innerHTML=h;
+  document.getElementById('modal').classList.remove('hidden');
 }
 async function addType(){
   var p=document.getElementById('ntp').value,n=document.getElementById('ntn').value.trim(),pt=parseInt(document.getElementById('ntpts').value)||10;
-  if(!n){toast('Type a name first');return}
+  if(!n){toast(T('nameFirst'));return}
   var r=await sb.from('activity_types').insert({pillar:p,name:n,points:pt}).select();
-  if(r.error){toast('Couldn\u2019t add \u2014 '+r.error.message);return}
-  if(r.data)types=types.concat(r.data);
-  toast('Added \u2014 '+n+' (+'+pt+')');
-  openTypes();
+  if(r.error){toast(T('err')+' \u2014 '+r.error.message);return}
+  types=types.concat(r.data||[]);toast(T('added')+' \u2014 '+n);openTypes();
 }
 function delType(id){
   var t=types.find(function(x){return x.id===id});if(!t)return;
-  confirmBox('Remove activity type?','Remove <b>'+esc(t.name)+'</b> (+'+t.points+') from your '+PIL[t.pillar].nm+' list? Past entries and XP stay \u2014 you just won\u2019t see it when adding new ones.','Remove',async function(){
+  confirmBox(T('remq'),T('remm',{t:esc(t.name),p:t.points}),T('remove'),async function(){
     await sb.from('activity_types').update({active:false}).eq('id',id);
-    t.active=false;
-    toast('Removed \u2014 '+t.name);
-    openTypes();
+    t.active=false;toast(T('removed')+' \u2014 '+t.name);openTypes();
   });
 }
-function closeModal(){document.getElementById('modal').classList.add('hidden')}
+
+/* ---------- onboarding ---------- */
+var obData={};
+function onboard(step){
+  document.getElementById('app').classList.add('hidden');
+  document.getElementById('auth').classList.remove('hidden');
+  var b=document.getElementById('authbox'),h='';
+  if(step===0){
+    h='<h1>\uD83D\uDC4B '+T('welcome')+'</h1><p>'+T('obtag')+'</p>'+
+    '<label style="color:var(--dim);font-size:12px;display:block;margin-bottom:6px">'+T('oblang')+'</label>'+
+    '<select id="ob_lang" style="width:100%;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:10px;color:var(--tx);margin-bottom:12px"><option value="en"'+(lang==='en'?' selected':'')+'>English</option><option value="ar"'+(lang==='ar'?' selected':'')+'>\u0627\u0644\u0639\u0631\u0628\u064A\u0629</option></select>'+
+    '<button class="main" onclick="obStep(0)">'+T('obnext')+'</button>';
+  }else if(step===1){
+    h='<h1>\uD83D\uDD4B</h1><p>'+T('obcity')+'</p>'+
+    '<input id="ob_city" value="'+esc(cfg.city)+'" placeholder="'+T('city')+'">'+
+    '<input id="ob_country" value="'+esc(cfg.country)+'" placeholder="'+T('country')+'">'+
+    '<button class="main" onclick="obStep(1)">'+T('obnext')+'</button>';
+  }else{
+    h='<h1>\uD83C\uDFAF</h1><p>'+T('obgoals')+'</p>';
+    PKEYS.forEach(function(p){
+      h+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span style="flex:1;font-size:14px">'+PIL[p].em+' '+pnm(p)+'</span>'+
+      '<input type="number" min="0" max="7" id="ob_'+p+'" value="'+(cfg.goals[p]||0)+'" style="width:70px;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:8px;color:var(--tx)"></div>';
+    });
+    h+='<button class="main" style="margin-top:10px" onclick="obStep(2)">'+T('obdone')+'</button>';
+  }
+  b.innerHTML=h;
+}
+async function obStep(step){
+  if(step===0){lang=document.getElementById('ob_lang').value;localStorage.setItem('fp_lang',lang);applyLang();onboard(1)}
+  else if(step===1){obData.city=document.getElementById('ob_city').value.trim()||'Riyadh';obData.country=document.getElementById('ob_country').value.trim()||'Saudi Arabia';onboard(2)}
+  else{
+    var g={};PKEYS.forEach(function(p){g[p]=parseInt(document.getElementById('ob_'+p).value)||0});
+    await saveCfg({lang:lang,city:obData.city,country:obData.country,goals:g,onboarded:true,season_start:today()});
+    document.getElementById('auth').classList.add('hidden');
+    document.getElementById('app').classList.remove('hidden');
+    render();loadPrayerTimes();toast('\u26A1 '+T('welcome'));
+  }
+}
+
+/* ---------- swipe ---------- */
+var tsX=0,tsY=0;
+document.addEventListener('touchstart',function(e){
+  if(!e.target.closest('#schedbody'))return;
+  tsX=e.changedTouches[0].clientX;tsY=e.changedTouches[0].clientY;
+},{passive:true});
+document.addEventListener('touchend',function(e){
+  if(!e.target.closest('#schedbody'))return;
+  var dx=e.changedTouches[0].clientX-tsX,dy=e.changedTouches[0].clientY-tsY;
+  if(Math.abs(dx)>70&&Math.abs(dy)<50){
+    var dir=dx<0?1:-1;
+    if(lang==='ar')dir=-dir;
+    nav(dir);
+  }
+},{passive:true});
+
+/* ---------- PWA ---------- */
+window.addEventListener('beforeinstallprompt',function(e){
+  e.preventDefault();deferredPrompt=e;
+  document.getElementById('install').classList.remove('hidden');
+});
+async function doInstall(){
+  if(!deferredPrompt)return;
+  deferredPrompt.prompt();
+  await deferredPrompt.userChoice;
+  deferredPrompt=null;
+  document.getElementById('install').classList.add('hidden');
+  toast(T('installed'));
+}
+if('serviceWorker' in navigator)window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})});
+
+/* ---------- boot ---------- */
 document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal()});
+sb.auth.onAuthStateChange(function(ev){if(ev==='PASSWORD_RECOVERY')showRecover()});
+applyLang();renderAuth();
 if(location.hash.indexOf('type=recovery')>=0)showRecover();else init();
 </script>
 </body>
