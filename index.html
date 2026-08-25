@@ -703,6 +703,13 @@ function minsNow(){
   var d=new Date();return d.getHours()*60+d.getMinutes();
 }
 function toMins(hm){var p=hm.split(':');return parseInt(p[0])*60+parseInt(p[1])}
+function fmt12(hm){
+  var p=hm.split(':'),h=parseInt(p[0],10),m=p[1];
+  var am=h<12;
+  var h12=h%12;if(h12===0)h12=12;
+  var suf=lang==='ar'?(am?'\u0635':'\u0645'):(am?'AM':'PM');
+  return h12+':'+m+' '+suf;
+}
 function nextPrayer(){
   if(!prayerTimes)return null;
   var n=minsNow(),cur=null,nxt=null;
@@ -919,7 +926,7 @@ function renderPillar(){
     PRAYERS.forEach(function(pr){
       var e=entries.find(function(x){return x.entry_date===td&&x.pillar==='soul'&&x.title===pr[0]&&x.status==='done'});
       var cls='pray'+(e?' done':'');
-      var tm=prayerTimes&&prayerTimes[pr[0]]?'<span class="tm">'+prayerTimes[pr[0]]+'</span>':'';
+      var tm=prayerTimes&&prayerTimes[pr[0]]?'<span class="tm">'+fmt12(prayerTimes[pr[0]])+'</span>':'';
       h+='<button class="'+cls+'" onclick="togglePrayer(\''+pr[0]+'\')">'+(e?'\u2705 ':'')+(lang==='ar'?pr[1]:pr[0])+tm+'</button>';
     });
     h+='</div>';
@@ -998,7 +1005,7 @@ function renderQuest(){
     var cls='pray'+(e?' done':'');
     var tm='';
     if(prayerTimes&&prayerTimes[pr[0]]){
-      tm='<span class="tm">'+prayerTimes[pr[0]]+'</span>';
+      tm='<span class="tm">'+fmt12(prayerTimes[pr[0]])+'</span>';
       if(toMins(prayerTimes[pr[0]])>minsNow()&&!e)cls+=' future';
       if(np&&np.cur===pr[0]&&!e)cls+=' now';
     }
