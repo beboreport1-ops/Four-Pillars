@@ -64,6 +64,21 @@ main{padding:0 16px 90px;max-width:1000px;margin:0 auto}
 .pray.done{background:rgba(167,139,250,.18);border-color:var(--soul);color:var(--tx)}
 .pray.now{box-shadow:0 0 0 1px var(--gold)}
 .pray.future{opacity:.45}
+.hcard{background:linear-gradient(135deg,#131a26,#161f2e);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:14px}
+.hcard h2{font-size:14px;margin-bottom:10px}
+.wrow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:6px}
+.btl{width:30px;height:38px;border:none;background:none;font-size:22px;line-height:1;opacity:.28;filter:grayscale(1);transition:all .2s;padding:0}
+.btl.full{opacity:1;filter:none;transform:scale(1.06)}
+.wmeta{display:flex;justify-content:space-between;font-size:12px;color:var(--dim);margin-bottom:10px}
+.wmeta b{color:var(--tx)}
+.nutgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.nut{background:var(--card2);border-radius:10px;padding:10px}
+.nut .nv{font-size:17px;font-weight:800}
+.nut .nl{font-size:11px;color:var(--dim);margin-top:1px}
+.nut .nb{height:5px;background:rgba(255,255,255,.07);border-radius:3px;margin-top:7px;overflow:hidden}
+.nut .nb div{height:100%;border-radius:3px;transition:width .4s}
+.hbtns{display:flex;gap:8px}
+.hbtns button{flex:1;background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:9px;font-size:13px;font-weight:600}
 .goalrow{display:flex;align-items:center;gap:10px;margin-bottom:9px}
 .goalrow .gi{width:96px;font-size:13px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .goalrow .tr{flex:1;height:12px;background:var(--card2);border-radius:6px;overflow:hidden}
@@ -215,6 +230,7 @@ main{padding:0 16px 90px;max-width:1000px;margin:0 auto}
   <div id="view-sched">
     <div id="questcard"></div>
     <div id="goalcard"></div>
+    <div id="healthcard"></div>
     <div class="vtoggle">
       <button id="vt-week" class="on" onclick="setView('week')"></button>
       <button id="vt-month" onclick="setView('month')"></button>
@@ -253,7 +269,11 @@ checkmail:'Check your email to confirm, then sign in.',resetsent:'Reset link sen
 newpass:'New Password',setnew:'Set a new password for your account',updatepw:'Update Password',pwshort:'Password must be at least 6 characters.',pwdone:'Password updated!',
 sched:'Schedule',stats:'Stats',week:'Week',month:'Month',year:'Year',today:'Today',
 quest:'Today\u2019s Quest',pillars:'pillars',all:'All',
-study:'Studying',gym:'Gym',social:'Social',soul:'Soul',
+study:'Studying',gym:'Health',social:'Social',soul:'Soul',
+health:'Health Today',water:'Water',calories:'Calories',protein:'Protein',addmeal:'Add meal',meal:'Meal',
+kcal:'kcal',grams:'g',bottles:'bottles',bottle:'bottle',bottlesize:'Bottle size (ml)',
+caloriegoal:'Daily calories goal',proteingoal:'Daily protein goal (g)',watergoal:'Daily water goal (ml)',
+watergoalhit:'Water goal reached!',proteingoalhit:'Protein goal reached!',avg7:'7-day average',optional:'optional',
 weekgoals:'Weekly Goals',goalmet:'Goal met',ontrack:'on track',
 add:'Add Activity',pillar:'Pillar',activity:'Activity',date:'Date',status:'Status',
 done:'Done (award points now)',planned:'Planned',repeat:'Repeat weekly (same weekday)',norepeat:'No repeat',forwk:'For {n} weeks',
@@ -288,7 +308,11 @@ checkmail:'\u062A\u062D\u0642\u0642 \u0645\u0646 \u0628\u0631\u064A\u062F\u0643 
 newpass:'\u0643\u0644\u0645\u0629 \u0645\u0631\u0648\u0631 \u062C\u062F\u064A\u062F\u0629',setnew:'\u0639\u064A\u0651\u0646 \u0643\u0644\u0645\u0629 \u0645\u0631\u0648\u0631 \u062C\u062F\u064A\u062F\u0629 \u0644\u062D\u0633\u0627\u0628\u0643',updatepw:'\u062A\u062D\u062F\u064A\u062B \u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631',pwshort:'\u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631 6 \u0623\u062D\u0631\u0641 \u0639\u0644\u0649 \u0627\u0644\u0623\u0642\u0644.',pwdone:'\u062A\u0645 \u062A\u062D\u062F\u064A\u062B \u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631!',
 sched:'\u0627\u0644\u062C\u062F\u0648\u0644',stats:'\u0627\u0644\u0625\u062D\u0635\u0627\u0621\u0627\u062A',week:'\u0623\u0633\u0628\u0648\u0639',month:'\u0634\u0647\u0631',year:'\u0633\u0646\u0629',today:'\u0627\u0644\u064A\u0648\u0645',
 quest:'\u0645\u0647\u0645\u0629 \u0627\u0644\u064A\u0648\u0645',pillars:'\u0623\u0631\u0643\u0627\u0646',all:'\u0627\u0644\u0643\u0644',
-study:'\u0627\u0644\u062F\u0631\u0627\u0633\u0629',gym:'\u0627\u0644\u0646\u0627\u062F\u064A',social:'\u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639\u064A',soul:'\u0627\u0644\u0631\u0648\u062D',
+study:'\u0627\u0644\u062F\u0631\u0627\u0633\u0629',gym:'\u0627\u0644\u0635\u062D\u0629',social:'\u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639\u064A',soul:'\u0627\u0644\u0631\u0648\u062D',
+health:'\u0635\u062D\u0629 \u0627\u0644\u064A\u0648\u0645',water:'\u0627\u0644\u0645\u0627\u0621',calories:'\u0627\u0644\u0633\u0639\u0631\u0627\u062A',protein:'\u0627\u0644\u0628\u0631\u0648\u062A\u064A\u0646',addmeal:'\u0625\u0636\u0627\u0641\u0629 \u0648\u062C\u0628\u0629',meal:'\u0648\u062C\u0628\u0629',
+kcal:'\u0633\u0639\u0631\u0629',grams:'\u062C\u0645',bottles:'\u0632\u062C\u0627\u062C\u0627\u062A',bottle:'\u0632\u062C\u0627\u062C\u0629',bottlesize:'\u062D\u062C\u0645 \u0627\u0644\u0632\u062C\u0627\u062C\u0629 (\u0645\u0644)',
+caloriegoal:'\u0647\u062F\u0641 \u0627\u0644\u0633\u0639\u0631\u0627\u062A \u0627\u0644\u064A\u0648\u0645\u064A',proteingoal:'\u0647\u062F\u0641 \u0627\u0644\u0628\u0631\u0648\u062A\u064A\u0646 (\u062C\u0645)',watergoal:'\u0647\u062F\u0641 \u0627\u0644\u0645\u0627\u0621 (\u0645\u0644)',
+watergoalhit:'\u062A\u0645 \u0628\u0644\u0648\u063A \u0647\u062F\u0641 \u0627\u0644\u0645\u0627\u0621!',proteingoalhit:'\u062A\u0645 \u0628\u0644\u0648\u063A \u0647\u062F\u0641 \u0627\u0644\u0628\u0631\u0648\u062A\u064A\u0646!',avg7:'\u0645\u062A\u0648\u0633\u0637 7 \u0623\u064A\u0627\u0645',optional:'\u0627\u062E\u062A\u064A\u0627\u0631\u064A',
 weekgoals:'\u0623\u0647\u062F\u0627\u0641 \u0627\u0644\u0623\u0633\u0628\u0648\u0639',goalmet:'\u062A\u0645 \u0627\u0644\u0647\u062F\u0641',ontrack:'\u0639\u0644\u0649 \u0627\u0644\u0645\u0633\u0627\u0631',
 add:'\u0625\u0636\u0627\u0641\u0629 \u0646\u0634\u0627\u0637',pillar:'\u0627\u0644\u0631\u0643\u0646',activity:'\u0627\u0644\u0646\u0634\u0627\u0637',date:'\u0627\u0644\u062A\u0627\u0631\u064A\u062E',status:'\u0627\u0644\u062D\u0627\u0644\u0629',
 done:'\u0645\u0646\u062C\u0632 (\u0627\u062D\u062A\u0633\u0627\u0628 \u0627\u0644\u0646\u0642\u0627\u0637)',planned:'\u0645\u062E\u0637\u0637',repeat:'\u062A\u0643\u0631\u0627\u0631 \u0623\u0633\u0628\u0648\u0639\u064A',norepeat:'\u0628\u062F\u0648\u0646 \u062A\u0643\u0631\u0627\u0631',forwk:'\u0644\u0645\u062F\u0629 {n} \u0623\u0633\u0627\u0628\u064A\u0639',
@@ -325,7 +349,7 @@ function T(k,vars){
 }
 var RANKS={en:['Novice','Apprentice','Fighter','Warrior','Knight','Champion','Master','Grandmaster','Legend','Mythic'],
 ar:['\u0645\u0628\u062A\u062F\u0626','\u0645\u062A\u062F\u0631\u0628','\u0645\u0642\u0627\u062A\u0644','\u0645\u062D\u0627\u0631\u0628','\u0641\u0627\u0631\u0633','\u0628\u0637\u0644','\u0645\u0639\u0644\u0645','\u0623\u0633\u062A\u0627\u0630','\u0623\u0633\u0637\u0648\u0631\u0629','\u062E\u0631\u0627\u0641\u064A']};
-var PIL={study:{em:'\uD83D\uDCDA',hex:'#4f9cf9'},gym:{em:'\uD83D\uDCAA',hex:'#ff6b4a'},social:{em:'\uD83D\uDC65',hex:'#34d399'},soul:{em:'\uD83D\uDD4C',hex:'#a78bfa'}};
+var PIL={study:{em:'\uD83D\uDCDA',hex:'#4f9cf9'},gym:{em:'\u2764\uFE0F',hex:'#ff6b4a'},social:{em:'\uD83D\uDC65',hex:'#34d399'},soul:{em:'\uD83D\uDD4C',hex:'#a78bfa'}};
 var PKEYS=['study','gym','social','soul'];
 function pnm(p){return T(p)}
 var PRAYERS=[['Fajr','\u0627\u0644\u0641\u062C\u0631'],['Dhuhr','\u0627\u0644\u0638\u0647\u0631'],['Asr','\u0627\u0644\u0639\u0635\u0631'],['Maghrib','\u0627\u0644\u0645\u063A\u0631\u0628'],['Isha','\u0627\u0644\u0639\u0634\u0627\u0621']];
@@ -333,7 +357,8 @@ var WD={en:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],ar:['\u0623\u062D\u062F',
 
 /* ---------- state ---------- */
 var types=[],entries=[],notes={},quran=[],gymSets=[],user=null;
-var cfg={lang:'en',city:'Riyadh',country:'Saudi Arabia',lat:null,lon:null,goals:{study:5,gym:4,social:3,soul:7},freezes:{},season_start:null,season_target:1500,quran_goal:604,onboarded:false};
+var cfg={lang:'en',city:'Riyadh',country:'Saudi Arabia',lat:null,lon:null,goals:{study:5,gym:4,social:3,soul:7},freezes:{},season_start:null,season_target:1500,quran_goal:604,onboarded:false,calorie_goal:2200,protein_goal:120,water_goal_ml:2000,bottle_ml:250};
+var nutri={};
 var tab='sched',view='week',anchor=new Date(),selDay=null,signup=false,curP='study',prevLvl=null,pFilter='all',prayerTimes=null,deferredPrompt=null;
 
 function dstr(d){var y=d.getFullYear(),m=('0'+(d.getMonth()+1)).slice(-2),dd=('0'+d.getDate()).slice(-2);return y+'-'+m+'-'+dd}
@@ -436,7 +461,8 @@ async function loadAll(){
     sb.from('settings').select('*').eq('user_id',user.id).maybeSingle(),
     sb.from('day_notes').select('*'),
     sb.from('quran_log').select('*').order('entry_date'),
-    sb.from('gym_sets').select('*').order('entry_date')
+    sb.from('gym_sets').select('*').order('entry_date'),
+    sb.from('nutrition_log').select('*').order('entry_date')
   ]);
   types=res[0].data||[];entries=res[1].data||[];
   if(res[2].data){
@@ -445,6 +471,9 @@ async function loadAll(){
     cfg.goals=s.goals||cfg.goals;cfg.freezes=s.freezes||{};
     cfg.season_start=s.season_start;cfg.season_target=s.season_target||1500;
     cfg.quran_goal=s.quran_goal||604;cfg.onboarded=!!s.onboarded;
+    cfg.calorie_goal=s.calorie_goal||2200;cfg.protein_goal=s.protein_goal||120;
+    cfg.water_goal_ml=s.water_goal_ml||2000;cfg.bottle_ml=s.bottle_ml||250;
+    if(s.latitude!=null){cfg.lat=s.latitude;cfg.lon=s.longitude}
     if(!localStorage.getItem('fp_lang'))lang=cfg.lang;
   }else{
     await sb.from('settings').insert({user_id:user.id});
@@ -452,20 +481,24 @@ async function loadAll(){
   }
   notes={};(res[3].data||[]).forEach(function(n){notes[n.entry_date]=n.note});
   quran=res[4].data||[];gymSets=res[5].data||[];
+  nutri={};(res[6]&&res[6].data||[]).forEach(function(n){nutri[n.entry_date]={calories:n.calories,protein:n.protein,water_ml:n.water_ml}});
   }catch(e){loadCache();return}
   saveCache();
 }
 async function seed(){
   var defs=[['study','Study Session',20],['study','Homework',15],['study','Review Notes',10],
-  ['gym','Workout',25],['gym','Cardio',15],
+  ['gym','Workout',25],['gym','Cardio',15],['gym','Walk',10],['gym','Good Sleep',10],
   ['social','Hangout with Friends',15],['social','Family Time',10],['social','Meet Someone New',20],
   ['soul','Fajr',10],['soul','Dhuhr',10],['soul','Asr',10],['soul','Maghrib',10],['soul','Isha',10],['soul','Quran Reading',15],['soul','Dhikr',5]];
   await sb.from('activity_types').insert(defs.map(function(d){return{pillar:d[0],name:d[1],points:d[2]}}));
   var t=await sb.from('activity_types').select('*').order('created_at');types=t.data||[];
 }
+var SETTING_COLS=['lang','city','country','goals','freezes','season_start','season_target','quran_goal','onboarded','calorie_goal','protein_goal','water_goal_ml','bottle_ml'];
 async function saveCfg(patch){
   Object.assign(cfg,patch);
-  var row={user_id:user.id};Object.keys(cfg).forEach(function(k){if(k!=='tz')row[k]=cfg[k]});
+  var row={user_id:user.id};
+  SETTING_COLS.forEach(function(k){if(cfg[k]!==undefined&&cfg[k]!==null)row[k]=cfg[k]});
+  if(cfg.lat!=null){row.latitude=cfg.lat;row.longitude=cfg.lon}
   await dbUpsert('settings',row);
   saveCache();
   return true;
@@ -484,13 +517,13 @@ function getQ(){try{return JSON.parse(localStorage.getItem(QK)||'[]')}catch(e){r
 function setQ(q){localStorage.setItem(QK,JSON.stringify(q));netBadge()}
 function enqueue(op){var q=getQ();q.push(op);setQ(q)}
 function saveCache(){
-  try{localStorage.setItem(CK,JSON.stringify({types:types,entries:entries,notes:notes,quran:quran,gymSets:gymSets,cfg:cfg}))}catch(e){}
+  try{localStorage.setItem(CK,JSON.stringify({types:types,entries:entries,notes:notes,quran:quran,gymSets:gymSets,nutri:nutri,cfg:cfg}))}catch(e){}
 }
 function loadCache(){
   try{
     var c=JSON.parse(localStorage.getItem(CK)||'null');
     if(!c)return false;
-    types=c.types||[];entries=c.entries||[];notes=c.notes||{};quran=c.quran||[];gymSets=c.gymSets||[];
+    types=c.types||[];entries=c.entries||[];notes=c.notes||{};quran=c.quran||[];gymSets=c.gymSets||[];nutri=c.nutri||{};
     if(c.cfg)Object.assign(cfg,c.cfg);
     return true;
   }catch(e){return false}
@@ -738,6 +771,84 @@ function seasonDaysLeft(){
 }
 function quranPages(){return quran.reduce(function(a,q){return a+q.pages},0)}
 
+/* ---------- health / nutrition ---------- */
+function nut(ds){return nutri[ds]||{calories:0,protein:0,water_ml:0}}
+function bottleMl(){return cfg.bottle_ml||250}
+function goalBottles(){return Math.max(1,Math.ceil((cfg.water_goal_ml||2000)/bottleMl()))}
+async function saveNut(ds,patch){
+  var cur=nut(ds);
+  var row={calories:cur.calories,protein:cur.protein,water_ml:cur.water_ml};
+  Object.keys(patch).forEach(function(k){row[k]=Math.max(0,patch[k])});
+  nutri[ds]=row;
+  var r=await dbUpsert('nutrition_log',{user_id:user.id,entry_date:ds,calories:row.calories,protein:row.protein,water_ml:row.water_ml});
+  saveCache();
+  return r;
+}
+async function awardOnce(title,pts,ds,pillar){
+  if(entries.some(function(e){return e.entry_date===ds&&e.title===title}))return false;
+  var r=await dbInsert('activity_entries',[{pillar:pillar,title:title,entry_date:ds,status:'done',points_awarded:pts}]);
+  entries=entries.concat(r.data);saveCache();
+  return true;
+}
+async function setWater(n){
+  var ds=today(),ml=Math.max(0,n)*bottleMl();
+  var before=nut(ds).water_ml;
+  var r=await saveNut(ds,{water_ml:ml});
+  var goal=cfg.water_goal_ml||2000;
+  if(ml>=goal&&before<goal){
+    if(await awardOnce('Water goal',10,ds,'gym')){toast('\uD83D\uDCA7 '+T('watergoalhit')+' +10 XP');checkLevelUp();render();return}
+  }
+  offToast(r,'\uD83D\uDCA7 '+Math.round(ml/bottleMl())+' \u00D7 '+bottleMl()+'ml');
+  render();
+}
+function openMeal(){
+  var h='<h2>\uD83C\uDF7D\uFE0F '+T('addmeal')+'</h2>'+
+  '<label>'+T('date')+'</label><input id="ndate" type="date" value="'+today()+'">'+
+  '<label>'+T('calories')+' ('+T('kcal')+')</label><input id="ncal" type="number" inputmode="numeric" placeholder="450">'+
+  '<label>'+T('protein')+' ('+T('grams')+' \u00B7 '+T('optional')+')</label><input id="nprot" type="number" inputmode="numeric" placeholder="30">'+
+  '<div class="mrow"><button class="no" onclick="closeModal()">'+T('cancel')+'</button><button class="ok" onclick="saveMeal()">'+T('save')+'</button></div>';
+  document.getElementById('mboxc').innerHTML=h;
+  document.getElementById('modal').classList.remove('hidden');
+  setTimeout(function(){var el=document.getElementById('ncal');if(el)el.focus()},50);
+}
+async function saveMeal(){
+  var ds=document.getElementById('ndate').value||today();
+  var cal=parseInt(document.getElementById('ncal').value)||0;
+  var pr=parseInt(document.getElementById('nprot').value)||0;
+  if(!cal&&!pr){toast(T('nameFirst'));return}
+  var cur=nut(ds),pgoal=cfg.protein_goal||120,beforeP=cur.protein;
+  var r=await saveNut(ds,{calories:cur.calories+cal,protein:cur.protein+pr});
+  closeModal();
+  if(pr&&cur.protein+pr>=pgoal&&beforeP<pgoal){
+    if(await awardOnce('Protein goal',10,ds,'gym')){toast('\uD83E\uDD69 '+T('proteingoalhit')+' +10 XP');checkLevelUp();render();return}
+  }
+  offToast(r,'\uD83C\uDF7D\uFE0F +'+cal+' '+T('kcal')+(pr?' \u00B7 +'+pr+T('grams'):''));
+  render();
+}
+function renderHealth(){
+  var el=document.getElementById('healthcard');if(!el)return;
+  var ds=today(),n=nut(ds);
+  var bm=bottleMl(),gb=goalBottles(),have=Math.round(n.water_ml/bm);
+  var show=Math.max(gb,have);
+  var h='<div class="hcard"><h2>\u2764\uFE0F '+T('health')+'</h2>';
+  h+='<div class="wrow">';
+  for(var i=0;i<show;i++){
+    var full=i<have;
+    h+='<button class="btl'+(full?' full':'')+'" onclick="setWater('+((full&&i===have-1)?i:(i+1))+')" title="'+((i+1)*bm)+'ml">\uD83E\uDDF4</button>';
+  }
+  h+='<button class="btl full" style="opacity:.55" onclick="setWater('+(have+1)+')">\u2795</button>';
+  h+='</div>';
+  h+='<div class="wmeta"><span>\uD83D\uDCA7 '+T('water')+'</span><span><b>'+n.water_ml+'</b> / '+(cfg.water_goal_ml||2000)+' ml'+(n.water_ml>=(cfg.water_goal_ml||2000)?' \u2705':'')+'</span></div>';
+  var cg=cfg.calorie_goal||2200,pg=cfg.protein_goal||120;
+  h+='<div class="nutgrid">';
+  h+='<div class="nut"><div class="nv">'+n.calories+' <span style="font-size:11px;color:var(--dim)">/ '+cg+'</span></div><div class="nl">'+T('calories')+'</div><div class="nb"><div style="width:'+Math.min(100,Math.round(n.calories/cg*100))+'%;background:'+(n.calories>cg?'#ff6b4a':'#fbbf24')+'"></div></div></div>';
+  h+='<div class="nut"><div class="nv">'+n.protein+'<span style="font-size:11px;color:var(--dim)">'+T('grams')+' / '+pg+'</span></div><div class="nl">'+T('protein')+(n.protein>=pg?' \u2705':'')+'</div><div class="nb"><div style="width:'+Math.min(100,Math.round(n.protein/pg*100))+'%;background:#34d399"></div></div></div>';
+  h+='</div>';
+  h+='<div class="hbtns"><button onclick="openMeal()">\uD83C\uDF7D\uFE0F '+T('addmeal')+'</button><button onclick="openGym()">\uD83C\uDFCB\uFE0F '+T('addset')+'</button></div>';
+  h+='</div>';
+  el.innerHTML=h;
+}
+
 /* ---------- ui helpers ---------- */
 function toast(msg){
   var t=document.getElementById('toast');
@@ -769,7 +880,7 @@ function showLevelUp(l){
 function setAccent(p){document.documentElement.style.setProperty('--accent',p==='all'?'#4f9cf9':PIL[p].hex)}
 
 /* ---------- render ---------- */
-function render(){renderHeader();renderQuest();renderGoals();renderFilter();if(tab==='sched')renderSched();else renderStats()}
+function render(){renderHeader();renderQuest();renderGoals();renderHealth();renderFilter();if(tab==='sched')renderSched();else renderStats()}
 function renderHeader(){
   var xp=totalXP(),l=lvlOf(xp),base=xpForLvl(l),next=xpForLvl(l+1);
   document.getElementById('hlvl').textContent='LV '+l+' \u00B7 '+rankOf(l);
@@ -999,7 +1110,9 @@ var BADGES=[
   {em:'\u2696\uFE0F',en:'Well-Rounded',ar:'\u0645\u062A\u0648\u0627\u0632\u0646',den:'Level 3 in all pillars',dar:'\u0645\u0633\u062A\u0648\u0649 3 \u0641\u064A \u0643\u0644 \u0631\u0643\u0646',ck:function(){return PKEYS.every(function(p){return lvlOf(pillarXP(p))>=3})}},
   {em:'\uD83D\uDCD6',en:'Reader',ar:'\u0642\u0627\u0631\u0626',den:'100 Quran pages',dar:'100 \u0635\u0641\u062D\u0629 \u0642\u0631\u0622\u0646',ck:function(){return quranPages()>=100}},
   {em:'\uD83D\uDD4B',en:'Khatma',ar:'\u062E\u062A\u0645\u0629',den:'Finish the Quran',dar:'\u062E\u062A\u0645 \u0627\u0644\u0642\u0631\u0622\u0646',ck:function(){return quranPages()>=cfg.quran_goal}},
-  {em:'\uD83C\uDFCB\uFE0F',en:'Iron',ar:'\u062D\u062F\u064A\u062F',den:'25 logged exercises',dar:'25 \u062A\u0645\u0631\u064A\u0646 \u0645\u0633\u062C\u0644',ck:function(){return gymSets.length>=25}}
+  {em:'\uD83C\uDFCB\uFE0F',en:'Iron',ar:'\u062D\u062F\u064A\u062F',den:'25 logged exercises',dar:'25 \u062A\u0645\u0631\u064A\u0646 \u0645\u0633\u062C\u0644',ck:function(){return gymSets.length>=25}},
+  {em:'\uD83D\uDCA7',en:'Hydrated',ar:'\u0645\u0631\u0648\u064A',den:'Hit water goal 7 days',dar:'\u0647\u062F\u0641 \u0627\u0644\u0645\u0627\u0621 7 \u0623\u064A\u0627\u0645',ck:function(){return Object.keys(nutri).filter(function(d){return nutri[d].water_ml>=(cfg.water_goal_ml||2000)}).length>=7}},
+  {em:'\uD83E\uDD69',en:'Fueled',ar:'\u0645\u062A\u063A\u0630\u064D',den:'Hit protein goal 7 days',dar:'\u0647\u062F\u0641 \u0627\u0644\u0628\u0631\u0648\u062A\u064A\u0646 7 \u0623\u064A\u0627\u0645',ck:function(){return Object.keys(nutri).filter(function(d){return nutri[d].protein>=(cfg.protein_goal||120)}).length>=7}}
 ];
 function renderStats(){
   var v=document.getElementById('view-stats'),i;
@@ -1054,6 +1167,22 @@ function renderStats(){
   h+='<div class="barrow"><span class="nm">'+qp+' '+T('pages')+'</span><div class="tr"><div style="width:'+Math.min(100,Math.round(qp/qg*100))+'%;background:var(--soul)"></div></div><span class="vl">'+Math.max(0,qg-qp)+'</span></div>';
   h+='<p class="muted">'+Math.max(0,qg-qp)+' '+T('pages')+' '+T('khatma')+'</p>';
   h+='<div class="mrow"><button class="ok" onclick="openQuran()">'+T('logread')+'</button></div></div>';
+  /* health nutrition */
+  var wk=[],ck=[],pk=[];
+  for(i=6;i>=0;i--){var nd=dstr(new Date(Date.now()-i*86400000)),nn=nut(nd);wk.push(nn.water_ml);ck.push(nn.calories);pk.push(nn.protein)}
+  var avg=function(a){return Math.round(a.reduce(function(x,y){return x+y},0)/a.length)};
+  h+='<div class="section"><h2>\u2764\uFE0F '+T('health')+' \u00B7 '+T('avg7')+'</h2><div class="recs">';
+  h+='<div class="rec"><div class="rv">\uD83D\uDCA7 '+avg(wk)+'ml</div><div class="rl">'+T('water')+'</div></div>';
+  h+='<div class="rec"><div class="rv">\uD83C\uDF7D\uFE0F '+avg(ck)+'</div><div class="rl">'+T('calories')+'</div></div>';
+  h+='<div class="rec"><div class="rv">\uD83E\uDD69 '+avg(pk)+T('grams')+'</div><div class="rl">'+T('protein')+'</div></div>';
+  h+='<div class="rec"><div class="rv">'+wk.filter(function(x){return x>=(cfg.water_goal_ml||2000)}).length+'/7</div><div class="rl">'+T('watergoal')+'</div></div>';
+  h+='</div><div style="display:flex;gap:4px;align-items:flex-end;height:80px;margin-top:12px">';
+  var wmax=Math.max.apply(null,wk.concat([cfg.water_goal_ml||2000]));
+  for(i=0;i<7;i++){
+    var dlab=new Date(Date.now()-(6-i)*86400000);
+    h+='<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end"><div style="width:100%;border-radius:4px 4px 0 0;background:linear-gradient(180deg,#60a5fa,#1d4ed8);height:'+Math.max(3,Math.round(wk[i]/wmax*70))+'%"></div><span style="font-size:9px;color:var(--dim)">'+WD[lang][dlab.getDay()]+'</span></div>';
+  }
+  h+='</div></div>';
   /* gym */
   h+='<div class="section"><h2>\uD83C\uDFCB\uFE0F '+T('gymlog')+'</h2>';
   if(gymSets.length){
@@ -1297,7 +1426,11 @@ function openPrefs(){
   PKEYS.forEach(function(p){
     h+='<div class="goalrow"><span class="gi">'+PIL[p].em+' '+pnm(p)+'</span><input type="number" min="0" max="7" id="g_'+p+'" value="'+(cfg.goals[p]||0)+'" style="width:70px"></div>';
   });
-  h+='<label>'+T('seasontarget')+'</label><input id="pseason" type="number" value="'+(cfg.season_target||1500)+'">'+
+  h+='<label>'+T('caloriegoal')+'</label><input id="pcal" type="number" value="'+(cfg.calorie_goal||2200)+'">'+
+  '<label>'+T('proteingoal')+'</label><input id="pprot" type="number" value="'+(cfg.protein_goal||120)+'">'+
+  '<label>'+T('watergoal')+'</label><input id="pwater" type="number" value="'+(cfg.water_goal_ml||2000)+'">'+
+  '<label>'+T('bottlesize')+'</label><input id="pbottle" type="number" value="'+(cfg.bottle_ml||250)+'">'+
+  '<label>'+T('seasontarget')+'</label><input id="pseason" type="number" value="'+(cfg.season_target||1500)+'">'+
   '<label>'+T('qurangoal')+'</label><input id="pquran" type="number" value="'+(cfg.quran_goal||604)+'">'+
   '<div class="mrow"><button class="no" onclick="closeModal()">'+T('cancel')+'</button><button class="ok" onclick="savePrefs()">'+T('save')+'</button></div>';
   document.getElementById('mboxc').innerHTML=h;
@@ -1309,7 +1442,11 @@ async function savePrefs(){
   var ok=await saveCfg({lang:nl,city:document.getElementById('pcity').value.trim()||'Riyadh',
     country:document.getElementById('pcountry').value.trim()||'Saudi Arabia',goals:g,
     season_target:parseInt(document.getElementById('pseason').value)||1500,
-    quran_goal:parseInt(document.getElementById('pquran').value)||604});
+    quran_goal:parseInt(document.getElementById('pquran').value)||604,
+    calorie_goal:parseInt(document.getElementById('pcal').value)||2200,
+    protein_goal:parseInt(document.getElementById('pprot').value)||120,
+    water_goal_ml:parseInt(document.getElementById('pwater').value)||2000,
+    bottle_ml:parseInt(document.getElementById('pbottle').value)||250});
   if(!ok)return;
   lang=nl;localStorage.setItem('fp_lang',lang);applyLang();
   if(document.getElementById('pcity')){cfg.lat=null;cfg.lon=null;localStorage.removeItem('fp_geo')}
@@ -1369,6 +1506,10 @@ function onboard(step){
       h+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span style="flex:1;font-size:14px">'+PIL[p].em+' '+pnm(p)+'</span>'+
       '<input type="number" min="0" max="7" id="ob_'+p+'" value="'+(cfg.goals[p]||0)+'" style="width:70px;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:8px;color:var(--tx)"></div>';
     });
+    h+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span style="flex:1;font-size:14px">\uD83D\uDCA7 '+T('watergoal')+'</span>'+
+    '<input type="number" id="ob_water" value="'+(cfg.water_goal_ml||2000)+'" style="width:90px;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:8px;color:var(--tx)"></div>';
+    h+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span style="flex:1;font-size:14px">\uD83C\uDF7D\uFE0F '+T('caloriegoal')+'</span>'+
+    '<input type="number" id="ob_cal" value="'+(cfg.calorie_goal||2200)+'" style="width:90px;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:8px;color:var(--tx)"></div>';
     h+='<button class="main" style="margin-top:10px" onclick="obStep(2)">'+T('obdone')+'</button>';
   }
   b.innerHTML=h;
@@ -1386,7 +1527,9 @@ async function obStep(step){
   else if(step===1){obData.city=document.getElementById('ob_city').value.trim()||'Riyadh';obData.country=document.getElementById('ob_country').value.trim()||'Saudi Arabia';onboard(2)}
   else{
     var g={};PKEYS.forEach(function(p){g[p]=parseInt(document.getElementById('ob_'+p).value)||0});
-    await saveCfg({lang:lang,city:obData.city,country:obData.country,goals:g,onboarded:true,season_start:today()});
+    var wEl=document.getElementById('ob_water'),cEl=document.getElementById('ob_cal');
+    await saveCfg({lang:lang,city:obData.city,country:obData.country,goals:g,onboarded:true,season_start:today(),
+      water_goal_ml:(wEl?parseInt(wEl.value):0)||2000,calorie_goal:(cEl?parseInt(cEl.value):0)||2200});
     document.getElementById('auth').classList.add('hidden');
     document.getElementById('app').classList.remove('hidden');
     render();loadPrayerTimes();toast('\u26A1 '+T('welcome'));
