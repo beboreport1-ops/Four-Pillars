@@ -38,9 +38,10 @@ header .logo{font-size:18px}
 .netbadge.off{border-color:#ff6b4a;color:#ff6b4a}
 .netbadge.pend{border-color:var(--gold);color:var(--gold)}
 .iconbtn{background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:13px}
-nav{display:flex;gap:8px;padding:12px 16px}
-nav button{flex:1;background:var(--card);border:1px solid var(--line);color:var(--dim);border-radius:10px;padding:10px;font-size:14px;font-weight:600}
-nav button.on{background:var(--card2);color:var(--tx);border-color:var(--accent)}
+.mainnav{display:flex;gap:7px;padding:12px 16px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;position:sticky;top:59px;background:rgba(11,15,23,.94);backdrop-filter:blur(8px);z-index:45}
+.mainnav::-webkit-scrollbar{display:none}
+.mainnav button{flex:0 0 auto;background:var(--card);border:1px solid var(--line);color:var(--dim);border-radius:20px;padding:9px 15px;font-size:13px;font-weight:600;white-space:nowrap}
+.mainnav button.on{color:var(--tx);background:var(--card2);border-color:var(--accent)}
 main{padding:0 16px 90px;max-width:1000px;margin:0 auto}
 .section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
 .section h2{font-size:15px;margin-bottom:12px}
@@ -151,8 +152,6 @@ main{padding:0 16px 90px;max-width:1000px;margin:0 auto}
 .vtoggle button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
 .vtoggle .spacer{flex:1}
 .vtoggle .todaybtn{border-color:var(--gold);color:var(--gold)}
-.pfilter{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;padding-bottom:2px}
-.pfilter button{background:var(--card);border:1px solid var(--line);color:var(--dim);border-radius:20px;padding:6px 13px;font-size:12px;font-weight:600;white-space:nowrap}
 .weeknav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:8px}
 .weeknav b{font-size:14px;text-align:center;flex:1}
 .wk{display:flex;gap:8px;align-items:stretch;min-height:340px}
@@ -239,15 +238,14 @@ main{padding:0 16px 90px;max-width:1000px;margin:0 auto}
   <button id="netbadge" class="netbadge hidden" onclick="flushQueue()"></button>
   <button class="iconbtn" onclick="openMenu()">&#9881;</button>
 </header>
-<nav>
-  <button id="tab-sched" class="on" onclick="setTab('sched')">&#128197; <span id="lbl-sched"></span></button>
-  <button id="tab-stats" onclick="setTab('stats')">&#128202; <span id="lbl-stats"></span></button>
-</nav>
+<nav id="mainnav" class="mainnav"></nav>
 <main>
-  <div id="view-sched">
-    <div class="pfilter" id="pfilter"></div>
+  <div id="view-main">
     <div id="questcard"></div>
     <div id="goalcard"></div>
+    <div id="todaycard"></div>
+  </div>
+  <div id="view-sched" class="hidden">
     <div id="pillarpanel"></div>
     <div id="healthcard"></div>
     <div class="vtoggle">
@@ -288,6 +286,7 @@ newpass:'New Password',setnew:'Set a new password for your account',updatepw:'Up
 sched:'Schedule',stats:'Stats',week:'Week',month:'Month',year:'Year',today:'Today',
 quest:'Today\u2019s Quest',pillars:'pillars',all:'All',
 study:'Studying',gym:'Health',social:'Social',soul:'Soul',
+main:'Main',todayplan:'Today',
 quickadd:'Quick log',thisweek:'This week',recent:'Recent',viewall:'All pillars',nothingweek:'Nothing logged this week yet.',
 health:'Health Today',water:'Water',calories:'Calories',protein:'Protein',addmeal:'Add meal',meal:'Meal',
 kcal:'kcal',grams:'g',bottles:'bottles',bottle:'bottle',bottlesize:'Bottle size (ml)',
@@ -328,6 +327,7 @@ newpass:'\u0643\u0644\u0645\u0629 \u0645\u0631\u0648\u0631 \u062C\u062F\u064A\u0
 sched:'\u0627\u0644\u062C\u062F\u0648\u0644',stats:'\u0627\u0644\u0625\u062D\u0635\u0627\u0621\u0627\u062A',week:'\u0623\u0633\u0628\u0648\u0639',month:'\u0634\u0647\u0631',year:'\u0633\u0646\u0629',today:'\u0627\u0644\u064A\u0648\u0645',
 quest:'\u0645\u0647\u0645\u0629 \u0627\u0644\u064A\u0648\u0645',pillars:'\u0623\u0631\u0643\u0627\u0646',all:'\u0627\u0644\u0643\u0644',
 study:'\u0627\u0644\u062F\u0631\u0627\u0633\u0629',gym:'\u0627\u0644\u0635\u062D\u0629',social:'\u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639\u064A',soul:'\u0627\u0644\u0631\u0648\u062D',
+main:'\u0627\u0644\u0631\u0626\u064A\u0633\u064A\u0629',todayplan:'\u0627\u0644\u064A\u0648\u0645',
 quickadd:'\u062A\u0633\u062C\u064A\u0644 \u0633\u0631\u064A\u0639',thisweek:'\u0647\u0630\u0627 \u0627\u0644\u0623\u0633\u0628\u0648\u0639',recent:'\u0627\u0644\u0623\u062E\u064A\u0631',viewall:'\u0643\u0644 \u0627\u0644\u0623\u0631\u0643\u0627\u0646',nothingweek:'\u0644\u0627 \u064A\u0648\u062C\u062F \u062A\u0633\u062C\u064A\u0644 \u0647\u0630\u0627 \u0627\u0644\u0623\u0633\u0628\u0648\u0639.',
 health:'\u0635\u062D\u0629 \u0627\u0644\u064A\u0648\u0645',water:'\u0627\u0644\u0645\u0627\u0621',calories:'\u0627\u0644\u0633\u0639\u0631\u0627\u062A',protein:'\u0627\u0644\u0628\u0631\u0648\u062A\u064A\u0646',addmeal:'\u0625\u0636\u0627\u0641\u0629 \u0648\u062C\u0628\u0629',meal:'\u0648\u062C\u0628\u0629',
 kcal:'\u0633\u0639\u0631\u0629',grams:'\u062C\u0645',bottles:'\u0632\u062C\u0627\u062C\u0627\u062A',bottle:'\u0632\u062C\u0627\u062C\u0629',bottlesize:'\u062D\u062C\u0645 \u0627\u0644\u0632\u062C\u0627\u062C\u0629 (\u0645\u0644)',
@@ -379,7 +379,7 @@ var WD={en:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],ar:['\u0623\u062D\u062F',
 var types=[],entries=[],notes={},quran=[],gymSets=[],user=null;
 var cfg={lang:'en',city:'Riyadh',country:'Saudi Arabia',lat:null,lon:null,goals:{study:5,gym:4,social:3,soul:7},freezes:{},season_start:null,season_target:1500,quran_goal:604,onboarded:false,calorie_goal:2200,protein_goal:120,water_goal_ml:2000,bottle_ml:250};
 var nutri={};
-var tab='sched',view='week',anchor=new Date(),selDay=null,signup=false,curP='study',prevLvl=null,pFilter='all',prayerTimes=null,deferredPrompt=null;
+var tab='main',view='week',anchor=new Date(),selDay=null,signup=false,curP='study',prevLvl=null,pFilter='all',prayerTimes=null,deferredPrompt=null;
 
 function dstr(d){var y=d.getFullYear(),m=('0'+(d.getMonth()+1)).slice(-2),dd=('0'+d.getDate()).slice(-2);return y+'-'+m+'-'+dd}
 function today(){return dstr(new Date())}
@@ -393,8 +393,6 @@ function applyLang(){
   document.documentElement.dir=lang==='ar'?'rtl':'ltr';
   document.getElementById('langbtn').textContent=lang==='ar'?'EN':'\u0639';
   document.title=T('title');
-  document.getElementById('lbl-sched').textContent=T('sched');
-  document.getElementById('lbl-stats').textContent=T('stats');
   document.getElementById('vt-week').textContent=T('week');
   document.getElementById('vt-month').textContent=T('month');
   document.getElementById('vt-year').textContent=T('year');
@@ -847,7 +845,7 @@ async function saveMeal(){
 }
 function renderHealth(){
   var el=document.getElementById('healthcard');if(!el)return;
-  if(pFilter!=='gym'){el.innerHTML='';return}
+  if(tab!=='gym'){el.innerHTML='';return}
   var ds=today(),n=nut(ds);
   var bm=bottleMl(),gb=goalBottles(),have=Math.round(n.water_ml/bm);
   var show=Math.max(gb,have);
@@ -870,6 +868,16 @@ function renderHealth(){
   el.innerHTML=h;
 }
 
+function renderToday(){
+  var el=document.getElementById('todaycard');if(!el)return;
+  var td=today();
+  var de=entries.filter(function(e){return e.entry_date===td});
+  var h='<div class="section"><h2>\uD83D\uDCCC '+T('todayplan')+' \u00B7 '+dayPoints(td)+' XP</h2>';
+  h+='<div class="wkentries">'+(de.length?de.map(entHtml).join(''):'<p class="muted">'+T('emptyday')+'</p>')+'</div>';
+  h+='<textarea class="dnote" style="border:1px solid var(--line);border-radius:8px;background:var(--card2);padding:8px" rows="2" placeholder="'+T('noteph')+'" onchange="saveNote(\''+td+'\',this.value)">'+esc(notes[td]||'')+'</textarea>';
+  h+='<div class="mrow"><button class="ok" onclick="openAdd(\''+td+'\')">+ '+T('add')+'</button></div></div>';
+  el.innerHTML=h;
+}
 /* ---------- pillar pages ---------- */
 async function quickLog(tid){
   var t=types.find(function(x){return x.id===tid});if(!t)return;
@@ -880,7 +888,7 @@ async function quickLog(tid){
 }
 function renderPillar(){
   var el=document.getElementById('pillarpanel');if(!el)return;
-  if(pFilter==='all'){el.innerHTML='';return}
+  if(PKEYS.indexOf(tab)<0){el.innerHTML='';return}
   var p=pFilter,ws=weekStart(new Date());
   var pxp=pillarXP(p),pl=lvlOf(pxp),base=xpForLvl(pl),next=xpForLvl(pl+1);
   var g=cfg.goals[p]||0,dn=pillarDaysInWeek(p,ws),wx=weekXP(ws,p);
@@ -954,7 +962,12 @@ function showLevelUp(l){
 function setAccent(p){document.documentElement.style.setProperty('--accent',p==='all'?'#4f9cf9':PIL[p].hex)}
 
 /* ---------- render ---------- */
-function render(){renderHeader();renderQuest();renderGoals();renderPillar();renderHealth();renderFilter();if(tab==='sched')renderSched();else renderStats()}
+function render(){
+  renderHeader();renderNav();
+  if(tab==='main'){renderQuest();renderGoals();renderToday();return}
+  if(tab==='stats'){renderStats();return}
+  renderPillar();renderHealth();renderSched();
+}
 function renderHeader(){
   var xp=totalXP(),l=lvlOf(xp),base=xpForLvl(l),next=xpForLvl(l+1);
   document.getElementById('hlvl').textContent='LV '+l+' \u00B7 '+rankOf(l);
@@ -962,7 +975,7 @@ function renderHeader(){
   document.getElementById('hxpt').textContent=xp+' XP \u00B7 '+(next-xp)+'\u2192LV'+(l+1);
 }
 function renderQuest(){
-  if(pFilter!=='all'){document.getElementById('questcard').innerHTML='';return}
+  if(tab!=='main')return;
   var td=today();
   var doneP=PKEYS.filter(function(p){return doneEntries().some(function(e){return e.pillar===p&&e.entry_date===td})});
   var h='<div class="quest"><div class="qtop"><h2>\u2694\uFE0F '+T('quest')+'</h2><span class="qcount">'+doneP.length+'/4 '+T('pillars')+'</span></div>';
@@ -995,7 +1008,7 @@ function renderQuest(){
   document.getElementById('questcard').innerHTML=h;
 }
 function renderGoals(){
-  if(pFilter!=='all'){document.getElementById('goalcard').innerHTML='';return}
+  if(tab!=='main')return;
   var ws=weekStart(new Date());
   var h='<div class="section"><h2>\uD83C\uDFAF '+T('weekgoals')+'</h2>';
   PKEYS.forEach(function(p){
@@ -1006,22 +1019,29 @@ function renderGoals(){
   h+='</div>';
   document.getElementById('goalcard').innerHTML=h;
 }
-function renderFilter(){
-  var h='<button onclick="setFilter(\'all\')" style="'+(pFilter==='all'?'border-color:var(--accent);color:var(--tx);background:var(--card2)':'')+'">\u2726 '+T('viewall')+'</button>';
-  PKEYS.forEach(function(p){
-    var on=pFilter===p;
-    h+='<button onclick="setFilter(\''+p+'\')" style="'+(on?'border-color:'+PIL[p].hex+';color:var(--tx);background:'+PIL[p].hex+'22':'')+'">'+PIL[p].em+' '+pnm(p)+'</button>';
-  });
-  document.getElementById('pfilter').innerHTML=h;
-}
-function setFilter(p){pFilter=p;setAccent(p);renderQuest();renderGoals();renderPillar();renderHealth();renderFilter();renderSched();window.scrollTo({top:0,behavior:'smooth'})}
+function renderFilter(){}
+function setFilter(p){setTab(p==='all'?'sched':p)}
 function visible(e){return pFilter==='all'||e.pillar===pFilter}
-function setTab(t){tab=t;
-  document.getElementById('tab-sched').classList.toggle('on',t==='sched');
-  document.getElementById('tab-stats').classList.toggle('on',t==='stats');
-  document.getElementById('view-sched').classList.toggle('hidden',t!=='sched');
+function setTab(t){
+  tab=t;
+  var pill=PKEYS.indexOf(t)>=0;
+  pFilter=pill?t:'all';
+  setAccent(pill?t:'all');
+  document.getElementById('view-main').classList.toggle('hidden',t!=='main');
+  document.getElementById('view-sched').classList.toggle('hidden',!(t==='sched'||pill));
   document.getElementById('view-stats').classList.toggle('hidden',t!=='stats');
+  window.scrollTo({top:0});
   render();
+}
+function renderNav(){
+  var el=document.getElementById('mainnav');if(!el)return;
+  var tabs=[['main','\uD83C\uDFE0 '+T('main')],['sched','\uD83D\uDCC5 '+T('sched')],['stats','\uD83D\uDCCA '+T('stats')]];
+  PKEYS.forEach(function(p){tabs.push([p,PIL[p].em+' '+pnm(p)])});
+  el.innerHTML=tabs.map(function(x){
+    var on=tab===x[0];
+    var st=on&&PKEYS.indexOf(x[0])>=0?'border-color:'+PIL[x[0]].hex+';background:'+PIL[x[0]].hex+'22;color:var(--tx)':'';
+    return '<button class="'+(on?'on':'')+'" style="'+st+'" onclick="setTab(\''+x[0]+'\')">'+x[1]+'</button>';
+  }).join('');
 }
 function setView(v){view=v;anchor=new Date();selDay=null;
   ['week','month','year'].forEach(function(x){document.getElementById('vt-'+x).classList.toggle('on',x===v)});
