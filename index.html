@@ -1131,6 +1131,13 @@ function sessionHours(ses){
 }
 function isAbsent(sid,ds){return absences.some(function(a){return a.session_id===sid&&a.class_date===ds})}
 function absRec(sid,ds){return absences.find(function(a){return a.session_id===sid&&a.class_date===ds})}
+/* hours charged for an absence: what was chosen, else the whole block */
+function absHours(ses,ds){
+  var r=absRec(ses.id,ds);
+  if(!r)return 0;
+  return r.hours||sessionHours(ses);
+}
+function absRec(sid,ds){return absences.find(function(a){return a.session_id===sid&&a.class_date===ds})}
 /* hours an absence costs: what the teacher counted, else the full block */
 function absHours(ses,ds){
   var r=absRec(ses.id,ds);
@@ -1259,7 +1266,8 @@ function classRow(ses,ds,interactive){
   '<div class="cm">'+actName(ses.activity)+' \u00B7 '+T('section')+' '+esc(ses.section||'')+'</div></div>';
   h+='<div class="ct">'+fmt12(ses.start_time)+'<br>'+fmt12(ses.end_time)+'</div>';
   if(interactive){
-    var lbl=abs?'\u274C '+T('absent'):'\u2705 '+T('present');
+    var ah=abs?absHours(ses,ds):0;
+    var lbl=abs?('\u274C '+T('absent')+(sessionHours(ses)>1?' \u00B7 '+ah+'h':'')):('\u2705 '+T('present'));
     if(abs){var ah=absHours(ses,ds);if(sessionHours(ses)>1)lbl+=' <small style="opacity:.85">'+ah+'</small>'}
     h+='<button class="cb'+(abs?' on':'')+'" onclick="toggleAbsent(\''+ses.id+'\',\''+ds+'\')">'+lbl+'</button>';
   }
