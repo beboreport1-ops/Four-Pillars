@@ -65,6 +65,34 @@ main{padding:0 16px 90px;max-width:1000px;margin:0 auto}
 .pray.done{background:rgba(167,139,250,.18);border-color:var(--soul);color:var(--tx)}
 .pray.now{box-shadow:0 0 0 1px var(--gold)}
 .pray.future{opacity:.45}
+.subtabs{display:flex;gap:6px;margin-bottom:12px}
+.subtabs button{flex:1;background:var(--card);border:1px solid var(--line);color:var(--dim);border-radius:9px;padding:8px;font-size:12px;font-weight:600}
+.subtabs button.on{background:var(--card2);color:var(--tx);border-color:var(--study)}
+.cls{display:flex;align-items:center;gap:10px;background:var(--card2);border-radius:10px;padding:10px 12px;margin-bottom:7px;border-inline-start:3px solid var(--study)}
+.cls.absent{border-inline-start-color:#ff6b4a;opacity:.72}
+.cls.future{opacity:.55}
+.cls .ci{flex:1;min-width:0}
+.cls .cc{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cls .cm{font-size:11px;color:var(--dim);margin-top:2px}
+.cls .ct{font-size:11px;color:var(--gold);font-weight:700;white-space:nowrap}
+.cls .cb{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:6px 10px;font-size:11px;font-weight:700;white-space:nowrap}
+.cls .cb.on{background:#b91c1c;border-color:#b91c1c;color:#fff}
+.crow{background:var(--card2);border-radius:10px;padding:11px 12px;margin-bottom:8px}
+.crow .ch{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.crow .cn{font-size:13px;font-weight:700}
+.crow .cp{font-size:15px;font-weight:800}
+.crow .cs{font-size:11px;color:var(--dim);margin-top:3px;display:flex;justify-content:space-between;gap:8px}
+.crow .cbar{height:6px;background:rgba(255,255,255,.07);border-radius:3px;margin-top:7px;overflow:hidden}
+.crow .cbar div{height:100%;border-radius:3px;transition:width .4s}
+.warn{color:#fbbf24;font-weight:700}
+.bad{color:#ff6b4a;font-weight:700}
+.tt{overflow-x:auto}
+.tt table{width:100%;border-collapse:separate;border-spacing:4px;min-width:520px}
+.tt th{font-size:11px;color:var(--dim);font-weight:600;padding:4px}
+.tt td{vertical-align:top}
+.ttc{background:var(--card2);border-radius:8px;padding:6px;font-size:10px;line-height:1.35;border-inline-start:2px solid var(--study)}
+.ttc b{display:block;font-size:11px}
+.ttc span{color:var(--dim)}
 .phero{background:linear-gradient(135deg,#131a26,#161f2e);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px;position:relative;overflow:hidden}
 .phero:after{content:'';position:absolute;top:-40px;inset-inline-end:-30px;width:130px;height:130px;border-radius:50%;opacity:.11}
 .phero .pe{font-size:30px}
@@ -247,6 +275,7 @@ main{padding:0 16px 90px;max-width:1000px;margin:0 auto}
   </div>
   <div id="view-sched" class="hidden">
     <div id="pillarpanel"></div>
+    <div id="studycard"></div>
     <div id="healthcard"></div>
     <div class="vtoggle">
       <button id="vt-week" class="on" onclick="setView('week')"></button>
@@ -287,6 +316,12 @@ sched:'Schedule',stats:'Stats',week:'Week',month:'Month',year:'Year',today:'Toda
 quest:'Today\u2019s Quest',pillars:'pillars',all:'All',
 study:'Studying',gym:'Health',social:'Social',soul:'Soul',
 main:'Main',todayplan:'Today',
+courses:'My Courses',todayclasses:'Today\u2019s Classes',timetable:'Timetable',attendance:'Attendance',
+present:'Present',absent:'Absent',lecture:'Lecture',tutorial:'Tutorial',lab:'Lab',section:'Section',
+noclasses:'No classes today \uD83C\uDF89',held:'held',canmiss:'Can miss {n} more',denied:'Denial risk!',
+week:'Week',weekof:'Week {n} of {t}',semstart:'Semester start',semweeks:'Semester weeks',abslimit:'Denial limit (%)',
+markedabsent:'Marked absent',markedpresent:'Back to present',required:'Required',elective:'Elective',
+semdone:'Semester finished',upcoming:'Upcoming',hours:'hrs',
 quickadd:'Quick log',thisweek:'This week',recent:'Recent',viewall:'All pillars',nothingweek:'Nothing logged this week yet.',
 health:'Health Today',water:'Water',calories:'Calories',protein:'Protein',addmeal:'Add meal',meal:'Meal',
 kcal:'kcal',grams:'g',bottles:'bottles',bottle:'bottle',bottlesize:'Bottle size (ml)',
@@ -328,6 +363,12 @@ sched:'\u0627\u0644\u062C\u062F\u0648\u0644',stats:'\u0627\u0644\u0625\u062D\u06
 quest:'\u0645\u0647\u0645\u0629 \u0627\u0644\u064A\u0648\u0645',pillars:'\u0623\u0631\u0643\u0627\u0646',all:'\u0627\u0644\u0643\u0644',
 study:'\u0627\u0644\u062F\u0631\u0627\u0633\u0629',gym:'\u0627\u0644\u0635\u062D\u0629',social:'\u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639\u064A',soul:'\u0627\u0644\u0631\u0648\u062D',
 main:'\u0627\u0644\u0631\u0626\u064A\u0633\u064A\u0629',todayplan:'\u0627\u0644\u064A\u0648\u0645',
+courses:'\u0645\u0648\u0627\u062F\u064A',todayclasses:'\u0645\u062D\u0627\u0636\u0631\u0627\u062A \u0627\u0644\u064A\u0648\u0645',timetable:'\u0627\u0644\u062C\u062F\u0648\u0644',attendance:'\u0627\u0644\u062D\u0636\u0648\u0631',
+present:'\u062D\u0627\u0636\u0631',absent:'\u063A\u0627\u0626\u0628',lecture:'\u0645\u062D\u0627\u0636\u0631\u0629',tutorial:'\u062A\u0645\u0627\u0631\u064A\u0646',lab:'\u0639\u0645\u0644\u064A',section:'\u0634\u0639\u0628\u0629',
+noclasses:'\u0644\u0627 \u0645\u062D\u0627\u0636\u0631\u0627\u062A \u0627\u0644\u064A\u0648\u0645 \uD83C\uDF89',held:'\u0645\u0646\u0639\u0642\u062F\u0629',canmiss:'\u064A\u0645\u0643\u0646 \u0627\u0644\u063A\u064A\u0627\u0628 {n} \u0645\u0631\u0627\u062A',denied:'\u062E\u0637\u0631 \u0627\u0644\u062D\u0631\u0645\u0627\u0646!',
+week:'\u0623\u0633\u0628\u0648\u0639',weekof:'\u0627\u0644\u0623\u0633\u0628\u0648\u0639 {n} \u0645\u0646 {t}',semstart:'\u0628\u062F\u0627\u064A\u0629 \u0627\u0644\u0641\u0635\u0644',semweeks:'\u0623\u0633\u0627\u0628\u064A\u0639 \u0627\u0644\u0641\u0635\u0644',abslimit:'\u062D\u062F \u0627\u0644\u062D\u0631\u0645\u0627\u0646 (%)',
+markedabsent:'\u062A\u0645 \u062A\u0633\u062C\u064A\u0644 \u063A\u064A\u0627\u0628',markedpresent:'\u0639\u0627\u062F \u062D\u0627\u0636\u0631',required:'\u0625\u062C\u0628\u0627\u0631\u064A\u0629',elective:'\u0625\u062E\u062A\u064A\u0627\u0631\u064A\u0629',
+semdone:'\u0627\u0646\u062A\u0647\u0649 \u0627\u0644\u0641\u0635\u0644',upcoming:'\u0627\u0644\u0642\u0627\u062F\u0645',hours:'\u0633\u0627\u0639\u0627\u062A',
 quickadd:'\u062A\u0633\u062C\u064A\u0644 \u0633\u0631\u064A\u0639',thisweek:'\u0647\u0630\u0627 \u0627\u0644\u0623\u0633\u0628\u0648\u0639',recent:'\u0627\u0644\u0623\u062E\u064A\u0631',viewall:'\u0643\u0644 \u0627\u0644\u0623\u0631\u0643\u0627\u0646',nothingweek:'\u0644\u0627 \u064A\u0648\u062C\u062F \u062A\u0633\u062C\u064A\u0644 \u0647\u0630\u0627 \u0627\u0644\u0623\u0633\u0628\u0648\u0639.',
 health:'\u0635\u062D\u0629 \u0627\u0644\u064A\u0648\u0645',water:'\u0627\u0644\u0645\u0627\u0621',calories:'\u0627\u0644\u0633\u0639\u0631\u0627\u062A',protein:'\u0627\u0644\u0628\u0631\u0648\u062A\u064A\u0646',addmeal:'\u0625\u0636\u0627\u0641\u0629 \u0648\u062C\u0628\u0629',meal:'\u0648\u062C\u0628\u0629',
 kcal:'\u0633\u0639\u0631\u0629',grams:'\u062C\u0645',bottles:'\u0632\u062C\u0627\u062C\u0627\u062A',bottle:'\u0632\u062C\u0627\u062C\u0629',bottlesize:'\u062D\u062C\u0645 \u0627\u0644\u0632\u062C\u0627\u062C\u0629 (\u0645\u0644)',
@@ -377,8 +418,11 @@ var WD={en:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],ar:['\u0623\u062D\u062F',
 
 /* ---------- state ---------- */
 var types=[],entries=[],notes={},quran=[],gymSets=[],user=null;
-var cfg={lang:'en',city:'Riyadh',country:'Saudi Arabia',lat:null,lon:null,goals:{study:5,gym:4,social:3,soul:7},freezes:{},season_start:null,season_target:1500,quran_goal:604,onboarded:false,calorie_goal:2200,protein_goal:120,water_goal_ml:2000,bottle_ml:250};
+var cfg={lang:'en',city:'Riyadh',country:'Saudi Arabia',lat:null,lon:null,goals:{study:5,gym:4,social:3,soul:7},freezes:{},season_start:null,season_target:1500,quran_goal:604,onboarded:false,calorie_goal:2200,protein_goal:120,water_goal_ml:2000,bottle_ml:250,
+semester_start:'2026-08-23',semester_weeks:15,absence_limit:25,courses_seeded:false};
 var nutri={};
+var courses=[],csessions=[],absences=[];
+var studyView='today';
 var tab='main',view='week',anchor=new Date(),selDay=null,signup=false,curP='study',prevLvl=null,pFilter='all',prayerTimes=null,deferredPrompt=null;
 
 function dstr(d){var y=d.getFullYear(),m=('0'+(d.getMonth()+1)).slice(-2),dd=('0'+d.getDate()).slice(-2);return y+'-'+m+'-'+dd}
@@ -465,6 +509,7 @@ async function init(){
   prevLvl=lvlOf(totalXP());
   applyLang();
   if(!cfg.onboarded){onboard(0);return}
+  if(!cfg.courses_seeded&&!courses.length&&isOnline())seedCourses().then(render);
   render();netBadge();flushQueue(true);
   loadPrayerTimes();
   setInterval(function(){if(isOnline()&&getQ().length)flushQueue(true)},60000);
@@ -480,7 +525,10 @@ async function loadAll(){
     sb.from('day_notes').select('*'),
     sb.from('quran_log').select('*').order('entry_date'),
     sb.from('gym_sets').select('*').order('entry_date'),
-    sb.from('nutrition_log').select('*').order('entry_date')
+    sb.from('nutrition_log').select('*').order('entry_date'),
+    sb.from('courses').select('*').order('sort'),
+    sb.from('course_sessions').select('*'),
+    sb.from('attendance').select('*')
   ]);
   types=res[0].data||[];entries=res[1].data||[];
   if(res[2].data){
@@ -491,6 +539,8 @@ async function loadAll(){
     cfg.quran_goal=s.quran_goal||604;cfg.onboarded=!!s.onboarded;
     cfg.calorie_goal=s.calorie_goal||2200;cfg.protein_goal=s.protein_goal||120;
     cfg.water_goal_ml=s.water_goal_ml||2000;cfg.bottle_ml=s.bottle_ml||250;
+    cfg.semester_start=s.semester_start||'2026-08-23';cfg.semester_weeks=s.semester_weeks||15;
+    cfg.absence_limit=s.absence_limit||25;cfg.courses_seeded=!!s.courses_seeded;
     if(s.latitude!=null){cfg.lat=s.latitude;cfg.lon=s.longitude}
     if(!localStorage.getItem('fp_lang'))lang=cfg.lang;
   }else{
@@ -500,6 +550,7 @@ async function loadAll(){
   notes={};(res[3].data||[]).forEach(function(n){notes[n.entry_date]=n.note});
   quran=res[4].data||[];gymSets=res[5].data||[];
   nutri={};(res[6]&&res[6].data||[]).forEach(function(n){nutri[n.entry_date]={calories:n.calories,protein:n.protein,water_ml:n.water_ml}});
+  courses=res[7]&&res[7].data||[];csessions=res[8]&&res[8].data||[];absences=res[9]&&res[9].data||[];
   }catch(e){loadCache();return}
   saveCache();
 }
@@ -511,7 +562,7 @@ async function seed(){
   await sb.from('activity_types').insert(defs.map(function(d){return{pillar:d[0],name:d[1],points:d[2]}}));
   var t=await sb.from('activity_types').select('*').order('created_at');types=t.data||[];
 }
-var SETTING_COLS=['lang','city','country','goals','freezes','season_start','season_target','quran_goal','onboarded','calorie_goal','protein_goal','water_goal_ml','bottle_ml'];
+var SETTING_COLS=['lang','city','country','goals','freezes','season_start','season_target','quran_goal','onboarded','calorie_goal','protein_goal','water_goal_ml','bottle_ml','semester_start','semester_weeks','absence_limit','courses_seeded'];
 async function saveCfg(patch){
   Object.assign(cfg,patch);
   var row={user_id:user.id};
@@ -535,13 +586,13 @@ function getQ(){try{return JSON.parse(localStorage.getItem(QK)||'[]')}catch(e){r
 function setQ(q){localStorage.setItem(QK,JSON.stringify(q));netBadge()}
 function enqueue(op){var q=getQ();q.push(op);setQ(q)}
 function saveCache(){
-  try{localStorage.setItem(CK,JSON.stringify({types:types,entries:entries,notes:notes,quran:quran,gymSets:gymSets,nutri:nutri,cfg:cfg}))}catch(e){}
+  try{localStorage.setItem(CK,JSON.stringify({types:types,entries:entries,notes:notes,quran:quran,gymSets:gymSets,nutri:nutri,courses:courses,csessions:csessions,absences:absences,cfg:cfg}))}catch(e){}
 }
 function loadCache(){
   try{
     var c=JSON.parse(localStorage.getItem(CK)||'null');
     if(!c)return false;
-    types=c.types||[];entries=c.entries||[];notes=c.notes||{};quran=c.quran||[];gymSets=c.gymSets||[];nutri=c.nutri||{};
+    types=c.types||[];entries=c.entries||[];notes=c.notes||{};quran=c.quran||[];gymSets=c.gymSets||[];nutri=c.nutri||{};courses=c.courses||[];csessions=c.csessions||[];absences=c.absences||[];
     if(c.cfg)Object.assign(cfg,c.cfg);
     return true;
   }catch(e){return false}
@@ -885,6 +936,195 @@ function renderToday(){
   h+='<div class="mrow"><button class="ok" onclick="openAdd(\''+td+'\')">+ '+T('add')+'</button></div></div>';
   el.innerHTML=h;
 }
+
+/* ---------- courses & attendance ---------- */
+var MYCOURSES=[
+ {code:'\u0639\u0627\u0644 212',name:'\u062A\u0631\u0627\u0643\u064A\u0628 \u0627\u0644\u0628\u064A\u0627\u0646\u0627\u062A',kind:'required',credits:3,sort:1,ses:[
+   {a:'lecture',sec:'90568',d:0,s:'10:00',e:'10:50'},
+   {a:'lecture',sec:'90568',d:2,s:'10:00',e:'10:50'},
+   {a:'lecture',sec:'90568',d:4,s:'10:00',e:'10:50'},
+   {a:'tutorial',sec:'90569',d:0,s:'13:00',e:'13:50'}]},
+ {code:'\u0646\u0627\u0644 482',name:'\u0627\u0644\u0623\u0639\u0645\u0627\u0644 \u0627\u0644\u0627\u0644\u0643\u062A\u0631\u0648\u0646\u064A\u0629',kind:'required',credits:3,sort:2,ses:[
+   {a:'lecture',sec:'27395',d:3,s:'10:00',e:'10:50'},
+   {a:'lecture',sec:'27395',d:1,s:'10:00',e:'11:50'},
+   {a:'tutorial',sec:'27396',d:3,s:'11:00',e:'11:50'}]},
+ {code:'\u0633\u0644\u0645 106',name:'\u0627\u0644\u0641\u0642\u0647 \u0627\u0644\u0637\u0628\u064A',kind:'elective',credits:2,sort:3,ses:[
+   {a:'lecture',sec:'4976',d:2,s:'13:00',e:'14:50'}]},
+ {code:'\u0646\u0627\u0644 385',name:'\u0646\u0638\u0645 \u062A\u062E\u0637\u064A\u0637 \u0645\u0648\u0627\u0631\u062F \u0627\u0644\u0645\u0624\u0633\u0633\u0627\u062A',kind:'required',credits:3,sort:4,ses:[
+   {a:'lecture',sec:'1785',d:1,s:'13:00',e:'14:50'},
+   {a:'lab',sec:'1787',d:3,s:'13:00',e:'14:50'}]},
+ {code:'\u0646\u0627\u0644 362',name:'\u0627\u0644\u0646\u0645\u0630\u062C\u0629 \u0627\u0644\u0631\u064A\u0627\u0636\u064A\u0629 \u0644\u0646\u0638\u0645 \u0627\u0644\u0645\u0639\u0644\u0648\u0645\u0627\u062A',kind:'required',credits:3,sort:5,ses:[
+   {a:'lecture',sec:'78568',d:1,s:'08:00',e:'08:50'},
+   {a:'lecture',sec:'78568',d:3,s:'08:00',e:'09:50'},
+   {a:'tutorial',sec:'78569',d:1,s:'09:00',e:'09:50'}]},
+ {code:'\u0646\u0627\u0644 424',name:'\u062A\u0637\u0648\u064A\u0631 \u062A\u0637\u0628\u064A\u0642\u0627\u062A \u0627\u0644\u0648\u064A\u0628',kind:'required',credits:3,sort:6,ses:[
+   {a:'lecture',sec:'77443',d:0,s:'08:00',e:'09:50'},
+   {a:'lab',sec:'4871',d:4,s:'08:00',e:'09:50'}]}
+];
+async function seedCourses(){
+  for(var i=0;i<MYCOURSES.length;i++){
+    var c=MYCOURSES[i];
+    var r=await dbInsert('courses',[{code:c.code,name:c.name,kind:c.kind,credits:c.credits,sort:c.sort}]);
+    var cid=r.data[0].id;
+    courses=courses.concat(r.data);
+    var rows=c.ses.map(function(x){return{course_id:cid,activity:x.a,section:x.sec,weekday:x.d,start_time:x.s,end_time:x.e}});
+    var r2=await dbInsert('course_sessions',rows);
+    csessions=csessions.concat(r2.data);
+  }
+  await saveCfg({courses_seeded:true});
+  saveCache();
+}
+function semStart(){return cfg.semester_start||'2026-08-23'}
+function semWeeks(){return cfg.semester_weeks||15}
+/* all dates a session occurs, across the semester */
+function sessionDates(ses){
+  var out=[],st=new Date(semStart()+'T00:00:00');
+  var base=new Date(st);base.setDate(base.getDate()+((ses.weekday-st.getDay())+7)%7);
+  for(var w=0;w<semWeeks();w++){var d=new Date(base);d.setDate(d.getDate()+7*w);out.push(dstr(d))}
+  return out;
+}
+function classPassed(ds,endTime){
+  var now=new Date();
+  var end=new Date(ds+'T'+endTime+':00');
+  return end<=now;
+}
+function isAbsent(sid,ds){return absences.some(function(a){return a.session_id===sid&&a.class_date===ds})}
+function courseSessions(cid){return csessions.filter(function(x){return x.course_id===cid})}
+function courseStats(cid){
+  var total=0,held=0,abs=0;
+  courseSessions(cid).forEach(function(ses){
+    sessionDates(ses).forEach(function(ds){
+      total++;
+      if(classPassed(ds,ses.end_time)){held++;if(isAbsent(ses.id,ds))abs++}
+    });
+  });
+  var limit=Math.floor(total*(cfg.absence_limit||25)/100);
+  return{total:total,held:held,absent:abs,present:held-abs,
+    pct:held?Math.round((held-abs)/held*100):100,
+    absPct:total?Math.round(abs/total*100):0,
+    limit:limit,left:Math.max(0,limit-abs),risk:abs>=limit?'over':(limit&&abs>=limit-1?'near':'ok')};
+}
+function allStats(){
+  var t=0,h=0,a=0;
+  courses.forEach(function(c){var s=courseStats(c.id);t+=s.total;h+=s.held;a+=s.absent});
+  return{total:t,held:h,absent:a,pct:h?Math.round((h-a)/h*100):100};
+}
+function semWeekNum(){
+  var d=Math.floor((new Date()-new Date(semStart()+'T00:00:00'))/86400000);
+  return Math.min(semWeeks(),Math.max(1,Math.floor(d/7)+1));
+}
+function sessionsOn(ds){
+  var wd=new Date(ds+'T00:00:00').getDay();
+  var start=new Date(semStart()+'T00:00:00'),end=new Date(semStart()+'T00:00:00');
+  end.setDate(end.getDate()+semWeeks()*7-1);
+  var d=new Date(ds+'T00:00:00');
+  if(d<start||d>end)return [];
+  return csessions.filter(function(x){return x.weekday===wd}).sort(function(a,b){return a.start_time<b.start_time?-1:1});
+}
+function courseOf(sid){
+  var ses=csessions.find(function(x){return x.id===sid});
+  return ses?courses.find(function(c){return c.id===ses.course_id}):null;
+}
+async function toggleAbsent(sid,ds){
+  var rec=absences.find(function(a){return a.session_id===sid&&a.class_date===ds});
+  if(rec){
+    var r=await dbDelete('attendance',rec.id);
+    absences=absences.filter(function(a){return a.id!==rec.id});
+    saveCache();offToast(r,'\u2705 '+T('markedpresent'));
+  }else{
+    var r2=await dbInsert('attendance',[{session_id:sid,class_date:ds}]);
+    absences=absences.concat(r2.data);
+    saveCache();offToast(r2,'\u274C '+T('markedabsent'));
+  }
+  render();
+}
+function actName(a){return T(a)||a}
+
+function setStudyView(v){studyView=v;renderStudy()}
+function renderStudy(){
+  var el=document.getElementById('studycard');if(!el)return;
+  if(tab!=='study'){el.innerHTML='';return}
+  if(!courses.length){
+    el.innerHTML='<div class="section"><h2>\uD83C\uDF93 '+T('courses')+'</h2><p class="muted">'+T('emptyday')+'</p>'+
+    '<div class="mrow"><button class="ok" onclick="loadMySchedule()">\u2795 '+T('courses')+'</button></div></div>';
+    return;
+  }
+  var a=allStats();
+  var h='<div class="section"><div class="qtop"><h2>\uD83C\uDF93 '+T('attendance')+'</h2>'+
+  '<span class="qcount">'+T('weekof',{n:semWeekNum(),t:semWeeks()})+'</span></div>';
+  h+='<div class="recs" style="margin-bottom:12px">'+
+  '<div class="rec"><div class="rv" style="color:'+(a.pct>=90?'#34d399':a.pct>=75?'#fbbf24':'#ff6b4a')+'">'+a.pct+'%</div><div class="rl">'+T('present')+'</div></div>'+
+  '<div class="rec"><div class="rv">'+a.absent+'</div><div class="rl">'+T('absent')+'</div></div>'+
+  '<div class="rec"><div class="rv">'+a.held+'</div><div class="rl">'+T('held')+'</div></div>'+
+  '</div>';
+  h+='<div class="subtabs">'+
+  '<button class="'+(studyView==='today'?'on':'')+'" onclick="setStudyView(\'today\')">\uD83D\uDCCC '+T('todayclasses')+'</button>'+
+  '<button class="'+(studyView==='courses'?'on':'')+'" onclick="setStudyView(\'courses\')">\uD83D\uDCD6 '+T('courses')+'</button>'+
+  '<button class="'+(studyView==='tt'?'on':'')+'" onclick="setStudyView(\'tt\')">\uD83D\uDDD3 '+T('timetable')+'</button>'+
+  '</div>';
+  if(studyView==='today')h+=todayClassesHtml();
+  else if(studyView==='courses')h+=coursesHtml();
+  else h+=timetableHtml();
+  h+='</div>';
+  el.innerHTML=h;
+}
+function classRow(ses,ds,interactive){
+  var c=courses.find(function(x){return x.id===ses.course_id});
+  var abs=isAbsent(ses.id,ds),passed=classPassed(ds,ses.end_time);
+  var cls='cls'+(abs?' absent':'')+(passed?'':' future');
+  var style=c?'border-inline-start-color:'+(abs?'#ff6b4a':'var(--study)'):'';
+  var h='<div class="'+cls+'" style="'+style+'">';
+  h+='<div class="ci"><div class="cc">'+esc(c?c.code:'')+' \u00B7 '+esc(c?c.name:'')+'</div>'+
+  '<div class="cm">'+actName(ses.activity)+' \u00B7 '+T('section')+' '+esc(ses.section||'')+'</div></div>';
+  h+='<div class="ct">'+fmt12(ses.start_time)+'<br>'+fmt12(ses.end_time)+'</div>';
+  if(interactive)h+='<button class="cb'+(abs?' on':'')+'" onclick="toggleAbsent(\''+ses.id+'\',\''+ds+'\')">'+(abs?'\u274C '+T('absent'):'\u2705 '+T('present'))+'</button>';
+  h+='</div>';
+  return h;
+}
+function todayClassesHtml(){
+  var ds=today(),list=sessionsOn(ds);
+  if(!list.length)return '<p class="muted">'+T('noclasses')+'</p>';
+  return list.map(function(ses){return classRow(ses,ds,true)}).join('');
+}
+function coursesHtml(){
+  var h='';
+  courses.slice().sort(function(a,b){return a.sort-b.sort}).forEach(function(c){
+    var st=courseStats(c.id);
+    var col=st.risk==='over'?'#ff6b4a':st.risk==='near'?'#fbbf24':'#34d399';
+    h+='<div class="crow" style="border-inline-start:3px solid '+col+'">';
+    h+='<div class="ch"><span class="cn">'+esc(c.code)+' \u00B7 '+esc(c.name)+'</span><span class="cp" style="color:'+col+'">'+st.pct+'%</span></div>';
+    h+='<div class="cbar"><div style="width:'+st.pct+'%;background:'+col+'"></div></div>';
+    h+='<div class="cs"><span>'+T(c.kind)+' \u00B7 '+c.credits+' '+T('hours')+' \u00B7 '+st.held+' '+T('held')+'</span>';
+    h+='<span class="'+(st.risk==='over'?'bad':st.risk==='near'?'warn':'')+'">'+
+      (st.risk==='over'?'\u26A0 '+T('denied'):T('canmiss',{n:st.left}))+'</span></div>';
+    h+='</div>';
+  });
+  return h;
+}
+function timetableHtml(){
+  var days=[0,1,2,3,4];
+  var h='<div class="tt"><table><tr>';
+  days.forEach(function(d){h+='<th>'+WD[lang][d]+'</th>'});
+  h+='</tr><tr>';
+  days.forEach(function(d){
+    var list=csessions.filter(function(x){return x.weekday===d}).sort(function(a,b){return a.start_time<b.start_time?-1:1});
+    h+='<td>';
+    list.forEach(function(ses){
+      var c=courses.find(function(x){return x.id===ses.course_id});
+      h+='<div class="ttc"><b>'+esc(c?c.code:'')+'</b><span>'+actName(ses.activity)+'<br>'+fmt12(ses.start_time)+'</span></div>';
+    });
+    if(!list.length)h+='<div class="ttc" style="opacity:.35;border-inline-start-color:var(--line)"><span>\u2014</span></div>';
+    h+='</td>';
+  });
+  h+='</tr></table></div>';
+  return h;
+}
+async function loadMySchedule(){
+  toast('...');
+  await seedCourses();
+  toast('\uD83C\uDF93 '+T('added'));
+  render();
+}
 /* ---------- pillar pages ---------- */
 async function quickLog(tid){
   var t=types.find(function(x){return x.id===tid});if(!t)return;
@@ -973,7 +1213,7 @@ function render(){
   renderHeader();renderNav();
   if(tab==='main'){renderQuest();renderGoals();renderToday();return}
   if(tab==='stats'){renderStats();return}
-  renderPillar();renderHealth();renderSched();
+  renderPillar();renderStudy();renderHealth();renderSched();
 }
 function renderHeader(){
   var xp=totalXP(),l=lvlOf(xp),base=xpForLvl(l),next=xpForLvl(l+1);
@@ -1530,6 +1770,9 @@ function openPrefs(){
   PKEYS.forEach(function(p){
     h+='<div class="goalrow"><span class="gi">'+PIL[p].em+' '+pnm(p)+'</span><input type="number" min="0" max="7" id="g_'+p+'" value="'+(cfg.goals[p]||0)+'" style="width:70px"></div>';
   });
+  h+='<label>'+T('semstart')+'</label><input id="psem" type="date" value="'+(cfg.semester_start||'2026-08-23')+'">'+
+  '<label>'+T('semweeks')+'</label><input id="psemw" type="number" value="'+(cfg.semester_weeks||15)+'">'+
+  '<label>'+T('abslimit')+'</label><input id="pabs" type="number" value="'+(cfg.absence_limit||25)+'">';
   h+='<label>'+T('caloriegoal')+'</label><input id="pcal" type="number" value="'+(cfg.calorie_goal||2200)+'">'+
   '<label>'+T('proteingoal')+'</label><input id="pprot" type="number" value="'+(cfg.protein_goal||120)+'">'+
   '<label>'+T('watergoal')+'</label><input id="pwater" type="number" value="'+(cfg.water_goal_ml||2000)+'">'+
@@ -1550,7 +1793,10 @@ async function savePrefs(){
     calorie_goal:parseInt(document.getElementById('pcal').value)||2200,
     protein_goal:parseInt(document.getElementById('pprot').value)||120,
     water_goal_ml:parseInt(document.getElementById('pwater').value)||2000,
-    bottle_ml:parseInt(document.getElementById('pbottle').value)||250});
+    bottle_ml:parseInt(document.getElementById('pbottle').value)||250,
+    semester_start:document.getElementById('psem').value||'2026-08-23',
+    semester_weeks:parseInt(document.getElementById('psemw').value)||15,
+    absence_limit:parseInt(document.getElementById('pabs').value)||25});
   if(!ok)return;
   lang=nl;localStorage.setItem('fp_lang',lang);applyLang();
   if(document.getElementById('pcity')){cfg.lat=null;cfg.lon=null;localStorage.removeItem('fp_geo')}
