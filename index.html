@@ -29,7 +29,6 @@ button{cursor:pointer;font-family:inherit;color:inherit}
 .langlink{background:none;border:none;color:var(--dim);font-size:12px;font-weight:600;text-decoration:underline;padding:6px;margin-top:4px}
 .topbar{position:sticky;top:0;z-index:50;background:rgba(11,15,23,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 header{display:flex;align-items:center;gap:8px;padding:11px 14px}
-header .logo{font-size:18px}
 .lvlbadge{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#1a1200;font-weight:800;border-radius:8px;padding:3px 9px;font-size:12px;white-space:nowrap;flex:0 0 auto}
 .xpwrap{flex:1 1 auto;min-width:0}
 .xpbar{height:8px;background:var(--card2);border-radius:6px;overflow:hidden}
@@ -128,7 +127,6 @@ main{padding:0 16px 90px;max-width:1000px;margin:0 auto}
 .crow.tap{cursor:pointer}
 .crow .ttnav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
 .ttnav b{flex:1;text-align:center;font-size:13px}
-.ttoff{position:absolute;inset:0;background:rgba(167,139,250,.13);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--soul);text-align:center;padding:4px}
 .phero{background:linear-gradient(135deg,#131a26,#161f2e);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px;position:relative;overflow:hidden}
 .phero:after{content:'';position:absolute;top:-40px;inset-inline-end:-30px;width:130px;height:130px;border-radius:50%;opacity:.11}
 .phero .pe{font-size:30px}
@@ -967,8 +965,7 @@ function openMeal(){
   '<label>'+T('calories')+' ('+T('kcal')+')</label><input id="ncal" type="number" inputmode="numeric" placeholder="450">'+
   '<label>'+T('protein')+' ('+T('grams')+' \u00B7 '+T('optional')+')</label><input id="nprot" type="number" inputmode="numeric" placeholder="30">'+
   '<div class="mrow"><button class="no" onclick="closeModal()">'+T('cancel')+'</button><button class="ok" onclick="saveMeal()">'+T('save')+'</button></div>';
-  document.getElementById('mboxc').innerHTML=h;
-  document.getElementById('modal').classList.remove('hidden');
+  showModal(h);
   setTimeout(function(){var el=document.getElementById('ncal');if(el)el.focus()},50);
 }
 async function saveMeal(){
@@ -1241,8 +1238,7 @@ function askAbsHours(ses,ds){
   h+='<button class="danger" onclick="applyAbsent(\''+ses.id+'\',\''+ds+'\','+full+')">'+T('twohr',{n:full})+'</button>';
   h+='</div>';
   h+='<div class="mrow"><button class="no" onclick="closeModal()">'+T('cancel')+'</button></div>';
-  document.getElementById('mboxc').innerHTML=h;
-  document.getElementById('modal').classList.remove('hidden');
+  showModal(h);
 }
 async function applyAbsent(sid,ds,hrs){
   closeModal();
@@ -1352,8 +1348,7 @@ function openEvent(id,cid){
   h+='<div class="mrow"><button class="no" onclick="closeModal()">'+T('cancel')+'</button>'+
   '<button class="ok" onclick="saveEvent()">'+T('save')+'</button></div>';
   if(e)h+='<div class="mrow"><button class="no" style="color:#ff6b4a;border-color:#ff6b4a" onclick="delEvent(\''+e.id+'\')">'+T('remove')+'</button></div>';
-  document.getElementById('mboxc').innerHTML=h;
-  document.getElementById('modal').classList.remove('hidden');
+  showModal(h);
 }
 function delEvent(id){
   closeModal();
@@ -1372,8 +1367,7 @@ function openScore(id){
   '<div><label>'+T('maxscore')+'</label><input id="sc_m" type="number" step="0.5" value="'+(e.max_score!=null?e.max_score:'')+'"></div></div>';
   h+='<div class="mrow"><button class="no" onclick="closeModal()">'+T('cancel')+'</button>'+
   '<button class="ok" onclick="saveScore(\''+id+'\')">'+T('save')+'</button></div>';
-  document.getElementById('mboxc').innerHTML=h;
-  document.getElementById('modal').classList.remove('hidden');
+  showModal(h);
 }
 async function saveScore(id){
   var v=parseFloat(document.getElementById('sc_v').value);
@@ -1398,8 +1392,7 @@ function openRoom(sid){
   h+='<label>'+T('room')+'</label><input id="rm_v" value="'+esc(ses.room||'')+'" placeholder="'+T('room')+'">';
   h+='<div class="mrow"><button class="no" onclick="closeModal()">'+T('cancel')+'</button>'+
   '<button class="ok" onclick="saveRoom(\''+sid+'\')">'+T('save')+'</button></div>';
-  document.getElementById('mboxc').innerHTML=h;
-  document.getElementById('modal').classList.remove('hidden');
+  showModal(h);
 }
 async function saveRoom(sid){
   var v=document.getElementById('rm_v').value.trim();
@@ -1657,8 +1650,7 @@ function askSteps(t){
   }).join('')+'</div>';
   h+='<div class="mrow"><button class="no" onclick="closeModal()">'+T('cancel')+'</button>'+
   '<button class="ok" onclick="saveSteps(\''+t.id+'\')">'+T('save')+'</button></div>';
-  document.getElementById('mboxc').innerHTML=h;
-  document.getElementById('modal').classList.remove('hidden');
+  showModal(h);
 }
 async function saveSteps(tid){
   var t=types.find(function(x){return x.id===tid});if(!t)return;
@@ -1736,12 +1728,15 @@ function toast(msg){
 var _confirmFn=null;
 function confirmBox(title,msg,okLabel,fn){
   _confirmFn=fn;
-  document.getElementById('mboxc').innerHTML='<h2>'+title+'</h2><p class="confmsg">'+msg+'</p>'+
+  showModal('<h2>'+title+'</h2><p class="confmsg">'+msg+'</p>'+
   '<div class="mrow"><button class="no" onclick="closeModal()">'+T('cancel')+'</button>'+
-  '<button class="danger" onclick="runConfirm()">'+okLabel+'</button></div>';
-  document.getElementById('modal').classList.remove('hidden');
+  '<button class="danger" onclick="runConfirm()">'+okLabel+'</button></div>');
 }
 function runConfirm(){var f=_confirmFn;_confirmFn=null;closeModal();if(f)f()}
+function showModal(html){
+  document.getElementById('mboxc').innerHTML=html;
+  document.getElementById('modal').classList.remove('hidden');
+}
 function closeModal(){document.getElementById('modal').classList.add('hidden')}
 function checkLevelUp(){
   var l=lvlOf(totalXP());
@@ -1984,8 +1979,7 @@ function openMove(id){
   }
   h+='</div><label>'+T('date')+'</label><input type="date" id="mvdate" value="'+e.entry_date+'">'+
   '<div class="mrow"><button class="no" onclick="closeModal()">'+T('cancel')+'</button><button class="ok" onclick="var v=document.getElementById(\'mvdate\').value;closeModal();moveEntry(\''+id+'\',v)">'+T('save')+'</button></div>';
-  document.getElementById('mboxc').innerHTML=h;
-  document.getElementById('modal').classList.remove('hidden');
+  showModal(h);
 }
 
 /* ---------- stats ---------- */
@@ -2183,8 +2177,7 @@ function openAdd(ds){
   h+='<label>'+T('repeat')+'</label><select id="arep"><option value="0">'+T('norepeat')+'</option>'+
   [2,4,8,12].map(function(n){return '<option value="'+n+'">'+T('forwk',{n:n})+'</option>'}).join('')+'</select>';
   h+='<div class="mrow"><button class="no" onclick="closeModal()">'+T('cancel')+'</button><button class="ok" onclick="saveAdd()">'+T('save')+'</button></div>';
-  document.getElementById('mboxc').innerHTML=h;
-  document.getElementById('modal').classList.remove('hidden');
+  showModal(h);
   selP(pFilter==='all'?'study':pFilter);
 }
 function custChk(){document.getElementById('custwrap').classList.toggle('hidden',document.getElementById('atype').value!=='__custom')}
@@ -2218,8 +2211,7 @@ function openEdit(id){
   '<label>'+T('date')+'</label><input id="edate" type="date" value="'+e.entry_date+'">'+
   '<label>'+T('status')+'</label><select id="estat"><option value="done"'+(e.status==='done'?' selected':'')+'>'+(lang==='ar'?'\u0645\u0646\u062C\u0632':'Done')+'</option><option value="planned"'+(e.status==='planned'?' selected':'')+'>'+T('planned')+'</option></select>'+
   '<div class="mrow"><button class="no" onclick="closeModal()">'+T('cancel')+'</button><button class="ok" onclick="saveEdit(\''+id+'\')">'+T('save')+'</button></div>';
-  document.getElementById('mboxc').innerHTML=h;
-  document.getElementById('modal').classList.remove('hidden');
+  showModal(h);
 }
 async function saveEdit(id){
   var e=entries.find(function(x){return x.id===id});if(!e)return;
@@ -2241,8 +2233,7 @@ function openDayModal(ds){
   else if(frozenWk)h+='<p class="muted">'+T('freezeused')+'</p>';
   else h+='<button class="menuitem" onclick="freezeDay(\''+ds+'\')">\u2744\uFE0F '+T('freezeon')+'</button>';
   h+='<div class="mrow"><button class="no" onclick="closeModal()">'+T('close')+'</button><button class="ok" onclick="closeModal();openAdd(\''+ds+'\')">+ '+T('add')+'</button></div>';
-  document.getElementById('mboxc').innerHTML=h;
-  document.getElementById('modal').classList.remove('hidden');
+  showModal(h);
 }
 async function freezeDay(ds){
   var f=Object.assign({},cfg.freezes);f[ds]=true;
@@ -2258,8 +2249,7 @@ function openQuran(){
   '<label>'+T('surah')+'</label><input id="qs">'+
   '<label>'+T('juz')+'</label><input id="qj" type="number" min="1" max="30">'+
   '<div class="mrow"><button class="no" onclick="closeModal()">'+T('cancel')+'</button><button class="ok" onclick="saveQuran()">'+T('save')+'</button></div>';
-  document.getElementById('mboxc').innerHTML=h;
-  document.getElementById('modal').classList.remove('hidden');
+  showModal(h);
 }
 async function saveQuran(){
   var row={entry_date:document.getElementById('qd').value,pages:parseInt(document.getElementById('qp').value)||0,
@@ -2280,8 +2270,7 @@ function openGym(){
   '<label>'+T('reps')+'</label><input id="gr" type="number" value="10">'+
   '<label>'+T('weight')+'</label><input id="gw" type="number" value="0" step="0.5">'+
   '<div class="mrow"><button class="no" onclick="closeModal()">'+T('cancel')+'</button><button class="ok" onclick="saveGym()">'+T('save')+'</button></div>';
-  document.getElementById('mboxc').innerHTML=h;
-  document.getElementById('modal').classList.remove('hidden');
+  showModal(h);
 }
 async function saveGym(){
   var ex=document.getElementById('ge').value.trim();
@@ -2305,8 +2294,7 @@ function openMenu(){
   '<button class="menuitem" onclick="openPrefs()">\uD83C\uDF9B '+T('prefs')+'</button>'+
   '<button class="menuitem" onclick="closeModal();logout()">\u2192 '+T('signout')+'</button>'+
   '<div class="mrow"><button class="no" onclick="closeModal()">'+T('close')+'</button></div>';
-  document.getElementById('mboxc').innerHTML=h;
-  document.getElementById('modal').classList.remove('hidden');
+  showModal(h);
 }
 function openPrefs(){
   var h='<h2>\uD83C\uDF9B '+T('prefs')+'</h2>'+
@@ -2331,8 +2319,7 @@ function openPrefs(){
   '<label>'+T('seasontarget')+'</label><input id="pseason" type="number" value="'+(cfg.season_target||1500)+'">'+
   '<label>'+T('qurangoal')+'</label><input id="pquran" type="number" value="'+(cfg.quran_goal||604)+'">'+
   '<div class="mrow"><button class="no" onclick="closeModal()">'+T('cancel')+'</button><button class="ok" onclick="savePrefs()">'+T('save')+'</button></div>';
-  document.getElementById('mboxc').innerHTML=h;
-  document.getElementById('modal').classList.remove('hidden');
+  showModal(h);
 }
 async function savePrefs(){
   var g={};PKEYS.forEach(function(p){g[p]=parseInt(document.getElementById('g_'+p).value)||0});
@@ -2366,8 +2353,7 @@ function openTypes(){
   h+='<label>'+T('addnew')+'</label><select id="ntp">'+PKEYS.map(function(p){return '<option value="'+p+'">'+pnm(p)+'</option>'}).join('')+'</select>'+
   '<input id="ntn" placeholder="'+T('actname')+'" style="margin-top:6px"><input id="ntpts" type="number" value="10" style="margin-top:6px">'+
   '<div class="mrow"><button class="no" onclick="closeModal()">'+T('close')+'</button><button class="ok" onclick="addType()">'+T('add')+'</button></div>';
-  document.getElementById('mboxc').innerHTML=h;
-  document.getElementById('modal').classList.remove('hidden');
+  showModal(h);
 }
 async function addType(){
   var p=document.getElementById('ntp').value,n=document.getElementById('ntn').value.trim(),pt=parseInt(document.getElementById('ntpts').value)||10;
