@@ -101,7 +101,6 @@ main{padding:0 16px 90px;max-width:1000px;margin:0 auto}
 .gtop{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
 .gnum{font-size:30px;font-weight:800;line-height:1}
 .gden{font-size:14px;color:var(--dim);font-weight:700}
-.gso{margin-inline-start:auto;font-size:11px;color:var(--dim);font-weight:600}
 .gbar{position:relative;height:9px;background:rgba(255,255,255,.07);border-radius:5px;margin-top:10px;overflow:hidden}
 .gfill{position:absolute;inset-inline-start:0;top:0;height:100%;border-radius:5px;transition:width .4s}
 .gpend{position:absolute;top:0;height:100%;background:repeating-linear-gradient(45deg,rgba(255,255,255,.12),rgba(255,255,255,.12) 4px,transparent 4px,transparent 8px)}
@@ -355,12 +354,12 @@ quest:'Today\u2019s Quest',pillars:'pillars',all:'All',
 study:'Studying',gym:'Health',social:'Social',soul:'Soul',
 main:'Main',todayplan:'Today',
 ofsem:'of semester',calendar:'Calendar',ttip:'Tap Present on any class to mark it absent',missingcourses:'Some courses are missing',repair:'Fix',
-events:'Deadlines',addevent:'Add',ungraded:'{n} not graded yet',optl:'optional',marks:'Marks (out of 100)',outof100:'of 100',allocated:'planned',
-scoredso:'Scored so far',remaining:'{n} marks left to plan',overplanned:'Over 100 by {n}',homework:'Homework',quiz:'Quiz',exam:'Exam',project:'Project',other:'Other',
+events:'Deadlines',addevent:'Add',optl:'optional',marks:'Marks (out of 100)',
+remaining:'{n} marks left to plan',overplanned:'Over 100 by {n}',homework:'Homework',quiz:'Quiz',exam:'Exam',project:'Project',other:'Other',
 duedate:'Date',duetime:'Time',score:'Score',maxscore:'Out of',room:'Room',
 noevents:'Nothing scheduled',upcomingev:'Upcoming',pastev:'Past',
 addscore:'Enter score',setroom:'Set room',overdue:'Overdue',dueintoday:'Today',duetomorrow:'Tomorrow',
-eventtitle:'Title',sessions:'Classes',gradesofar:'Grade so far',earned:'earned',
+eventtitle:'Title',sessions:'Classes',
 deleteev:'Delete this item?',
 howmany:'How many hours did the teacher count?',onehr:'1 hour',twohr:'{n} hours',countedas:'counted as {n}',
 markabsent:'Mark absent',noclassday:'No classes \u00B7 {r}',daysleft:'in {n} days',daysago:'{n} days ago',
@@ -414,12 +413,12 @@ quest:'\u0645\u0647\u0645\u0629 \u0627\u0644\u064A\u0648\u0645',pillars:'\u0623\
 study:'\u0627\u0644\u062F\u0631\u0627\u0633\u0629',gym:'\u0627\u0644\u0635\u062D\u0629',social:'\u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639\u064A',soul:'\u0627\u0644\u0631\u0648\u062D',
 main:'\u0627\u0644\u0631\u0626\u064A\u0633\u064A\u0629',todayplan:'\u0627\u0644\u064A\u0648\u0645',
 ofsem:'\u0645\u0646 \u0627\u0644\u0641\u0635\u0644',calendar:'\u0627\u0644\u062A\u0642\u0648\u064A\u0645',ttip:'\u0627\u0636\u063A\u0637 \u0639\u0644\u0649 \u0627\u0644\u0645\u062D\u0627\u0636\u0631\u0629 \u0644\u062A\u0633\u062C\u064A\u0644 \u0627\u0644\u063A\u064A\u0627\u0628',missingcourses:'\u0628\u0639\u0636 \u0627\u0644\u0645\u0648\u0627\u062F \u0646\u0627\u0642\u0635\u0629',repair:'\u0625\u0635\u0644\u0627\u062D',
-events:'\u0627\u0644\u0645\u0648\u0627\u0639\u064A\u062F',addevent:'\u0625\u0636\u0627\u0641\u0629',ungraded:'{n} \u0628\u0627\u0642\u064A \u0644\u0644\u062A\u0635\u062D\u064A\u062D',optl:'\u0627\u062E\u062A\u064A\u0627\u0631\u064A',marks:'\u0627\u0644\u062F\u0631\u062C\u0629 (\u0645\u0646 100)',outof100:'\u0645\u0646 100',allocated:'\u0645\u062E\u0637\u0637',
-scoredso:'\u0645\u062D\u0642\u0642 \u062D\u062A\u0649 \u0627\u0644\u0622\u0646',remaining:'\u0628\u0627\u0642\u064A {n} \u062F\u0631\u062C\u0629 \u0644\u0644\u062A\u0648\u0632\u064A\u0639',overplanned:'\u062A\u062C\u0627\u0648\u0632 100 \u0628\u0640 {n}',homework:'\u0648\u0627\u062C\u0628',quiz:'\u0643\u0648\u064A\u0632',exam:'\u0627\u062E\u062A\u0628\u0627\u0631',project:'\u0645\u0634\u0631\u0648\u0639',other:'\u0623\u062E\u0631\u0649',
+events:'\u0627\u0644\u0645\u0648\u0627\u0639\u064A\u062F',addevent:'\u0625\u0636\u0627\u0641\u0629',optl:'\u0627\u062E\u062A\u064A\u0627\u0631\u064A',marks:'\u0627\u0644\u062F\u0631\u062C\u0629 (\u0645\u0646 100)',
+remaining:'\u0628\u0627\u0642\u064A {n} \u062F\u0631\u062C\u0629 \u0644\u0644\u062A\u0648\u0632\u064A\u0639',overplanned:'\u062A\u062C\u0627\u0648\u0632 100 \u0628\u0640 {n}',homework:'\u0648\u0627\u062C\u0628',quiz:'\u0643\u0648\u064A\u0632',exam:'\u0627\u062E\u062A\u0628\u0627\u0631',project:'\u0645\u0634\u0631\u0648\u0639',other:'\u0623\u062E\u0631\u0649',
 duedate:'\u0627\u0644\u062A\u0627\u0631\u064A\u062E',duetime:'\u0627\u0644\u0648\u0642\u062A',score:'\u0627\u0644\u062F\u0631\u062C\u0629',maxscore:'\u0645\u0646',room:'\u0627\u0644\u0642\u0627\u0639\u0629',
 noevents:'\u0644\u0627 \u064A\u0648\u062C\u062F',upcomingev:'\u0627\u0644\u0642\u0627\u062F\u0645',pastev:'\u0627\u0644\u0633\u0627\u0628\u0642',
 addscore:'\u0623\u062F\u062E\u0644 \u0627\u0644\u062F\u0631\u062C\u0629',setroom:'\u062A\u062D\u062F\u064A\u062F \u0627\u0644\u0642\u0627\u0639\u0629',overdue:'\u0645\u062A\u0623\u062E\u0631',dueintoday:'\u0627\u0644\u064A\u0648\u0645',duetomorrow:'\u063A\u062F\u0627\u064B',
-eventtitle:'\u0627\u0644\u0639\u0646\u0648\u0627\u0646',sessions:'\u0627\u0644\u0645\u062D\u0627\u0636\u0631\u0627\u062A',gradesofar:'\u0627\u0644\u062F\u0631\u062C\u0629 \u062D\u062A\u0649 \u0627\u0644\u0622\u0646',earned:'\u0645\u062D\u0642\u0642',
+eventtitle:'\u0627\u0644\u0639\u0646\u0648\u0627\u0646',sessions:'\u0627\u0644\u0645\u062D\u0627\u0636\u0631\u0627\u062A',
 deleteev:'\u062D\u0630\u0641 \u0647\u0630\u0627 \u0627\u0644\u0639\u0646\u0635\u0631\u061F',
 howmany:'\u0643\u0645 \u0633\u0627\u0639\u0629 \u0627\u062D\u062A\u0633\u0628\u0647\u0627 \u0627\u0644\u062F\u0643\u062A\u0648\u0631\u061F',onehr:'\u0633\u0627\u0639\u0629 \u0648\u0627\u062D\u062F\u0629',twohr:'{n} \u0633\u0627\u0639\u0627\u062A',countedas:'\u0627\u062D\u062A\u0633\u0628\u062A {n}',
 markabsent:'\u062A\u0633\u062C\u064A\u0644 \u063A\u064A\u0627\u0628',noclassday:'\u0644\u0627 \u062F\u0631\u0627\u0633\u0629 \u00B7 {r}',daysleft:'\u0628\u0639\u062F {n} \u064A\u0648\u0645',daysago:'\u0642\u0628\u0644 {n} \u064A\u0648\u0645',
@@ -1305,8 +1304,7 @@ function courseGrade(cid){
     scoredMax:r(scoredMax),                 /* marks already graded */
     pending:r(pending),                     /* graded later */
     unplanned:r(100-planned),
-    pct:r(earned),                          /* course is out of 100 */
-    sofar:scoredMax?Math.round(earned/scoredMax*100):null};
+    pct:r(earned)};                         /* course is out of 100 */
 }
 async function saveEvent(){
   var cid=document.getElementById('ev_course').value;
@@ -1444,18 +1442,14 @@ function gradeCardHtml(cid,g){
   var col=pct>=85?'#34d399':pct>=70?'#fbbf24':pct>0?'#4f9cf9':'var(--dim)';
   var h='<div class="gcard">';
   h+='<div class="gtop"><span class="gnum" style="color:'+col+'">'+pct+'</span><span class="gden">/ 100</span>';
-  if(g&&g.sofar!=null)h+='<span class="gso">'+T('scoredso')+': '+g.earned+'/'+g.scoredMax+' \u00B7 '+g.sofar+'%</span>';
   h+='</div>';
   h+='<div class="gbar">';
   h+='<div class="gfill" style="width:'+Math.min(100,pct)+'%;background:'+col+'"></div>';
   if(g&&g.pending)h+='<div class="gpend" style="inset-inline-start:'+Math.min(100,pct)+'%;width:'+Math.min(100-pct,g.pending)+'%"></div>';
   h+='</div>';
   if(g){
-    var notes=[];
-    if(g.pending)notes.push(T('ungraded',{n:g.pending}));
-    if(g.unplanned>0)notes.push(T('remaining',{n:g.unplanned}));
-    if(g.unplanned<0)notes.push(T('overplanned',{n:-g.unplanned}));
-    if(notes.length)h+='<div class="gnote">'+notes.join(' \u00B7 ')+'</div>';
+    if(g.unplanned>0)h+='<div class="gnote">'+T('remaining',{n:g.unplanned})+'</div>';
+    else if(g.unplanned<0)h+='<div class="gnote">'+T('overplanned',{n:-g.unplanned})+'</div>';
   }
   h+='</div>';
   return h;
