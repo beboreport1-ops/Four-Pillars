@@ -68,14 +68,15 @@ main{padding:0 16px 90px;max-width:1000px;margin:0 auto}
 .subtabs{display:flex;gap:6px;margin-bottom:12px}
 .subtabs button{flex:1;background:var(--card);border:1px solid var(--line);color:var(--dim);border-radius:9px;padding:8px;font-size:12px;font-weight:600}
 .subtabs button.on{background:var(--card2);color:var(--tx);border-color:var(--study)}
-.cls{display:flex;align-items:center;gap:10px;background:var(--card2);border-radius:10px;padding:10px 12px;margin-bottom:7px;border-inline-start:3px solid var(--study)}
+.cls{display:flex;align-items:flex-start;gap:9px;background:var(--card2);border-radius:10px;padding:10px 12px;margin-bottom:7px;border-inline-start:3px solid var(--study)}
 .cls.absent{border-inline-start-color:#ff6b4a;opacity:.72}
 .cls.future{opacity:.55}
 .cls .ci{flex:1;min-width:0}
-.cls .cc{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cls .cc{font-size:12px;font-weight:800;color:var(--study);letter-spacing:.2px}
+.cls .cnm{font-size:13px;font-weight:600;line-height:1.35;margin-top:1px;overflow-wrap:anywhere}
 .cls .cm{font-size:11px;color:var(--dim);margin-top:2px}
-.cls .ct{font-size:11px;color:var(--gold);font-weight:700;white-space:nowrap}
-.cls .cb{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:6px 10px;font-size:11px;font-weight:700;white-space:nowrap}
+.cls .ct{font-size:11px;color:var(--gold);font-weight:700;white-space:nowrap;padding-top:1px}
+.cls .cb{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:6px 9px;font-size:11px;font-weight:700;white-space:nowrap;flex:0 0 auto;align-self:center}
 .cls .cb.on{background:#b91c1c;border-color:#b91c1c;color:#fff}
 .crow{background:var(--card2);border-radius:10px;padding:11px 12px;margin-bottom:8px}
 .crow .ch{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
@@ -1220,7 +1221,8 @@ function classRow(ses,ds,interactive){
   var cls='cls'+(abs?' absent':'')+(passed?'':' future');
   var style=c?'border-inline-start-color:'+(abs?'#ff6b4a':'var(--study)'):'';
   var h='<div class="'+cls+'" style="'+style+'">';
-  h+='<div class="ci"><div class="cc">'+esc(c?c.code:'')+' \u00B7 '+esc(c?c.name:'')+'</div>'+
+  h+='<div class="ci"><div class="cc">'+esc(c?c.code:'')+'</div>'+
+  '<div class="cnm">'+esc(c?c.name:'')+'</div>'+
   '<div class="cm">'+actName(ses.activity)+' \u00B7 '+T('section')+' '+esc(ses.section||'')+'</div></div>';
   h+='<div class="ct">'+fmt12(ses.start_time)+'<br>'+fmt12(ses.end_time)+'</div>';
   if(interactive)h+='<button class="cb'+(abs?' on':'')+'" onclick="toggleAbsent(\''+ses.id+'\',\''+ds+'\')">'+(abs?'\u274C '+T('absent'):'\u2705 '+T('present'))+'</button>';
@@ -1242,7 +1244,7 @@ function coursesHtml(){
     var st=courseStats(c.id);
     var col=st.risk==='over'?'#ff6b4a':st.risk==='near'?'#fbbf24':(st.limit&&st.absent>=st.limit*0.6?'#fbbf24':'#34d399');
     h+='<div class="crow" style="border-inline-start:3px solid '+col+'">';
-    h+='<div class="ch"><span class="cn">'+esc(c.code)+' \u00B7 '+esc(c.name)+'</span><span class="cp" style="color:'+col+'">'+st.pct+'%</span></div>';
+    h+='<div class="ch"><span class="cn" style="overflow-wrap:anywhere"><span style="color:var(--study)">'+esc(c.code)+'</span><br>'+esc(c.name)+'</span><span class="cp" style="color:'+col+'">'+st.pct+'%</span></div>';
     h+='<div class="cbar"><div style="width:'+Math.min(100,Math.round(st.absent/(st.limit||1)*100))+'%;background:'+col+'"></div></div>';
     h+='<div class="cs"><span>'+T(c.kind)+' \u00B7 '+st.absent+'/'+st.total+' '+T('absent')+' \u00B7 '+st.held+' '+T('held')+'</span>';
     h+='<span class="'+(st.risk==='over'?'bad':st.risk==='near'?'warn':'')+'">'+
