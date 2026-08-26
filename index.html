@@ -116,21 +116,9 @@ main{padding:0 16px 90px;max-width:1000px;margin:0 auto}
 .srow .rm{background:var(--card);border:1px solid var(--line);border-radius:7px;padding:5px 9px;font-size:11px;font-weight:700;white-space:nowrap}
 .srow .rm.set{border-color:var(--study);color:var(--study)}
 .crow.tap{cursor:pointer}
-.crow .arw{font-size:11px;color:var(--dim)}
-.ttnav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.crow .ttnav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
 .ttnav b{flex:1;text-align:center;font-size:13px}
 .ttoff{position:absolute;inset:0;background:rgba(167,139,250,.13);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--soul);text-align:center;padding:4px}
-.tthead{font-size:11px;color:var(--dim);font-weight:700;text-align:center;padding:5px 2px;background:var(--card2);border-radius:7px}
-.tthead.now{color:var(--gold);background:rgba(251,191,36,.13)}
-.tthour{font-size:9px;color:var(--dim);text-align:end;padding-top:3px;padding-inline-end:3px;white-space:nowrap}
-.ttcell{background:rgba(255,255,255,.022);border-radius:6px}
-.ttcell.now{background:rgba(251,191,36,.06)}
-.ttblock{border-radius:8px;padding:5px 6px;font-size:10px;line-height:1.3;overflow:hidden;border:none;text-align:start;color:var(--tx);display:flex;flex-direction:column;justify-content:center;min-width:0}
-.ttblock b{font-size:11px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ttblock span{opacity:.8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ttblock.miss{outline:2px solid #ff6b4a;opacity:.75}
-.ttlegend{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;font-size:11px;color:var(--dim)}
-.ttlegend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-inline-end:4px}
 .phero{background:linear-gradient(135deg,#131a26,#161f2e);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px;position:relative;overflow:hidden}
 .phero:after{content:'';position:absolute;top:-40px;inset-inline-end:-30px;width:130px;height:130px;border-radius:50%;opacity:.11}
 .phero .pe{font-size:30px}
@@ -359,27 +347,27 @@ study:'Studying',gym:'Health',social:'Social',soul:'Soul',
 main:'Main',todayplan:'Today',
 ofsem:'of semester',calendar:'Calendar',ttip:'Tap Present on any class to mark it absent',missingcourses:'Some courses are missing',repair:'Fix',
 events:'Deadlines',addevent:'Add',homework:'Homework',quiz:'Quiz',exam:'Exam',project:'Project',other:'Other',
-duedate:'Date',duetime:'Time',score:'Score',maxscore:'Out of',weight:'Weight %',room:'Room',instructor:'Instructor',
-noevents:'Nothing scheduled',upcomingev:'Upcoming',pastev:'Past',markdone:'Done',grade:'Grade',
+duedate:'Date',duetime:'Time',score:'Score',maxscore:'Out of',weight:'Weight %',room:'Room',
+noevents:'Nothing scheduled',upcomingev:'Upcoming',pastev:'Past',
 addscore:'Enter score',setroom:'Set room',overdue:'Overdue',dueintoday:'Today',duetomorrow:'Tomorrow',
-eventtitle:'Title',sessions:'Classes',gradesofar:'Grade so far',earned:'earned',notitle:'Untitled',
-deleteev:'Delete this item?',allcourses:'All courses',backc:'Back',
+eventtitle:'Title',sessions:'Classes',gradesofar:'Grade so far',earned:'earned',
+deleteev:'Delete this item?',
 howmany:'How many hours did the teacher count?',onehr:'1 hour',twohr:'{n} hours',countedas:'counted as {n}',
 markabsent:'Mark absent',noclassday:'No classes \u00B7 {r}',daysleft:'in {n} days',daysago:'{n} days ago',
-todayis:'Today',breakweek:'Break week',examsoon:'Finals in {n} days',nextevent:'Next',studyweeks:'study weeks',
+todayis:'Today',nextevent:'Next',
 ev_start:'Semester starts',ev_holiday:'National Day holiday',ev_break:'Autumn break',ev_resume:'Classes resume',
 ev_deadline:'Last day to withdraw',ev_exams:'Final exams',ev_vacation:'Mid-year vacation',courses:'My Courses',todayclasses:'Today\u2019s Classes',timetable:'Timetable',attendance:'Attendance',
 present:'Present',absent:'Absent',lecture:'Lecture',tutorial:'Tutorial',lab:'Lab',section:'Section',
 noclasses:'No classes today \uD83C\uDF89',held:'held',canmiss:'Can miss {n} more',denied:'Denial risk!',
 week:'Week',weekof:'Week {n} of {t}',semstart:'Semester start',semweeks:'Semester weeks',abslimit:'Denial limit (%)',
 markedabsent:'Marked absent',markedpresent:'Back to present',required:'Required',elective:'Elective',
-semdone:'Semester finished',upcoming:'Upcoming',hours:'hrs',ofsem:'of semester',limitlbl:'limit {n}',
-quickadd:'Quick log',thisweek:'This week',recent:'Recent',viewall:'All pillars',nothingweek:'Nothing logged this week yet.',
-health:'Health Today',water:'Water',calories:'Calories',protein:'Protein',addmeal:'Add meal',meal:'Meal',
-kcal:'kcal',grams:'g',bottles:'bottles',bottle:'bottle',bottlesize:'Bottle size (ml)',
+hours:'hrs',ofsem:'of semester',limitlbl:'limit {n}',
+quickadd:'Quick log',thisweek:'This week',
+health:'Health Today',water:'Water',calories:'Calories',protein:'Protein',addmeal:'Add meal',
+kcal:'kcal',grams:'g',bottlesize:'Bottle size (ml)',
 caloriegoal:'Daily calories goal',proteingoal:'Daily protein goal (g)',watergoal:'Daily water goal (ml)',
 watergoalhit:'Water goal reached!',proteingoalhit:'Protein goal reached!',avg7:'7-day average',optional:'optional',
-weekgoals:'Weekly Goals',goalmet:'Goal met',ontrack:'on track',
+weekgoals:'Weekly Goals',goalmet:'Goal met',
 add:'Add Activity',pillar:'Pillar',activity:'Activity',date:'Date',status:'Status',
 done:'Done (award points now)',planned:'Planned',repeat:'Repeat weekly (same weekday)',norepeat:'No repeat',forwk:'For {n} weeks',
 custom:'Custom...',ctitle:'Custom title',points:'Points',save:'Save',cancel:'Cancel',close:'Close',del:'Delete',remove:'Remove',
@@ -388,13 +376,13 @@ settings:'Settings',manage:'Manage Activities',prefs:'Preferences',signout:'Sign
 lang:'Language',city:'City',country:'Country',goals:'Weekly goals per pillar',seasontarget:'Season XP target',qurangoal:'Quran goal (pages)',startseason:'Start new season',
 totalxp:'Total XP',perfstreak:'Perfect Day Streak',actsdone:'Activities Done',xptoday:'XP Today',
 radar:'Pillar Radar',balance:'Pillar Balance',achievements:'Achievements',records:'Records',last14:'Last 14 Days',
-season:'Season',dayleft:'days left',seasondone:'Season complete!',
+season:'Season',dayleft:'days left',
 quran:'Quran Progress',pages:'pages',logread:'Log reading',surah:'Surah (optional)',juz:'Juz (optional)',khatma:'to khatma',
 gymlog:'Gym Log',exercise:'Exercise',sets:'Sets',reps:'Reps',weight:'Weight (kg)',addset:'Add exercise',pr:'PR',
 notes:'Reflection',noteph:'How did today go?',
 recap:'This Week',compare:'This Week vs Last',prayercal:'Prayer Calendar',
 freeze:'Streak freeze',freezeused:'Freeze used this week',freezeon:'Freeze this day',frozen:'Frozen \u2014 streak safe',
-nextpray:'{p} in {t}',prayernow:'{p} now',
+nextpray:'{p} in {t}',
 emptyday:'Nothing planned. Tap + Add to start.',
 signoutq:'Sign out?',signoutm:'You\u2019ll need your email and password to get back in. Your data stays safe.',
 delq:'Delete activity?',delm:'Remove <b>{t}</b> from {d}?',dellost:' You\u2019ll lose the {p} XP it earned.',
@@ -402,11 +390,11 @@ remq:'Remove activity type?',remm:'Remove <b>{t}</b> (+{p})? Past entries and XP
 welcome:'Welcome',obtag:'Let\u2019s set up your four pillars',obnext:'Next',obdone:'Start',oblang:'Pick your language',obcity:'Your city (for prayer times)',obgoals:'How many days a week for each pillar?',
 install:'Install app',installed:'Added to home screen',
 autoloc:'Detect my location',gpsloc:'Use GPS (precise)',locfail:'Couldn\u2019t detect location \u2014 set your city manually.',locdenied:'Location permission denied.',gpsok:'Location updated',locnow:'Location',
-saved:'Saved',deleted:'Deleted',added:'Added',removed:'Removed',err:'Couldn\u2019t save',nameFirst:'Type a name first',
+saved:'Saved',deleted:'Deleted',added:'Added',removed:'Removed',nameFirst:'Type a name first',
 backplan:'back to planned',unlogged:'unlogged',
 strongest:'Strongest',weakest:'Needs work',vslast:'vs last week',
 lvl:'Level',bestday:'Best day',activedays:'Active days',longest:'Longest',streak:'streak',
-offline:'Offline',pending:'{n} to sync',synced:'Synced {n} change(s)',offlinemode:'Offline \u2014 changes save on this device',savedoff:'saved offline',syncnow:'Sync now'},
+offline:'Offline',pending:'{n} to sync',synced:'Synced {n} change(s)',offlinemode:'Offline \u2014 changes save on this device',savedoff:'saved offline',},
 ar:{title:'\u0627\u0644\u0623\u0631\u0643\u0627\u0646 \u0627\u0644\u0623\u0631\u0628\u0639\u0629',tag:'\u0637\u0648\u0651\u0631 \u0646\u0641\u0633\u0643: \u0627\u0644\u062F\u0631\u0627\u0633\u0629 \u00B7 \u0627\u0644\u0646\u0627\u062F\u064A \u00B7 \u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639\u064A \u00B7 \u0627\u0644\u0631\u0648\u062D',
 signin:'\u062A\u0633\u062C\u064A\u0644 \u0627\u0644\u062F\u062E\u0648\u0644',create:'\u0625\u0646\u0634\u0627\u0621 \u062D\u0633\u0627\u0628',newhere:'\u062D\u0633\u0627\u0628 \u062C\u062F\u064A\u062F\u061F \u0623\u0646\u0634\u0626 \u062D\u0633\u0627\u0628',haveacc:'\u0644\u062F\u064A\u0643 \u062D\u0633\u0627\u0628\u061F \u0633\u062C\u0651\u0644 \u0627\u0644\u062F\u062E\u0648\u0644',forgot:'\u0646\u0633\u064A\u062A \u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631\u061F',email:'\u0627\u0644\u0628\u0631\u064A\u062F \u0627\u0644\u0625\u0644\u0643\u062A\u0631\u0648\u0646\u064A',pass:'\u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631',
 checkmail:'\u062A\u062D\u0642\u0642 \u0645\u0646 \u0628\u0631\u064A\u062F\u0643 \u0644\u0644\u062A\u0623\u0643\u064A\u062F\u060C \u062B\u0645 \u0633\u062C\u0651\u0644 \u0627\u0644\u062F\u062E\u0648\u0644.',resetsent:'\u062A\u0645 \u0625\u0631\u0633\u0627\u0644 \u0631\u0627\u0628\u0637 \u0627\u0644\u0627\u0633\u062A\u0639\u0627\u062F\u0629 \u2014 \u062A\u062D\u0642\u0642 \u0645\u0646 \u0628\u0631\u064A\u062F\u0643.',typeemail:'\u0627\u0643\u062A\u0628 \u0628\u0631\u064A\u062F\u0643 \u0623\u0648\u0644\u0627\u064B \u062B\u0645 \u0627\u0636\u063A\u0637 \u0646\u0633\u064A\u062A \u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631.',
@@ -417,27 +405,27 @@ study:'\u0627\u0644\u062F\u0631\u0627\u0633\u0629',gym:'\u0627\u0644\u0635\u062D
 main:'\u0627\u0644\u0631\u0626\u064A\u0633\u064A\u0629',todayplan:'\u0627\u0644\u064A\u0648\u0645',
 ofsem:'\u0645\u0646 \u0627\u0644\u0641\u0635\u0644',calendar:'\u0627\u0644\u062A\u0642\u0648\u064A\u0645',ttip:'\u0627\u0636\u063A\u0637 \u0639\u0644\u0649 \u0627\u0644\u0645\u062D\u0627\u0636\u0631\u0629 \u0644\u062A\u0633\u062C\u064A\u0644 \u0627\u0644\u063A\u064A\u0627\u0628',missingcourses:'\u0628\u0639\u0636 \u0627\u0644\u0645\u0648\u0627\u062F \u0646\u0627\u0642\u0635\u0629',repair:'\u0625\u0635\u0644\u0627\u062D',
 events:'\u0627\u0644\u0645\u0648\u0627\u0639\u064A\u062F',addevent:'\u0625\u0636\u0627\u0641\u0629',homework:'\u0648\u0627\u062C\u0628',quiz:'\u0643\u0648\u064A\u0632',exam:'\u0627\u062E\u062A\u0628\u0627\u0631',project:'\u0645\u0634\u0631\u0648\u0639',other:'\u0623\u062E\u0631\u0649',
-duedate:'\u0627\u0644\u062A\u0627\u0631\u064A\u062E',duetime:'\u0627\u0644\u0648\u0642\u062A',score:'\u0627\u0644\u062F\u0631\u062C\u0629',maxscore:'\u0645\u0646',weight:'\u0627\u0644\u0648\u0632\u0646 %',room:'\u0627\u0644\u0642\u0627\u0639\u0629',instructor:'\u0627\u0644\u062F\u0643\u062A\u0648\u0631',
-noevents:'\u0644\u0627 \u064A\u0648\u062C\u062F',upcomingev:'\u0627\u0644\u0642\u0627\u062F\u0645',pastev:'\u0627\u0644\u0633\u0627\u0628\u0642',markdone:'\u062A\u0645',grade:'\u0627\u0644\u062F\u0631\u062C\u0629',
+duedate:'\u0627\u0644\u062A\u0627\u0631\u064A\u062E',duetime:'\u0627\u0644\u0648\u0642\u062A',score:'\u0627\u0644\u062F\u0631\u062C\u0629',maxscore:'\u0645\u0646',weight:'\u0627\u0644\u0648\u0632\u0646 %',room:'\u0627\u0644\u0642\u0627\u0639\u0629',
+noevents:'\u0644\u0627 \u064A\u0648\u062C\u062F',upcomingev:'\u0627\u0644\u0642\u0627\u062F\u0645',pastev:'\u0627\u0644\u0633\u0627\u0628\u0642',
 addscore:'\u0623\u062F\u062E\u0644 \u0627\u0644\u062F\u0631\u062C\u0629',setroom:'\u062A\u062D\u062F\u064A\u062F \u0627\u0644\u0642\u0627\u0639\u0629',overdue:'\u0645\u062A\u0623\u062E\u0631',dueintoday:'\u0627\u0644\u064A\u0648\u0645',duetomorrow:'\u063A\u062F\u0627\u064B',
-eventtitle:'\u0627\u0644\u0639\u0646\u0648\u0627\u0646',sessions:'\u0627\u0644\u0645\u062D\u0627\u0636\u0631\u0627\u062A',gradesofar:'\u0627\u0644\u062F\u0631\u062C\u0629 \u062D\u062A\u0649 \u0627\u0644\u0622\u0646',earned:'\u0645\u062D\u0642\u0642',notitle:'\u0628\u062F\u0648\u0646 \u0639\u0646\u0648\u0627\u0646',
-deleteev:'\u062D\u0630\u0641 \u0647\u0630\u0627 \u0627\u0644\u0639\u0646\u0635\u0631\u061F',allcourses:'\u0643\u0644 \u0627\u0644\u0645\u0648\u0627\u062F',backc:'\u0631\u062C\u0648\u0639',
+eventtitle:'\u0627\u0644\u0639\u0646\u0648\u0627\u0646',sessions:'\u0627\u0644\u0645\u062D\u0627\u0636\u0631\u0627\u062A',gradesofar:'\u0627\u0644\u062F\u0631\u062C\u0629 \u062D\u062A\u0649 \u0627\u0644\u0622\u0646',earned:'\u0645\u062D\u0642\u0642',
+deleteev:'\u062D\u0630\u0641 \u0647\u0630\u0627 \u0627\u0644\u0639\u0646\u0635\u0631\u061F',
 howmany:'\u0643\u0645 \u0633\u0627\u0639\u0629 \u0627\u062D\u062A\u0633\u0628\u0647\u0627 \u0627\u0644\u062F\u0643\u062A\u0648\u0631\u061F',onehr:'\u0633\u0627\u0639\u0629 \u0648\u0627\u062D\u062F\u0629',twohr:'{n} \u0633\u0627\u0639\u0627\u062A',countedas:'\u0627\u062D\u062A\u0633\u0628\u062A {n}',
 markabsent:'\u062A\u0633\u062C\u064A\u0644 \u063A\u064A\u0627\u0628',noclassday:'\u0644\u0627 \u062F\u0631\u0627\u0633\u0629 \u00B7 {r}',daysleft:'\u0628\u0639\u062F {n} \u064A\u0648\u0645',daysago:'\u0642\u0628\u0644 {n} \u064A\u0648\u0645',
-todayis:'\u0627\u0644\u064A\u0648\u0645',breakweek:'\u0623\u0633\u0628\u0648\u0639 \u0627\u0644\u0625\u062C\u0627\u0632\u0629',examsoon:'\u0627\u0644\u0627\u062E\u062A\u0628\u0627\u0631\u0627\u062A \u0628\u0639\u062F {n} \u064A\u0648\u0645',nextevent:'\u0627\u0644\u0642\u0627\u062F\u0645',studyweeks:'\u0623\u0633\u0627\u0628\u064A\u0639 \u062F\u0631\u0627\u0633\u064A\u0629',
+todayis:'\u0627\u0644\u064A\u0648\u0645',nextevent:'\u0627\u0644\u0642\u0627\u062F\u0645',
 ev_start:'\u0628\u062F\u0627\u064A\u0629 \u0627\u0644\u062F\u0631\u0627\u0633\u0629 \u0644\u0644\u0641\u0635\u0644 \u0627\u0644\u0623\u0648\u0644',ev_holiday:'\u0625\u062C\u0627\u0632\u0629 \u0627\u0644\u064A\u0648\u0645 \u0627\u0644\u0648\u0637\u0646\u064A',ev_break:'\u0625\u062C\u0627\u0632\u0629 \u0627\u0644\u062E\u0631\u064A\u0641',ev_resume:'\u0628\u062F\u0627\u064A\u0629 \u0627\u0644\u062F\u0631\u0627\u0633\u0629 \u0628\u0639\u062F \u0625\u062C\u0627\u0632\u0629 \u0627\u0644\u062E\u0631\u064A\u0641',
 ev_deadline:'\u0622\u062E\u0631 \u0645\u0648\u0639\u062F \u0644\u0644\u0627\u0639\u062A\u0630\u0627\u0631 \u0639\u0646 \u0627\u0644\u0641\u0635\u0644 \u0648\u0639\u0646 \u0645\u0642\u0631\u0631',ev_exams:'\u0627\u0644\u0627\u062E\u062A\u0628\u0627\u0631\u0627\u062A \u0627\u0644\u0646\u0647\u0627\u0626\u064A\u0629',ev_vacation:'\u0625\u062C\u0627\u0632\u0629 \u0645\u0646\u062A\u0635\u0641 \u0627\u0644\u0639\u0627\u0645',courses:'\u0645\u0648\u0627\u062F\u064A',todayclasses:'\u0645\u062D\u0627\u0636\u0631\u0627\u062A \u0627\u0644\u064A\u0648\u0645',timetable:'\u0627\u0644\u062C\u062F\u0648\u0644',attendance:'\u0627\u0644\u062D\u0636\u0648\u0631',
 present:'\u062D\u0627\u0636\u0631',absent:'\u063A\u0627\u0626\u0628',lecture:'\u0645\u062D\u0627\u0636\u0631\u0629',tutorial:'\u062A\u0645\u0627\u0631\u064A\u0646',lab:'\u0639\u0645\u0644\u064A',section:'\u0634\u0639\u0628\u0629',
 noclasses:'\u0644\u0627 \u0645\u062D\u0627\u0636\u0631\u0627\u062A \u0627\u0644\u064A\u0648\u0645 \uD83C\uDF89',held:'\u0645\u0646\u0639\u0642\u062F\u0629',canmiss:'\u064A\u0645\u0643\u0646 \u0627\u0644\u063A\u064A\u0627\u0628 {n} \u0645\u0631\u0627\u062A',denied:'\u062E\u0637\u0631 \u0627\u0644\u062D\u0631\u0645\u0627\u0646!',
 week:'\u0623\u0633\u0628\u0648\u0639',weekof:'\u0627\u0644\u0623\u0633\u0628\u0648\u0639 {n} \u0645\u0646 {t}',semstart:'\u0628\u062F\u0627\u064A\u0629 \u0627\u0644\u0641\u0635\u0644',semweeks:'\u0623\u0633\u0627\u0628\u064A\u0639 \u0627\u0644\u0641\u0635\u0644',abslimit:'\u062D\u062F \u0627\u0644\u062D\u0631\u0645\u0627\u0646 (%)',
 markedabsent:'\u062A\u0645 \u062A\u0633\u062C\u064A\u0644 \u063A\u064A\u0627\u0628',markedpresent:'\u0639\u0627\u062F \u062D\u0627\u0636\u0631',required:'\u0625\u062C\u0628\u0627\u0631\u064A\u0629',elective:'\u0625\u062E\u062A\u064A\u0627\u0631\u064A\u0629',
-semdone:'\u0627\u0646\u062A\u0647\u0649 \u0627\u0644\u0641\u0635\u0644',upcoming:'\u0627\u0644\u0642\u0627\u062F\u0645',hours:'\u0633\u0627\u0639\u0627\u062A',ofsem:'\u0645\u0646 \u0627\u0644\u0641\u0635\u0644',limitlbl:'\u0627\u0644\u062D\u062F {n}',
-quickadd:'\u062A\u0633\u062C\u064A\u0644 \u0633\u0631\u064A\u0639',thisweek:'\u0647\u0630\u0627 \u0627\u0644\u0623\u0633\u0628\u0648\u0639',recent:'\u0627\u0644\u0623\u062E\u064A\u0631',viewall:'\u0643\u0644 \u0627\u0644\u0623\u0631\u0643\u0627\u0646',nothingweek:'\u0644\u0627 \u064A\u0648\u062C\u062F \u062A\u0633\u062C\u064A\u0644 \u0647\u0630\u0627 \u0627\u0644\u0623\u0633\u0628\u0648\u0639.',
-health:'\u0635\u062D\u0629 \u0627\u0644\u064A\u0648\u0645',water:'\u0627\u0644\u0645\u0627\u0621',calories:'\u0627\u0644\u0633\u0639\u0631\u0627\u062A',protein:'\u0627\u0644\u0628\u0631\u0648\u062A\u064A\u0646',addmeal:'\u0625\u0636\u0627\u0641\u0629 \u0648\u062C\u0628\u0629',meal:'\u0648\u062C\u0628\u0629',
-kcal:'\u0633\u0639\u0631\u0629',grams:'\u062C\u0645',bottles:'\u0632\u062C\u0627\u062C\u0627\u062A',bottle:'\u0632\u062C\u0627\u062C\u0629',bottlesize:'\u062D\u062C\u0645 \u0627\u0644\u0632\u062C\u0627\u062C\u0629 (\u0645\u0644)',
+hours:'\u0633\u0627\u0639\u0627\u062A',ofsem:'\u0645\u0646 \u0627\u0644\u0641\u0635\u0644',limitlbl:'\u0627\u0644\u062D\u062F {n}',
+quickadd:'\u062A\u0633\u062C\u064A\u0644 \u0633\u0631\u064A\u0639',thisweek:'\u0647\u0630\u0627 \u0627\u0644\u0623\u0633\u0628\u0648\u0639',
+health:'\u0635\u062D\u0629 \u0627\u0644\u064A\u0648\u0645',water:'\u0627\u0644\u0645\u0627\u0621',calories:'\u0627\u0644\u0633\u0639\u0631\u0627\u062A',protein:'\u0627\u0644\u0628\u0631\u0648\u062A\u064A\u0646',addmeal:'\u0625\u0636\u0627\u0641\u0629 \u0648\u062C\u0628\u0629',
+kcal:'\u0633\u0639\u0631\u0629',grams:'\u062C\u0645',bottlesize:'\u062D\u062C\u0645 \u0627\u0644\u0632\u062C\u0627\u062C\u0629 (\u0645\u0644)',
 caloriegoal:'\u0647\u062F\u0641 \u0627\u0644\u0633\u0639\u0631\u0627\u062A \u0627\u0644\u064A\u0648\u0645\u064A',proteingoal:'\u0647\u062F\u0641 \u0627\u0644\u0628\u0631\u0648\u062A\u064A\u0646 (\u062C\u0645)',watergoal:'\u0647\u062F\u0641 \u0627\u0644\u0645\u0627\u0621 (\u0645\u0644)',
 watergoalhit:'\u062A\u0645 \u0628\u0644\u0648\u063A \u0647\u062F\u0641 \u0627\u0644\u0645\u0627\u0621!',proteingoalhit:'\u062A\u0645 \u0628\u0644\u0648\u063A \u0647\u062F\u0641 \u0627\u0644\u0628\u0631\u0648\u062A\u064A\u0646!',avg7:'\u0645\u062A\u0648\u0633\u0637 7 \u0623\u064A\u0627\u0645',optional:'\u0627\u062E\u062A\u064A\u0627\u0631\u064A',
-weekgoals:'\u0623\u0647\u062F\u0627\u0641 \u0627\u0644\u0623\u0633\u0628\u0648\u0639',goalmet:'\u062A\u0645 \u0627\u0644\u0647\u062F\u0641',ontrack:'\u0639\u0644\u0649 \u0627\u0644\u0645\u0633\u0627\u0631',
+weekgoals:'\u0623\u0647\u062F\u0627\u0641 \u0627\u0644\u0623\u0633\u0628\u0648\u0639',goalmet:'\u062A\u0645 \u0627\u0644\u0647\u062F\u0641',
 add:'\u0625\u0636\u0627\u0641\u0629 \u0646\u0634\u0627\u0637',pillar:'\u0627\u0644\u0631\u0643\u0646',activity:'\u0627\u0644\u0646\u0634\u0627\u0637',date:'\u0627\u0644\u062A\u0627\u0631\u064A\u062E',status:'\u0627\u0644\u062D\u0627\u0644\u0629',
 done:'\u0645\u0646\u062C\u0632 (\u0627\u062D\u062A\u0633\u0627\u0628 \u0627\u0644\u0646\u0642\u0627\u0637)',planned:'\u0645\u062E\u0637\u0637',repeat:'\u062A\u0643\u0631\u0627\u0631 \u0623\u0633\u0628\u0648\u0639\u064A',norepeat:'\u0628\u062F\u0648\u0646 \u062A\u0643\u0631\u0627\u0631',forwk:'\u0644\u0645\u062F\u0629 {n} \u0623\u0633\u0627\u0628\u064A\u0639',
 custom:'\u0645\u062E\u0635\u0635...',ctitle:'\u0639\u0646\u0648\u0627\u0646 \u0645\u062E\u0635\u0635',points:'\u0627\u0644\u0646\u0642\u0627\u0637',save:'\u062D\u0641\u0638',cancel:'\u0625\u0644\u063A\u0627\u0621',close:'\u0625\u063A\u0644\u0627\u0642',del:'\u062D\u0630\u0641',remove:'\u0625\u0632\u0627\u0644\u0629',
@@ -446,13 +434,13 @@ settings:'\u0627\u0644\u0625\u0639\u062F\u0627\u062F\u0627\u062A',manage:'\u0625
 lang:'\u0627\u0644\u0644\u063A\u0629',city:'\u0627\u0644\u0645\u062F\u064A\u0646\u0629',country:'\u0627\u0644\u062F\u0648\u0644\u0629',goals:'\u0623\u0647\u062F\u0627\u0641 \u0623\u0633\u0628\u0648\u0639\u064A\u0629 \u0644\u0643\u0644 \u0631\u0643\u0646',seasontarget:'\u0647\u062F\u0641 \u0646\u0642\u0627\u0637 \u0627\u0644\u0645\u0648\u0633\u0645',qurangoal:'\u0647\u062F\u0641 \u0627\u0644\u0642\u0631\u0622\u0646 (\u0635\u0641\u062D\u0627\u062A)',startseason:'\u0628\u062F\u0621 \u0645\u0648\u0633\u0645 \u062C\u062F\u064A\u062F',
 totalxp:'\u0645\u062C\u0645\u0648\u0639 \u0627\u0644\u0646\u0642\u0627\u0637',perfstreak:'\u0633\u0644\u0633\u0644\u0629 \u0627\u0644\u064A\u0648\u0645 \u0627\u0644\u0645\u062B\u0627\u0644\u064A',actsdone:'\u0627\u0644\u0623\u0646\u0634\u0637\u0629 \u0627\u0644\u0645\u0646\u062C\u0632\u0629',xptoday:'\u0646\u0642\u0627\u0637 \u0627\u0644\u064A\u0648\u0645',
 radar:'\u0631\u0627\u062F\u0627\u0631 \u0627\u0644\u0623\u0631\u0643\u0627\u0646',balance:'\u062A\u0648\u0627\u0632\u0646 \u0627\u0644\u0623\u0631\u0643\u0627\u0646',achievements:'\u0627\u0644\u0625\u0646\u062C\u0627\u0632\u0627\u062A',records:'\u0627\u0644\u0623\u0631\u0642\u0627\u0645 \u0627\u0644\u0642\u064A\u0627\u0633\u064A\u0629',last14:'\u0622\u062E\u0631 14 \u064A\u0648\u0645',
-season:'\u0627\u0644\u0645\u0648\u0633\u0645',dayleft:'\u064A\u0648\u0645 \u0645\u062A\u0628\u0642\u064D',seasondone:'\u0627\u0643\u062A\u0645\u0644 \u0627\u0644\u0645\u0648\u0633\u0645!',
+season:'\u0627\u0644\u0645\u0648\u0633\u0645',dayleft:'\u064A\u0648\u0645 \u0645\u062A\u0628\u0642\u064D',
 quran:'\u062A\u0642\u062F\u0645 \u0627\u0644\u0642\u0631\u0622\u0646',pages:'\u0635\u0641\u062D\u0629',logread:'\u062A\u0633\u062C\u064A\u0644 \u0642\u0631\u0627\u0621\u0629',surah:'\u0627\u0644\u0633\u0648\u0631\u0629 (\u0627\u062E\u062A\u064A\u0627\u0631\u064A)',juz:'\u0627\u0644\u062C\u0632\u0621 (\u0627\u062E\u062A\u064A\u0627\u0631\u064A)',khatma:'\u0644\u0644\u062E\u062A\u0645\u0629',
 gymlog:'\u0633\u062C\u0644 \u0627\u0644\u0646\u0627\u062F\u064A',exercise:'\u0627\u0644\u062A\u0645\u0631\u064A\u0646',sets:'\u0645\u062C\u0645\u0648\u0639\u0627\u062A',reps:'\u062A\u0643\u0631\u0627\u0631\u0627\u062A',weight:'\u0627\u0644\u0648\u0632\u0646 (\u0643\u062C\u0645)',addset:'\u0625\u0636\u0627\u0641\u0629 \u062A\u0645\u0631\u064A\u0646',pr:'\u0631\u0642\u0645 \u0642\u064A\u0627\u0633\u064A',
 notes:'\u062A\u0623\u0645\u0644 \u0627\u0644\u064A\u0648\u0645',noteph:'\u0643\u064A\u0641 \u0643\u0627\u0646 \u064A\u0648\u0645\u0643\u061F',
 recap:'\u0647\u0630\u0627 \u0627\u0644\u0623\u0633\u0628\u0648\u0639',compare:'\u0647\u0630\u0627 \u0627\u0644\u0623\u0633\u0628\u0648\u0639 \u0645\u0642\u0627\u0628\u0644 \u0627\u0644\u0645\u0627\u0636\u064A',prayercal:'\u062A\u0642\u0648\u064A\u0645 \u0627\u0644\u0635\u0644\u0627\u0629',
 freeze:'\u062A\u062C\u0645\u064A\u062F \u0627\u0644\u0633\u0644\u0633\u0644\u0629',freezeused:'\u062A\u0645 \u0627\u0633\u062A\u062E\u062F\u0627\u0645 \u0627\u0644\u062A\u062C\u0645\u064A\u062F \u0647\u0630\u0627 \u0627\u0644\u0623\u0633\u0628\u0648\u0639',freezeon:'\u062A\u062C\u0645\u064A\u062F \u0647\u0630\u0627 \u0627\u0644\u064A\u0648\u0645',frozen:'\u0645\u062C\u0645\u0651\u062F \u2014 \u0627\u0644\u0633\u0644\u0633\u0644\u0629 \u0622\u0645\u0646\u0629',
-nextpray:'{p} \u0628\u0639\u062F {t}',prayernow:'{p} \u0627\u0644\u0622\u0646',
+nextpray:'{p} \u0628\u0639\u062F {t}',
 emptyday:'\u0644\u0627 \u064A\u0648\u062C\u062F \u0645\u062E\u0637\u0637. \u0627\u0636\u063A\u0637 + \u0644\u0644\u0625\u0636\u0627\u0641\u0629.',
 signoutq:'\u062A\u0633\u062C\u064A\u0644 \u0627\u0644\u062E\u0631\u0648\u062C\u061F',signoutm:'\u0633\u062A\u062D\u062A\u0627\u062C \u0628\u0631\u064A\u062F\u0643 \u0648\u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631 \u0644\u0644\u0639\u0648\u062F\u0629. \u0628\u064A\u0627\u0646\u0627\u062A\u0643 \u0645\u062D\u0641\u0648\u0638\u0629.',
 delq:'\u062D\u0630\u0641 \u0627\u0644\u0646\u0634\u0627\u0637\u061F',delm:'\u062D\u0630\u0641 <b>{t}</b> \u0645\u0646 {d}\u061F',dellost:' \u0633\u062A\u0641\u0642\u062F {p} \u0646\u0642\u0637\u0629.',
@@ -460,11 +448,11 @@ remq:'\u0625\u0632\u0627\u0644\u0629 \u0646\u0648\u0639 \u0627\u0644\u0646\u0634
 welcome:'\u0623\u0647\u0644\u0627\u064B',obtag:'\u0644\u0646\u062C\u0647\u0651\u0632 \u0623\u0631\u0643\u0627\u0646\u0643 \u0627\u0644\u0623\u0631\u0628\u0639\u0629',obnext:'\u0627\u0644\u062A\u0627\u0644\u064A',obdone:'\u0627\u0628\u062F\u0623',oblang:'\u0627\u062E\u062A\u0631 \u0644\u063A\u062A\u0643',obcity:'\u0645\u062F\u064A\u0646\u062A\u0643 (\u0644\u0645\u0648\u0627\u0642\u064A\u062A \u0627\u0644\u0635\u0644\u0627\u0629)',obgoals:'\u0643\u0645 \u064A\u0648\u0645 \u0641\u064A \u0627\u0644\u0623\u0633\u0628\u0648\u0639 \u0644\u0643\u0644 \u0631\u0643\u0646\u061F',
 install:'\u062A\u062B\u0628\u064A\u062A \u0627\u0644\u062A\u0637\u0628\u064A\u0642',installed:'\u062A\u0645\u062A \u0627\u0644\u0625\u0636\u0627\u0641\u0629 \u0644\u0644\u0634\u0627\u0634\u0629 \u0627\u0644\u0631\u0626\u064A\u0633\u064A\u0629',
 autoloc:'\u062A\u062D\u062F\u064A\u062F \u0645\u0648\u0642\u0639\u064A \u062A\u0644\u0642\u0627\u0626\u064A\u0627\u064B',gpsloc:'\u0627\u0633\u062A\u062E\u062F\u0627\u0645 GPS (\u062F\u0642\u064A\u0642)',locfail:'\u062A\u0639\u0630\u0631 \u062A\u062D\u062F\u064A\u062F \u0627\u0644\u0645\u0648\u0642\u0639 \u2014 \u0627\u0643\u062A\u0628 \u0645\u062F\u064A\u0646\u062A\u0643 \u064A\u062F\u0648\u064A\u0627\u064B.',locdenied:'\u062A\u0645 \u0631\u0641\u0636 \u0625\u0630\u0646 \u0627\u0644\u0645\u0648\u0642\u0639.',gpsok:'\u062A\u0645 \u062A\u062D\u062F\u064A\u062B \u0627\u0644\u0645\u0648\u0642\u0639',locnow:'\u0627\u0644\u0645\u0648\u0642\u0639',
-saved:'\u062A\u0645 \u0627\u0644\u062D\u0641\u0638',deleted:'\u062A\u0645 \u0627\u0644\u062D\u0630\u0641',added:'\u062A\u0645\u062A \u0627\u0644\u0625\u0636\u0627\u0641\u0629',removed:'\u062A\u0645\u062A \u0627\u0644\u0625\u0632\u0627\u0644\u0629',err:'\u062A\u0639\u0630\u0631 \u0627\u0644\u062D\u0641\u0638',nameFirst:'\u0627\u0643\u062A\u0628 \u0627\u0633\u0645\u0627\u064B \u0623\u0648\u0644\u0627\u064B',
+saved:'\u062A\u0645 \u0627\u0644\u062D\u0641\u0638',deleted:'\u062A\u0645 \u0627\u0644\u062D\u0630\u0641',added:'\u062A\u0645\u062A \u0627\u0644\u0625\u0636\u0627\u0641\u0629',removed:'\u062A\u0645\u062A \u0627\u0644\u0625\u0632\u0627\u0644\u0629',nameFirst:'\u0627\u0643\u062A\u0628 \u0627\u0633\u0645\u0627\u064B \u0623\u0648\u0644\u0627\u064B',
 backplan:'\u0639\u0627\u062F \u0644\u0644\u062A\u062E\u0637\u064A\u0637',unlogged:'\u062A\u0645 \u0627\u0644\u0625\u0644\u063A\u0627\u0621',
 strongest:'\u0627\u0644\u0623\u0642\u0648\u0649',weakest:'\u064A\u062D\u062A\u0627\u062C \u0639\u0645\u0644',vslast:'\u0645\u0642\u0627\u0631\u0646\u0629 \u0628\u0627\u0644\u0645\u0627\u0636\u064A',
 lvl:'\u0627\u0644\u0645\u0633\u062A\u0648\u0649',bestday:'\u0623\u0641\u0636\u0644 \u064A\u0648\u0645',activedays:'\u0623\u064A\u0627\u0645 \u0646\u0634\u0637\u0629',longest:'\u0623\u0637\u0648\u0644',streak:'\u0633\u0644\u0633\u0644\u0629',
-offline:'\u063A\u064A\u0631 \u0645\u062A\u0635\u0644',pending:'{n} \u0628\u0627\u0646\u062A\u0638\u0627\u0631 \u0627\u0644\u0645\u0632\u0627\u0645\u0646\u0629',synced:'\u062A\u0645\u062A \u0645\u0632\u0627\u0645\u0646\u0629 {n} \u062A\u063A\u064A\u064A\u0631',offlinemode:'\u063A\u064A\u0631 \u0645\u062A\u0635\u0644 \u2014 \u064A\u062A\u0645 \u0627\u0644\u062D\u0641\u0638 \u0639\u0644\u0649 \u062C\u0647\u0627\u0632\u0643',savedoff:'\u0645\u062D\u0641\u0648\u0638 \u0645\u062D\u0644\u064A\u0627\u064B',syncnow:'\u0645\u0632\u0627\u0645\u0646\u0629 \u0627\u0644\u0622\u0646'}};
+offline:'\u063A\u064A\u0631 \u0645\u062A\u0635\u0644',pending:'{n} \u0628\u0627\u0646\u062A\u0638\u0627\u0631 \u0627\u0644\u0645\u0632\u0627\u0645\u0646\u0629',synced:'\u062A\u0645\u062A \u0645\u0632\u0627\u0645\u0646\u0629 {n} \u062A\u063A\u064A\u064A\u0631',offlinemode:'\u063A\u064A\u0631 \u0645\u062A\u0635\u0644 \u2014 \u064A\u062A\u0645 \u0627\u0644\u062D\u0641\u0638 \u0639\u0644\u0649 \u062C\u0647\u0627\u0632\u0643',savedoff:'\u0645\u062D\u0641\u0648\u0638 \u0645\u062D\u0644\u064A\u0627\u064B',}};
 var lang=localStorage.getItem('fp_lang')||'en';
 function T(k,vars){
   var s=(L[lang]&&L[lang][k])||L.en[k]||k;
@@ -1188,13 +1176,7 @@ function absHours(ses,ds){
   if(!r)return 0;
   return r.hours||sessionHours(ses);
 }
-function absRec(sid,ds){return absences.find(function(a){return a.session_id===sid&&a.class_date===ds})}
 /* hours an absence costs: what the teacher counted, else the full block */
-function absHours(ses,ds){
-  var r=absRec(ses.id,ds);
-  if(!r)return 0;
-  return r.hours||sessionHours(ses);
-}
 function courseSessions(cid){return csessions.filter(function(x){return x.course_id===cid})}
 function courseStats(cid){
   var c=courses.find(function(x){return x.id===cid});
@@ -1218,10 +1200,6 @@ function allStats(){
   courses.forEach(function(c){var s=courseStats(c.id);t+=s.total;h+=s.held;a+=s.absent});
   return{total:t,held:h,absent:a,pct:t?Math.round((t-a)/t*100):100,absPct:t?Math.round(a/t*100):0};
 }
-function semWeekNum(){
-  var d=Math.floor((new Date()-new Date(semStart()+'T00:00:00'))/86400000);
-  return Math.min(semWeeks(),Math.max(1,Math.floor(d/7)+1));
-}
 function sessionsOn(ds){
   var wd=new Date(ds+'T00:00:00').getDay();
   var start=new Date(semStart()+'T00:00:00'),end=new Date(semStart()+'T00:00:00');
@@ -1230,10 +1208,6 @@ function sessionsOn(ds){
   if(d<start||d>end)return [];
   if(noClassReason(ds))return [];
   return csessions.filter(function(x){return x.weekday===wd}).sort(function(a,b){return a.start_time<b.start_time?-1:1});
-}
-function courseOf(sid){
-  var ses=csessions.find(function(x){return x.id===sid});
-  return ses?courses.find(function(c){return c.id===ses.course_id}):null;
 }
 function toggleAbsent(sid,ds){
   var ses=csessions.find(function(x){return x.id===sid});
@@ -1317,7 +1291,6 @@ function courseGrade(cid){
     wSum:wSum,wEarn:Math.round(wEarn*10)/10,
     weighted:wSum>0};
 }
-function sessionRoom(ses){return ses.room||''}
 async function saveEvent(){
   var cid=document.getElementById('ev_course').value;
   var d=document.getElementById('ev_date').value;
@@ -1574,11 +1547,6 @@ function coursesHtml(){
 }
 function ttNav(d){ttAnchor.setDate(ttAnchor.getDate()+7*d);renderStudy()}
 function ttToday(){ttAnchor=new Date();renderStudy()}
-var CCOL=['#4f9cf9','#34d399','#fbbf24','#a78bfa','#ff6b4a','#22d3ee'];
-function courseColor(cid){
-  var i=courses.findIndex(function(c){return c.id===cid});
-  return CCOL[(i<0?0:i)%CCOL.length];
-}
 function timetableHtml(){
   var ws=weekStart(ttAnchor),td=today();
   var h='<div class="ttnav"><button class="iconbtn" onclick="ttNav(-1)">\u2190</button>'+
@@ -1780,8 +1748,6 @@ function renderGoals(){
   h+='</div>';
   document.getElementById('goalcard').innerHTML=h;
 }
-function renderFilter(){}
-function setFilter(p){setTab(p==='all'?'sched':p)}
 function visible(e){return pFilter==='all'||e.pillar===pFilter}
 function setTab(t){
   tab=t;
