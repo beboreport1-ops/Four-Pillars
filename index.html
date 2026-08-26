@@ -269,7 +269,7 @@ main{padding:0 16px 90px;max-width:1000px;margin:0 auto}
 </style>
 </head>
 <body>
-<button class="langtoggle" onclick="toggleLang()" id="langbtn">ع</button>
+<button class="langtoggle hidden" onclick="toggleLang()" id="langbtn">ع</button>
 
 <div id="auth">
   <div class="authbox" id="authbox"></div>
@@ -467,7 +467,11 @@ function addDays(ds,n){var d=new Date(ds+'T00:00:00');d.setDate(d.getDate()+n);r
 function applyLang(){
   document.documentElement.lang=lang;
   document.documentElement.dir=lang==='ar'?'rtl':'ltr';
-  document.getElementById('langbtn').textContent=lang==='ar'?'EN':'\u0639';
+  var lb=document.getElementById('langbtn');
+  if(lb){
+    lb.textContent=lang==='ar'?'EN':'\u0639';
+    lb.classList.toggle('hidden',!!user);   /* signed in \u2192 use Preferences instead */
+  }
   document.title=T('title');
   document.getElementById('vt-week').textContent=T('week');
   document.getElementById('vt-month').textContent=T('month');
