@@ -87,6 +87,25 @@ main{padding:0 16px 90px;max-width:1000px;margin:0 auto}
 .warn{color:#fbbf24;font-weight:700}
 .bad{color:#ff6b4a;font-weight:700}
 .tt{overflow-x:auto;padding-bottom:4px}
+.ttwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px}
+.ttgrid{min-width:560px}
+.tthead{display:grid;grid-template-columns:40px repeat(5,1fr);gap:4px;margin-bottom:4px}
+.tthead div{font-size:11px;color:var(--dim);text-align:center;font-weight:600;padding:5px 0;border-radius:6px}
+.tthead div.tdy{background:var(--card2);color:var(--gold)}
+.ttbody{display:grid;grid-template-columns:40px repeat(5,1fr);gap:4px}
+.ttgut{position:relative}
+.ttgut span{position:absolute;inset-inline-end:3px;font-size:9px;color:var(--dim);transform:translateY(-4px);white-space:nowrap}
+.ttcol{position:relative;background:var(--card2);border-radius:8px;overflow:hidden}
+.ttcol.tdy{box-shadow:inset 0 0 0 1px var(--gold)}
+.ttline{position:absolute;left:0;right:0;height:1px;background:rgba(255,255,255,.05)}
+.ttblk{position:absolute;left:3px;right:3px;border-radius:7px;padding:4px 6px;font-size:10px;line-height:1.25;overflow:hidden;cursor:pointer;border-inline-start:3px solid}
+.ttblk b{display:block;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ttblk small{font-size:9px;opacity:.8}
+.ttblk.absent{background:rgba(255,107,74,.25)!important;border-inline-start-color:#ff6b4a!important}
+.ttblk.future{opacity:.6}
+.ttnav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.ttnav b{flex:1;text-align:center;font-size:13px}
+.ttoff{position:absolute;inset:0;background:rgba(167,139,250,.13);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--soul);text-align:center;padding:4px}
 .ttgrid{display:grid;grid-template-columns:44px repeat(5,minmax(62px,1fr));gap:3px;min-width:380px}
 .tthead{font-size:11px;color:var(--dim);font-weight:700;text-align:center;padding:5px 2px;background:var(--card2);border-radius:7px}
 .tthead.now{color:var(--gold);background:rgba(251,191,36,.13)}
@@ -279,10 +298,12 @@ main{padding:0 16px 90px;max-width:1000px;margin:0 auto}
     <div id="goalcard"></div>
     <div id="todaycard"></div>
   </div>
-  <div id="view-sched" class="hidden">
+  <div id="view-pillar" class="hidden">
     <div id="pillarpanel"></div>
     <div id="studycard"></div>
     <div id="healthcard"></div>
+  </div>
+  <div id="view-sched" class="hidden">
     <div id="calblock">
       <div class="vtoggle">
         <button id="vt-week" class="on" onclick="setView('week')"></button>
@@ -324,7 +345,7 @@ sched:'Schedule',stats:'Stats',week:'Week',month:'Month',year:'Year',today:'Toda
 quest:'Today\u2019s Quest',pillars:'pillars',all:'All',
 study:'Studying',gym:'Health',social:'Social',soul:'Soul',
 main:'Main',todayplan:'Today',
-ofsem:'of semester',calendar:'Calendar',noclassday:'No classes \u00B7 {r}',daysleft:'in {n} days',daysago:'{n} days ago',
+ofsem:'of semester',calendar:'Calendar',ttip:'Tap a class to mark it absent · swipe for more days',noclassday:'No classes \u00B7 {r}',daysleft:'in {n} days',daysago:'{n} days ago',
 todayis:'Today',breakweek:'Break week',examsoon:'Finals in {n} days',nextevent:'Next',studyweeks:'study weeks',
 ev_start:'Semester starts',ev_holiday:'National Day holiday',ev_break:'Autumn break',ev_resume:'Classes resume',
 ev_deadline:'Last day to withdraw',ev_exams:'Final exams',ev_vacation:'Mid-year vacation',courses:'My Courses',todayclasses:'Today\u2019s Classes',timetable:'Timetable',attendance:'Attendance',
@@ -374,7 +395,7 @@ sched:'\u0627\u0644\u062C\u062F\u0648\u0644',stats:'\u0627\u0644\u0625\u062D\u06
 quest:'\u0645\u0647\u0645\u0629 \u0627\u0644\u064A\u0648\u0645',pillars:'\u0623\u0631\u0643\u0627\u0646',all:'\u0627\u0644\u0643\u0644',
 study:'\u0627\u0644\u062F\u0631\u0627\u0633\u0629',gym:'\u0627\u0644\u0635\u062D\u0629',social:'\u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639\u064A',soul:'\u0627\u0644\u0631\u0648\u062D',
 main:'\u0627\u0644\u0631\u0626\u064A\u0633\u064A\u0629',todayplan:'\u0627\u0644\u064A\u0648\u0645',
-ofsem:'\u0645\u0646 \u0627\u0644\u0641\u0635\u0644',calendar:'\u0627\u0644\u062A\u0642\u0648\u064A\u0645',noclassday:'\u0644\u0627 \u062F\u0631\u0627\u0633\u0629 \u00B7 {r}',daysleft:'\u0628\u0639\u062F {n} \u064A\u0648\u0645',daysago:'\u0642\u0628\u0644 {n} \u064A\u0648\u0645',
+ofsem:'\u0645\u0646 \u0627\u0644\u0641\u0635\u0644',calendar:'\u0627\u0644\u062A\u0642\u0648\u064A\u0645',ttip:'\u0627\u0636\u063A\u0637 \u0639\u0644\u0649 \u0627\u0644\u0645\u062D\u0627\u0636\u0631\u0629 \u0644\u062A\u0633\u062C\u064A\u0644 \u0627\u0644\u063A\u064A\u0627\u0628',noclassday:'\u0644\u0627 \u062F\u0631\u0627\u0633\u0629 \u00B7 {r}',daysleft:'\u0628\u0639\u062F {n} \u064A\u0648\u0645',daysago:'\u0642\u0628\u0644 {n} \u064A\u0648\u0645',
 todayis:'\u0627\u0644\u064A\u0648\u0645',breakweek:'\u0623\u0633\u0628\u0648\u0639 \u0627\u0644\u0625\u062C\u0627\u0632\u0629',examsoon:'\u0627\u0644\u0627\u062E\u062A\u0628\u0627\u0631\u0627\u062A \u0628\u0639\u062F {n} \u064A\u0648\u0645',nextevent:'\u0627\u0644\u0642\u0627\u062F\u0645',studyweeks:'\u0623\u0633\u0627\u0628\u064A\u0639 \u062F\u0631\u0627\u0633\u064A\u0629',
 ev_start:'\u0628\u062F\u0627\u064A\u0629 \u0627\u0644\u062F\u0631\u0627\u0633\u0629 \u0644\u0644\u0641\u0635\u0644 \u0627\u0644\u0623\u0648\u0644',ev_holiday:'\u0625\u062C\u0627\u0632\u0629 \u0627\u0644\u064A\u0648\u0645 \u0627\u0644\u0648\u0637\u0646\u064A',ev_break:'\u0625\u062C\u0627\u0632\u0629 \u0627\u0644\u062E\u0631\u064A\u0641',ev_resume:'\u0628\u062F\u0627\u064A\u0629 \u0627\u0644\u062F\u0631\u0627\u0633\u0629 \u0628\u0639\u062F \u0625\u062C\u0627\u0632\u0629 \u0627\u0644\u062E\u0631\u064A\u0641',
 ev_deadline:'\u0622\u062E\u0631 \u0645\u0648\u0639\u062F \u0644\u0644\u0627\u0639\u062A\u0630\u0627\u0631 \u0639\u0646 \u0627\u0644\u0641\u0635\u0644 \u0648\u0639\u0646 \u0645\u0642\u0631\u0631',ev_exams:'\u0627\u0644\u0627\u062E\u062A\u0628\u0627\u0631\u0627\u062A \u0627\u0644\u0646\u0647\u0627\u0626\u064A\u0629',ev_vacation:'\u0625\u062C\u0627\u0632\u0629 \u0645\u0646\u062A\u0635\u0641 \u0627\u0644\u0639\u0627\u0645',courses:'\u0645\u0648\u0627\u062F\u064A',todayclasses:'\u0645\u062D\u0627\u0636\u0631\u0627\u062A \u0627\u0644\u064A\u0648\u0645',timetable:'\u0627\u0644\u062C\u062F\u0648\u0644',attendance:'\u0627\u0644\u062D\u0636\u0648\u0631',
@@ -436,7 +457,7 @@ var cfg={lang:'en',city:'Riyadh',country:'Saudi Arabia',lat:null,lon:null,goals:
 semester_start:'2026-08-23',semester_weeks:15,absence_limit:25,courses_seeded:false,calendar_seeded:false};
 var nutri={};
 var courses=[],csessions=[],absences=[],acadEvents=[];
-var studyView='today';
+var studyView='today';var ttAnchor=new Date();
 var tab='main',view='week',anchor=new Date(),selDay=null,signup=false,curP='study',prevLvl=null,pFilter='all',prayerTimes=null,deferredPrompt=null;
 
 function dstr(d){var y=d.getFullYear(),m=('0'+(d.getMonth()+1)).slice(-2),dd=('0'+d.getDate()).slice(-2);return y+'-'+m+'-'+dd}
@@ -1212,78 +1233,60 @@ function coursesHtml(){
   });
   return h;
 }
+function ttNav(d){ttAnchor.setDate(ttAnchor.getDate()+7*d);renderStudy()}
+function ttToday(){ttAnchor=new Date();renderStudy()}
+var CCOL=['#4f9cf9','#34d399','#fbbf24','#a78bfa','#ff6b4a','#22d3ee'];
+function courseColor(cid){
+  var i=courses.findIndex(function(c){return c.id===cid});
+  return CCOL[(i<0?0:i)%CCOL.length];
+}
 function timetableHtml(){
-  var days=[0,1,2,3,4];
-  var wd=new Date().getDay();
-  var minH=24,maxH=0;
-  csessions.forEach(function(x){
-    minH=Math.min(minH,Math.floor(toMins(x.start_time)/60));
-    maxH=Math.max(maxH,Math.ceil(toMins(x.end_time)/60));
-  });
-  if(!csessions.length){minH=8;maxH=15}
-  var rows=Math.max(1,maxH-minH);
-  var thisWeek=weekStart(new Date());
-  var h='<div class="tt"><div class="ttgrid">';
-  h+='<div class="tthead" style="grid-row:1;grid-column:1"></div>';
-  days.forEach(function(d,i){
-    h+='<div class="tthead'+(d===wd?' now':'')+'" style="grid-row:1;grid-column:'+(i+2)+'">'+WD[lang][d]+'</div>';
-  });
-  for(var r=0;r<rows;r++){
-    h+='<div class="tthour" style="grid-row:'+(r+2)+';grid-column:1">'+fmt12(((minH+r)<10?'0':'')+(minH+r)+':00')+'</div>';
-    days.forEach(function(d,i){
-      h+='<div class="ttcell'+(d===wd?' now':'')+'" style="grid-row:'+(r+2)+';grid-column:'+(i+2)+'"></div>';
-    });
+  var H=52,T0=8*60,T1=15*60;
+  var ws=weekStart(ttAnchor),td=today();
+  var height=(T1-T0)/60*H;
+  var h='<div class="ttnav"><button class="iconbtn" onclick="ttNav(-1)">\u2190</button>'+
+  '<b>'+new Date(ws+'T00:00:00').toLocaleDateString(locale(),{month:'short',day:'numeric'})+' \u2013 '+
+  new Date(addDays(ws,4)+'T00:00:00').toLocaleDateString(locale(),{month:'short',day:'numeric'})+'</b>'+
+  '<button class="iconbtn" onclick="ttNav(1)">\u2192</button>'+
+  '<button class="iconbtn" style="border-color:var(--gold);color:var(--gold)" onclick="ttToday()">'+T('today')+'</button></div>';
+  h+='<div class="ttwrap"><div class="ttgrid">';
+  h+='<div class="tthead"><div></div>';
+  for(var d=0;d<5;d++){
+    var ds=addDays(ws,d);
+    h+='<div class="'+(ds===td?'tdy':'')+'">'+WD[lang][d]+' '+new Date(ds+'T00:00:00').getDate()+'</div>';
   }
-  csessions.forEach(function(ses){
-    var col=days.indexOf(ses.weekday);if(col<0)return;
-    var c=courses.find(function(x){return x.id===ses.course_id});
-    var hex=courseColor(c);
-    var sh=toMins(ses.start_time)/60,eh=toMins(ses.end_time)/60;
-    var row=Math.round(sh-minH)+2,span=Math.max(1,Math.round(eh-sh));
-    var ds=addDays(thisWeek,ses.weekday);
-    var miss=isAbsent(ses.id,ds);
-    h+='<button class="ttblock'+(miss?' miss':'')+'" style="grid-row:'+row+' / span '+span+';grid-column:'+(col+2)+';background:'+hex+'2e;border-inline-start:3px solid '+hex+'" onclick="openSession(\''+ses.id+'\')">'+
-    '<b>'+esc(c?c.code:'')+'</b><span>'+actName(ses.activity)+'</span><span>'+fmt12(ses.start_time)+'</span></button>';
-  });
-  h+='</div></div>';
-  h+='<div class="ttlegend">';
-  courses.slice().sort(function(a,b){return a.sort-b.sort}).forEach(function(c){
-    h+='<span><i style="background:'+courseColor(c)+'"></i>'+esc(c.code)+'</span>';
-  });
+  h+='</div><div class="ttbody">';
+  h+='<div class="ttgut" style="height:'+height+'px">';
+  for(var t=T0;t<=T1;t+=60)h+='<span style="top:'+((t-T0)/60*H)+'px">'+fmt12((t/60|0)+':00').replace(':00','')+'</span>';
   h+='</div>';
+  for(var d=0;d<5;d++){
+    var ds=addDays(ws,d),isT=ds===td;
+    h+='<div class="ttcol'+(isT?' tdy':'')+'" style="height:'+height+'px">';
+    for(var t=T0+60;t<T1;t+=60)h+='<div class="ttline" style="top:'+((t-T0)/60*H)+'px"></div>';
+    var reason=noClassReason(ds);
+    var inSem=ds>=semStart()&&ds<=studyEnd();
+    if(!inSem){h+='<div class="ttoff" style="background:rgba(132,148,173,.10);color:var(--dim)">\u2014</div>'}
+    else if(reason){h+='<div class="ttoff">'+esc(reason)+'</div>'}
+    else{
+      csessions.filter(function(x){return x.weekday===d}).forEach(function(ses){
+        var c=courses.find(function(x){return x.id===ses.course_id});
+        var st=toMins(ses.start_time),en=toMins(ses.end_time);
+        var top=(st-T0)/60*H,hh=Math.max(26,(en-st)/60*H-3);
+        var abs=isAbsent(ses.id,ds),passed=classPassed(ds,ses.end_time);
+        var col=courseColor(ses.course_id);
+        var cls='ttblk'+(abs?' absent':'')+(passed?' passed':' future');
+        h+='<div class="'+cls+'" style="top:'+top+'px;height:'+hh+'px;background:'+col+'22;border-inline-start-color:'+col+'" '+
+        'onclick="toggleAbsent(\''+ses.id+'\',\''+ds+'\')">'+
+        '<b>'+esc(c?c.code:'')+(abs?' \u274C':(passed?' \u2705':''))+'</b>'+
+        '<small>'+actName(ses.activity)+'<br>'+fmt12(ses.start_time)+'</small></div>';
+      });
+    }
+    h+='</div>';
+  }
+  h+='</div></div></div>';
+  h+='<p class="muted" style="margin-top:10px;font-size:11px">'+T('ttip')+'</p>';
   return h;
 }
-var CPAL=['#4f9cf9','#ff6b4a','#34d399','#a78bfa','#fbbf24','#f472b6'];
-function courseColor(c){
-  if(!c)return '#4f9cf9';
-  var i=courses.slice().sort(function(a,b){return a.sort-b.sort}).findIndex(function(x){return x.id===c.id});
-  return CPAL[(i<0?0:i)%CPAL.length];
-}
-function openSession(sid){
-  var ses=csessions.find(function(x){return x.id===sid});if(!ses)return;
-  var c=courses.find(function(x){return x.id===ses.course_id});
-  var dates=sessionDates(ses);
-  var td=today();
-  var upcoming=dates.filter(function(d){return d>=td}).slice(0,3);
-  var recent=dates.filter(function(d){return d<td}).slice(-3).reverse();
-  var list=recent.concat(upcoming);
-  var h='<h2 style="border-inline-start:4px solid '+courseColor(c)+';padding-inline-start:9px">'+esc(c?c.code:'')+' \u00B7 '+esc(c?c.name:'')+'</h2>';
-  h+='<p class="confmsg">'+actName(ses.activity)+' \u00B7 '+T('section')+' '+esc(ses.section||'')+'<br>'+
-  WD[lang][ses.weekday]+' \u00B7 '+fmt12(ses.start_time)+' \u2013 '+fmt12(ses.end_time)+' \u00B7 '+sessionHours(ses)+' '+T('hours')+'</p>';
-  if(c){var st=courseStats(c.id);
-    h+='<p class="confmsg" style="margin-top:8px">'+st.pct+'% \u00B7 '+T('canmiss',{n:st.left})+'</p>';}
-  h+='<label>'+T('attendance')+'</label>';
-  list.forEach(function(d){
-    var abs=isAbsent(ses.id,d),passed=classPassed(d,ses.end_time);
-    h+='<div class="cls'+(abs?' absent':'')+(passed?'':' future')+'" style="border-inline-start-color:'+(abs?'#ff6b4a':courseColor(c))+'">'+
-    '<div class="ci"><div class="cc">'+d+'</div><div class="cm">'+new Date(d+'T00:00:00').toLocaleDateString(locale(),{weekday:'long'})+(passed?'':' \u00B7 '+T('upcoming'))+'</div></div>'+
-    '<button class="cb'+(abs?' on':'')+'" onclick="toggleAbsent(\''+sid+'\',\''+d+'\');closeModal()">'+(abs?'\u274C '+T('absent'):'\u2705 '+T('present'))+'</button></div>';
-  });
-  h+='<div class="mrow"><button class="no" onclick="closeModal()">'+T('close')+'</button></div>';
-  document.getElementById('mboxc').innerHTML=h;
-  document.getElementById('modal').classList.remove('hidden');
-}
-
 function calendarHtml(){
   if(!acadEvents.length)return '<p class="muted">\u2014</p>';
   var td=today();
@@ -1397,7 +1400,7 @@ function render(){
   renderHeader();renderNav();
   if(tab==='main'){renderQuest();renderGoals();renderToday();return}
   if(tab==='stats'){renderStats();return}
-  renderPillar();renderStudy();renderHealth();
+  if(PKEYS.indexOf(tab)>=0){renderPillar();renderStudy();renderHealth();return}
   if(tab==='sched')renderSched();
 }
 function renderHeader(){
@@ -1460,7 +1463,8 @@ function setTab(t){
   pFilter=pill?t:'all';
   setAccent(pill?t:'all');
   document.getElementById('view-main').classList.toggle('hidden',t!=='main');
-  document.getElementById('view-sched').classList.toggle('hidden',!(t==='sched'||pill));
+  document.getElementById('view-pillar').classList.toggle('hidden',!pill);
+  document.getElementById('view-sched').classList.toggle('hidden',t!=='sched');
   document.getElementById('view-stats').classList.toggle('hidden',t!=='stats');
   var cb=document.getElementById('calblock');if(cb)cb.classList.toggle('hidden',t!=='sched');
   window.scrollTo({top:0});
