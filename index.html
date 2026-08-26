@@ -86,13 +86,19 @@ main{padding:0 16px 90px;max-width:1000px;margin:0 auto}
 .crow .cbar div{height:100%;border-radius:3px;transition:width .4s}
 .warn{color:#fbbf24;font-weight:700}
 .bad{color:#ff6b4a;font-weight:700}
-.tt{overflow-x:auto}
-.tt table{width:100%;border-collapse:separate;border-spacing:4px;min-width:520px}
-.tt th{font-size:11px;color:var(--dim);font-weight:600;padding:4px}
-.tt td{vertical-align:top}
-.ttc{background:var(--card2);border-radius:8px;padding:6px;font-size:10px;line-height:1.35;border-inline-start:2px solid var(--study)}
-.ttc b{display:block;font-size:11px}
-.ttc span{color:var(--dim)}
+.tt{overflow-x:auto;padding-bottom:4px}
+.ttgrid{display:grid;grid-template-columns:44px repeat(5,minmax(62px,1fr));gap:3px;min-width:380px}
+.tthead{font-size:11px;color:var(--dim);font-weight:700;text-align:center;padding:5px 2px;background:var(--card2);border-radius:7px}
+.tthead.now{color:var(--gold);background:rgba(251,191,36,.13)}
+.tthour{font-size:9px;color:var(--dim);text-align:end;padding-top:3px;padding-inline-end:3px;white-space:nowrap}
+.ttcell{background:rgba(255,255,255,.022);border-radius:6px}
+.ttcell.now{background:rgba(251,191,36,.06)}
+.ttblock{border-radius:8px;padding:5px 6px;font-size:10px;line-height:1.3;overflow:hidden;border:none;text-align:start;color:var(--tx);display:flex;flex-direction:column;justify-content:center;min-width:0}
+.ttblock b{font-size:11px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ttblock span{opacity:.8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ttblock.miss{outline:2px solid #ff6b4a;opacity:.75}
+.ttlegend{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;font-size:11px;color:var(--dim)}
+.ttlegend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-inline-end:4px}
 .phero{background:linear-gradient(135deg,#131a26,#161f2e);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px;position:relative;overflow:hidden}
 .phero:after{content:'';position:absolute;top:-40px;inset-inline-end:-30px;width:130px;height:130px;border-radius:50%;opacity:.11}
 .phero .pe{font-size:30px}
@@ -277,19 +283,21 @@ main{padding:0 16px 90px;max-width:1000px;margin:0 auto}
     <div id="pillarpanel"></div>
     <div id="studycard"></div>
     <div id="healthcard"></div>
-    <div class="vtoggle">
-      <button id="vt-week" class="on" onclick="setView('week')"></button>
-      <button id="vt-month" onclick="setView('month')"></button>
-      <button id="vt-year" onclick="setView('year')"></button>
-      <span class="spacer"></span>
-      <button class="todaybtn" onclick="goToday()"></button>
+    <div id="calblock">
+      <div class="vtoggle">
+        <button id="vt-week" class="on" onclick="setView('week')"></button>
+        <button id="vt-month" onclick="setView('month')"></button>
+        <button id="vt-year" onclick="setView('year')"></button>
+        <span class="spacer"></span>
+        <button class="todaybtn" onclick="goToday()"></button>
+      </div>
+      <div class="weeknav">
+        <button class="iconbtn" onclick="nav(-1)">&#8592;</button>
+        <b id="navlbl"></b>
+        <button class="iconbtn" onclick="nav(1)">&#8594;</button>
+      </div>
+      <div id="schedbody"></div>
     </div>
-    <div class="weeknav">
-      <button class="iconbtn" onclick="nav(-1)">&#8592;</button>
-      <b id="navlbl"></b>
-      <button class="iconbtn" onclick="nav(1)">&#8594;</button>
-    </div>
-    <div id="schedbody"></div>
   </div>
   <div id="view-stats" class="hidden"></div>
 </main>
@@ -1206,22 +1214,76 @@ function coursesHtml(){
 }
 function timetableHtml(){
   var days=[0,1,2,3,4];
-  var h='<div class="tt"><table><tr>';
-  days.forEach(function(d){h+='<th>'+WD[lang][d]+'</th>'});
-  h+='</tr><tr>';
-  days.forEach(function(d){
-    var list=csessions.filter(function(x){return x.weekday===d}).sort(function(a,b){return a.start_time<b.start_time?-1:1});
-    h+='<td>';
-    list.forEach(function(ses){
-      var c=courses.find(function(x){return x.id===ses.course_id});
-      h+='<div class="ttc"><b>'+esc(c?c.code:'')+'</b><span>'+actName(ses.activity)+'<br>'+fmt12(ses.start_time)+'</span></div>';
-    });
-    if(!list.length)h+='<div class="ttc" style="opacity:.35;border-inline-start-color:var(--line)"><span>\u2014</span></div>';
-    h+='</td>';
+  var wd=new Date().getDay();
+  var minH=24,maxH=0;
+  csessions.forEach(function(x){
+    minH=Math.min(minH,Math.floor(toMins(x.start_time)/60));
+    maxH=Math.max(maxH,Math.ceil(toMins(x.end_time)/60));
   });
-  h+='</tr></table></div>';
+  if(!csessions.length){minH=8;maxH=15}
+  var rows=Math.max(1,maxH-minH);
+  var thisWeek=weekStart(new Date());
+  var h='<div class="tt"><div class="ttgrid">';
+  h+='<div class="tthead" style="grid-row:1;grid-column:1"></div>';
+  days.forEach(function(d,i){
+    h+='<div class="tthead'+(d===wd?' now':'')+'" style="grid-row:1;grid-column:'+(i+2)+'">'+WD[lang][d]+'</div>';
+  });
+  for(var r=0;r<rows;r++){
+    h+='<div class="tthour" style="grid-row:'+(r+2)+';grid-column:1">'+fmt12(((minH+r)<10?'0':'')+(minH+r)+':00')+'</div>';
+    days.forEach(function(d,i){
+      h+='<div class="ttcell'+(d===wd?' now':'')+'" style="grid-row:'+(r+2)+';grid-column:'+(i+2)+'"></div>';
+    });
+  }
+  csessions.forEach(function(ses){
+    var col=days.indexOf(ses.weekday);if(col<0)return;
+    var c=courses.find(function(x){return x.id===ses.course_id});
+    var hex=courseColor(c);
+    var sh=toMins(ses.start_time)/60,eh=toMins(ses.end_time)/60;
+    var row=Math.round(sh-minH)+2,span=Math.max(1,Math.round(eh-sh));
+    var ds=addDays(thisWeek,ses.weekday);
+    var miss=isAbsent(ses.id,ds);
+    h+='<button class="ttblock'+(miss?' miss':'')+'" style="grid-row:'+row+' / span '+span+';grid-column:'+(col+2)+';background:'+hex+'2e;border-inline-start:3px solid '+hex+'" onclick="openSession(\''+ses.id+'\')">'+
+    '<b>'+esc(c?c.code:'')+'</b><span>'+actName(ses.activity)+'</span><span>'+fmt12(ses.start_time)+'</span></button>';
+  });
+  h+='</div></div>';
+  h+='<div class="ttlegend">';
+  courses.slice().sort(function(a,b){return a.sort-b.sort}).forEach(function(c){
+    h+='<span><i style="background:'+courseColor(c)+'"></i>'+esc(c.code)+'</span>';
+  });
+  h+='</div>';
   return h;
 }
+var CPAL=['#4f9cf9','#ff6b4a','#34d399','#a78bfa','#fbbf24','#f472b6'];
+function courseColor(c){
+  if(!c)return '#4f9cf9';
+  var i=courses.slice().sort(function(a,b){return a.sort-b.sort}).findIndex(function(x){return x.id===c.id});
+  return CPAL[(i<0?0:i)%CPAL.length];
+}
+function openSession(sid){
+  var ses=csessions.find(function(x){return x.id===sid});if(!ses)return;
+  var c=courses.find(function(x){return x.id===ses.course_id});
+  var dates=sessionDates(ses);
+  var td=today();
+  var upcoming=dates.filter(function(d){return d>=td}).slice(0,3);
+  var recent=dates.filter(function(d){return d<td}).slice(-3).reverse();
+  var list=recent.concat(upcoming);
+  var h='<h2 style="border-inline-start:4px solid '+courseColor(c)+';padding-inline-start:9px">'+esc(c?c.code:'')+' \u00B7 '+esc(c?c.name:'')+'</h2>';
+  h+='<p class="confmsg">'+actName(ses.activity)+' \u00B7 '+T('section')+' '+esc(ses.section||'')+'<br>'+
+  WD[lang][ses.weekday]+' \u00B7 '+fmt12(ses.start_time)+' \u2013 '+fmt12(ses.end_time)+' \u00B7 '+sessionHours(ses)+' '+T('hours')+'</p>';
+  if(c){var st=courseStats(c.id);
+    h+='<p class="confmsg" style="margin-top:8px">'+st.pct+'% \u00B7 '+T('canmiss',{n:st.left})+'</p>';}
+  h+='<label>'+T('attendance')+'</label>';
+  list.forEach(function(d){
+    var abs=isAbsent(ses.id,d),passed=classPassed(d,ses.end_time);
+    h+='<div class="cls'+(abs?' absent':'')+(passed?'':' future')+'" style="border-inline-start-color:'+(abs?'#ff6b4a':courseColor(c))+'">'+
+    '<div class="ci"><div class="cc">'+d+'</div><div class="cm">'+new Date(d+'T00:00:00').toLocaleDateString(locale(),{weekday:'long'})+(passed?'':' \u00B7 '+T('upcoming'))+'</div></div>'+
+    '<button class="cb'+(abs?' on':'')+'" onclick="toggleAbsent(\''+sid+'\',\''+d+'\');closeModal()">'+(abs?'\u274C '+T('absent'):'\u2705 '+T('present'))+'</button></div>';
+  });
+  h+='<div class="mrow"><button class="no" onclick="closeModal()">'+T('close')+'</button></div>';
+  document.getElementById('mboxc').innerHTML=h;
+  document.getElementById('modal').classList.remove('hidden');
+}
+
 function calendarHtml(){
   if(!acadEvents.length)return '<p class="muted">\u2014</p>';
   var td=today();
@@ -1335,7 +1397,8 @@ function render(){
   renderHeader();renderNav();
   if(tab==='main'){renderQuest();renderGoals();renderToday();return}
   if(tab==='stats'){renderStats();return}
-  renderPillar();renderStudy();renderHealth();renderSched();
+  renderPillar();renderStudy();renderHealth();
+  if(tab==='sched')renderSched();
 }
 function renderHeader(){
   var xp=totalXP(),l=lvlOf(xp),base=xpForLvl(l),next=xpForLvl(l+1);
@@ -1399,6 +1462,7 @@ function setTab(t){
   document.getElementById('view-main').classList.toggle('hidden',t!=='main');
   document.getElementById('view-sched').classList.toggle('hidden',!(t==='sched'||pill));
   document.getElementById('view-stats').classList.toggle('hidden',t!=='stats');
+  var cb=document.getElementById('calblock');if(cb)cb.classList.toggle('hidden',t!=='sched');
   window.scrollTo({top:0});
   render();
 }
