@@ -316,7 +316,10 @@ sched:'Schedule',stats:'Stats',week:'Week',month:'Month',year:'Year',today:'Toda
 quest:'Today\u2019s Quest',pillars:'pillars',all:'All',
 study:'Studying',gym:'Health',social:'Social',soul:'Soul',
 main:'Main',todayplan:'Today',
-ofsem:'of semester',courses:'My Courses',todayclasses:'Today\u2019s Classes',timetable:'Timetable',attendance:'Attendance',
+ofsem:'of semester',calendar:'Calendar',noclassday:'No classes \u00B7 {r}',daysleft:'in {n} days',daysago:'{n} days ago',
+todayis:'Today',breakweek:'Break week',examsoon:'Finals in {n} days',nextevent:'Next',studyweeks:'study weeks',
+ev_start:'Semester starts',ev_holiday:'National Day holiday',ev_break:'Autumn break',ev_resume:'Classes resume',
+ev_deadline:'Last day to withdraw',ev_exams:'Final exams',ev_vacation:'Mid-year vacation',courses:'My Courses',todayclasses:'Today\u2019s Classes',timetable:'Timetable',attendance:'Attendance',
 present:'Present',absent:'Absent',lecture:'Lecture',tutorial:'Tutorial',lab:'Lab',section:'Section',
 noclasses:'No classes today \uD83C\uDF89',held:'held',canmiss:'Can miss {n} more',denied:'Denial risk!',
 week:'Week',weekof:'Week {n} of {t}',semstart:'Semester start',semweeks:'Semester weeks',abslimit:'Denial limit (%)',
@@ -363,7 +366,10 @@ sched:'\u0627\u0644\u062C\u062F\u0648\u0644',stats:'\u0627\u0644\u0625\u062D\u06
 quest:'\u0645\u0647\u0645\u0629 \u0627\u0644\u064A\u0648\u0645',pillars:'\u0623\u0631\u0643\u0627\u0646',all:'\u0627\u0644\u0643\u0644',
 study:'\u0627\u0644\u062F\u0631\u0627\u0633\u0629',gym:'\u0627\u0644\u0635\u062D\u0629',social:'\u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639\u064A',soul:'\u0627\u0644\u0631\u0648\u062D',
 main:'\u0627\u0644\u0631\u0626\u064A\u0633\u064A\u0629',todayplan:'\u0627\u0644\u064A\u0648\u0645',
-ofsem:'\u0645\u0646 \u0627\u0644\u0641\u0635\u0644',courses:'\u0645\u0648\u0627\u062F\u064A',todayclasses:'\u0645\u062D\u0627\u0636\u0631\u0627\u062A \u0627\u0644\u064A\u0648\u0645',timetable:'\u0627\u0644\u062C\u062F\u0648\u0644',attendance:'\u0627\u0644\u062D\u0636\u0648\u0631',
+ofsem:'\u0645\u0646 \u0627\u0644\u0641\u0635\u0644',calendar:'\u0627\u0644\u062A\u0642\u0648\u064A\u0645',noclassday:'\u0644\u0627 \u062F\u0631\u0627\u0633\u0629 \u00B7 {r}',daysleft:'\u0628\u0639\u062F {n} \u064A\u0648\u0645',daysago:'\u0642\u0628\u0644 {n} \u064A\u0648\u0645',
+todayis:'\u0627\u0644\u064A\u0648\u0645',breakweek:'\u0623\u0633\u0628\u0648\u0639 \u0627\u0644\u0625\u062C\u0627\u0632\u0629',examsoon:'\u0627\u0644\u0627\u062E\u062A\u0628\u0627\u0631\u0627\u062A \u0628\u0639\u062F {n} \u064A\u0648\u0645',nextevent:'\u0627\u0644\u0642\u0627\u062F\u0645',studyweeks:'\u0623\u0633\u0627\u0628\u064A\u0639 \u062F\u0631\u0627\u0633\u064A\u0629',
+ev_start:'\u0628\u062F\u0627\u064A\u0629 \u0627\u0644\u062F\u0631\u0627\u0633\u0629 \u0644\u0644\u0641\u0635\u0644 \u0627\u0644\u0623\u0648\u0644',ev_holiday:'\u0625\u062C\u0627\u0632\u0629 \u0627\u0644\u064A\u0648\u0645 \u0627\u0644\u0648\u0637\u0646\u064A',ev_break:'\u0625\u062C\u0627\u0632\u0629 \u0627\u0644\u062E\u0631\u064A\u0641',ev_resume:'\u0628\u062F\u0627\u064A\u0629 \u0627\u0644\u062F\u0631\u0627\u0633\u0629 \u0628\u0639\u062F \u0625\u062C\u0627\u0632\u0629 \u0627\u0644\u062E\u0631\u064A\u0641',
+ev_deadline:'\u0622\u062E\u0631 \u0645\u0648\u0639\u062F \u0644\u0644\u0627\u0639\u062A\u0630\u0627\u0631 \u0639\u0646 \u0627\u0644\u0641\u0635\u0644 \u0648\u0639\u0646 \u0645\u0642\u0631\u0631',ev_exams:'\u0627\u0644\u0627\u062E\u062A\u0628\u0627\u0631\u0627\u062A \u0627\u0644\u0646\u0647\u0627\u0626\u064A\u0629',ev_vacation:'\u0625\u062C\u0627\u0632\u0629 \u0645\u0646\u062A\u0635\u0641 \u0627\u0644\u0639\u0627\u0645',courses:'\u0645\u0648\u0627\u062F\u064A',todayclasses:'\u0645\u062D\u0627\u0636\u0631\u0627\u062A \u0627\u0644\u064A\u0648\u0645',timetable:'\u0627\u0644\u062C\u062F\u0648\u0644',attendance:'\u0627\u0644\u062D\u0636\u0648\u0631',
 present:'\u062D\u0627\u0636\u0631',absent:'\u063A\u0627\u0626\u0628',lecture:'\u0645\u062D\u0627\u0636\u0631\u0629',tutorial:'\u062A\u0645\u0627\u0631\u064A\u0646',lab:'\u0639\u0645\u0644\u064A',section:'\u0634\u0639\u0628\u0629',
 noclasses:'\u0644\u0627 \u0645\u062D\u0627\u0636\u0631\u0627\u062A \u0627\u0644\u064A\u0648\u0645 \uD83C\uDF89',held:'\u0645\u0646\u0639\u0642\u062F\u0629',canmiss:'\u064A\u0645\u0643\u0646 \u0627\u0644\u063A\u064A\u0627\u0628 {n} \u0645\u0631\u0627\u062A',denied:'\u062E\u0637\u0631 \u0627\u0644\u062D\u0631\u0645\u0627\u0646!',
 week:'\u0623\u0633\u0628\u0648\u0639',weekof:'\u0627\u0644\u0623\u0633\u0628\u0648\u0639 {n} \u0645\u0646 {t}',semstart:'\u0628\u062F\u0627\u064A\u0629 \u0627\u0644\u0641\u0635\u0644',semweeks:'\u0623\u0633\u0627\u0628\u064A\u0639 \u0627\u0644\u0641\u0635\u0644',abslimit:'\u062D\u062F \u0627\u0644\u062D\u0631\u0645\u0627\u0646 (%)',
@@ -419,9 +425,9 @@ var WD={en:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],ar:['\u0623\u062D\u062F',
 /* ---------- state ---------- */
 var types=[],entries=[],notes={},quran=[],gymSets=[],user=null;
 var cfg={lang:'en',city:'Riyadh',country:'Saudi Arabia',lat:null,lon:null,goals:{study:5,gym:4,social:3,soul:7},freezes:{},season_start:null,season_target:1500,quran_goal:604,onboarded:false,calorie_goal:2200,protein_goal:120,water_goal_ml:2000,bottle_ml:250,
-semester_start:'2026-08-23',semester_weeks:15,absence_limit:25,courses_seeded:false};
+semester_start:'2026-08-23',semester_weeks:15,absence_limit:25,courses_seeded:false,calendar_seeded:false};
 var nutri={};
-var courses=[],csessions=[],absences=[];
+var courses=[],csessions=[],absences=[],acadEvents=[];
 var studyView='today';
 var tab='main',view='week',anchor=new Date(),selDay=null,signup=false,curP='study',prevLvl=null,pFilter='all',prayerTimes=null,deferredPrompt=null;
 
@@ -510,6 +516,7 @@ async function init(){
   applyLang();
   if(!cfg.onboarded){onboard(0);return}
   if(!cfg.courses_seeded&&!courses.length&&isOnline())seedCourses().then(render);
+  if(!cfg.calendar_seeded&&!acadEvents.length&&isOnline())seedCalendar().then(render);
   render();netBadge();flushQueue(true);
   loadPrayerTimes();
   setInterval(function(){if(isOnline()&&getQ().length)flushQueue(true)},60000);
@@ -528,7 +535,8 @@ async function loadAll(){
     sb.from('nutrition_log').select('*').order('entry_date'),
     sb.from('courses').select('*').order('sort'),
     sb.from('course_sessions').select('*'),
-    sb.from('attendance').select('*')
+    sb.from('attendance').select('*'),
+    sb.from('academic_events').select('*').order('start_date')
   ]);
   types=res[0].data||[];entries=res[1].data||[];
   if(res[2].data){
@@ -540,7 +548,7 @@ async function loadAll(){
     cfg.calorie_goal=s.calorie_goal||2200;cfg.protein_goal=s.protein_goal||120;
     cfg.water_goal_ml=s.water_goal_ml||2000;cfg.bottle_ml=s.bottle_ml||250;
     cfg.semester_start=s.semester_start||'2026-08-23';cfg.semester_weeks=s.semester_weeks||15;
-    cfg.absence_limit=s.absence_limit||25;cfg.courses_seeded=!!s.courses_seeded;
+    cfg.absence_limit=s.absence_limit||25;cfg.courses_seeded=!!s.courses_seeded;cfg.calendar_seeded=!!s.calendar_seeded;
     if(s.latitude!=null){cfg.lat=s.latitude;cfg.lon=s.longitude}
     if(!localStorage.getItem('fp_lang'))lang=cfg.lang;
   }else{
@@ -551,6 +559,7 @@ async function loadAll(){
   quran=res[4].data||[];gymSets=res[5].data||[];
   nutri={};(res[6]&&res[6].data||[]).forEach(function(n){nutri[n.entry_date]={calories:n.calories,protein:n.protein,water_ml:n.water_ml}});
   courses=res[7]&&res[7].data||[];csessions=res[8]&&res[8].data||[];absences=res[9]&&res[9].data||[];
+  acadEvents=res[10]&&res[10].data||[];
   }catch(e){loadCache();return}
   saveCache();
 }
@@ -562,7 +571,7 @@ async function seed(){
   await sb.from('activity_types').insert(defs.map(function(d){return{pillar:d[0],name:d[1],points:d[2]}}));
   var t=await sb.from('activity_types').select('*').order('created_at');types=t.data||[];
 }
-var SETTING_COLS=['lang','city','country','goals','freezes','season_start','season_target','quran_goal','onboarded','calorie_goal','protein_goal','water_goal_ml','bottle_ml','semester_start','semester_weeks','absence_limit','courses_seeded'];
+var SETTING_COLS=['lang','city','country','goals','freezes','season_start','season_target','quran_goal','onboarded','calorie_goal','protein_goal','water_goal_ml','bottle_ml','semester_start','semester_weeks','absence_limit','courses_seeded','calendar_seeded'];
 async function saveCfg(patch){
   Object.assign(cfg,patch);
   var row={user_id:user.id};
@@ -586,13 +595,13 @@ function getQ(){try{return JSON.parse(localStorage.getItem(QK)||'[]')}catch(e){r
 function setQ(q){localStorage.setItem(QK,JSON.stringify(q));netBadge()}
 function enqueue(op){var q=getQ();q.push(op);setQ(q)}
 function saveCache(){
-  try{localStorage.setItem(CK,JSON.stringify({types:types,entries:entries,notes:notes,quran:quran,gymSets:gymSets,nutri:nutri,courses:courses,csessions:csessions,absences:absences,cfg:cfg}))}catch(e){}
+  try{localStorage.setItem(CK,JSON.stringify({types:types,entries:entries,notes:notes,quran:quran,gymSets:gymSets,nutri:nutri,courses:courses,csessions:csessions,absences:absences,acadEvents:acadEvents,cfg:cfg}))}catch(e){}
 }
 function loadCache(){
   try{
     var c=JSON.parse(localStorage.getItem(CK)||'null');
     if(!c)return false;
-    types=c.types||[];entries=c.entries||[];notes=c.notes||{};quran=c.quran||[];gymSets=c.gymSets||[];nutri=c.nutri||{};courses=c.courses||[];csessions=c.csessions||[];absences=c.absences||[];
+    types=c.types||[];entries=c.entries||[];notes=c.notes||{};quran=c.quran||[];gymSets=c.gymSets||[];nutri=c.nutri||{};courses=c.courses||[];csessions=c.csessions||[];absences=c.absences||[];acadEvents=c.acadEvents||[];
     if(c.cfg)Object.assign(cfg,c.cfg);
     return true;
   }catch(e){return false}
@@ -937,6 +946,78 @@ function renderToday(){
   el.innerHTML=h;
 }
 
+
+/* ---------- academic calendar ---------- */
+var MYCAL=[
+ {d:'2026-08-23',e:null,k:'start',nc:false},
+ {d:'2026-09-23',e:null,k:'holiday',nc:true},
+ {d:'2026-11-22',e:'2026-11-28',k:'break',nc:true},
+ {d:'2026-11-28',e:null,k:'deadline',nc:false},
+ {d:'2026-11-29',e:null,k:'resume',nc:false},
+ {d:'2026-12-13',e:'2026-12-26',k:'exams',nc:true},
+ {d:'2026-12-27',e:'2027-01-09',k:'vacation',nc:true}
+];
+async function seedCalendar(){
+  var rows=MYCAL.map(function(x){return{start_date:x.d,end_date:x.e,kind:x.k,no_class:x.nc,title_ar:'',title_en:''}});
+  var r=await dbInsert('academic_events',rows);
+  acadEvents=acadEvents.concat(r.data);
+  await saveCfg({calendar_seeded:true});
+  saveCache();
+}
+function evTitle(ev){return T('ev_'+ev.kind)||ev.kind}
+function evRange(ev){return{a:ev.start_date,b:ev.end_date||ev.start_date}}
+function inRange(ds,ev){var r=evRange(ev);return ds>=r.a&&ds<=r.b}
+/* is this date cancelled by a holiday / break / exams / vacation? */
+function noClassReason(ds){
+  for(var i=0;i<acadEvents.length;i++){
+    var ev=acadEvents[i];
+    if(ev.no_class&&inRange(ds,ev))return evTitle(ev);
+  }
+  return null;
+}
+/* last day of regular classes = day before finals start (fallback: +15wk) */
+function studyEnd(){
+  var ex=acadEvents.find(function(e){return e.kind==='exams'});
+  if(ex){var d=new Date(ex.start_date+'T00:00:00');d.setDate(d.getDate()-1);return dstr(d)}
+  var f=new Date(semStart()+'T00:00:00');f.setDate(f.getDate()+semWeeks()*7-1);return dstr(f);
+}
+/* every week-start that actually contains classes (break weeks excluded) */
+function studyWeekStarts(){
+  var out=[],st=new Date(semStart()+'T00:00:00');
+  st.setDate(st.getDate()-st.getDay());
+  var end=studyEnd();
+  var guard=0;
+  while(dstr(st)<=end&&guard++<60){
+    var ws=dstr(st),any=false;
+    for(var i=0;i<7;i++){
+      var d=addDays(ws,i);
+      if(d>=semStart()&&d<=end&&!noClassReason(d)){any=true;break}
+    }
+    if(any)out.push(ws);
+    st.setDate(st.getDate()+7);
+  }
+  return out;
+}
+function semWeekNum(){
+  var ws=studyWeekStarts(),cur=weekStart(new Date());
+  var i=ws.indexOf(cur);
+  if(i>=0)return i+1;
+  var td=today();
+  if(td<semStart())return 0;
+  for(var j=ws.length-1;j>=0;j--)if(ws[j]<cur)return j+1;
+  return 0;
+}
+function totalStudyWeeks(){return studyWeekStarts().length}
+function nextEvent(){
+  var td=today(),best=null;
+  acadEvents.forEach(function(ev){
+    var r=evRange(ev);
+    if(r.b>=td&&(!best||r.a<evRange(best).a))best=ev;
+  });
+  return best;
+}
+function daysTo(ds){return Math.round((new Date(ds+'T00:00:00')-new Date(today()+'T00:00:00'))/86400000)}
+
 /* ---------- courses & attendance ---------- */
 var MYCOURSES=[
  {code:'\u0639\u0627\u0644 212',name:'\u062A\u0631\u0627\u0643\u064A\u0628 \u0627\u0644\u0628\u064A\u0627\u0646\u0627\u062A',kind:'required',credits:3,sort:1,ses:[
@@ -980,7 +1061,13 @@ function semWeeks(){return cfg.semester_weeks||15}
 function sessionDates(ses){
   var out=[],st=new Date(semStart()+'T00:00:00');
   var base=new Date(st);base.setDate(base.getDate()+((ses.weekday-st.getDay())+7)%7);
-  for(var w=0;w<semWeeks();w++){var d=new Date(base);d.setDate(d.getDate()+7*w);out.push(dstr(d))}
+  var end=studyEnd(),guard=0;
+  var d=new Date(base);
+  while(dstr(d)<=end&&guard++<60){
+    var ds=dstr(d);
+    if(ds>=semStart()&&!noClassReason(ds))out.push(ds);
+    d.setDate(d.getDate()+7);
+  }
   return out;
 }
 function classPassed(ds,endTime){
@@ -1019,6 +1106,7 @@ function sessionsOn(ds){
   end.setDate(end.getDate()+semWeeks()*7-1);
   var d=new Date(ds+'T00:00:00');
   if(d<start||d>end)return [];
+  if(noClassReason(ds))return [];
   return csessions.filter(function(x){return x.weekday===wd}).sort(function(a,b){return a.start_time<b.start_time?-1:1});
 }
 function courseOf(sid){
@@ -1051,19 +1139,25 @@ function renderStudy(){
   }
   var a=allStats();
   var h='<div class="section"><div class="qtop"><h2>\uD83C\uDF93 '+T('attendance')+'</h2>'+
-  '<span class="qcount">'+T('weekof',{n:semWeekNum(),t:semWeeks()})+'</span></div>';
+  '<span class="qcount">'+T('weekof',{n:semWeekNum(),t:totalStudyWeeks()})+'</span></div>';
   h+='<div class="recs" style="margin-bottom:12px">'+
   '<div class="rec"><div class="rv" style="color:'+(a.pct>=90?'#34d399':a.pct>=76?'#fbbf24':'#ff6b4a')+'">'+a.pct+'%</div><div class="rl">'+T('present')+' \u00B7 '+T('ofsem')+'</div></div>'+
   '<div class="rec"><div class="rv">'+a.absent+' <span style="font-size:11px;color:var(--dim)">/ '+a.total+'</span></div><div class="rl">'+T('absent')+' ('+a.absPct+'%)</div></div>'+
   '<div class="rec"><div class="rv">'+a.held+'</div><div class="rl">'+T('held')+'</div></div>'+
   '</div>';
+  var ncr=noClassReason(today()),nx=nextEvent();
+  if(ncr)h+='<div class="crow" style="border-inline-start:3px solid var(--soul);margin-bottom:10px"><div class="cn">\uD83C\uDFD6\uFE0F '+T('noclassday',{r:ncr})+'</div></div>';
+  else if(nx&&daysTo(nx.start_date)>=0&&daysTo(nx.start_date)<=14)
+    h+='<div class="crow" style="border-inline-start:3px solid var(--gold);margin-bottom:10px"><div class="cs"><span>'+T('nextevent')+': '+evTitle(nx)+'</span><span class="warn">'+T('daysleft',{n:daysTo(nx.start_date)})+'</span></div></div>';
   h+='<div class="subtabs">'+
   '<button class="'+(studyView==='today'?'on':'')+'" onclick="setStudyView(\'today\')">\uD83D\uDCCC '+T('todayclasses')+'</button>'+
   '<button class="'+(studyView==='courses'?'on':'')+'" onclick="setStudyView(\'courses\')">\uD83D\uDCD6 '+T('courses')+'</button>'+
   '<button class="'+(studyView==='tt'?'on':'')+'" onclick="setStudyView(\'tt\')">\uD83D\uDDD3 '+T('timetable')+'</button>'+
+  '<button class="'+(studyView==='cal'?'on':'')+'" onclick="setStudyView(\'cal\')">\uD83D\uDCC6 '+T('calendar')+'</button>'+
   '</div>';
   if(studyView==='today')h+=todayClassesHtml();
   else if(studyView==='courses')h+=coursesHtml();
+  else if(studyView==='cal')h+=calendarHtml();
   else h+=timetableHtml();
   h+='</div>';
   el.innerHTML=h;
@@ -1082,7 +1176,9 @@ function classRow(ses,ds,interactive){
   return h;
 }
 function todayClassesHtml(){
-  var ds=today(),list=sessionsOn(ds);
+  var ds=today(),r=noClassReason(ds);
+  if(r)return '<div class="crow" style="border-inline-start:3px solid var(--soul)"><div class="cn">\uD83C\uDFD6\uFE0F '+T('noclassday',{r:r})+'</div></div>';
+  var list=sessionsOn(ds);
   if(!list.length)return '<p class="muted">'+T('noclasses')+'</p>';
   return list.map(function(ses){return classRow(ses,ds,true)}).join('');
 }
@@ -1119,9 +1215,28 @@ function timetableHtml(){
   h+='</tr></table></div>';
   return h;
 }
+function calendarHtml(){
+  if(!acadEvents.length)return '<p class="muted">\u2014</p>';
+  var td=today();
+  var evs=acadEvents.slice().sort(function(a,b){return a.start_date<b.start_date?-1:1});
+  var h='';
+  evs.forEach(function(ev){
+    var r=evRange(ev),past=r.b<td,now=inRange(td,ev);
+    var n=daysTo(r.a);
+    var col=ev.kind==='exams'?'#ff6b4a':ev.no_class?'#a78bfa':ev.kind==='deadline'?'#fbbf24':'var(--study)';
+    h+='<div class="crow" style="border-inline-start:3px solid '+col+';'+(past?'opacity:.45':'')+(now?';box-shadow:0 0 0 1px '+col:'')+'">';
+    h+='<div class="ch"><span class="cn">'+evTitle(ev)+'</span><span class="cp" style="font-size:12px;color:'+col+'">'+
+      (now?'\u2726 '+T('todayis'):n>0?T('daysleft',{n:n}):T('daysago',{n:-n}))+'</span></div>';
+    h+='<div class="cs"><span>'+r.a+(ev.end_date&&ev.end_date!==ev.start_date?' \u2192 '+ev.end_date:'')+'</span>'+
+      '<span>'+new Date(r.a+'T00:00:00').toLocaleDateString(locale(),{weekday:'long'})+'</span></div>';
+    h+='</div>';
+  });
+  return h;
+}
 async function loadMySchedule(){
   toast('...');
   await seedCourses();
+  if(!acadEvents.length)await seedCalendar();
   toast('\uD83C\uDF93 '+T('added'));
   render();
 }
