@@ -346,8 +346,8 @@ quest:'Today\u2019s Quest',pillars:'pillars',all:'All',
 study:'Studying',gym:'Health',social:'Social',soul:'Soul',
 main:'Main',todayplan:'Today',
 ofsem:'of semester',calendar:'Calendar',ttip:'Tap Present on any class to mark it absent',missingcourses:'Some courses are missing',repair:'Fix',
-events:'Deadlines',addevent:'Add',homework:'Homework',quiz:'Quiz',exam:'Exam',project:'Project',other:'Other',
-duedate:'Date',duetime:'Time',score:'Score',maxscore:'Out of',weight:'Weight %',room:'Room',
+events:'Deadlines',addevent:'Add',optl:'optional',marks:'Marks (out of)',homework:'Homework',quiz:'Quiz',exam:'Exam',project:'Project',other:'Other',
+duedate:'Date',duetime:'Time',score:'Score',maxscore:'Out of',room:'Room',
 noevents:'Nothing scheduled',upcomingev:'Upcoming',pastev:'Past',
 addscore:'Enter score',setroom:'Set room',overdue:'Overdue',dueintoday:'Today',duetomorrow:'Tomorrow',
 eventtitle:'Title',sessions:'Classes',gradesofar:'Grade so far',earned:'earned',
@@ -404,8 +404,8 @@ quest:'\u0645\u0647\u0645\u0629 \u0627\u0644\u064A\u0648\u0645',pillars:'\u0623\
 study:'\u0627\u0644\u062F\u0631\u0627\u0633\u0629',gym:'\u0627\u0644\u0635\u062D\u0629',social:'\u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639\u064A',soul:'\u0627\u0644\u0631\u0648\u062D',
 main:'\u0627\u0644\u0631\u0626\u064A\u0633\u064A\u0629',todayplan:'\u0627\u0644\u064A\u0648\u0645',
 ofsem:'\u0645\u0646 \u0627\u0644\u0641\u0635\u0644',calendar:'\u0627\u0644\u062A\u0642\u0648\u064A\u0645',ttip:'\u0627\u0636\u063A\u0637 \u0639\u0644\u0649 \u0627\u0644\u0645\u062D\u0627\u0636\u0631\u0629 \u0644\u062A\u0633\u062C\u064A\u0644 \u0627\u0644\u063A\u064A\u0627\u0628',missingcourses:'\u0628\u0639\u0636 \u0627\u0644\u0645\u0648\u0627\u062F \u0646\u0627\u0642\u0635\u0629',repair:'\u0625\u0635\u0644\u0627\u062D',
-events:'\u0627\u0644\u0645\u0648\u0627\u0639\u064A\u062F',addevent:'\u0625\u0636\u0627\u0641\u0629',homework:'\u0648\u0627\u062C\u0628',quiz:'\u0643\u0648\u064A\u0632',exam:'\u0627\u062E\u062A\u0628\u0627\u0631',project:'\u0645\u0634\u0631\u0648\u0639',other:'\u0623\u062E\u0631\u0649',
-duedate:'\u0627\u0644\u062A\u0627\u0631\u064A\u062E',duetime:'\u0627\u0644\u0648\u0642\u062A',score:'\u0627\u0644\u062F\u0631\u062C\u0629',maxscore:'\u0645\u0646',weight:'\u0627\u0644\u0648\u0632\u0646 %',room:'\u0627\u0644\u0642\u0627\u0639\u0629',
+events:'\u0627\u0644\u0645\u0648\u0627\u0639\u064A\u062F',addevent:'\u0625\u0636\u0627\u0641\u0629',optl:'\u0627\u062E\u062A\u064A\u0627\u0631\u064A',marks:'\u0627\u0644\u062F\u0631\u062C\u0629 (\u0645\u0646)',homework:'\u0648\u0627\u062C\u0628',quiz:'\u0643\u0648\u064A\u0632',exam:'\u0627\u062E\u062A\u0628\u0627\u0631',project:'\u0645\u0634\u0631\u0648\u0639',other:'\u0623\u062E\u0631\u0649',
+duedate:'\u0627\u0644\u062A\u0627\u0631\u064A\u062E',duetime:'\u0627\u0644\u0648\u0642\u062A',score:'\u0627\u0644\u062F\u0631\u062C\u0629',maxscore:'\u0645\u0646',room:'\u0627\u0644\u0642\u0627\u0639\u0629',
 noevents:'\u0644\u0627 \u064A\u0648\u062C\u062F',upcomingev:'\u0627\u0644\u0642\u0627\u062F\u0645',pastev:'\u0627\u0644\u0633\u0627\u0628\u0642',
 addscore:'\u0623\u062F\u062E\u0644 \u0627\u0644\u062F\u0631\u062C\u0629',setroom:'\u062A\u062D\u062F\u064A\u062F \u0627\u0644\u0642\u0627\u0639\u0629',overdue:'\u0645\u062A\u0623\u062E\u0631',dueintoday:'\u0627\u0644\u064A\u0648\u0645',duetomorrow:'\u063A\u062F\u0627\u064B',
 eventtitle:'\u0627\u0644\u0639\u0646\u0648\u0627\u0646',sessions:'\u0627\u0644\u0645\u062D\u0627\u0636\u0631\u0627\u062A',gradesofar:'\u0627\u0644\u062F\u0631\u062C\u0629 \u062D\u062A\u0649 \u0627\u0644\u0622\u0646',earned:'\u0645\u062D\u0642\u0642',
@@ -1280,16 +1280,10 @@ function dueColor(e){
 function courseGrade(cid){
   var evs=eventsFor(cid).filter(function(e){return e.score!=null&&e.max_score});
   if(!evs.length)return null;
-  var wSum=0,wEarn=0,rawE=0,rawM=0;
-  evs.forEach(function(e){
-    var pct=e.score/e.max_score;
-    rawE+=Number(e.score);rawM+=Number(e.max_score);
-    if(e.weight){wSum+=Number(e.weight);wEarn+=pct*Number(e.weight)}
-  });
-  return{count:evs.length,rawE:rawE,rawM:rawM,
-    pct:rawM?Math.round(rawE/rawM*100):0,
-    wSum:wSum,wEarn:Math.round(wEarn*10)/10,
-    weighted:wSum>0};
+  var rawE=0,rawM=0;
+  evs.forEach(function(e){rawE+=Number(e.score);rawM+=Number(e.max_score)});
+  return{count:evs.length,rawE:Math.round(rawE*10)/10,rawM:Math.round(rawM*10)/10,
+    pct:rawM?Math.round(rawE/rawM*100):0};
 }
 async function saveEvent(){
   var cid=document.getElementById('ev_course').value;
@@ -1298,9 +1292,7 @@ async function saveEvent(){
   var row={course_id:cid,kind:document.getElementById('ev_kind').value,
     title:document.getElementById('ev_title').value.trim(),
     due_date:d,due_time:document.getElementById('ev_time').value||null,
-    room:document.getElementById('ev_room').value.trim(),
-    max_score:parseFloat(document.getElementById('ev_max').value)||null,
-    weight:parseFloat(document.getElementById('ev_weight').value)||null};
+    max_score:parseFloat(document.getElementById('ev_max').value)||null};
   var id=document.getElementById('ev_id').value;
   closeModal();
   if(id){
@@ -1329,10 +1321,8 @@ function openEvent(id,cid){
   }).join('')+'</select>';
   h+='<label>'+T('eventtitle')+'</label><input id="ev_title" value="'+esc(e?e.title:'')+'" placeholder="'+T('eventtitle')+'">';
   h+='<div class="frow"><div><label>'+T('duedate')+'</label><input id="ev_date" type="date" value="'+(e?e.due_date:today())+'"></div>'+
-  '<div><label>'+T('duetime')+'</label><input id="ev_time" type="time" value="'+(e&&e.due_time?e.due_time:'')+'"></div></div>';
-  h+='<div class="frow"><div><label>'+T('room')+'</label><input id="ev_room" value="'+esc(e?e.room||'':'')+'" placeholder="'+T('room')+'"></div>'+
-  '<div><label>'+T('maxscore')+'</label><input id="ev_max" type="number" step="0.5" value="'+(e&&e.max_score!=null?e.max_score:'')+'"></div></div>';
-  h+='<label>'+T('weight')+'</label><input id="ev_weight" type="number" step="0.5" value="'+(e&&e.weight!=null?e.weight:'')+'" placeholder="%">';
+  '<div><label>'+T('duetime')+' ('+T('optl')+')</label><input id="ev_time" type="time" value="'+(e&&e.due_time?e.due_time:'')+'"></div></div>';
+  h+='<label>'+T('marks')+'</label><input id="ev_max" type="number" step="0.5" value="'+(e&&e.max_score!=null?e.max_score:'')+'" placeholder="20">';
   h+='<div class="mrow"><button class="no" onclick="closeModal()">'+T('cancel')+'</button>'+
   '<button class="ok" onclick="saveEvent()">'+T('save')+'</button></div>';
   if(e)h+='<div class="mrow"><button class="no" style="color:#ff6b4a;border-color:#ff6b4a" onclick="delEvent(\''+e.id+'\')">'+T('remove')+'</button></div>';
@@ -1405,7 +1395,7 @@ function evRowHtml(e,showCourse){
   h+='<div class="et">'+esc(e.title||T(e.kind))+'</div>';
   h+='<div class="em">'+(showCourse&&c?esc(c.code)+' \u00B7 ':'')+T(e.kind)+
      ' \u00B7 '+e.due_date+(e.due_time?' '+fmt12(e.due_time):'')+
-     (e.room?' \u00B7 '+esc(e.room):'')+(e.weight?' \u00B7 '+e.weight+'%':'')+'</div>';
+     (e.max_score&&e.score==null?' \u00B7 /'+e.max_score:'')+'</div>';
   h+='</div>';
   h+='<div class="ed" style="color:'+dueColor(e)+'">'+dueLabel(e)+'</div>';
   var has=e.score!=null;
@@ -1439,7 +1429,7 @@ function courseDetailHtml(cid){
     '<div class="rec"><div class="rv" style="color:'+col+'">'+st.left+'</div><div class="rl">'+T('canmiss',{n:''}).replace('{n}','').trim()+'</div></div>'+
     (g?'<div class="rec"><div class="rv" style="color:var(--gold)">'+g.pct+'%</div><div class="rl">'+T('gradesofar')+'</div></div>':'')+
     '</div>';
-  if(g&&g.weighted)h+='<p class="muted" style="font-size:11px;margin-bottom:10px">'+T('earned')+': '+g.wEarn+' / '+g.wSum+'%</p>';
+  if(g)h+='<p class="muted" style="font-size:11px;margin-bottom:10px">'+T('earned')+': '+g.rawE+' / '+g.rawM+'</p>';
   h+='<h3 style="font-size:12px;color:var(--dim);margin:10px 0 6px">'+T('sessions')+'</h3>';
   courseSessions(cid).sort(function(a,b){return a.weekday-b.weekday||toMins(a.start_time)-toMins(b.start_time)}).forEach(function(ses){
     h+='<div class="srow"><div class="si"><b>'+WD[lang][ses.weekday]+'</b> '+fmt12(ses.start_time)+' \u2013 '+fmt12(ses.end_time)+
