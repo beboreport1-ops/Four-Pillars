@@ -97,6 +97,8 @@ main{padding:0 16px 90px;max-width:1000px;margin:0 auto}
 .ttday .tth span{font-size:11px;color:var(--dim)}
 .ttday .tth .cnt{margin-inline-start:auto;font-size:11px;color:var(--dim)}
 .ttoffday{background:rgba(167,139,250,.12);border-radius:9px;padding:10px;font-size:12px;color:var(--soul);text-align:center}
+.stchips{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 4px}
+.stchips button{flex:1;min-width:64px;background:var(--card2);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:8px 6px;font-size:12px;font-weight:600}
 .gcard{background:var(--card2);border-radius:12px;padding:13px;margin-bottom:12px}
 .gtop{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
 .gnum{font-size:30px;font-weight:800;line-height:1}
@@ -354,7 +356,7 @@ quest:'Today\u2019s Quest',pillars:'pillars',all:'All',
 study:'Studying',gym:'Health',social:'Social',soul:'Soul',
 main:'Main',todayplan:'Today',
 ofsem:'of semester',calendar:'Calendar',ttip:'Tap Present on any class to mark it absent',missingcourses:'Some courses are missing',repair:'Fix',
-events:'Deadlines',addevent:'Add',optl:'optional',marks:'Marks (out of 100)',
+events:'Deadlines',addevent:'Add',optl:'optional',steps:'Steps',stepsgoal:'Daily steps goal',howmanysteps:'How many steps?',stepsgoalhit:'Steps goal!',marks:'Marks (out of 100)',
 remaining:'{n} marks left to plan',overplanned:'Over 100 by {n}',homework:'Homework',quiz:'Quiz',exam:'Exam',project:'Project',other:'Other',
 duedate:'Date',duetime:'Time',score:'Score',maxscore:'Out of',room:'Room',
 noevents:'Nothing scheduled',upcomingev:'Upcoming',pastev:'Past',
@@ -413,7 +415,7 @@ quest:'\u0645\u0647\u0645\u0629 \u0627\u0644\u064A\u0648\u0645',pillars:'\u0623\
 study:'\u0627\u0644\u062F\u0631\u0627\u0633\u0629',gym:'\u0627\u0644\u0635\u062D\u0629',social:'\u0627\u0644\u0627\u062C\u062A\u0645\u0627\u0639\u064A',soul:'\u0627\u0644\u0631\u0648\u062D',
 main:'\u0627\u0644\u0631\u0626\u064A\u0633\u064A\u0629',todayplan:'\u0627\u0644\u064A\u0648\u0645',
 ofsem:'\u0645\u0646 \u0627\u0644\u0641\u0635\u0644',calendar:'\u0627\u0644\u062A\u0642\u0648\u064A\u0645',ttip:'\u0627\u0636\u063A\u0637 \u0639\u0644\u0649 \u0627\u0644\u0645\u062D\u0627\u0636\u0631\u0629 \u0644\u062A\u0633\u062C\u064A\u0644 \u0627\u0644\u063A\u064A\u0627\u0628',missingcourses:'\u0628\u0639\u0636 \u0627\u0644\u0645\u0648\u0627\u062F \u0646\u0627\u0642\u0635\u0629',repair:'\u0625\u0635\u0644\u0627\u062D',
-events:'\u0627\u0644\u0645\u0648\u0627\u0639\u064A\u062F',addevent:'\u0625\u0636\u0627\u0641\u0629',optl:'\u0627\u062E\u062A\u064A\u0627\u0631\u064A',marks:'\u0627\u0644\u062F\u0631\u062C\u0629 (\u0645\u0646 100)',
+events:'\u0627\u0644\u0645\u0648\u0627\u0639\u064A\u062F',addevent:'\u0625\u0636\u0627\u0641\u0629',optl:'\u0627\u062E\u062A\u064A\u0627\u0631\u064A',steps:'\u0627\u0644\u062E\u0637\u0648\u0627\u062A',stepsgoal:'\u0647\u062F\u0641 \u0627\u0644\u062E\u0637\u0648\u0627\u062A \u0627\u0644\u064A\u0648\u0645\u064A',howmanysteps:'\u0643\u0645 \u062E\u0637\u0648\u0629\u061F',stepsgoalhit:'\u062A\u062D\u0642\u0642 \u0647\u062F\u0641 \u0627\u0644\u062E\u0637\u0648\u0627\u062A!',marks:'\u0627\u0644\u062F\u0631\u062C\u0629 (\u0645\u0646 100)',
 remaining:'\u0628\u0627\u0642\u064A {n} \u062F\u0631\u062C\u0629 \u0644\u0644\u062A\u0648\u0632\u064A\u0639',overplanned:'\u062A\u062C\u0627\u0648\u0632 100 \u0628\u0640 {n}',homework:'\u0648\u0627\u062C\u0628',quiz:'\u0643\u0648\u064A\u0632',exam:'\u0627\u062E\u062A\u0628\u0627\u0631',project:'\u0645\u0634\u0631\u0648\u0639',other:'\u0623\u062E\u0631\u0649',
 duedate:'\u0627\u0644\u062A\u0627\u0631\u064A\u062E',duetime:'\u0627\u0644\u0648\u0642\u062A',score:'\u0627\u0644\u062F\u0631\u062C\u0629',maxscore:'\u0645\u0646',room:'\u0627\u0644\u0642\u0627\u0639\u0629',
 noevents:'\u0644\u0627 \u064A\u0648\u062C\u062F',upcomingev:'\u0627\u0644\u0642\u0627\u062F\u0645',pastev:'\u0627\u0644\u0633\u0627\u0628\u0642',
@@ -479,7 +481,7 @@ var WD={en:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],ar:['\u0623\u062D\u062F',
 
 /* ---------- state ---------- */
 var types=[],entries=[],notes={},quran=[],gymSets=[],user=null;
-var cfg={lang:'en',city:'Riyadh',country:'Saudi Arabia',lat:null,lon:null,goals:{study:5,gym:4,social:3,soul:7},freezes:{},season_start:null,season_target:1500,quran_goal:604,onboarded:false,calorie_goal:2200,protein_goal:120,water_goal_ml:2000,bottle_ml:250,
+var cfg={lang:'en',city:'Riyadh',country:'Saudi Arabia',lat:null,lon:null,goals:{study:5,gym:4,social:3,soul:7},freezes:{},season_start:null,season_target:1500,quran_goal:604,onboarded:false,calorie_goal:2200,protein_goal:120,water_goal_ml:2000,bottle_ml:250,steps_goal:8000,
 semester_start:'2026-08-23',semester_weeks:15,absence_limit:25,courses_seeded:false,calendar_seeded:false};
 var nutri={};
 var courses=[],csessions=[],absences=[],acadEvents=[],cevents=[];var openCourse=null;var loadFailed=false;
@@ -602,7 +604,7 @@ async function loadAll(){
     cfg.season_start=s.season_start;cfg.season_target=s.season_target||1500;
     cfg.quran_goal=s.quran_goal||604;cfg.onboarded=!!s.onboarded;
     cfg.calorie_goal=s.calorie_goal||2200;cfg.protein_goal=s.protein_goal||120;
-    cfg.water_goal_ml=s.water_goal_ml||2000;cfg.bottle_ml=s.bottle_ml||250;
+    cfg.water_goal_ml=s.water_goal_ml||2000;cfg.bottle_ml=s.bottle_ml||250;cfg.steps_goal=s.steps_goal||8000;
     cfg.semester_start=s.semester_start||'2026-08-23';cfg.semester_weeks=s.semester_weeks||15;
     cfg.absence_limit=s.absence_limit||25;cfg.courses_seeded=!!s.courses_seeded;cfg.calendar_seeded=!!s.calendar_seeded;
     if(s.latitude!=null){cfg.lat=s.latitude;cfg.lon=s.longitude}
@@ -644,7 +646,7 @@ async function seed(){
   if(miss.length)await sb.from('activity_types').insert(miss.map(function(d){return{pillar:d[0],name:d[1],points:d[2]}}));
   var t=await sb.from('activity_types').select('*').order('created_at');types=t.data||[];
 }
-var SETTING_COLS=['lang','city','country','goals','freezes','season_start','season_target','quran_goal','onboarded','calorie_goal','protein_goal','water_goal_ml','bottle_ml','semester_start','semester_weeks','absence_limit','courses_seeded','calendar_seeded'];
+var SETTING_COLS=['lang','city','country','goals','freezes','season_start','season_target','quran_goal','onboarded','calorie_goal','protein_goal','water_goal_ml','bottle_ml','steps_goal','semester_start','semester_weeks','absence_limit','courses_seeded','calendar_seeded'];
 async function saveCfg(patch){
   Object.assign(cfg,patch);
   var row={user_id:user.id};
@@ -999,6 +1001,9 @@ function renderHealth(){
   h+='</div>';
   h+='<div class="wmeta"><span>\uD83D\uDCA7 '+T('water')+'</span><span><b>'+n.water_ml+'</b> / '+(cfg.water_goal_ml||2000)+' ml'+(n.water_ml>=(cfg.water_goal_ml||2000)?' \u2705':'')+'</span></div>';
   var cg=cfg.calorie_goal||2200,pg=cfg.protein_goal||120;
+  var st=stepsOn(ds),sg=stepsGoal();
+  h+='<div class="wmeta" style="margin-top:2px"><span>\uD83D\uDC5F '+T('steps')+'</span><span><b>'+st.toLocaleString()+'</b> / '+sg.toLocaleString()+(st>=sg?' \u2705':'')+'</span></div>';
+  h+='<div class="nb" style="margin:6px 0 12px"><div style="width:'+Math.min(100,Math.round(st/sg*100))+'%;background:#4f9cf9"></div></div>';
   h+='<div class="nutgrid">';
   h+='<div class="nut"><div class="nv">'+n.calories+' <span style="font-size:11px;color:var(--dim)">/ '+cg+'</span></div><div class="nl">'+T('calories')+'</div><div class="nb"><div style="width:'+Math.min(100,Math.round(n.calories/cg*100))+'%;background:'+(n.calories>cg?'#ff6b4a':'#fbbf24')+'"></div></div></div>';
   h+='<div class="nut"><div class="nv">'+n.protein+'<span style="font-size:11px;color:var(--dim)">'+T('grams')+' / '+pg+'</span></div><div class="nl">'+T('protein')+(n.protein>=pg?' \u2705':'')+'</div><div class="nb"><div style="width:'+Math.min(100,Math.round(n.protein/pg*100))+'%;background:#34d399"></div></div></div>';
@@ -1634,11 +1639,47 @@ async function loadMySchedule(){
   render();
 }
 /* ---------- pillar pages ---------- */
+function isWalk(t){return t.pillar==='gym'&&/walk|\u0645\u0634\u064A/i.test(t.name)}
+function stepsOn(ds){
+  return entries.reduce(function(a,e){return a+(e.entry_date===ds&&e.steps?Number(e.steps):0)},0);
+}
+function stepsGoal(){return cfg.steps_goal||8000}
 async function quickLog(tid){
   var t=types.find(function(x){return x.id===tid});if(!t)return;
-  var r=await dbInsert('activity_entries',[{pillar:t.pillar,title:t.name,entry_date:today(),status:'done',points_awarded:t.points,activity_type_id:t.id}]);
+  if(isWalk(t)){askSteps(t);return}
+  await logType(t,null);
+}
+function askSteps(t){
+  var h='<h2>\uD83D\uDC5F '+T('howmanysteps')+'</h2>';
+  h+='<label>'+T('steps')+'</label><input id="st_v" type="number" inputmode="numeric" placeholder="'+stepsGoal()+'">';
+  h+='<div class="stchips">'+[2000,4000,6000,8000,10000].map(function(n){
+    return '<button onclick="document.getElementById(\'st_v\').value='+n+'">'+n.toLocaleString()+'</button>';
+  }).join('')+'</div>';
+  h+='<div class="mrow"><button class="no" onclick="closeModal()">'+T('cancel')+'</button>'+
+  '<button class="ok" onclick="saveSteps(\''+t.id+'\')">'+T('save')+'</button></div>';
+  document.getElementById('mboxc').innerHTML=h;
+  document.getElementById('modal').classList.remove('hidden');
+}
+async function saveSteps(tid){
+  var t=types.find(function(x){return x.id===tid});if(!t)return;
+  var v=parseInt(document.getElementById('st_v').value)||0;
+  closeModal();
+  await logType(t,v>0?v:null);
+}
+async function logType(t,steps){
+  var ds=today();
+  var row={pillar:t.pillar,title:t.name,entry_date:ds,status:'done',points_awarded:t.points,activity_type_id:t.id};
+  if(steps)row.steps=steps;
+  var before=stepsOn(ds);
+  var r=await dbInsert('activity_entries',[row]);
   entries=r.data.concat(entries);saveCache();
-  offToast(r,'+'+t.points+' XP '+PIL[t.pillar].em+' '+t.name);
+  offToast(r,'+'+t.points+' XP '+PIL[t.pillar].em+' '+t.name+(steps?' \u00B7 '+steps.toLocaleString()+' \uD83D\uDC5F':''));
+  if(steps){
+    var g=stepsGoal();
+    if(before<g&&stepsOn(ds)>=g&&await awardOnce('Steps goal',10,ds,'gym')){
+      toast('\uD83D\uDC5F '+T('stepsgoalhit')+' +10 XP');
+    }
+  }
   checkLevelUp();render();
 }
 function renderPillar(){
@@ -2279,6 +2320,7 @@ function openPrefs(){
   PKEYS.forEach(function(p){
     h+='<div class="goalrow"><span class="gi">'+PIL[p].em+' '+pnm(p)+'</span><input type="number" min="0" max="7" id="g_'+p+'" value="'+(cfg.goals[p]||0)+'" style="width:70px"></div>';
   });
+  h+='<label>'+T('stepsgoal')+'</label><input id="psteps" type="number" value="'+stepsGoal()+'">';
   h+='<label>'+T('semstart')+'</label><input id="psem" type="date" value="'+(cfg.semester_start||'2026-08-23')+'">'+
   '<label>'+T('semweeks')+'</label><input id="psemw" type="number" value="'+(cfg.semester_weeks||15)+'">'+
   '<label>'+T('abslimit')+'</label><input id="pabs" type="number" value="'+(cfg.absence_limit||25)+'">';
@@ -2303,6 +2345,7 @@ async function savePrefs(){
     protein_goal:parseInt(document.getElementById('pprot').value)||120,
     water_goal_ml:parseInt(document.getElementById('pwater').value)||2000,
     bottle_ml:parseInt(document.getElementById('pbottle').value)||250,
+    steps_goal:parseInt(document.getElementById('psteps').value)||8000,
     semester_start:document.getElementById('psem').value||'2026-08-23',
     semester_weeks:parseInt(document.getElementById('psemw').value)||15,
     absence_limit:parseInt(document.getElementById('pabs').value)||25});
