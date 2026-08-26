@@ -1244,9 +1244,9 @@ function coursesHtml(){
     var st=courseStats(c.id);
     var col=st.risk==='over'?'#ff6b4a':st.risk==='near'?'#fbbf24':(st.limit&&st.absent>=st.limit*0.6?'#fbbf24':'#34d399');
     h+='<div class="crow" style="border-inline-start:3px solid '+col+'">';
-    h+='<div class="ch"><span class="cn" style="overflow-wrap:anywhere"><span style="color:var(--study)">'+esc(c.code)+'</span><br>'+esc(c.name)+'</span><span class="cp" style="color:'+col+'">'+st.pct+'%</span></div>';
+    h+='<div class="ch"><span class="cn" style="overflow-wrap:anywhere"><span style="color:var(--study)">'+esc(c.code)+'</span><br>'+esc(c.name)+'</span><span class="cp" style="color:'+col+';text-align:'+(lang==='ar'?'left':'right')+'">'+st.absPct+'%<br><span style="font-size:9px;font-weight:600;color:var(--dim)">'+T('absent')+' / '+(cfg.absence_limit||25)+'%</span></span></div>';
     h+='<div class="cbar"><div style="width:'+Math.min(100,Math.round(st.absent/(st.limit||1)*100))+'%;background:'+col+'"></div></div>';
-    h+='<div class="cs"><span>'+T(c.kind)+' \u00B7 '+st.absent+'/'+st.total+' '+T('absent')+' \u00B7 '+st.held+' '+T('held')+'</span>';
+    h+='<div class="cs"><span>'+T(c.kind)+' \u00B7 '+st.absent+'/'+st.total+' '+T('hours')+'</span>';
     h+='<span class="'+(st.risk==='over'?'bad':st.risk==='near'?'warn':'')+'">'+
       (st.risk==='over'?'\u26A0 '+T('denied'):T('canmiss',{n:st.left})+' \u00B7 '+T('limitlbl',{n:st.limit}))+'</span></div>';
     h+='</div>';
