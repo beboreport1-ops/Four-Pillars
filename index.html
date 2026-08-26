@@ -87,26 +87,16 @@ main{padding:0 16px 90px;max-width:1000px;margin:0 auto}
 .warn{color:#fbbf24;font-weight:700}
 .bad{color:#ff6b4a;font-weight:700}
 .tt{overflow-x:auto;padding-bottom:4px}
-.ttwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px}
-.ttgrid{min-width:560px}
-.tthead{display:grid;grid-template-columns:40px repeat(5,1fr);gap:4px;margin-bottom:4px}
-.tthead div{font-size:11px;color:var(--dim);text-align:center;font-weight:600;padding:5px 0;border-radius:6px}
-.tthead div.tdy{background:var(--card2);color:var(--gold)}
-.ttbody{display:grid;grid-template-columns:40px repeat(5,1fr);gap:4px}
-.ttgut{position:relative}
-.ttgut span{position:absolute;inset-inline-end:3px;font-size:9px;color:var(--dim);transform:translateY(-4px);white-space:nowrap}
-.ttcol{position:relative;background:var(--card2);border-radius:8px;overflow:hidden}
-.ttcol.tdy{box-shadow:inset 0 0 0 1px var(--gold)}
-.ttline{position:absolute;left:0;right:0;height:1px;background:rgba(255,255,255,.05)}
-.ttblk{position:absolute;left:3px;right:3px;border-radius:7px;padding:4px 6px;font-size:10px;line-height:1.25;overflow:hidden;cursor:pointer;border-inline-start:3px solid}
-.ttblk b{display:block;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ttblk small{font-size:9px;opacity:.8}
-.ttblk.absent{background:rgba(255,107,74,.25)!important;border-inline-start-color:#ff6b4a!important}
-.ttblk.future{opacity:.6}
+.ttday{background:var(--card2);border-radius:12px;padding:12px;margin-bottom:9px;border-inline-start:3px solid var(--line)}
+.ttday.today{border-inline-start-color:var(--gold);box-shadow:0 0 0 1px rgba(245,196,74,.25)}
+.ttday .tth{display:flex;align-items:baseline;gap:8px;margin-bottom:9px}
+.ttday .tth b{font-size:14px}
+.ttday .tth span{font-size:11px;color:var(--dim)}
+.ttday .tth .cnt{margin-inline-start:auto;font-size:11px;color:var(--dim)}
+.ttoffday{background:rgba(167,139,250,.12);border-radius:9px;padding:10px;font-size:12px;color:var(--soul);text-align:center}
 .ttnav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
 .ttnav b{flex:1;text-align:center;font-size:13px}
 .ttoff{position:absolute;inset:0;background:rgba(167,139,250,.13);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--soul);text-align:center;padding:4px}
-.ttgrid{display:grid;grid-template-columns:44px repeat(5,minmax(62px,1fr));gap:3px;min-width:380px}
 .tthead{font-size:11px;color:var(--dim);font-weight:700;text-align:center;padding:5px 2px;background:var(--card2);border-radius:7px}
 .tthead.now{color:var(--gold);background:rgba(251,191,36,.13)}
 .tthour{font-size:9px;color:var(--dim);text-align:end;padding-top:3px;padding-inline-end:3px;white-space:nowrap}
@@ -1241,50 +1231,30 @@ function courseColor(cid){
   return CCOL[(i<0?0:i)%CCOL.length];
 }
 function timetableHtml(){
-  var H=52,T0=8*60,T1=15*60;
   var ws=weekStart(ttAnchor),td=today();
-  var height=(T1-T0)/60*H;
   var h='<div class="ttnav"><button class="iconbtn" onclick="ttNav(-1)">\u2190</button>'+
   '<b>'+new Date(ws+'T00:00:00').toLocaleDateString(locale(),{month:'short',day:'numeric'})+' \u2013 '+
   new Date(addDays(ws,4)+'T00:00:00').toLocaleDateString(locale(),{month:'short',day:'numeric'})+'</b>'+
   '<button class="iconbtn" onclick="ttNav(1)">\u2192</button>'+
   '<button class="iconbtn" style="border-color:var(--gold);color:var(--gold)" onclick="ttToday()">'+T('today')+'</button></div>';
-  h+='<div class="ttwrap"><div class="ttgrid">';
-  h+='<div class="tthead"><div></div>';
-  for(var d=0;d<5;d++){
-    var ds=addDays(ws,d);
-    h+='<div class="'+(ds===td?'tdy':'')+'">'+WD[lang][d]+' '+new Date(ds+'T00:00:00').getDate()+'</div>';
-  }
-  h+='</div><div class="ttbody">';
-  h+='<div class="ttgut" style="height:'+height+'px">';
-  for(var t=T0;t<=T1;t+=60)h+='<span style="top:'+((t-T0)/60*H)+'px">'+fmt12((t/60|0)+':00').replace(':00','')+'</span>';
-  h+='</div>';
   for(var d=0;d<5;d++){
     var ds=addDays(ws,d),isT=ds===td;
-    h+='<div class="ttcol'+(isT?' tdy':'')+'" style="height:'+height+'px">';
-    for(var t=T0+60;t<T1;t+=60)h+='<div class="ttline" style="top:'+((t-T0)/60*H)+'px"></div>';
+    var dt=new Date(ds+'T00:00:00');
+    var list=csessions.filter(function(x){return x.weekday===d})
+      .sort(function(a,b){return toMins(a.start_time)-toMins(b.start_time)});
     var reason=noClassReason(ds);
     var inSem=ds>=semStart()&&ds<=studyEnd();
-    if(!inSem){h+='<div class="ttoff" style="background:rgba(132,148,173,.10);color:var(--dim)">\u2014</div>'}
-    else if(reason){h+='<div class="ttoff">'+esc(reason)+'</div>'}
-    else{
-      csessions.filter(function(x){return x.weekday===d}).forEach(function(ses){
-        var c=courses.find(function(x){return x.id===ses.course_id});
-        var st=toMins(ses.start_time),en=toMins(ses.end_time);
-        var top=(st-T0)/60*H,hh=Math.max(26,(en-st)/60*H-3);
-        var abs=isAbsent(ses.id,ds),passed=classPassed(ds,ses.end_time);
-        var col=courseColor(ses.course_id);
-        var cls='ttblk'+(abs?' absent':'')+(passed?' passed':' future');
-        h+='<div class="'+cls+'" style="top:'+top+'px;height:'+hh+'px;background:'+col+'22;border-inline-start-color:'+col+'" '+
-        'onclick="toggleAbsent(\''+ses.id+'\',\''+ds+'\')">'+
-        '<b>'+esc(c?c.code:'')+(abs?' \u274C':(passed?' \u2705':''))+'</b>'+
-        '<small>'+actName(ses.activity)+'<br>'+fmt12(ses.start_time)+'</small></div>';
-      });
-    }
+    h+='<div class="ttday'+(isT?' today':'')+'">';
+    h+='<div class="tth"><b>'+WD[lang][d]+'</b><span>'+dt.getDate()+' '+dt.toLocaleDateString(locale(),{month:'short'})+'</span>'+
+      (isT?'<span style="color:var(--gold)">\u2B50</span>':'')+
+      '<span class="cnt">'+(!inSem||reason?'':list.length+' \u00B7 '+list.reduce(function(a,x){return a+sessionHours(x)},0)+' '+T('hours'))+'</span></div>';
+    if(!inSem)h+='<div class="ttoffday" style="background:rgba(132,148,173,.10);color:var(--dim)">\u2014</div>';
+    else if(reason)h+='<div class="ttoffday">\uD83C\uDFD6\uFE0F '+esc(reason)+'</div>';
+    else if(!list.length)h+='<div class="empty" style="font-size:12px;color:var(--dim);text-align:center;padding:6px">'+T('noclasses')+'</div>';
+    else list.forEach(function(ses){h+=classRow(ses,ds,true)});
     h+='</div>';
   }
-  h+='</div></div></div>';
-  h+='<p class="muted" style="margin-top:10px;font-size:11px">'+T('ttip')+'</p>';
+  h+='<p class="muted" style="font-size:11px">'+T('ttip')+'</p>';
   return h;
 }
 function calendarHtml(){
