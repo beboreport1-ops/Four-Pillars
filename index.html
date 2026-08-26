@@ -1075,16 +1075,23 @@ function classPassed(ds,endTime){
   var end=new Date(ds+'T'+endTime+':00');
   return end<=now;
 }
+function sessionHours(ses){
+  var m=toMins(ses.end_time)-toMins(ses.start_time);
+  return Math.max(1,Math.round(m/60));
+}
 function isAbsent(sid,ds){return absences.some(function(a){return a.session_id===sid&&a.class_date===ds})}
 function courseSessions(cid){return csessions.filter(function(x){return x.course_id===cid})}
 function courseStats(cid){
-  var total=0,held=0,abs=0;
+  var c=courses.find(function(x){return x.id===cid});
+  var total=(c?c.credits:3)*semWeeks();
+  var held=0,abs=0;
   courseSessions(cid).forEach(function(ses){
+    var hrs=sessionHours(ses);
     sessionDates(ses).forEach(function(ds){
-      total++;
-      if(classPassed(ds,ses.end_time)){held++;if(isAbsent(ses.id,ds))abs++}
+      if(classPassed(ds,ses.end_time)){held+=hrs;if(isAbsent(ses.id,ds))abs+=hrs}
     });
   });
+  held=Math.min(held,total);
   var limit=Math.floor(total*(cfg.absence_limit||25)/100);
   return{total:total,held:held,absent:abs,present:held-abs,
     pct:total?Math.round((total-abs)/total*100):100,
