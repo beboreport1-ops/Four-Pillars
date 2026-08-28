@@ -11,11 +11,20 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{--bg:#0b0f17;--card:#131a26;--card2:#1a2332;--line:#232f42;--tx:#e8eefb;--dim:#8494ad;
---study:#4f9cf9;--gym:#ff6b4a;--social:#34d399;--soul:#a78bfa;--gold:#fbbf24;--accent:#4f9cf9}
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
-body{background:var(--bg);color:var(--tx);min-height:100vh;-webkit-tap-highlight-color:transparent}
-html[dir=rtl] body{font-family:'Segoe UI',Tahoma,system-ui,sans-serif}
+:root{
+  --bg:#0a0e16;--card:#121a27;--card2:#1a2434;--line:#263349;--line2:#31415c;
+  --tx:#e9eef8;--dim:#96a5c0;--faint:#5d6c87;
+  --study:#4f9cf9;--gym:#ff6b4a;--social:#34d399;--soul:#a78bfa;
+  --study-soft:rgba(79,156,249,.14);--gym-soft:rgba(255,107,74,.14);
+  --social-soft:rgba(52,211,153,.14);--soul-soft:rgba(167,139,250,.14);
+  --gold:#fbbf24;--accent:#4f9cf9;--accent-fill:#2470d4;--danger:#ef4444;--warn:#f59e0b;--okc:#22c55e;
+  --r-s:10px;--r-m:14px;--r-l:18px;--dur:.18s;
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 8px 24px -12px rgba(0,0,0,.5);
+}
+html{color-scheme:dark}
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,'Segoe UI',sans-serif}
+body{background:radial-gradient(140% 60% at 50% -8%,#131c30 0%,var(--bg) 55%) fixed,var(--bg);color:var(--tx);min-height:100vh;-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased;font-family:system-ui,-apple-system,'Segoe UI',sans-serif}
+html[dir=rtl] body{font-family:system-ui,-apple-system,'Segoe UI',Tahoma,sans-serif}
 button{cursor:pointer;font-family:inherit;color:inherit}
 .hidden{display:none!important}
 #auth{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
@@ -78,7 +87,7 @@ main{padding:0 16px 90px;max-width:1000px;margin:0 auto}
 .cls .cm{font-size:11px;color:var(--dim);margin-top:2px}
 .cls .ct{font-size:11px;color:var(--gold);font-weight:700;white-space:nowrap;padding-top:1px}
 .cls .cb{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:6px 9px;font-size:11px;font-weight:700;white-space:nowrap;flex:0 0 auto;align-self:center}
-.cls .cb.on{background:#b91c1c;border-color:#b91c1c;color:#fff}
+.cls .cb.on{background:var(--danger);border-color:var(--danger);color:#fff}
 .crow{background:var(--card2);border-radius:10px;padding:11px 12px;margin-bottom:8px}
 .crow .ch{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
 .crow .cn{font-size:13px;font-weight:700}
@@ -303,7 +312,7 @@ main{padding:0 16px 90px;max-width:1000px;margin:0 auto}
 .mrow button{flex:1;border:none;border-radius:10px;padding:11px;font-size:14px;font-weight:600}
 .mrow .ok{background:var(--accent);color:#fff}
 .mrow .no{background:var(--card2);color:var(--dim)}
-.mrow .danger{background:#b91c1c;color:#fff}
+.mrow .danger{background:var(--danger);color:#fff}
 .confmsg{font-size:14px;color:var(--dim);line-height:1.5}
 .confmsg b{color:var(--tx)}
 .typerow{display:flex;align-items:center;gap:8px;background:var(--card2);border-radius:8px;padding:8px 10px;margin-bottom:6px;font-size:13px}
@@ -325,6 +334,83 @@ main{padding:0 16px 90px;max-width:1000px;margin:0 auto}
 #install{position:fixed;bottom:22px;inset-inline-start:22px;background:var(--card2);border:1px solid var(--gold);color:var(--gold);border-radius:12px;padding:10px 14px;font-size:13px;font-weight:700;z-index:60}
 @media (prefers-reduced-motion: reduce){.conf{display:none}*{transition:none!important;animation:none!important}}
 @media(max-width:640px){.wk{flex-direction:column;min-height:auto}.day{flex:none!important}.day .list{display:block}.day .dots{display:none}.xpwrap{max-width:110px}}
+
+/* ============================================================
+   DESIGN SYSTEM LAYER - token discipline + interaction states
+   Appended last so it wins the cascade at equal specificity.
+   Type scale: 10/11/12/13/15/17/20/24/32. Radii: 10/14/18.
+   ============================================================ */
+
+/* ---- surfaces ---- */
+.section{border-radius:var(--r-l);border-color:var(--line);box-shadow:var(--shadow);padding:16px;margin-bottom:16px}
+.section h2{font-size:15px;font-weight:700;letter-spacing:.2px;margin-bottom:12px}
+.sh{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--faint);font-weight:800}
+.topbar{background:rgba(10,14,22,.82);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%)}
+
+/* ---- stat numerals read as data, not prose ---- */
+.lvlbadge,.rv,.he,.lrk,.rlp,.rname,.btier,.cstat,.abspct,.gs,.qn{font-variant-numeric:tabular-nums}
+
+/* ---- nav: pill tabs, real touch targets ---- */
+.mainnav{padding:6px 10px 10px;gap:6px}
+.mainnav button{min-height:40px;border-radius:999px;padding:8px 14px;font-size:12.5px;transition:background var(--dur),color var(--dur),border-color var(--dur)}
+.mainnav button.on{background:var(--accent-fill);border-color:var(--accent-fill);color:#fff;font-weight:700}
+.subtabs button{min-height:40px;border-radius:var(--r-s)}
+
+/* ---- buttons: states exist now ---- */
+button{transition:background var(--dur),border-color var(--dur),color var(--dur),transform var(--dur),opacity var(--dur)}
+button:active{transform:scale(.97)}
+button:disabled{opacity:.45;pointer-events:none}
+.mrow button{min-height:46px;border-radius:var(--r-m);font-weight:700}
+.mrow .ok{background:var(--accent-fill);color:#fff}
+.mrow .danger{background:var(--danger)}
+.menuitem{min-height:48px;border-radius:var(--r-m)}
+@media(hover:hover){
+  .mainnav button:not(.on):hover{color:var(--tx);border-color:var(--line2)}
+  .mrow .ok:hover{filter:brightness(1.1)}
+  .mrow .no:hover{color:var(--tx)}
+  .liftrow:hover,.menuitem:hover,.crow:hover,.evrow:hover{border-color:var(--line2);background:#1e2a3d}
+  .qchip:hover{border-color:var(--line2)}
+}
+
+/* ---- keyboard focus: visible everywhere, never for taps ---- */
+:focus{outline:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.mbox input:focus-visible,.mbox select:focus-visible,.mbox textarea:focus-visible{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--study-soft)}
+
+/* ---- forms ---- */
+.mbox input,.mbox select,.mbox textarea{border-radius:var(--r-s);padding:12px;min-height:46px;font-size:15px;transition:border-color var(--dur),box-shadow var(--dur)}
+.mbox label{font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--faint);font-weight:700;margin:12px 0 5px}
+.mbox h2{font-size:17px}
+
+/* ---- modal: bottom sheet on phones ---- */
+.modal{align-items:flex-end;padding:0}
+.mbox{max-width:none;border-radius:20px 20px 0 0;padding:10px 18px calc(20px + env(safe-area-inset-bottom));max-height:86vh;box-shadow:0 -12px 48px rgba(0,0,0,.55)}
+.mbox::before{content:'';display:block;width:38px;height:4px;border-radius:2px;background:var(--line2);margin:2px auto 14px}
+@media(min-width:640px){
+  .modal{align-items:center;padding:16px}
+  .mbox{max-width:440px;border-radius:20px;padding:20px}
+  .mbox::before{display:none}
+}
+
+/* ---- floating action + toast ---- */
+#fab{width:56px;height:56px;border-radius:999px;font-size:26px;background:linear-gradient(160deg,#3a8bee,var(--accent-fill));border:none;color:#fff;box-shadow:0 6px 20px rgba(79,156,249,.4),0 2px 6px rgba(0,0,0,.4)}
+#toast{border-radius:999px;font-size:13px;font-weight:600;box-shadow:var(--shadow)}
+
+/* ---- rows are comfortable tap targets ---- */
+.liftrow{min-height:56px;border:1px solid transparent;border-radius:var(--r-m);transition:border-color var(--dur),background var(--dur)}
+.hrow{min-height:44px;border-radius:var(--r-s)}
+.hrow .hx{min-width:36px;min-height:36px;font-size:18px}
+.crow,.evrow{border-radius:var(--r-m)}
+.qchip{border-radius:var(--r-m);transition:border-color var(--dur),color var(--dur)}
+
+/* ---- legibility floor: nothing under 10px ---- */
+.hrow .prtag{font-size:10px}
+.spark+*{font-size:11px}
+
+/* ---- motion respect ---- */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
 </style>
 </head>
 <body>
@@ -532,7 +618,7 @@ function T(k,vars){
   if(vars)Object.keys(vars).forEach(function(v){s=s.split('{'+v+'}').join(vars[v])});
   return s;
 }
-var RANKS={en:['Novice','Apprentice','Fighter','Warrior','Knight','Champion','Master','Grandmaster','Legend','Mythic'],
+var LVLTITLES={en:['Novice','Apprentice','Fighter','Warrior','Knight','Champion','Master','Grandmaster','Legend','Mythic'],
 ar:['\u0645\u0628\u062A\u062F\u0626','\u0645\u062A\u062F\u0631\u0628','\u0645\u0642\u0627\u062A\u0644','\u0645\u062D\u0627\u0631\u0628','\u0641\u0627\u0631\u0633','\u0628\u0637\u0644','\u0645\u0639\u0644\u0645','\u0623\u0633\u062A\u0627\u0630','\u0623\u0633\u0637\u0648\u0631\u0629','\u062E\u0631\u0627\u0641\u064A']};
 var PIL={study:{em:'\uD83D\uDCDA',hex:'#4f9cf9'},gym:{em:'\u2764\uFE0F',hex:'#ff6b4a'},social:{em:'\uD83D\uDC65',hex:'#34d399'},soul:{em:'\uD83D\uDD4C',hex:'#a78bfa'}};
 var PKEYS=['study','gym','social','soul'];
@@ -960,7 +1046,7 @@ function pillarXP(p){return doneEntries().filter(function(e){return e.pillar===p
 function totalXP(){return doneEntries().reduce(function(a,e){return a+e.points_awarded},0)}
 function lvlOf(xp){return Math.floor(Math.sqrt(xp/60))+1}
 function xpForLvl(l){return 60*(l-1)*(l-1)}
-function rankOf(l){var r=RANKS[lang]||RANKS.en;return r[Math.min(r.length-1,Math.floor((l-1)/3))]}
+function lvlTitle(l){var r=LVLTITLES[lang]||LVLTITLES.en;return r[Math.min(r.length-1,Math.floor((l-1)/3))]}
 function isFrozen(ds){return !!cfg.freezes[ds]}
 function daySet(p){var s={};doneEntries().forEach(function(e){if(!p||e.pillar===p)s[e.entry_date]=1});return s}
 function streak(p){
@@ -2107,7 +2193,7 @@ function renderPillar(){
   var pxp=pillarXP(p),pl=lvlOf(pxp),base=xpForLvl(pl),next=xpForLvl(pl+1);
   var g=cfg.goals[p]||0,dn=pillarDaysInWeek(p,ws),wx=weekXP(ws,p);
   var h='<div class="phero" style="border-color:'+PIL[p].hex+'55"><span class="pe">'+PIL[p].em+'</span>'+
-  '<h2>'+pnm(p)+'</h2><div class="sub">'+T('lvl')+' '+pl+' \u00B7 '+rankOf(pl)+'</div>'+
+  '<h2>'+pnm(p)+'</h2><div class="sub">'+T('lvl')+' '+pl+' \u00B7 '+lvlTitle(pl)+'</div>'+
   '<div class="pstats">'+
   '<div><span class="v" style="color:'+PIL[p].hex+'">'+pxp+'</span><span class="k">'+T('totalxp')+'</span></div>'+
   '<div><span class="v">\uD83D\uDD25 '+streak(p)+'</span><span class="k">'+T('streak')+'</span></div>'+
@@ -2171,7 +2257,7 @@ function checkLevelUp(){
 }
 function showLevelUp(l){
   var o=document.getElementById('lvlup');
-  var h='<div class="lt">'+(lang==='ar'?'\u0645\u0633\u062A\u0648\u0649 \u062C\u062F\u064A\u062F':'LEVEL UP')+'</div><div class="ln">LV '+l+'</div><div class="lr">'+rankOf(l)+'</div><button onclick="document.getElementById(\'lvlup\').classList.add(\'hidden\')">'+(lang==='ar'?'\u0648\u0627\u0635\u0644':'Keep Going')+'</button>';
+  var h='<div class="lt">'+(lang==='ar'?'\u0645\u0633\u062A\u0648\u0649 \u062C\u062F\u064A\u062F':'LEVEL UP')+'</div><div class="ln">LV '+l+'</div><div class="lr">'+lvlTitle(l)+'</div><button onclick="document.getElementById(\'lvlup\').classList.add(\'hidden\')">'+(lang==='ar'?'\u0648\u0627\u0635\u0644':'Keep Going')+'</button>';
   var em=['\u2B50','\uD83C\uDF89','\u2728','\uD83D\uDD25','\uD83C\uDFC6'];
   for(var i=0;i<24;i++)h+='<span class="conf" style="left:'+Math.random()*100+'%;animation-duration:'+(1.6+Math.random()*1.8)+'s;animation-delay:'+Math.random()*.6+'s">'+em[i%5]+'</span>';
   o.innerHTML=h;o.classList.remove('hidden');
@@ -2189,7 +2275,7 @@ function render(){
 }
 function renderHeader(){
   var xp=totalXP(),l=lvlOf(xp),base=xpForLvl(l),next=xpForLvl(l+1);
-  document.getElementById('hlvl').textContent='LV '+l+' \u00B7 '+rankOf(l);
+  document.getElementById('hlvl').textContent='LV '+l+' \u00B7 '+lvlTitle(l);
   document.getElementById('hxp').style.width=Math.min(100,Math.round((xp-base)/(next-base)*100))+'%';
   document.getElementById('hxpt').textContent=xp+' XP \u00B7 '+(next-xp)+' \u2192 LV'+(l+1);
 }
@@ -2449,7 +2535,7 @@ function renderStats(){
   h+='<div class="grid4">';
   PKEYS.forEach(function(p){
     var pxp=pillarXP(p),pl=lvlOf(pxp),base=xpForLvl(pl),next=xpForLvl(pl+1);
-    h+='<div class="pcard"><span class="stk">\uD83D\uDD25 '+streak(p)+'</span><div class="em">'+PIL[p].em+'</div><h3>'+pnm(p)+'</h3><div class="plvl">'+T('lvl')+' '+pl+' \u00B7 '+rankOf(pl)+'</div><div class="ppts">'+pxp+' XP</div><div class="pbar"><div style="width:'+Math.min(100,Math.round((pxp-base)/(next-base)*100))+'%;background:'+PIL[p].hex+'"></div></div></div>';
+    h+='<div class="pcard"><span class="stk">\uD83D\uDD25 '+streak(p)+'</span><div class="em">'+PIL[p].em+'</div><h3>'+pnm(p)+'</h3><div class="plvl">'+T('lvl')+' '+pl+' \u00B7 '+lvlTitle(pl)+'</div><div class="ppts">'+pxp+' XP</div><div class="pbar"><div style="width:'+Math.min(100,Math.round((pxp-base)/(next-base)*100))+'%;background:'+PIL[p].hex+'"></div></div></div>';
   });
   h+='</div>';
   h+='<div class="section"><h2>\uD83C\uDFAE '+T('radar')+'</h2><canvas id="radar" width="320" height="290"></canvas></div>';
