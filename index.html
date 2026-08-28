@@ -407,6 +407,12 @@ button:disabled{opacity:.45;pointer-events:none}
 .hrow .prtag{font-size:10px}
 .spark+*{font-size:11px}
 
+
+/* ---- pixel icon system ---- */
+.px{display:inline-block;vertical-align:-2px;flex:0 0 auto}
+h2>.px:first-child{vertical-align:-3px;margin-inline-end:3px}
+.menuitem>.px:first-child{margin-inline-end:2px}
+
 /* ---- motion respect ---- */
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
@@ -498,7 +504,7 @@ todayis:'Today',nextevent:'Next',
 ev_start:'Semester starts',ev_holiday:'National Day holiday',ev_break:'Autumn break',ev_resume:'Classes resume',
 ev_deadline:'Last day to withdraw',ev_exams:'Final exams',ev_vacation:'Mid-year vacation',courses:'My Courses',todayclasses:'Today\u2019s Classes',timetable:'Timetable',attendance:'Attendance',
 present:'Present',absent:'Absent',lecture:'Lecture',tutorial:'Tutorial',lab:'Lab',section:'Section',
-noclasses:'No classes today \uD83C\uDF89',held:'held',canmiss:'Can miss {n} more',denied:'Denial risk!',
+noclasses:'No classes today',held:'held',canmiss:'Can miss {n} more',denied:'Denial risk!',
 week:'Week',weekof:'Week {n} of {t}',semstart:'Semester start',semweeks:'Semester weeks',abslimit:'Denial limit (%)',
 markedabsent:'Marked absent',markedpresent:'Back to present',required:'Required',elective:'Elective',
 hours:'hrs',ofsem:'of semester',limitlbl:'limit {n}',
@@ -566,7 +572,7 @@ todayis:'\u0627\u0644\u064A\u0648\u0645',nextevent:'\u0627\u0644\u0642\u0627\u06
 ev_start:'\u0628\u062F\u0627\u064A\u0629 \u0627\u0644\u062F\u0631\u0627\u0633\u0629 \u0644\u0644\u0641\u0635\u0644 \u0627\u0644\u0623\u0648\u0644',ev_holiday:'\u0625\u062C\u0627\u0632\u0629 \u0627\u0644\u064A\u0648\u0645 \u0627\u0644\u0648\u0637\u0646\u064A',ev_break:'\u0625\u062C\u0627\u0632\u0629 \u0627\u0644\u062E\u0631\u064A\u0641',ev_resume:'\u0628\u062F\u0627\u064A\u0629 \u0627\u0644\u062F\u0631\u0627\u0633\u0629 \u0628\u0639\u062F \u0625\u062C\u0627\u0632\u0629 \u0627\u0644\u062E\u0631\u064A\u0641',
 ev_deadline:'\u0622\u062E\u0631 \u0645\u0648\u0639\u062F \u0644\u0644\u0627\u0639\u062A\u0630\u0627\u0631 \u0639\u0646 \u0627\u0644\u0641\u0635\u0644 \u0648\u0639\u0646 \u0645\u0642\u0631\u0631',ev_exams:'\u0627\u0644\u0627\u062E\u062A\u0628\u0627\u0631\u0627\u062A \u0627\u0644\u0646\u0647\u0627\u0626\u064A\u0629',ev_vacation:'\u0625\u062C\u0627\u0632\u0629 \u0645\u0646\u062A\u0635\u0641 \u0627\u0644\u0639\u0627\u0645',courses:'\u0645\u0648\u0627\u062F\u064A',todayclasses:'\u0645\u062D\u0627\u0636\u0631\u0627\u062A \u0627\u0644\u064A\u0648\u0645',timetable:'\u0627\u0644\u062C\u062F\u0648\u0644',attendance:'\u0627\u0644\u062D\u0636\u0648\u0631',
 present:'\u062D\u0627\u0636\u0631',absent:'\u063A\u0627\u0626\u0628',lecture:'\u0645\u062D\u0627\u0636\u0631\u0629',tutorial:'\u062A\u0645\u0627\u0631\u064A\u0646',lab:'\u0639\u0645\u0644\u064A',section:'\u0634\u0639\u0628\u0629',
-noclasses:'\u0644\u0627 \u0645\u062D\u0627\u0636\u0631\u0627\u062A \u0627\u0644\u064A\u0648\u0645 \uD83C\uDF89',held:'\u0645\u0646\u0639\u0642\u062F\u0629',canmiss:'\u064A\u0645\u0643\u0646 \u0627\u0644\u063A\u064A\u0627\u0628 {n} \u0645\u0631\u0627\u062A',denied:'\u062E\u0637\u0631 \u0627\u0644\u062D\u0631\u0645\u0627\u0646!',
+noclasses:'\u0644\u0627 \u0645\u062D\u0627\u0636\u0631\u0627\u062A \u0627\u0644\u064A\u0648\u0645',held:'\u0645\u0646\u0639\u0642\u062F\u0629',canmiss:'\u064A\u0645\u0643\u0646 \u0627\u0644\u063A\u064A\u0627\u0628 {n} \u0645\u0631\u0627\u062A',denied:'\u062E\u0637\u0631 \u0627\u0644\u062D\u0631\u0645\u0627\u0646!',
 week:'\u0623\u0633\u0628\u0648\u0639',weekof:'\u0627\u0644\u0623\u0633\u0628\u0648\u0639 {n} \u0645\u0646 {t}',semstart:'\u0628\u062F\u0627\u064A\u0629 \u0627\u0644\u0641\u0635\u0644',semweeks:'\u0623\u0633\u0627\u0628\u064A\u0639 \u0627\u0644\u0641\u0635\u0644',abslimit:'\u062D\u062F \u0627\u0644\u062D\u0631\u0645\u0627\u0646 (%)',
 markedabsent:'\u062A\u0645 \u062A\u0633\u062C\u064A\u0644 \u063A\u064A\u0627\u0628',markedpresent:'\u0639\u0627\u062F \u062D\u0627\u0636\u0631',required:'\u0625\u062C\u0628\u0627\u0631\u064A\u0629',elective:'\u0625\u062E\u062A\u064A\u0627\u0631\u064A\u0629',
 hours:'\u0633\u0627\u0639\u0627\u062A',ofsem:'\u0645\u0646 \u0627\u0644\u0641\u0635\u0644',limitlbl:'\u0627\u0644\u062D\u062F {n}',
@@ -620,7 +626,156 @@ function T(k,vars){
 }
 var LVLTITLES={en:['Novice','Apprentice','Fighter','Warrior','Knight','Champion','Master','Grandmaster','Legend','Mythic'],
 ar:['\u0645\u0628\u062A\u062F\u0626','\u0645\u062A\u062F\u0631\u0628','\u0645\u0642\u0627\u062A\u0644','\u0645\u062D\u0627\u0631\u0628','\u0641\u0627\u0631\u0633','\u0628\u0637\u0644','\u0645\u0639\u0644\u0645','\u0623\u0633\u062A\u0627\u0630','\u0623\u0633\u0637\u0648\u0631\u0629','\u062E\u0631\u0627\u0641\u064A']};
-var PIL={study:{em:'\uD83D\uDCDA',hex:'#4f9cf9'},gym:{em:'\u2764\uFE0F',hex:'#ff6b4a'},social:{em:'\uD83D\uDC65',hex:'#34d399'},soul:{em:'\uD83D\uDD4C',hex:'#a78bfa'}};
+
+/* ============================================================
+   PIXEL ICON ENGINE - 12x12 grids -> crisp inline SVG.
+   Chars map to palette slots; '.' = transparent.
+   Shared outline 'o' everywhere for a cohesive 8-bit language.
+   ============================================================ */
+var PXO='#0d1526',PXW='#e9eef8';
+var PX={
+home:{p:{o:PXO,a:'var(--gym)',b:'#c94f33',w:PXW,d:'#5d3a2e'},g:[
+'............','.....oo.....','....oaao....','...oaaaao...','..oaaaaaao..','.oaaaaaaaao.','.oobbbbbboo.','..obbwwbbo..','..obbwwbbo..','..obbddbbo..','..obbddbbo..','..oooooooo..']},
+cal:{p:{o:PXO,a:'var(--study)',b:'#2a5da8',w:PXW,r:'var(--danger)'},g:[
+'............','..o..oo..o..','.oooooooooo.','.orrrrrrrro.','.oooooooooo.','.owwwwwwwwo.','.owaowaowao.','.owwwwwwwwo.','.owaowaowao.','.owwwwwwwwo.','.oooooooooo.','............']},
+stats:{p:{o:PXO,a:'var(--study)',b:'var(--social)',c:'var(--gold)'},g:[
+'............','..........o.','.......oo.o.','.......oa.o.','..oo...oa.o.','..ob...oa.o.','..ob.o.oa.o.','..ob.oc.a.o.','..ob.oc.a.o.','..ob.oc.a.o.','.ooooooooooo','............']},
+book:{p:{o:PXO,a:'var(--study)',b:'#2a5da8',w:PXW},g:[
+'............','..oooooooo..','.oaaaaaaaao.','.oaawwwaaao.','.oaawwwaaao.','.oaaaaaaaao.','.oaawwwaaao.','.oaaaaaaaao.','.obbbbbbbbo.','.obbbbbbbbo.','..oooooooo..','............']},
+heart:{p:{o:PXO,a:'var(--gym)',b:'#c23a22',w:PXW},g:[
+'............','..oo...oo...','.oaao.oaao..','oaawaoaaaao.','oaawaaaaaao.','oaaaaaaaaao.','.oaaaaaaao..','..oaaaaao...','...oaaao....','....oao.....','.....o......','............']},
+people:{p:{o:PXO,a:'var(--social)',b:'#1d9c6c',w:PXW},g:[
+'............','..oo...oo...','.oaao.obbo..','.oaao.obbo..','..oo...oo...','.oooo.oooo..','oaaaaobbbbo.','oaaaaobbbbo.','oaaaaobbbbo.','oaaaaobbbbo.','.oooo.oooo..','............']},
+mosque:{p:{o:PXO,a:'var(--soul)',b:'#7c5fd1',w:PXW,y:'var(--gold)'},g:[
+'.....y......','.....o......','....oao.....','...oaaao....','..oaaaaao...','.oaaaaaaao..','.oooooooo.o.','.obbwwbbo.y.','.obbwwbbo.o.','.obbwwbbo.a.','.obbwwbbo.a.','.oooooooooo.']},
+medal:{p:{o:PXO,a:'var(--gold)',b:'#c98d0a',r:'var(--gym)',w:PXW},g:[
+'..oo....oo..','..oro..oro..','...oro.ro...','...oror.o...','....oooo....','....oooo....','...oaaaao...','..oaawaaao..','..oaawaaao..','..oaaaaaao..','...oaaaao...','....oooo....']},
+trophy:{p:{o:PXO,a:'var(--gold)',b:'#c98d0a',w:PXW},g:[
+'............','.oooooooooo.','.oaaaaaaaao.','oboaaaaaaobo','ob.oaawaao.o','.o.oaawaao.o','....oaaao...','.....oao....','.....obo....','....oaaao...','...oaaaaao..','...ooooooo..']},
+fire:{p:{o:PXO,a:'var(--gym)',b:'var(--warn)',y:'var(--gold)',w:PXW},g:[
+'.....o......','....oao.....','....oao..o..','...oaao.oo..','..oaaaaoao..','..oabbaaao..','.oabyybaao..','.oabyyybao..','.oabywybao..','..obyyybo...','...obbbo....','....ooo.....']},
+snow:{p:{o:'#9fc4ef',a:'#cfe4ff'},g:[
+'.....a......','..a..a..a...','...a.a.a....','....aaa.....','.aaaaoaaaa..','....aaa.....','...a.a.a....','..a..a..a...','.....a......','............','............','............']},
+star:{p:{o:PXO,a:'var(--gold)',b:'#c98d0a',w:PXW},g:[
+'............','.....oo.....','.....oao....','....oaao....','.oooaaaaooo.','.oaaaawaaao.','..oaaawao...','...oaaaao...','...oaaaao...','..oaao.oao..','..oo....oo..','............']},
+check:{p:{o:PXO,a:'var(--okc)',b:'#168947',w:PXW},g:[
+'............','..oooooooo..','.oaaaaaaaao.','.oaaaaaaobo.','.oaaaaaobbo.','.obaaaobbao.','.obboaobbao.','.obbbobbaao.','.oabbbbaaao.','.oaabbaaaao.','..oooooooo..','............']},
+boxempty:{p:{o:'#41546f',a:'#141d2c'},g:[
+'............','..oooooooo..','.oaaaaaaaao.','.oaaaaaaaao.','.oaaaaaaaao.','.oaaaaaaaao.','.oaaaaaaaao.','.oaaaaaaaao.','.oaaaaaaaao.','.oaaaaaaaao.','..oooooooo..','............']},
+cross:{p:{o:PXO,a:'var(--danger)',w:PXW},g:[
+'............','.oo......oo.','oaao....oaao','oaaao..oaaao','.oaaaooaaao.','..oaaaaaao..','...oaaaao...','..oaaaaaao..','.oaaaooaaao.','oaaao..oaaao','oaao....oaao','.oo......oo.']},
+warn:{p:{o:PXO,a:'var(--warn)',b:'#c47a08',d:PXO},g:[
+'.....oo.....','....oaao....','....oaao....','...oaddao...','...oaddao...','..oaaddaao..','..oaaddaao..','.oaaaddaaao.','.oaaaaaaaao.','oaaaaddaaaao','oaaaaaaaaaao','.oooooooooo.']},
+plus:{p:{o:PXO,a:'var(--okc)',w:PXW},g:[
+'............','....oooo....','....oaao....','....oaao....','.oooaaaaooo.','.oaaaaaaaao.','.oaaaaaaaao.','.oooaaaaooo.','....oaao....','....oaao....','....oooo....','............']},
+trash:{p:{o:PXO,a:'#8b9bb5',b:'#5d6c87',r:'var(--danger)'},g:[
+'............','....oooo....','.ooorrrrooo.','.orrrrrrrro.','.oooooooooo.','..oaaaaaao..','..oaobobao..','..oaobobao..','..oaobobao..','..oaobobao..','...oooooo...','............']},
+pin:{p:{o:PXO,a:'var(--gym)',b:'#c94f33',w:PXW},g:[
+'............','...oooo.....','..oaaaao....','.oaawwaao...','.oaawwaao...','.oaaaaaao...','..oaaaao....','...oaao.....','....oao.....','....oo......','...oo.......','..o.........']},
+target:{p:{o:PXO,a:'var(--gym)',w:PXW},g:[
+'............','...oooooo...','..oaaaaaao..','.oaowwwwao..','.oawoooowo..','.oawoaaowo..','.oawoaaowo..','.oawooo.wo..','.oaowwwwao..','..oaaaaaao..','...oooooo...','............']},
+clip:{p:{o:PXO,a:'#8b9bb5',w:PXW,b:'var(--study)'},g:[
+'....oooo....','..ooabbaoo..','.owwoooowwo.','.owwwwwwwwo.','.owbbbbbbwo.','.owwwwwwwwo.','.owbbbbwwwo.','.owwwwwwwwo.','.owbbbbbwwo.','.owwwwwwwwo.','..oooooooo..','............']},
+scroll:{p:{o:PXO,a:'#e8d9b0',b:'#c9b586',w:PXW},g:[
+'............','..ooooooo...','.oaaaaaaoo..','.oabbbbaobo.','.oaaaaaaoo..','.oabbbaao...','.oaaaaaao...','.oabbbbao...','.oaaaaaao...','.ooaaaaoo...','.obooooobo..','..ooooooo...']},
+chartup:{p:{o:PXO,a:'var(--okc)',w:PXW},g:[
+'............','..........o.','........ooa.','.......oaao.','......oaao..','..o..oaao...','.oa.oaao....','.oaoaao.....','.oaaao......','.oaao.......','.ooo........','............']},
+flag:{p:{o:PXO,a:PXW,b:'#141d2c'},g:[
+'.o..........','.oooooooo...','.oabababao..','.obabababo..','.oabababao..','.obabababo..','.oooooooo...','.o..........','.o..........','.o..........','.o..........','.o..........']},
+pad:{p:{o:PXO,a:'#5d6c87',b:'#41546f',r:'var(--gym)',g:'var(--okc)',w:PXW},g:[
+'............','..oooooooo..','.oaaaaaaaao.','oaawaaaaagao','oawwwaargrgo','oaawaaaaagao','oaaaaaaaaaao','.obbo..obbo.','.oo......oo.','............','............','............']},
+grad:{p:{o:PXO,a:'#3d4f6b',b:'#28374e',y:'var(--gold)'},g:[
+'............','.....oo.....','...ooaaoo...','.ooaaaaaaoo.','oaaaaaaaaaao','.ooaaaaaaoo.','...ooaaooyo.','..oaobboayo.','..obbbbbbyo.','...oooooo.o.','..........y.','............']},
+pencil:{p:{o:PXO,a:'var(--warn)',b:'#c47a08',w:'#f4c98a',d:'#3d4f6b'},g:[
+'........oo..','.......oddo.','......oddo..','.....oaao...','....oaao....','...oaao.....','..oaao......','.oaao.......','.owo........','.oo.........','.o..........','............']},
+quest:{p:{o:PXO,a:'var(--soul)',w:PXW},g:[
+'............','...ooooo....','..oaaaaao...','..oao..oao..','.......oao..','......oao...','.....oao....','.....oao....','.....oo.....','............','.....oo.....','.....oo.....']},
+exam:{p:{o:PXO,a:PXW,b:'var(--study)',r:'var(--danger)'},g:[
+'............','..oooooo....','.oaaaaaaoo..','.oaraaaaao..','.oaaabbao...','.oaraaaaao..','.oaaabbbao..','.oaraaaaao..','.oaaabbao...','.oaaaaaaao..','..ooooooo...','............']},
+folder:{p:{o:PXO,a:'var(--gold)',b:'#c98d0a'},g:[
+'............','..ooooo.....','.oaaaaao....','.oaaaaaooooo','.obbbbbbbbbo','.obbbbbbbbbo','.obbbbbbbbbo','.obbbbbbbbbo','.obbbbbbbbbo','.obbbbbbbbbo','..ooooooooo.','............']},
+pushpin:{p:{o:PXO,a:'var(--danger)',b:'#b32d21',w:PXW},g:[
+'............','...oooo.....','..oawwao....','..oaaaao....','..oaaaao....','..obbbbo....','.oaaaaaao...','.oooooooo...','....oo......','....oo......','....o.......','............']},
+clock:{p:{o:PXO,a:PXW,b:'var(--study)',d:'#3d4f6b'},g:[
+'............','...oooooo...','..oaaaaaao..','.oaaaobaaao.','.oaaaobaaao.','.oaaaobbbao.','.oaaaaaaaao.','.oaaaaaaaao.','..oaaaaaao..','...oooooo...','..od....do..','............']},
+gear:{p:{o:PXO,a:'#8b9bb5',b:'#5d6c87',d:'#141d2c'},g:[
+'....o..o....','...oaooao...','..oaaaaaao..','.oaaaaaaaao.','oaaoddddoaao','.oaoddddoao.','.oaoddddoao.','oaaoddddoaao','.oaaaaaaaao.','..oaaaaaao..','...oaooao...','....o..o....']},
+slid:{p:{o:PXO,a:'#8b9bb5',b:'var(--study)'},g:[
+'............','.oooooooooo.','.o...b....o.','.oaaabbaaao.','.o...b....o.','.o........o.','.o......b.o.','.oaaaaabbao.','.o......b.o.','.oooooooooo.','............','............']},
+globe:{p:{o:PXO,a:'var(--study)',b:'#2a5da8',g:'var(--social)'},g:[
+'............','...oooooo...','..oaagggao..','.oaaagggaao.','.ogaaaagggo.','.oggaaaggao.','.oagggaaaao.','.oaagggaaao.','..oaaaggao..','...oooooo...','............','............']},
+drop:{p:{o:PXO,a:'var(--study)',b:'#2a5da8',w:PXW},g:[
+'.....o......','.....oo.....','....oao.....','....oaao....','...oaaao....','..oaaaaao...','.oaaaaaaao..','.oawaaaaao..','.oawaaaaao..','..oaaaaao...','...oaaao....','....ooo.....']},
+bottle:{p:{o:PXO,a:'var(--study)',b:'#2a5da8',w:PXW,c:'#8b9bb5'},g:[
+'....occo....','....occo....','...oooooo...','...oaaaao...','..oaaaaaao..','..oawaaaao..','..oawaaaao..','..oawaaaao..','..oaaaaaao..','..oabbbbao..','..oabbbbao..','...oooooo...']},
+meat:{p:{o:PXO,a:'var(--gym)',b:'#c94f33',w:'#f3d9c9',d:'#e8b090'},g:[
+'............','...ooooo....','..oaaaaao...','.oaaddaaao..','.oadwwdaao..','.oadwwdaaoo.','.oaaddaaobo.','..oaaaaaobo.','...oooooobo.','.........o..','............','............']},
+plate:{p:{o:PXO,a:PXW,b:'#b9c6da',c:'#8b9bb5'},g:[
+'............','.o...ooo..o.','.o..oaaao.o.','.o.oabbbaoo.','.oooabbbao..','.o.oabbbaoo.','.o..oaaao.o.','.o...ooo..o.','.o........o.','............','............','............']},
+shoe:{p:{o:PXO,a:'var(--social)',b:'#1d9c6c',w:PXW},g:[
+'............','............','...oo.......','..oaao......','..oaaoo.....','.oaaaaoo....','.oaawaaoooo.','oaaawaaaaaao','oaaaaaaaaaao','obbbbbbbbbbo','.oooooooooo.','............']},
+scale:{p:{o:PXO,a:'#8b9bb5',b:'var(--gold)'},g:[
+'.....oo.....','..ooobboo...','.ob..oo..bo.','obbbo..obbbo','.obo....obo.','..o......o..','.....oo.....','.....oo.....','.....oo.....','...oooooo...','..oaaaaaao..','...oooooo...']},
+barbell:{p:{o:PXO,a:'#8b9bb5',b:'#41546f',w:PXW},g:[
+'............','.o........o.','oboo....oobo','obao....oabo','obaooooooabo','obaaaaaaaabo','obaooooooabo','obao....oabo','oboo....oobo','.o........o.','............','............']},
+key:{p:{o:PXO,a:'var(--gold)',b:'#c98d0a',w:PXW},g:[
+'............','...oooo.....','..oaaaao....','.oaowwoao...','.oaowwoao...','..oaaaao....','...oaao.....','....oao.....','....oaoo....','....oaao....','....oaoo....','.....oo.....']},
+wave:{p:{o:PXO,a:'#f4c98a',b:'#d9a05f'},g:[
+'............','...o.o.o....','..oaoaoao...','..oaoaoaoo..','..oaaaaaoao.','.ooaaaaaaao.','oaoaaaaaaao.','oaaaaaaaao..','.oaaaaaaao..','..oaaaaao...','...oooooo...','............']},
+bolt:{p:{o:PXO,a:'var(--gold)',b:'#c98d0a',w:PXW},g:[
+'............','......ooo...','.....oaao...','....oaao....','...oaao.....','..oaaaoooo..','.oaaaaaaao..','..ooooaao...','.....oaao...','....oaao....','....oao.....','....oo......']},
+cloud:{p:{o:PXO,a:PXW,b:'#b9c6da'},g:[
+'............','....oooo....','...oaaaao...','..oaaaaaao..','.ooaaaaaaoo.','oaaaaaaaaaao','oaaaaaaaaaao','obbbbbbbbbbo','.oooooooooo.','............','............','............']},
+offline:{p:{o:PXO,a:'#8b9bb5',r:'var(--danger)'},g:[
+'.r........r.','..r......r..','...oooo.r...','..oaaaar....','..oaaraao...','..oaraaao...','..oraaaao...','..raaaaao...','.r.oooo.....','r........r..','............','............']},
+gem:{p:{o:PXO,a:'#6ee7ff',b:'#2facd4',w:PXW},g:[
+'............','..oooooooo..','.oawabbawao.','.oaaabbaaao.','..obaaaabo..','..obaaaabo..','...obaabo...','...obaabo...','....obbo....','....obbo....','.....oo.....','............']},
+sprout:{p:{o:PXO,a:'var(--social)',b:'#1d9c6c',d:'#8a5a3b'},g:[
+'............','..oo........','.oaaoo..oo..','.oaaaao.obo.','..oaaaoobbo.','...ooaaobo..','.....oaoo...','.....oao....','.....oao....','....oddo....','...oddddo...','....oooo....']},
+star2:{p:{o:PXO,a:'var(--soul)',w:PXW},g:[
+'.....oo.....','....oaao....','.....oo.....','.oo......oo.','.oao.oo.oao.','..o.oaao.o..','....oaao....','..o..oo..o..','.oao....oao.','..oo.oo.oo..','....oaao....','.....oo.....']},
+down:{p:{o:PXO,a:'var(--study)',w:PXW},g:[
+'............','....oooo....','....oaao....','....oaao....','....oaao....','.oooaaaooo..','.oaaaaaaao..','..oaaaaao...','...oaaao....','....oao.....','.....o......','............']},
+umbrella:{p:{o:PXO,a:'var(--gym)',b:'#c94f33',w:PXW,y:'var(--gold)'},g:[
+'.....oo.....','...ooaaoo...','..oaawwaao..','.oaaawwaaao.','oaabaawaabao','oooooooooooo','.....oo.....','.....oo.....','.....oo.oo..','.....oo.oo..','......ooo...','............']},
+kaaba:{p:{o:PXO,a:'#232c3b',b:'var(--gold)',d:'#161d29'},g:[
+'............','...oooooo...','..oaaaaaao..','.oaaaaaaaao.','.obbbbbbbbo.','.oaaaaaaaao.','.oaaadaaaao.','.oaaadaaaao.','.oaaadaaaao.','.oaaaaaaaao.','..oooooooo..','............']},
+party:{p:{o:PXO,a:'var(--gold)',b:'var(--gym)',c:'var(--study)',g:'var(--social)'},g:[
+'..........c.','.g...b..c...','...a......g.','.b..ooo...b.','...oaao..a..','...oaaao....','..oaaaao.c..','..oaaaaao...','.oaaaaaao...','.oooooooo...','............','............']},
+leg:{p:{o:PXO,a:'#f4c98a',b:'#d9a05f',w:PXW},g:[
+'............','..ooo.......','.oaaao......','.oaaao......','.oaaao......','.oaaaoo.....','.oaaaaoo....','..oaaaaoo...','...oaaaao...','....oaaaoo..','....obbbbo..','.....oooo...']},
+flex:{p:{o:PXO,a:'#f4c98a',b:'#d9a05f'},g:[
+'............','...oo.......','..oaao......','..oaaoo.....','.ooaaaao....','oaaoaaaao...','oaaooaaaao..','oaao.oaaao..','.oo..oaaao..','.....oaao...','......oo....','............']},
+bench:{p:{o:PXO,a:'#8b9bb5',b:'#41546f',c:'var(--gym)'},g:[
+'............','.o...oo...o.','obo.oaao.obo','oboooaaooobo','obaaaaaaaabo','oboooooooobo','obo.occo.obo','.o..occo..o.','....occo....','...oooooo...','............','............']},
+squat:{p:{o:PXO,a:'#8b9bb5',c:'#f4c98a',b:'#41546f'},g:[
+'............','obooooooooob','obaaaaaaaaob','.o..occ..o..','....occo....','....occo....','...occcco...','..occ..cco..','..occ..cco..','...oo..oo...','............','............']},
+deadlift:{p:{o:PXO,a:'#8b9bb5',b:'#41546f',c:'#f4c98a'},g:[
+'............','....occo....','....occo....','...occcco...','..occ..cco..','..occ..cco..','..occ..cco..','...o....o...','obooooooooob','obaaaaaaaaob','obooooooooob','.o........o.']},
+ohp:{p:{o:PXO,a:'#8b9bb5',b:'#41546f',c:'#f4c98a'},g:[
+'obooooooooob','obaaaaaaaaob','.o..occo..o.','....occo....','....occo....','....occo....','...occcco...','..occ..cco..','..occ..cco..','...oo..oo...','............','............']},
+rowlift:{p:{o:PXO,a:'#8b9bb5',b:'#41546f',c:'#f4c98a'},g:[
+'............','.....occoo..','....occcco..','...occ.oco..','..occ...o...','..occ.......','oboooooooob.','obaaaaaaaob.','oboooooooob.','.o.......o..','............','............']},
+push:{p:{o:PXO,a:'var(--gym)',b:'#c94f33'},g:[
+'............','.oo......oo.','.oao....oao.','.oaao..oaao.','..oao..oao..','..oo....oo..','.oooooooooo.','.oaaaaaaaao.','.obbbbbbbbo.','.oooooooooo.','............','............']},
+pull:{p:{o:PXO,a:'var(--study)',b:'#2a5da8'},g:[
+'.oooooooooo.','.oaaaaaaaao.','.oooooooooo.','..oo....oo..','..oao..oao..','.oaao..oaao.','.oao....oao.','.oo......oo.','............','............','............','............']},
+foot:{p:{o:PXO,a:'#f4c98a',b:'#d9a05f'},g:[
+'............','...oo.......','..oaao......','..oaaao.....','..oaaao.....','..oaaaoo....','..oaaaaoo...','..oaaaaaoo..','.oaaaaaaaoo.','.obbbbbbbbo.','..oooooooo..','............']}
+};
+function px(n,sz,style){
+  var d=PX[n];if(!d)return '';
+  sz=sz||16;
+  var o='<svg class="px" width="'+sz+'" height="'+sz+'" viewBox="0 0 12 12" shape-rendering="crispEdges" aria-hidden="true"'+(style?' style="'+style+'"':'')+'>';
+  for(var y=0;y<12;y++){var row=d.g[y];
+    for(var x=0;x<12;x++){var ch=row[x];if(ch==='.'){continue}
+      var run=1;while(x+run<12&&row[x+run]===ch)run++;
+      o+='<rect x="'+x+'" y="'+y+'" width="'+run+'" height="1" fill="'+(d.p[ch]||'#f0f')+'"/>';
+      x+=run-1;
+    }}
+  return o+'</svg>';
+}
+var PIL={study:{ic:'book',hex:'#4f9cf9'},gym:{ic:'heart',hex:'#ff6b4a'},social:{ic:'people',hex:'#34d399'},soul:{ic:'mosque',hex:'#a78bfa'}};
 var PKEYS=['study','gym','social','soul'];
 function pnm(p){return T(p)}
 var PRAYERS=[['Fajr','\u0627\u0644\u0641\u062C\u0631'],['Dhuhr','\u0627\u0644\u0638\u0647\u0631'],['Asr','\u0627\u0644\u0639\u0635\u0631'],['Maghrib','\u0627\u0644\u0645\u063A\u0631\u0628'],['Isha','\u0627\u0644\u0639\u0634\u0627\u0621']];
@@ -651,7 +806,7 @@ function applyLang(){
   document.getElementById('vt-month').textContent=T('month');
   document.getElementById('vt-year').textContent=T('year');
   document.querySelector('.todaybtn').textContent=T('today');
-  document.getElementById('install').textContent='\u2B07 '+T('install');
+  document.getElementById('install').innerHTML=px('down',13)+' '+T('install');
 }
 async function toggleLang(){
   lang=lang==='ar'?'en':'ar';
@@ -664,7 +819,7 @@ async function toggleLang(){
 /* ---------- auth ---------- */
 function renderAuth(){
   var b=document.getElementById('authbox');
-  b.innerHTML='<h1>\u26A1 '+T('title')+'</h1><p>'+T('tag')+'</p>'+
+  b.innerHTML='<h1>'+px('bolt',20)+' '+T('title')+'</h1><p>'+T('tag')+'</p>'+
   '<input id="em" type="email" placeholder="'+T('email')+'">'+
   '<input id="pw" type="password" placeholder="'+T('pass')+'">'+
   '<button class="main" id="authbtn" onclick="doAuth()">'+(signup?T('create'):T('signin'))+'</button>'+
@@ -693,7 +848,7 @@ async function forgotPw(){
 function showRecover(){
   document.getElementById('app').classList.add('hidden');
   document.getElementById('auth').classList.remove('hidden');
-  document.getElementById('authbox').innerHTML='<h1>\uD83D\uDD11 '+T('newpass')+'</h1><p>'+T('setnew')+'</p><input id="npw" type="password" placeholder="'+T('pass')+'"><button class="main" onclick="saveNewPw()">'+T('updatepw')+'</button><div id="authmsg"></div>';
+  document.getElementById('authbox').innerHTML='<h1>'+px('key',20)+' '+T('newpass')+'</h1><p>'+T('setnew')+'</p><input id="npw" type="password" placeholder="'+T('pass')+'"><button class="main" onclick="saveNewPw()">'+T('updatepw')+'</button><div id="authmsg"></div>';
 }
 async function saveNewPw(){
   var pw=document.getElementById('npw').value,msg=document.getElementById('authmsg');
@@ -858,13 +1013,13 @@ async function flushQueue(quiet){
     q.shift();setQ(q);sent++;
   }
   syncing=false;netBadge();
-  if(sent&&!quiet)toast('\u2601\uFE0F '+T('synced',{n:sent}));
+  if(sent&&!quiet)toast(T('synced',{n:sent}),'cloud');
   return sent;
 }
 function netBadge(){
   var el=document.getElementById('netbadge');if(!el)return;
   var n=getQ().length;
-  if(!isOnline()){el.className='netbadge off';el.textContent='\u26A1 '+T('offline')+(n?' \u00B7 '+n:'');el.classList.remove('hidden')}
+  if(!isOnline()){el.className='netbadge off';el.innerHTML=px('bolt',11)+' '+T('offline')+(n?' \u00B7 '+n:'');el.classList.remove('hidden')}
   else if(n){el.className='netbadge pend';el.textContent='\u21BB '+T('pending',{n:n});el.classList.remove('hidden')}
   else el.classList.add('hidden');
 }
@@ -915,9 +1070,9 @@ async function dbUpsert(table,row){
   q.push({op:'upsert',table:table,row:row});setQ(q);
   return{offline:true};
 }
-function offToast(res,msg){toast(res&&res.offline?'\uD83D\uDCF4 '+msg+' \u00B7 '+T('savedoff'):msg)}
+function offToast(res,msg,ic){if(res&&res.offline)toast(msg+' \u00B7 '+T('savedoff'),'offline');else toast(msg,ic)}
 window.addEventListener('online',function(){netBadge();flushQueue()});
-window.addEventListener('offline',function(){netBadge();toast('\uD83D\uDCF4 '+T('offlinemode'))});
+window.addEventListener('offline',function(){netBadge();toast(T('offlinemode'),'offline')});
 
 /* ---------- prayer times ---------- */
 /* everything below crosses a trust boundary: third-party API responses and
@@ -946,7 +1101,7 @@ async function detectLocation(silent){
       cfg.lat=patch.lat;cfg.lon=patch.lon;
       localStorage.setItem('fp_geo',JSON.stringify({lat:patch.lat,lon:patch.lon,city:patch.city,country:patch.country}));
       if(user)await saveCfg({city:patch.city,country:patch.country});
-      if(!silent)toast('\uD83D\uDCCD '+patch.city+', '+patch.country);
+      if(!silent)toast(patch.city+', '+patch.country,'pin');
       return true;
     }
   }catch(e){}
@@ -955,14 +1110,14 @@ async function detectLocation(silent){
 }
 function gpsLocate(){
   if(!navigator.geolocation){toast(T('locfail'));return}
-  toast('\uD83D\uDCCD ...');
+  toast('...','pin');
   navigator.geolocation.getCurrentPosition(async function(pos){
     var gl=numOrNull(pos.coords.latitude),gn=numOrNull(pos.coords.longitude);
     if(!validCoord(gl,gn)){toast(T('locfail'));return}
     cfg.lat=gl;cfg.lon=gn;
     localStorage.setItem('fp_geo',JSON.stringify({lat:cfg.lat,lon:cfg.lon,city:cfg.city,country:cfg.country}));
     prayerTimes=null;await loadPrayerTimes(true);
-    toast('\uD83D\uDCCD '+T('gpsok'));
+    toast(T('gpsok'),'pin');
   },function(){toast(T('locdenied'))},{timeout:8000});
 }
 async function loadPrayerTimes(force){
@@ -1140,13 +1295,13 @@ async function setWater(n){
   var r=await saveNut(ds,{water_ml:ml});
   var goal=cfg.water_goal_ml||2000;
   if(ml>=goal&&before<goal){
-    if(await awardOnce('Water goal',10,ds,'gym')){toast('\uD83D\uDCA7 '+T('watergoalhit')+' +10 XP');checkLevelUp();render();return}
+    if(await awardOnce('Water goal',10,ds,'gym')){toast(T('watergoalhit')+' +10 XP','drop');checkLevelUp();render();return}
   }
-  offToast(r,'\uD83D\uDCA7 '+Math.round(ml/bottleMl())+' \u00D7 '+bottleMl()+'ml');
+  offToast(r,Math.round(ml/bottleMl())+' \u00D7 '+bottleMl()+'ml','drop');
   render();
 }
 function openMeal(){
-  var h='<h2>\uD83C\uDF7D\uFE0F '+T('addmeal')+'</h2>'+
+  var h='<h2>'+px('plate',16)+" "+T('addmeal')+'</h2>'+
   '<label>'+T('date')+'</label><input id="ndate" type="date" value="'+today()+'">'+
   '<label>'+T('calories')+' ('+T('kcal')+')</label><input id="ncal" type="number" inputmode="numeric" placeholder="450">'+
   '<label>'+T('protein')+' ('+T('grams')+' \u00B7 '+T('optional')+')</label><input id="nprot" type="number" inputmode="numeric" placeholder="30">'+
@@ -1163,9 +1318,9 @@ async function saveMeal(){
   var r=await saveNut(ds,{calories:cur.calories+cal,protein:cur.protein+pr});
   closeModal();
   if(pr&&cur.protein+pr>=pgoal&&beforeP<pgoal){
-    if(await awardOnce('Protein goal',10,ds,'gym')){toast('\uD83E\uDD69 '+T('proteingoalhit')+' +10 XP');checkLevelUp();render();return}
+    if(await awardOnce('Protein goal',10,ds,'gym')){toast(T('proteingoalhit')+' +10 XP','meat');checkLevelUp();render();return}
   }
-  offToast(r,'\uD83C\uDF7D\uFE0F +'+cal+' '+T('kcal')+(pr?' \u00B7 +'+pr+T('grams'):''));
+  offToast(r,'+'+cal+' '+T('kcal')+(pr?' \u00B7 +'+pr+T('grams'):''));
   render();
 }
 function renderHealth(){
@@ -1174,24 +1329,24 @@ function renderHealth(){
   var ds=today(),n=nut(ds);
   var bm=bottleMl(),gb=goalBottles(),have=Math.round(n.water_ml/bm);
   var show=Math.max(gb,have);
-  var h='<div class="hcard"><h2>\u2764\uFE0F '+T('health')+'</h2>';
+  var h='<div class="hcard"><h2>'+px('heart',16)+' '+T('health')+'</h2>';
   h+='<div class="wrow">';
   for(var i=0;i<show;i++){
     var full=i<have;
-    h+='<button class="btl'+(full?' full':'')+'" onclick="setWater('+((full&&i===have-1)?i:(i+1))+')" title="'+((i+1)*bm)+'ml">\uD83E\uDDF4</button>';
+    h+='<button class="btl'+(full?' full':'')+'" onclick="setWater('+((full&&i===have-1)?i:(i+1))+')" title="'+((i+1)*bm)+'ml">'+px('bottle',16)+'</button>';
   }
-  h+='<button class="btl full" style="opacity:.55" onclick="setWater('+(have+1)+')">\u2795</button>';
+  h+='<button class="btl full" style="opacity:.55" onclick="setWater('+(have+1)+')">'+px('plus',16)+'</button>';
   h+='</div>';
-  h+='<div class="wmeta"><span>\uD83D\uDCA7 '+T('water')+'</span><span><b>'+n.water_ml+'</b> / '+(cfg.water_goal_ml||2000)+' ml'+(n.water_ml>=(cfg.water_goal_ml||2000)?' \u2705':'')+'</span></div>';
+  h+='<div class="wmeta"><span>'+px('drop',13)+' '+T('water')+'</span><span><b>'+n.water_ml+'</b> / '+(cfg.water_goal_ml||2000)+' ml'+(n.water_ml>=(cfg.water_goal_ml||2000)?' '+px('check',12):'')+'</span></div>';
   var cg=cfg.calorie_goal||2200,pg=cfg.protein_goal||120;
   var st=stepsOn(ds),sg=stepsGoal();
-  h+='<div class="wmeta" style="margin-top:2px"><span>\uD83D\uDC5F '+T('steps')+'</span><span><b>'+st.toLocaleString()+'</b> / '+sg.toLocaleString()+(st>=sg?' \u2705':'')+'</span></div>';
+  h+='<div class="wmeta" style="margin-top:2px"><span>'+px('shoe',13)+' '+T('steps')+'</span><span><b>'+st.toLocaleString()+'</b> / '+sg.toLocaleString()+(st>=sg?' '+px('check',12):'')+'</span></div>';
   h+='<div class="nb" style="margin:6px 0 12px"><div style="width:'+Math.min(100,Math.round(st/sg*100))+'%;background:#4f9cf9"></div></div>';
   h+='<div class="nutgrid">';
   h+='<div class="nut"><div class="nv">'+n.calories+' <span style="font-size:11px;color:var(--dim)">/ '+cg+'</span></div><div class="nl">'+T('calories')+'</div><div class="nb"><div style="width:'+Math.min(100,Math.round(n.calories/cg*100))+'%;background:'+(n.calories>cg?'#ff6b4a':'#fbbf24')+'"></div></div></div>';
-  h+='<div class="nut"><div class="nv">'+n.protein+'<span style="font-size:11px;color:var(--dim)">'+T('grams')+' / '+pg+'</span></div><div class="nl">'+T('protein')+(n.protein>=pg?' \u2705':'')+'</div><div class="nb"><div style="width:'+Math.min(100,Math.round(n.protein/pg*100))+'%;background:#34d399"></div></div></div>';
+  h+='<div class="nut"><div class="nv">'+n.protein+'<span style="font-size:11px;color:var(--dim)">'+T('grams')+' / '+pg+'</span></div><div class="nl">'+T('protein')+(n.protein>=pg?' '+px('check',12):'')+'</div><div class="nb"><div style="width:'+Math.min(100,Math.round(n.protein/pg*100))+'%;background:#34d399"></div></div></div>';
   h+='</div>';
-  h+='<div class="hbtns"><button onclick="openMeal()">\uD83C\uDF7D\uFE0F '+T('addmeal')+'</button></div>';
+  h+='<div class="hbtns"><button onclick="openMeal()">'+px('plate',16)+" "+T('addmeal')+'</button></div>';
   h+='</div>';
   el.innerHTML=h;
 }
@@ -1200,7 +1355,7 @@ function renderToday(){
   var el=document.getElementById('todaycard');if(!el)return;
   var td=today();
   var de=entries.filter(function(e){return e.entry_date===td});
-  var h='<div class="section"><h2>\uD83D\uDCCC '+T('todayplan')+' \u00B7 '+dayPoints(td)+' XP</h2>';
+  var h='<div class="section"><h2>'+px('pushpin',16)+" "+T('todayplan')+' \u00B7 '+dayPoints(td)+' XP</h2>';
   h+='<div class="wkentries">'+(de.length?de.map(entHtml).join(''):'<p class="muted">'+T('emptyday')+'</p>')+'</div>';
   h+='<textarea class="dnote" style="border:1px solid var(--line);border-radius:8px;background:var(--card2);padding:8px" rows="2" placeholder="'+T('noteph')+'" onchange="saveNote(\''+td+'\',this.value)">'+esc(notes[td]||'')+'</textarea>';
   h+='<div class="mrow"><button class="ok" onclick="openAdd(\''+td+'\')">+ '+T('add')+'</button></div></div>';
@@ -1239,13 +1394,13 @@ function liftRowHtml(l){
   var bw=bodyWeight(),b=bestLift(l.k);
   var hist=liftHistory(l.k);
   if(!b)return '<div class="liftrow empty" onclick="openLiftLog(\''+l.k+'\')">'+
-    '<span class="lem">'+l.em+'</span><div class="li"><b>'+liftName(l.k)+'</b>'+
+    '<span class="lem">'+px(l.ic,22)+'</span><div class="li"><b>'+liftName(l.k)+'</b>'+
     '<div class="lm">'+T('nolifts')+'</div></div><span class="ladd">+</span></div>';
   var r=bw?rankOf(l.k,b.e1,bw):null;
   var R=r?RANKS[r.rank]:null;
   var first=hist[0],gain=Math.round((b.e1-e1RM(first.weight,first.reps))*10)/10;
   var h='<div class="liftrow" onclick="openLiftHistory(\''+l.k+'\')">';
-  h+=r?badgeHtml(r.rank,r.tier,40):'<span class="lem">'+l.em+'</span>';
+  h+=r?badgeHtml(r.rank,r.tier,40):'<span class="lem">'+px(l.ic,22)+'</span>';
   h+='<div class="li"><b>'+liftName(l.k)+'</b>';
   h+='<div class="lm">'+b.row.weight+'kg \u00D7 '+b.row.reps+' \u00B7 '+T('e1rm')+' '+b.e1+'kg'+
      (gain>0?' \u00B7 <span class="up">\u2191'+gain+'kg</span>':'')+'</div>';
@@ -1258,11 +1413,11 @@ function liftRowHtml(l){
 function accRowHtml(l){
   var b=bestLift(l.k),hist=liftHistory(l.k);
   if(!b)return '<div class="liftrow empty" onclick="openLiftLog(\''+l.k+'\')">'+
-    '<span class="lem">'+l.em+'</span><div class="li"><b>'+liftName(l.k)+'</b>'+
+    '<span class="lem">'+px(l.ic,22)+'</span><div class="li"><b>'+liftName(l.k)+'</b>'+
     '<div class="lm">'+T('noaccessory')+'</div></div><span class="ladd">+</span></div>';
   var first=hist[0],gain=Math.round((b.row.weight-first.weight)*10)/10;
   var h='<div class="liftrow" onclick="openLiftHistory(\''+l.k+'\')">';
-  h+='<span class="lem">'+l.em+'</span>';
+  h+='<span class="lem">'+px(l.ic,22)+'</span>';
   h+='<div class="li"><b>'+liftName(l.k)+'</b>';
   h+='<div class="lm">'+T('best')+' '+b.row.weight+'kg \u00D7 '+b.row.reps+
      (gain>0?' \u00B7 <span class="up">\u2191'+gain+'kg</span>':'')+' \u00B7 '+hist.length+'\u00D7</div>';
@@ -1274,10 +1429,10 @@ function renderRank(){
   if(tab!=='rank'){el.innerHTML='';return}
   if(openLift){el.innerHTML='<div class="section">'+liftHistoryHtml(openLift)+'</div>';return}
   var h='<div class="section">';
-  h+='<div class="qtop"><h2>\uD83C\uDFC5 '+T('rank')+'</h2>'+
-     '<button class="iconbtn" onclick="openBodyWeight()">\u2696\uFE0F '+(bodyWeight()?bodyWeight()+'kg':T('bodyweight'))+'</button></div>';
+  h+='<div class="qtop"><h2>'+px('medal',15)+" "+T('rank')+'</h2>'+
+     '<button class="iconbtn" onclick="openBodyWeight()">'+px('scale',14)+' '+(bodyWeight()?bodyWeight()+'kg':T('bodyweight'))+'</button></div>';
   h+=rankCardHtml();
-  h+='<div class="mrow" style="margin:12px 0"><button class="ok" onclick="openLiftLog(null)">\u2795 '+T('loglift')+'</button></div>';
+  h+='<div class="mrow" style="margin:12px 0"><button class="ok" onclick="openLiftLog(null)">'+px('plus',14)+' '+T('loglift')+'</button></div>';
   h+='<h3 class="sh">'+T('liftrank')+'</h3>';
   LIFTS.forEach(function(l){h+=liftRowHtml(l)});
   var GRP={push:'pushday',pull:'pullday',legs:'legday'};
@@ -1302,7 +1457,7 @@ function liftHistoryHtml(k){
   var bw=bodyWeight(),hist=liftHistory(k).slice().reverse();
   var b=bestLift(k),r=b&&bw&&isRanked(k)?rankOf(k,b.e1,bw):null;
   var h='<div class="cdhead"><button class="bk" onclick="closeLift()">\u2190</button>'+
-    '<div><div class="cc2">'+liftEmoji(k)+' '+T('history')+'</div><h2>'+liftName(k)+'</h2></div></div>';
+    '<div><div class="cc2">'+liftIcon(k)+' '+T('history')+'</div><h2>'+liftName(k)+'</h2></div></div>';
   if(!r&&b)h+='<div class="rankcard sm"><div class="rname" style="color:var(--gold)">'+b.row.weight+'kg \u00D7 '+b.row.reps+'</div>'+
     '<div class="rlp">'+T('best')+' \u00B7 '+T('e1rm')+' '+b.e1+'kg</div></div>';
   if(r){
@@ -1315,7 +1470,7 @@ function liftHistoryHtml(k){
       (r.max?'<div class="rnext">'+T('maxrank')+'</div>':'<div class="rnext">+'+r.needKg+'kg '+T('tonext',{r:r.tier<3?rankName(r.rank)+' '+['I','II','III'][r.tier]:rankName(r.rank+1)})+'</div>')+
       '</div>';
   }
-  h+='<div class="mrow" style="margin:12px 0"><button class="ok" onclick="openLiftLog(\''+k+'\')">\u2795 '+T('loglift')+'</button></div>';
+  h+='<div class="mrow" style="margin:12px 0"><button class="ok" onclick="openLiftLog(\''+k+'\')">'+px('plus',14)+' '+T('loglift')+'</button></div>';
   if(hist.length>1){
     var vals=hist.slice().reverse().map(function(g){return e1RM(g.weight,g.reps)});
     var mx=Math.max.apply(null,vals),mn=Math.min.apply(null,vals);
@@ -1343,7 +1498,7 @@ function liftHistoryHtml(k){
 function openLiftHistory(k){openLift=k;renderRank();window.scrollTo({top:0})}
 function closeLift(){openLift=null;renderRank();window.scrollTo({top:0})}
 function openBodyWeight(){
-  var h='<h2>\u2696\uFE0F '+T('bodyweight')+'</h2>';
+  var h='<h2>'+px('scale',16)+' '+T('bodyweight')+'</h2>';
   h+='<label>'+T('bodyweight')+'</label><input id="bw_v" type="number" step="0.5" value="'+(bodyWeight()||'')+'" placeholder="80">';
   h+='<label>'+T('liftsex')+'</label><select id="bw_s"><option value="male"'+(cfg.lift_sex!=='female'?' selected':'')+'>'+T('male')+'</option>'+
      '<option value="female"'+(cfg.lift_sex==='female'?' selected':'')+'>'+T('female')+'</option></select>';
@@ -1360,17 +1515,17 @@ async function saveBodyWeight(){
   saveCache();render();
 }
 function openLiftLog(k){
-  var h='<h2>\uD83C\uDFCB\uFE0F '+T('loglift')+'</h2>';
+  var h='<h2>'+px('barbell',16)+" "+T('loglift')+'</h2>';
   h+='<label>'+T('exercise')+'</label><select id="lf_k">'+
     '<optgroup label="'+T('ranked')+'">'+LIFTS.map(function(l){
-      return '<option value="'+l.k+'"'+(k===l.k?' selected':'')+'>'+l.em+' '+liftName(l.k)+'</option>';
+      return '<option value="'+l.k+'"'+(k===l.k?' selected':'')+'>'+liftName(l.k)+'</option>';
     }).join('')+'</optgroup>'+
     ['push','pull','legs'].map(function(g){
       var list=ACCESSORIES.filter(function(x){return x.g===g});
       if(!list.length)return '';
       var GL={push:'pushday',pull:'pullday',legs:'legday'};
       return '<optgroup label="'+T(GL[g])+'">'+list.map(function(l){
-        return '<option value="'+l.k+'"'+(k===l.k?' selected':'')+'>'+l.em+' '+liftName(l.k)+'</option>';
+        return '<option value="'+l.k+'"'+(k===l.k?' selected':'')+'>'+liftName(l.k)+'</option>';
       }).join('')+'</optgroup>';
     }).join('')+'</select>';
   h+='<label>'+T('date')+'</label><input id="lf_d" type="date" value="'+today()+'">';
@@ -1384,7 +1539,7 @@ function openLiftLog(k){
 async function saveLift(){
   var k=document.getElementById('lf_k').value;
   var w=parseFloat(document.getElementById('lf_w').value);
-  if(!w){toast('\u26A0');return}
+  if(!w){toast('!','warn');return}
   var reps=parseInt(document.getElementById('lf_r').value)||1;
   var sets=parseInt(document.getElementById('lf_s').value)||1;
   var d=document.getElementById('lf_d').value||today();
@@ -1404,17 +1559,17 @@ async function saveLift(){
   var newE=e1RM(w,reps);
   var newRank=bw&&isRanked(k)?rankOf(k,Math.max(newE,prevBest?prevBest.e1:0),bw):null;
   if(newRank&&prevRank&&newRank.idx>prevRank.idx){
-    offToast(r,'\uD83C\uDFC5 '+rankName(newRank.rank)+' '+['I','II','III'][newRank.tier-1]+'! +'+pts+' XP');
+    offToast(r,rankName(newRank.rank)+' '+['I','II','III'][newRank.tier-1]+'! +'+pts+' XP');
   }else if(!prevBest||newE>prevBest.e1){
-    offToast(r,'\uD83C\uDFC6 '+T('pr')+'! '+newE+'kg \u00B7 +'+pts+' XP');
-  }else offToast(r,'+'+pts+' XP \uD83C\uDFCB\uFE0F');
+    offToast(r,T('pr')+'! '+newE+'kg \u00B7 +'+pts+' XP','trophy');
+  }else offToast(r,'+'+pts+' XP','barbell');
   checkLevelUp();render();
 }
 function delLift(id){
   confirmBox(T('remove'),T('delset'),T('remove'),async function(){
     var r=await dbDelete('gym_sets',id);
     gymSets=gymSets.filter(function(g){return g.id!==id});
-    saveCache();offToast(r,'\u2705');render();
+    saveCache();offToast(r,'OK','check');render();
   });
 }
 
@@ -1432,37 +1587,37 @@ var RANKS=[
 ];
 /* e1RM as a multiple of body weight, at the START of each rank */
 var LIFTS=[
- {k:'bench',   n:'Bench Press',   ar:'\u0628\u0646\u0634 \u0628\u0631\u0633',        em:'\uD83C\uDFCB\uFE0F', g:'push', std:[0.25,0.50,0.75,1.00,1.25,1.50,1.75,2.00,2.25]},
- {k:'squat',   n:'Squat',         ar:'\u0633\u0643\u0648\u0627\u062A',                em:'\uD83E\uDDB5', g:'legs', std:[0.50,0.75,1.25,1.50,1.75,2.00,2.25,2.50,2.75]},
- {k:'deadlift',n:'Deadlift',      ar:'\u062F\u064A\u062F \u0644\u064A\u0641\u062A',    em:'\u26D3\uFE0F', g:'pull', std:[0.50,1.00,1.50,1.75,2.00,2.25,2.50,2.75,3.00]},
- {k:'ohp',     n:'Overhead Press',ar:'\u0636\u063A\u0637 \u0643\u062A\u0641',          em:'\uD83D\uDCAA', g:'push', std:[0.20,0.35,0.50,0.65,0.80,0.95,1.10,1.25,1.40]},
- {k:'row',     n:'Barbell Row',   ar:'\u062A\u062C\u062F\u064A\u0641',                em:'\uD83D\uDEA3', g:'pull', std:[0.30,0.50,0.75,1.00,1.20,1.40,1.60,1.80,2.00]}
+ {k:'bench',   n:'Bench Press',   ar:'\u0628\u0646\u0634 \u0628\u0631\u0633',        ic:'bench', g:'push', std:[0.25,0.50,0.75,1.00,1.25,1.50,1.75,2.00,2.25]},
+ {k:'squat',   n:'Squat',         ar:'\u0633\u0643\u0648\u0627\u062A',                ic:'squat', g:'legs', std:[0.50,0.75,1.25,1.50,1.75,2.00,2.25,2.50,2.75]},
+ {k:'deadlift',n:'Deadlift',      ar:'\u062F\u064A\u062F \u0644\u064A\u0641\u062A',    ic:'deadlift', g:'pull', std:[0.50,1.00,1.50,1.75,2.00,2.25,2.50,2.75,3.00]},
+ {k:'ohp',     n:'Overhead Press',ar:'\u0636\u063A\u0637 \u0643\u062A\u0641',          ic:'ohp', g:'push', std:[0.20,0.35,0.50,0.65,0.80,0.95,1.10,1.25,1.40]},
+ {k:'row',     n:'Barbell Row',   ar:'\u062A\u062C\u062F\u064A\u0641',                ic:'rowlift', g:'pull', std:[0.30,0.50,0.75,1.00,1.20,1.40,1.60,1.80,2.00]}
 ];
 /* tracked but not ranked - machines and cables don't map to bodyweight standards */
 var ACCESSORIES=[
- {k:'incline_machine',n:'Incline Bench Press (Machine)',ar:'\u0628\u0646\u0634 \u0639\u0644\u0648\u064A \u062C\u0647\u0627\u0632',em:'\uD83C\uDFCB\uFE0F',g:'push'},
- {k:'fly_cable',      n:'Chest Fly (Cable)',           ar:'\u062A\u0641\u062A\u064A\u062D \u0635\u062F\u0631 \u0643\u064A\u0628\u0644',em:'\uD83E\uDD41',g:'push'},
- {k:'lateral_raise',  n:'Lateral Raise',                ar:'\u0631\u0641\u0639 \u062C\u0627\u0646\u0628\u064A',em:'\uD83E\uDD3C',g:'push'},
- {k:'front_raise',    n:'Front Raise',                  ar:'\u0631\u0641\u0639 \u0623\u0645\u0627\u0645\u064A',em:'\uD83D\uDD3C',g:'push'},
- {k:'skullcrusher',   n:'Skull Crushers (Barbell)',     ar:'\u0633\u0643\u0644 \u0643\u0631\u0634\u0631',em:'\u2620\uFE0F',g:'push'},
- {k:'pushdown',       n:'Tricep Pushdown (Cable)',      ar:'\u062A\u0631\u0627\u064A \u0628\u0648\u0634 \u062F\u0627\u0648\u0646',em:'\uD83D\uDD3D',g:'push'},
- {k:'latpulldown',    n:'Lat Pulldown',                 ar:'\u0633\u062D\u0628 \u0623\u0631\u0636\u064A \u0639\u0644\u0648\u064A',em:'\uD83E\uDDD7',g:'pull'},
- {k:'row_cable',      n:'Seated Row (Cable)',           ar:'\u062A\u062C\u062F\u064A\u0641 \u0643\u064A\u0628\u0644',em:'\uD83D\uDEA3',g:'pull'},
- {k:'reverse_fly',    n:'Reverse Fly',                  ar:'\u062A\u0641\u062A\u064A\u062D \u0639\u0643\u0633\u064A',em:'\uD83E\uDD8B',g:'pull'},
- {k:'barbell_curl',   n:'Barbell Curl',                 ar:'\u0628\u0627\u064A \u0628\u0627\u0631',em:'\uD83D\uDCAA',g:'pull'},
- {k:'hammer_curl',    n:'Dumbbell Hammer Curl',         ar:'\u0647\u0627\u0645\u0631 \u0643\u064A\u0631\u0644',em:'\uD83D\uDD28',g:'pull'},
- {k:'wrist_curl',     n:'Forearm Barbell Curl',         ar:'\u0633\u0648\u0627\u0639\u062F \u0628\u0627\u0631',em:'\uD83E\uDD1A',g:'pull'},
- {k:'rdl',            n:'Romanian Deadlift',            ar:'\u0631\u0648\u0645\u0627\u0646\u064A \u062F\u064A\u062F\u0644\u064A\u0641\u062A',em:'\uD83C\uDFCB\uFE0F',g:'legs'},
- {k:'leg_ext',        n:'Leg Extension',                ar:'\u062A\u0645\u062F\u064A\u062F \u0627\u0644\u0633\u0627\u0642',em:'\uD83E\uDDB5',g:'legs'},
- {k:'leg_curl',       n:'Leg Curl',                     ar:'\u062B\u0646\u064A \u0627\u0644\u0633\u0627\u0642',em:'\uD83E\uDDB5',g:'legs'},
- {k:'calf_standing',  n:'Standing Calf Raise',          ar:'\u0633\u0645\u0627\u0646\u0629 \u0648\u0642\u0648\u0641',em:'\uD83E\uDDB6',g:'legs'},
- {k:'calf_seated',    n:'Seated Calf Raise',            ar:'\u0633\u0645\u0627\u0646\u0629 \u062C\u0644\u0648\u0633',em:'\uD83E\uDDB6',g:'legs'}
+ {k:'incline_machine',n:'Incline Bench Press (Machine)',ar:'\u0628\u0646\u0634 \u0639\u0644\u0648\u064A \u062C\u0647\u0627\u0632',ic:'push',g:'push'},
+ {k:'fly_cable',      n:'Chest Fly (Cable)',           ar:'\u062A\u0641\u062A\u064A\u062D \u0635\u062F\u0631 \u0643\u064A\u0628\u0644',ic:'push',g:'push'},
+ {k:'lateral_raise',  n:'Lateral Raise',                ar:'\u0631\u0641\u0639 \u062C\u0627\u0646\u0628\u064A',ic:'push',g:'push'},
+ {k:'front_raise',    n:'Front Raise',                  ar:'\u0631\u0641\u0639 \u0623\u0645\u0627\u0645\u064A',ic:'push',g:'push'},
+ {k:'skullcrusher',   n:'Skull Crushers (Barbell)',     ar:'\u0633\u0643\u0644 \u0643\u0631\u0634\u0631',ic:'push',g:'push'},
+ {k:'pushdown',       n:'Tricep Pushdown (Cable)',      ar:'\u062A\u0631\u0627\u064A \u0628\u0648\u0634 \u062F\u0627\u0648\u0646',ic:'push',g:'push'},
+ {k:'latpulldown',    n:'Lat Pulldown',                 ar:'\u0633\u062D\u0628 \u0623\u0631\u0636\u064A \u0639\u0644\u0648\u064A',ic:'pull',g:'pull'},
+ {k:'row_cable',      n:'Seated Row (Cable)',           ar:'\u062A\u062C\u062F\u064A\u0641 \u0643\u064A\u0628\u0644',ic:'pull',g:'pull'},
+ {k:'reverse_fly',    n:'Reverse Fly',                  ar:'\u062A\u0641\u062A\u064A\u062D \u0639\u0643\u0633\u064A',ic:'pull',g:'pull'},
+ {k:'barbell_curl',   n:'Barbell Curl',                 ar:'\u0628\u0627\u064A \u0628\u0627\u0631',ic:'pull',g:'pull'},
+ {k:'hammer_curl',    n:'Dumbbell Hammer Curl',         ar:'\u0647\u0627\u0645\u0631 \u0643\u064A\u0631\u0644',ic:'pull',g:'pull'},
+ {k:'wrist_curl',     n:'Forearm Barbell Curl',         ar:'\u0633\u0648\u0627\u0639\u062F \u0628\u0627\u0631',ic:'pull',g:'pull'},
+ {k:'rdl',            n:'Romanian Deadlift',            ar:'\u0631\u0648\u0645\u0627\u0646\u064A \u062F\u064A\u062F\u0644\u064A\u0641\u062A',ic:'foot',g:'legs'},
+ {k:'leg_ext',        n:'Leg Extension',                ar:'\u062A\u0645\u062F\u064A\u062F \u0627\u0644\u0633\u0627\u0642',ic:'foot',g:'legs'},
+ {k:'leg_curl',       n:'Leg Curl',                     ar:'\u062B\u0646\u064A \u0627\u0644\u0633\u0627\u0642',ic:'foot',g:'legs'},
+ {k:'calf_standing',  n:'Standing Calf Raise',          ar:'\u0633\u0645\u0627\u0646\u0629 \u0648\u0642\u0648\u0641',ic:'foot',g:'legs'},
+ {k:'calf_seated',    n:'Seated Calf Raise',            ar:'\u0633\u0645\u0627\u0646\u0629 \u062C\u0644\u0648\u0633',ic:'foot',g:'legs'}
 ];
 function allLifts(){return LIFTS.concat(ACCESSORIES)}
 function liftDef(k){return allLifts().find(function(x){return x.k===k})}
 function isRanked(k){return LIFTS.some(function(x){return x.k===k})}
 function liftName(k){var l=liftDef(k);return l?(lang==='ar'?l.ar:l.n):k}
-function liftEmoji(k){var l=liftDef(k);return l?l.em:'\uD83C\uDFCB\uFE0F'}
+function liftIcon(k){var l=liftDef(k);return px(l?l.ic:'barbell',18)}
 function rankName(i){return T('rk_'+RANKS[i].k)}
 /* Epley, capped: singles stay honest, high reps don't inflate */
 function e1RM(w,reps){
@@ -1758,12 +1913,12 @@ async function applyAbsent(sid,ds,hrs){
   if(rec){
     var r=await dbDelete('attendance',rec.id);
     absences=absences.filter(function(a){return a.id!==rec.id});
-    saveCache();offToast(r,'\u2705 '+T('markedpresent'));
+    saveCache();offToast(r,T('markedpresent'),'check');
   }else{
     var r2=await dbInsert('attendance',[{session_id:sid,class_date:ds,hours:hrs}]);
     absences=absences.concat(r2.data);
     saveCache();
-    offToast(r2,'\u274C '+T('markedabsent')+(hrs?' \u00B7 '+T('countedas',{n:hrs}):''));
+    offToast(r2,T('markedabsent')+(hrs?' \u00B7 '+T('countedas',{n:hrs}):''));
   }
   render();
 }
@@ -1772,7 +1927,7 @@ function actName(a){return T(a)||a}
 
 /* ---------- course events (deadlines, exams, grades) ---------- */
 var EKINDS=['homework','quiz','exam','project','other'];
-var EEMO={homework:'\u270F\uFE0F',quiz:'\u2753',exam:'\uD83D\uDCDD',project:'\uD83D\uDCC1',other:'\uD83D\uDCCC'};
+var EEMO={homework:'pencil',quiz:'quest',exam:'exam',project:'folder',other:'pushpin'};
 var EHUE={homework:'#4f9cf9',quiz:'#fbbf24',exam:'#ff6b4a',project:'#a78bfa',other:'#8494ad'};
 function eventsFor(cid){
   return cevents.filter(function(e){return e.course_id===cid})
@@ -1786,7 +1941,7 @@ function upcomingEvents(days){
 }
 function dueLabel(e){
   var n=daysTo(e.due_date);
-  if(e.done)return '\u2705';
+  if(e.done)return px('check',13);
   if(n<0)return T('overdue');
   if(n===0)return T('dueintoday');
   if(n===1)return T('duetomorrow');
@@ -1822,7 +1977,7 @@ function courseGrade(cid){
 async function saveEvent(){
   var cid=document.getElementById('ev_course').value;
   var d=document.getElementById('ev_date').value;
-  if(!cid||!d){toast('\u26A0');return}
+  if(!cid||!d){toast('!','warn');return}
   var row={course_id:cid,kind:document.getElementById('ev_kind').value,
     title:document.getElementById('ev_title').value.trim(),
     due_date:d,due_time:document.getElementById('ev_time').value||null,
@@ -1833,25 +1988,25 @@ async function saveEvent(){
     var r=await dbUpdate('course_events',id,row);
     var i=cevents.findIndex(function(x){return x.id===id});
     if(i>=0)cevents[i]=Object.assign({},cevents[i],row);
-    offToast(r,'\u2705');
+    offToast(r,'OK','check');
   }else{
     var r2=await dbInsert('course_events',[row]);
     cevents=cevents.concat(r2.data);
-    offToast(r2,'\u2705 '+T('added'));
+    offToast(r,T('added'),'check');
   }
   saveCache();render();
 }
 function openEvent(id,cid){
   var e=id?cevents.find(function(x){return x.id===id}):null;
   var list=courses.slice().sort(function(a,b){return a.sort-b.sort});
-  var h='<h2>'+(e?EEMO[e.kind]+' '+T('events'):'\u2795 '+T('addevent'))+'</h2>';
+  var h='<h2>'+(e?px(EEMO[e.kind],16)+' '+T('events'):px('plus',16)+' '+T('addevent'))+'</h2>';
   h+='<input type="hidden" id="ev_id" value="'+(e?e.id:'')+'">';
   h+='<label>'+T('courses')+'</label><select id="ev_course">'+list.map(function(c){
     var sel=(e?e.course_id===c.id:cid===c.id)?' selected':'';
     return '<option value="'+c.id+'"'+sel+'>'+esc(c.code)+' \u00B7 '+esc(c.name)+'</option>';
   }).join('')+'</select>';
   h+='<label>'+T('type')+'</label><select id="ev_kind">'+EKINDS.map(function(k){
-    return '<option value="'+k+'"'+(e&&e.kind===k?' selected':'')+'>'+EEMO[k]+' '+T(k)+'</option>';
+    return '<option value="'+k+'"'+(e&&e.kind===k?' selected':'')+'>'+T(k)+'</option>';
   }).join('')+'</select>';
   h+='<label>'+T('eventtitle')+'</label><input id="ev_title" value="'+esc(e?e.title:'')+'" placeholder="'+T('eventtitle')+'">';
   h+='<div class="frow"><div><label>'+T('duedate')+'</label><input id="ev_date" type="date" value="'+(e?e.due_date:today())+'"></div>'+
@@ -1867,14 +2022,14 @@ function delEvent(id){
   confirmBox(T('remove'),T('deleteev'),T('remove'),async function(){
     var r=await dbDelete('course_events',id);
     cevents=cevents.filter(function(x){return x.id!==id});
-    saveCache();offToast(r,'\u2705');render();
+    saveCache();offToast(r,'OK','check');render();
   });
 }
 function openScore(id){
   var e=cevents.find(function(x){return x.id===id});if(!e)return;
   var c=courses.find(function(x){return x.id===e.course_id});
   var h='<h2>'+T('addscore')+'</h2>';
-  h+='<p class="confmsg">'+EEMO[e.kind]+' '+esc(e.title||T(e.kind))+'<br><span style="color:var(--dim)">'+esc(c?c.code:'')+'</span></p>';
+  h+='<p class="confmsg">'+px(EEMO[e.kind],14)+' '+esc(e.title||T(e.kind))+'<br><span style="color:var(--dim)">'+esc(c?c.code:'')+'</span></p>';
   h+='<div class="frow"><div><label>'+T('score')+'</label><input id="sc_v" type="number" step="0.5" value="'+(e.score!=null?e.score:'')+'"></div>'+
   '<div><label>'+T('maxscore')+'</label><input id="sc_m" type="number" step="0.5" value="'+(e.max_score!=null?e.max_score:'')+'"></div></div>';
   h+='<div class="mrow"><button class="no" onclick="closeModal()">'+T('cancel')+'</button>'+
@@ -1889,12 +2044,12 @@ async function saveScore(id){
   var r=await dbUpdate('course_events',id,row);
   var i=cevents.findIndex(function(x){return x.id===id});
   if(i>=0)cevents[i]=Object.assign({},cevents[i],row);
-  saveCache();offToast(r,'\u2705');render();
+  saveCache();offToast(r,'OK','check');render();
 }
 async function toggleEventDone(id){
   var e=cevents.find(function(x){return x.id===id});if(!e)return;
   var r=await dbUpdate('course_events',id,{done:!e.done});
-  e.done=!e.done;saveCache();offToast(r,e.done?'\u2705':'\u21A9');render();
+  e.done=!e.done;saveCache();offToast(r,e.done?T('done'):T('backplan'),e.done?'check':undefined);render();
 }
 function openRoom(sid){
   var ses=csessions.find(function(x){return x.id===sid});if(!ses)return;
@@ -1912,7 +2067,7 @@ async function saveRoom(sid){
   var r=await dbUpdate('course_sessions',sid,{room:v});
   var i=csessions.findIndex(function(x){return x.id===sid});
   if(i>=0)csessions[i].room=v;
-  saveCache();offToast(r,'\u2705');render();
+  saveCache();offToast(r,'OK','check');render();
 }
 
 function openCourseView(cid){openCourse=cid;renderStudy();window.scrollTo({top:0})}
@@ -1921,7 +2076,7 @@ function evRowHtml(e,showCourse){
   var c=courses.find(function(x){return x.id===e.course_id});
   var col=EHUE[e.kind]||'#8494ad';
   var h='<div class="evrow'+(e.done?' done':'')+'" style="border-inline-start-color:'+col+'">';
-  h+='<span class="ee" onclick="toggleEventDone(\''+e.id+'\')">'+(e.done?'\u2705':EEMO[e.kind])+'</span>';
+  h+='<span class="ee" onclick="toggleEventDone(\''+e.id+'\')">'+(e.done?px('check',15):px(EEMO[e.kind],15))+'</span>';
   h+='<div class="ei" onclick="openEvent(\''+e.id+'\')">';
   h+='<div class="et">'+esc(e.title||T(e.kind))+'</div>';
   h+='<div class="em">'+(showCourse&&c?esc(c.code)+' \u00B7 ':'')+T(e.kind)+
@@ -1931,7 +2086,7 @@ function evRowHtml(e,showCourse){
   h+='<div class="ed" style="color:'+dueColor(e)+'">'+dueLabel(e)+'</div>';
   var has=e.score!=null;
   h+='<button class="sc'+(has?' has':'')+'" onclick="openScore(\''+e.id+'\')">'+
-     (has?e.score+(e.max_score?'/'+e.max_score:''):'\uD83D\uDCCA')+'</button>';
+     (has?e.score+(e.max_score?'/'+e.max_score:''):px('stats',12))+'</button>';
   h+='</div>';
   return h;
 }
@@ -1940,8 +2095,8 @@ function eventsHtml(){
   var up=cevents.filter(function(e){return !e.done&&e.due_date>=td}).sort(function(a,b){return a.due_date<b.due_date?-1:1});
   var od=cevents.filter(function(e){return !e.done&&e.due_date<td}).sort(function(a,b){return a.due_date>b.due_date?-1:1});
   var pa=cevents.filter(function(e){return e.done}).sort(function(a,b){return a.due_date>b.due_date?-1:1}).slice(0,12);
-  var h='<div class="mrow" style="margin-bottom:10px"><button class="ok" onclick="openEvent(null,null)">\u2795 '+T('addevent')+'</button></div>';
-  if(od.length){h+='<h3 style="font-size:12px;color:#ff6b4a;margin:10px 0 6px">\u26A0 '+T('overdue')+'</h3>';h+=od.map(function(e){return evRowHtml(e,true)}).join('')}
+  var h='<div class="mrow" style="margin-bottom:10px"><button class="ok" onclick="openEvent(null,null)">'+px('plus',14)+' '+T('addevent')+'</button></div>';
+  if(od.length){h+='<h3 style="font-size:12px;color:var(--gym);margin:10px 0 6px">'+px('warn',14)+' '+T('overdue')+'</h3>';h+=od.map(function(e){return evRowHtml(e,true)}).join('')}
   h+='<h3 style="font-size:12px;color:var(--dim);margin:12px 0 6px">'+T('upcomingev')+'</h3>';
   h+=up.length?up.map(function(e){return evRowHtml(e,true)}).join(''):'<p class="muted">'+T('noevents')+'</p>';
   if(pa.length){h+='<h3 style="font-size:12px;color:var(--dim);margin:14px 0 6px">'+T('pastev')+'</h3>';h+=pa.map(function(e){return evRowHtml(e,true)}).join('')}
@@ -1981,11 +2136,11 @@ function courseDetailHtml(cid){
   courseSessions(cid).sort(function(a,b){return a.weekday-b.weekday||toMins(a.start_time)-toMins(b.start_time)}).forEach(function(ses){
     h+='<div class="srow"><div class="si"><b>'+WD[lang][ses.weekday]+'</b> '+fmt12(ses.start_time)+' \u2013 '+fmt12(ses.end_time)+
     '<div class="sm">'+actName(ses.activity)+' \u00B7 '+T('section')+' '+esc(ses.section||'')+'</div></div>'+
-    '<button class="rm'+(ses.room?' set':'')+'" onclick="openRoom(\''+ses.id+'\')">'+(ses.room?'\uD83D\uDCCD '+esc(ses.room):'\uD83D\uDCCD '+T('setroom'))+'</button></div>';
+    '<button class="rm'+(ses.room?' set':'')+'" onclick="openRoom(\''+ses.id+'\')">'+(ses.room?px('pin',12)+' '+esc(ses.room):px('pin',12)+' '+T('setroom'))+'</button></div>';
   });
   h+='<div style="display:flex;justify-content:space-between;align-items:center;margin:14px 0 6px">'+
     '<h3 style="font-size:12px;color:var(--dim);margin:0">'+T('events')+'</h3>'+
-    '<button class="cb" style="border:1px solid var(--line);background:var(--card2);border-radius:8px;padding:6px 10px;font-size:11px;font-weight:700" onclick="openEvent(null,\''+cid+'\')">\u2795 '+T('addevent')+'</button></div>';
+    '<button class="cb" style="border:1px solid var(--line);background:var(--card2);border-radius:8px;padding:6px 10px;font-size:11px;font-weight:700" onclick="openEvent(null,\''+cid+'\')">'+px('plus',14)+' '+T('addevent')+'</button></div>';
   var evs=eventsFor(cid);
   h+=evs.length?evs.map(function(e){return evRowHtml(e,false)}).join(''):'<p class="muted">'+T('noevents')+'</p>';
   return h;
@@ -1996,8 +2151,8 @@ function renderStudy(){
   var el=document.getElementById('studycard');if(!el)return;
   if(tab!=='study'){el.innerHTML='';return}
   if(!courses.length){
-    el.innerHTML='<div class="section"><h2>\uD83C\uDF93 '+T('courses')+'</h2><p class="muted">'+T('emptyday')+'</p>'+
-    '<div class="mrow"><button class="ok" onclick="loadMySchedule()">\u2795 '+T('courses')+'</button></div></div>';
+    el.innerHTML='<div class="section"><h2>'+px('grad',16)+" "+T('courses')+'</h2><p class="muted">'+T('emptyday')+'</p>'+
+    '<div class="mrow"><button class="ok" onclick="loadMySchedule()">'+px('plus',14)+' '+T('courses')+'</button></div></div>';
     return;
   }
   if(openCourse){
@@ -2005,7 +2160,7 @@ function renderStudy(){
     return;
   }
   var a=allStats();
-  var h='<div class="section"><div class="qtop"><h2>\uD83C\uDF93 '+T('attendance')+'</h2>'+
+  var h='<div class="section"><div class="qtop"><h2>'+px('grad',16)+' '+T('attendance')+'</h2>'+
   '<span class="qcount">'+T('weekof',{n:semWeekNum(),t:totalStudyWeeks()})+'</span></div>';
   h+='<div class="recs" style="margin-bottom:12px">'+
   '<div class="rec"><div class="rv" style="color:'+(a.pct>=90?'#34d399':a.pct>=76?'#fbbf24':'#ff6b4a')+'">'+a.pct+'%</div><div class="rl">'+T('present')+' \u00B7 '+T('ofsem')+'</div></div>'+
@@ -2019,15 +2174,15 @@ function renderStudy(){
     h+='</div>';
   }
   var ncr=noClassReason(today()),nx=nextEvent();
-  if(ncr)h+='<div class="crow" style="border-inline-start:3px solid var(--soul);margin-bottom:10px"><div class="cn">\uD83C\uDFD6\uFE0F '+T('noclassday',{r:ncr})+'</div></div>';
+  if(ncr)h+='<div class="crow" style="border-inline-start:3px solid var(--soul);margin-bottom:10px"><div class="cn">'+px('umbrella',15)+' '+T('noclassday',{r:ncr})+'</div></div>';
   else if(nx&&daysTo(nx.start_date)>=0&&daysTo(nx.start_date)<=14)
     h+='<div class="crow" style="border-inline-start:3px solid var(--gold);margin-bottom:10px"><div class="cs"><span>'+T('nextevent')+': '+evTitle(nx)+'</span><span class="warn">'+T('daysleft',{n:daysTo(nx.start_date)})+'</span></div></div>';
   h+='<div class="subtabs">'+
-  '<button class="'+(studyView==='today'?'on':'')+'" onclick="setStudyView(\'today\')">\uD83D\uDCCC '+T('todayclasses')+'</button>'+
-  '<button class="'+(studyView==='courses'?'on':'')+'" onclick="setStudyView(\'courses\')">\uD83D\uDCD6 '+T('courses')+'</button>'+
-  '<button class="'+(studyView==='events'?'on':'')+'" onclick="setStudyView(\'events\')">\u23F0 '+T('events')+'</button>'+
-  '<button class="'+(studyView==='tt'?'on':'')+'" onclick="setStudyView(\'tt\')">\uD83D\uDDD3 '+T('timetable')+'</button>'+
-  '<button class="'+(studyView==='cal'?'on':'')+'" onclick="setStudyView(\'cal\')">\uD83D\uDCC6 '+T('calendar')+'</button>'+
+  '<button class="'+(studyView==='today'?'on':'')+'" onclick="setStudyView(\'today\')">'+px('pushpin',14)+' '+T('todayclasses')+'</button>'+
+  '<button class="'+(studyView==='courses'?'on':'')+'" onclick="setStudyView(\'courses\')">'+px('book',14)+" "+T('courses')+'</button>'+
+  '<button class="'+(studyView==='events'?'on':'')+'" onclick="setStudyView(\'events\')">'+px('clock',14)+" "+T('events')+'</button>'+
+  '<button class="'+(studyView==='tt'?'on':'')+'" onclick="setStudyView(\'tt\')">'+px('cal',14)+" "+T('timetable')+'</button>'+
+  '<button class="'+(studyView==='cal'?'on':'')+'" onclick="setStudyView(\'cal\')">'+px('cal',14)+" "+T('calendar')+'</button>'+
   '</div>';
   if(studyView==='today')h+=todayClassesHtml();
   else if(studyView==='events')h+=eventsHtml();
@@ -2049,7 +2204,7 @@ function classRow(ses,ds,interactive){
   h+='<div class="ct">'+fmt12(ses.start_time)+'<br>'+fmt12(ses.end_time)+'</div>';
   if(interactive){
     var ah=abs?absHours(ses,ds):0;
-    var lbl=abs?('\u274C '+T('absent')+(sessionHours(ses)>1?' \u00B7 '+ah+'h':'')):('\u2705 '+T('present'));
+    var lbl=abs?(px('cross',12)+' '+T('absent')+(sessionHours(ses)>1?' \u00B7 '+ah+'h':'')):(px('check',12)+' '+T('present'));
     if(abs){var ah=absHours(ses,ds);if(sessionHours(ses)>1)lbl+=' <small style="opacity:.85">'+ah+'</small>'}
     h+='<button class="cb'+(abs?' on':'')+'" onclick="toggleAbsent(\''+ses.id+'\',\''+ds+'\')">'+lbl+'</button>';
   }
@@ -2058,14 +2213,14 @@ function classRow(ses,ds,interactive){
 }
 function todayClassesHtml(){
   var ds=today(),r=noClassReason(ds);
-  if(r)return '<div class="crow" style="border-inline-start:3px solid var(--soul)"><div class="cn">\uD83C\uDFD6\uFE0F '+T('noclassday',{r:r})+'</div></div>';
+  if(r)return '<div class="crow" style="border-inline-start:3px solid var(--soul)"><div class="cn">'+px('umbrella',15)+' '+T('noclassday',{r:r})+'</div></div>';
   var list=sessionsOn(ds);
   if(!list.length)return '<p class="muted">'+T('noclasses')+'</p>';
   return list.map(function(ses){return classRow(ses,ds,true)}).join('');
 }
 function coursesHtml(){
   var h='';
-  if(coursesIncomplete())h+='<div class="crow" style="border-inline-start:3px solid #fbbf24"><div class="cs"><span class="warn">\u26A0 '+T('missingcourses')+'</span>'+
+  if(coursesIncomplete())h+='<div class="crow" style="border-inline-start:3px solid #fbbf24"><div class="cs"><span class="warn">'+px('warn',13)+' '+T('missingcourses')+'</span>'+
   '<button class="cb" onclick="repairCourses()">'+T('repair')+'</button></div></div>';
   courses.slice().sort(function(a,b){return a.sort-b.sort}).forEach(function(c){
     var st=courseStats(c.id);
@@ -2075,9 +2230,9 @@ function coursesHtml(){
     h+='<div class="cbar"><div style="width:'+Math.min(100,Math.round(st.absent/(st.limit||1)*100))+'%;background:'+col+'"></div></div>';
     var g=courseGrade(c.id),ev=eventsFor(c.id).filter(function(e){return !e.done&&e.due_date>=today()}).length;
     h+='<div class="cs"><span>'+T(c.kind)+' \u00B7 '+st.absent+'/'+st.total+' '+T('hours')+
-      (g?' \u00B7 \uD83D\uDCCA '+g.earned+'/100':'')+(ev?' \u00B7 \u23F0 '+ev:'')+'</span>';
+      (g?' \u00B7 '+px('stats',11)+' '+g.earned+'/100':'')+(ev?' \u00B7 '+px('clock',11)+' '+ev:'')+'</span>';
     h+='<span class="'+(st.risk==='over'?'bad':st.risk==='near'?'warn':'')+'">'+
-      (st.risk==='over'?'\u26A0 '+T('denied'):T('canmiss',{n:st.left})+' \u00B7 '+T('limitlbl',{n:st.limit}))+'</span></div>';
+      (st.risk==='over'?px('warn',12)+' '+T('denied'):T('canmiss',{n:st.left})+' \u00B7 '+T('limitlbl',{n:st.limit}))+'</span></div>';
     h+='</div>';
   });
   return h;
@@ -2100,10 +2255,10 @@ function timetableHtml(){
     var inSem=ds>=semStart()&&ds<=studyEnd();
     h+='<div class="ttday'+(isT?' today':'')+'">';
     h+='<div class="tth"><b>'+WD[lang][d]+'</b><span>'+dt.getDate()+' '+dt.toLocaleDateString(locale(),{month:'short'})+'</span>'+
-      (isT?'<span style="color:var(--gold)">\u2B50</span>':'')+
+      (isT?px('star',13):'')+
       '<span class="cnt">'+(!inSem||reason?'':list.length+' \u00B7 '+list.reduce(function(a,x){return a+sessionHours(x)},0)+' '+T('hours'))+'</span></div>';
     if(!inSem)h+='<div class="ttoffday" style="background:rgba(132,148,173,.10);color:var(--dim)">\u2014</div>';
-    else if(reason)h+='<div class="ttoffday">\uD83C\uDFD6\uFE0F '+esc(reason)+'</div>';
+    else if(reason)h+='<div class="ttoffday">'+px('umbrella',14)+' '+esc(reason)+'</div>';
     else if(!list.length)h+='<div class="empty" style="font-size:12px;color:var(--dim);text-align:center;padding:6px">'+T('noclasses')+'</div>';
     else list.forEach(function(ses){h+=classRow(ses,ds,true)});
     h+='</div>';
@@ -2122,7 +2277,7 @@ function calendarHtml(){
     var col=ev.kind==='exams'?'#ff6b4a':ev.no_class?'#a78bfa':ev.kind==='deadline'?'#fbbf24':'var(--study)';
     h+='<div class="crow" style="border-inline-start:3px solid '+col+';'+(past?'opacity:.45':'')+(now?';box-shadow:0 0 0 1px '+col:'')+'">';
     h+='<div class="ch"><span class="cn">'+evTitle(ev)+'</span><span class="cp" style="font-size:12px;color:'+col+'">'+
-      (now?'\u2726 '+T('todayis'):n>0?T('daysleft',{n:n}):T('daysago',{n:-n}))+'</span></div>';
+      (now?px('star',11)+' '+T('todayis'):n>0?T('daysleft',{n:n}):T('daysago',{n:-n}))+'</span></div>';
     h+='<div class="cs"><span>'+r.a+(ev.end_date&&ev.end_date!==ev.start_date?' \u2192 '+ev.end_date:'')+'</span>'+
       '<span>'+new Date(r.a+'T00:00:00').toLocaleDateString(locale(),{weekday:'long'})+'</span></div>';
     h+='</div>';
@@ -2133,14 +2288,14 @@ async function repairCourses(){
   toast('\u2026');
   var n=await seedCourses();
   await seedCalendar();
-  toast(n?'\u2705 +'+n:'\u2705');
+  toast(n?'+'+n:'OK','check');
   render();
 }
 async function loadMySchedule(){
   toast('...');
   await seedCourses();
   if(!acadEvents.length)await seedCalendar();
-  toast('\uD83C\uDF93 '+T('added'));
+  toast(T('added'),'grad');
   render();
 }
 /* ---------- pillar pages ---------- */
@@ -2155,7 +2310,7 @@ async function quickLog(tid){
   await logType(t,null);
 }
 function askSteps(t){
-  var h='<h2>\uD83D\uDC5F '+T('howmanysteps')+'</h2>';
+  var h='<h2>'+px('shoe',16)+' '+T('howmanysteps')+'</h2>';
   h+='<label>'+T('steps')+'</label><input id="st_v" type="number" inputmode="numeric" placeholder="'+stepsGoal()+'">';
   h+='<div class="stchips">'+[2000,4000,6000,8000,10000].map(function(n){
     return '<button onclick="document.getElementById(\'st_v\').value='+n+'">'+n.toLocaleString()+'</button>';
@@ -2177,11 +2332,11 @@ async function logType(t,steps){
   var before=stepsOn(ds);
   var r=await dbInsert('activity_entries',[row]);
   entries=r.data.concat(entries);saveCache();
-  offToast(r,'+'+t.points+' XP '+PIL[t.pillar].em+' '+t.name+(steps?' \u00B7 '+steps.toLocaleString()+' \uD83D\uDC5F':''));
+  offToast(r,'+'+t.points+' XP '+t.name+(steps?' \u00B7 '+steps.toLocaleString():''));
   if(steps){
     var g=stepsGoal();
     if(before<g&&stepsOn(ds)>=g&&await awardOnce('Steps goal',10,ds,'gym')){
-      toast('\uD83D\uDC5F '+T('stepsgoalhit')+' +10 XP');
+      toast(T('stepsgoalhit')+' +10 XP','shoe');
     }
   }
   checkLevelUp();render();
@@ -2192,16 +2347,16 @@ function renderPillar(){
   var p=pFilter,ws=weekStart(new Date());
   var pxp=pillarXP(p),pl=lvlOf(pxp),base=xpForLvl(pl),next=xpForLvl(pl+1);
   var g=cfg.goals[p]||0,dn=pillarDaysInWeek(p,ws),wx=weekXP(ws,p);
-  var h='<div class="phero" style="border-color:'+PIL[p].hex+'55"><span class="pe">'+PIL[p].em+'</span>'+
+  var h='<div class="phero" style="border-color:'+PIL[p].hex+'55"><span class="pe">'+px(PIL[p].ic,44)+'</span>'+
   '<h2>'+pnm(p)+'</h2><div class="sub">'+T('lvl')+' '+pl+' \u00B7 '+lvlTitle(pl)+'</div>'+
   '<div class="pstats">'+
   '<div><span class="v" style="color:'+PIL[p].hex+'">'+pxp+'</span><span class="k">'+T('totalxp')+'</span></div>'+
-  '<div><span class="v">\uD83D\uDD25 '+streak(p)+'</span><span class="k">'+T('streak')+'</span></div>'+
+  '<div><span class="v">'+px('fire',13)+' '+streak(p)+'</span><span class="k">'+T('streak')+'</span></div>'+
   '<div><span class="v">'+wx+'</span><span class="k">'+T('thisweek')+'</span></div>'+
   '</div>';
   if(g){
     h+='<div class="pgoal"><div style="width:'+Math.min(100,Math.round(dn/g*100))+'%;background:'+PIL[p].hex+'"></div></div>'+
-    '<div class="pgoaltx">'+T('weekgoals')+': '+dn+'/'+g+(dn>=g?' \u2705 '+T('goalmet'):'')+'</div>';
+    '<div class="pgoaltx">'+T('weekgoals')+': '+dn+'/'+g+(dn>=g?' '+px('check',12)+' '+T('goalmet'):'')+'</div>';
   }else{
     h+='<div class="pgoal"><div style="width:'+Math.min(100,Math.round((pxp-base)/(next-base)*100))+'%;background:'+PIL[p].hex+'"></div></div>'+
     '<div class="pgoaltx">'+(next-pxp)+' XP \u2192 '+T('lvl')+' '+(pl+1)+'</div>';
@@ -2215,18 +2370,18 @@ function renderPillar(){
   h+='</div>';
   if(p==='soul'){
     var td=today();
-    h+='<div class="hcard"><h2>\uD83D\uDD4B '+T('prayercal')+' \u00B7 '+T('today')+'</h2><div class="prayrow">';
+    h+='<div class="hcard"><h2>'+px('kaaba',16)+" "+T('prayercal')+' \u00B7 '+T('today')+'</h2><div class="prayrow">';
     PRAYERS.forEach(function(pr){
       var e=entries.find(function(x){return x.entry_date===td&&x.pillar==='soul'&&x.title===pr[0]&&x.status==='done'});
       var cls='pray'+(e?' done':'');
       var tm=prayerTimes&&prayerTimes[pr[0]]?'<span class="tm">'+fmt12(prayerTimes[pr[0]])+'</span>':'';
-      h+='<button class="'+cls+'" onclick="togglePrayer(\''+pr[0]+'\')">'+(e?'\u2705 ':'')+(lang==='ar'?pr[1]:pr[0])+tm+'</button>';
+      h+='<button class="'+cls+'" onclick="togglePrayer(\''+pr[0]+'\')">'+(e?px('check',12)+' ':'')+(lang==='ar'?pr[1]:pr[0])+tm+'</button>';
     });
     h+='</div>';
     var qp=quranPages(),qg=cfg.quran_goal||604;
-    h+='<div class="wmeta" style="margin-top:14px"><span>\uD83D\uDCD6 '+T('quran')+'</span><span><b>'+qp+'</b> / '+qg+' '+T('pages')+'</span></div>';
+    h+='<div class="wmeta" style="margin-top:14px"><span>'+px('book',13)+' '+T('quran')+'</span><span><b>'+qp+'</b> / '+qg+' '+T('pages')+'</span></div>';
     h+='<div class="pgoal"><div style="width:'+Math.min(100,Math.round(qp/qg*100))+'%;background:var(--soul)"></div></div>';
-    h+='<div class="hbtns" style="margin-top:12px"><button onclick="openQuran()">\uD83D\uDCD6 '+T('logread')+'</button></div></div>';
+    h+='<div class="hbtns" style="margin-top:12px"><button onclick="openQuran()">'+px('book',14)+' '+T('logread')+'</button></div></div>';
   }
   el.innerHTML=h;
 }
@@ -2258,7 +2413,7 @@ function checkLevelUp(){
 function showLevelUp(l){
   var o=document.getElementById('lvlup');
   var h='<div class="lt">'+(lang==='ar'?'\u0645\u0633\u062A\u0648\u0649 \u062C\u062F\u064A\u062F':'LEVEL UP')+'</div><div class="ln">LV '+l+'</div><div class="lr">'+lvlTitle(l)+'</div><button onclick="document.getElementById(\'lvlup\').classList.add(\'hidden\')">'+(lang==='ar'?'\u0648\u0627\u0635\u0644':'Keep Going')+'</button>';
-  var em=['\u2B50','\uD83C\uDF89','\u2728','\uD83D\uDD25','\uD83C\uDFC6'];
+  var em=[px('star',18),px('party',18),px('star2',18),px('fire',18),px('trophy',18)];
   for(var i=0;i<24;i++)h+='<span class="conf" style="left:'+Math.random()*100+'%;animation-duration:'+(1.6+Math.random()*1.8)+'s;animation-delay:'+Math.random()*.6+'s">'+em[i%5]+'</span>';
   o.innerHTML=h;o.classList.remove('hidden');
 }
@@ -2283,11 +2438,11 @@ function renderQuest(){
   if(tab!=='main')return;
   var td=today();
   var doneP=PKEYS.filter(function(p){return doneEntries().some(function(e){return e.pillar===p&&e.entry_date===td})});
-  var h='<div class="quest"><div class="qtop"><h2>\u2694\uFE0F '+T('quest')+'</h2><span class="qcount">'+doneP.length+'/4 '+T('pillars')+'</span></div>';
+  var h='<div class="quest"><div class="qtop"><h2>'+px('target',16)+" "+T('quest')+'</h2><span class="qcount">'+doneP.length+'/4 '+T('pillars')+'</span></div>';
   h+='<div class="qchips">';
   PKEYS.forEach(function(p){
     var on=doneP.indexOf(p)>=0;
-    h+='<div class="qchip'+(on?' done':'')+'"'+(on?' style="border-color:'+PIL[p].hex+'"':'')+'><span class="qe">'+PIL[p].em+'</span>'+pnm(p)+'</div>';
+    h+='<div class="qchip'+(on?' done':'')+'"'+(on?' style="border-color:'+PIL[p].hex+'"':'')+'><span class="qe">'+px(PIL[p].ic,20)+'</span>'+pnm(p)+'</div>';
   });
   h+='</div><div class="qbar"><div style="width:'+(doneP.length*25)+'%"></div></div>';
   var np=nextPrayer();
@@ -2295,7 +2450,7 @@ function renderQuest(){
     var ai=PRAYERS.findIndex(function(x){return x[0]===np.next.name});
     var nm=lang==='ar'?PRAYERS[ai][1]:np.next.name;
     var hh=Math.floor(np.next.mins/60),mm=np.next.mins%60;
-    h+='<div class="nextpray">\uD83D\uDD4B '+T('nextpray',{p:nm,t:(hh?hh+'h ':'')+mm+'m'})+'</div>';
+    h+='<div class="nextpray">'+px('kaaba',14)+' '+T('nextpray',{p:nm,t:(hh?hh+'h ':'')+mm+'m'})+'</div>';
   }
   h+='<div class="prayrow">';
   PRAYERS.forEach(function(pr){
@@ -2307,7 +2462,7 @@ function renderQuest(){
       if(toMins(prayerTimes[pr[0]])>minsNow()&&!e)cls+=' future';
       if(np&&np.cur===pr[0]&&!e)cls+=' now';
     }
-    h+='<button class="'+cls+'" onclick="togglePrayer(\''+pr[0]+'\')">'+(e?'\u2705 ':'')+(lang==='ar'?pr[1]:pr[0])+(lang==='ar'?'':'<small>'+pr[1]+'</small>')+tm+'</button>';
+    h+='<button class="'+cls+'" onclick="togglePrayer(\''+pr[0]+'\')">'+(e?px('check',12)+' ':'')+(lang==='ar'?pr[1]:pr[0])+(lang==='ar'?'':'<small>'+pr[1]+'</small>')+tm+'</button>';
   });
   h+='</div></div>';
   document.getElementById('questcard').innerHTML=h;
@@ -2315,11 +2470,11 @@ function renderQuest(){
 function renderGoals(){
   if(tab!=='main')return;
   var ws=weekStart(new Date());
-  var h='<div class="section"><h2>\uD83C\uDFAF '+T('weekgoals')+'</h2>';
+  var h='<div class="section"><h2>'+px('target',16)+" "+T('weekgoals')+'</h2>';
   PKEYS.forEach(function(p){
     var g=cfg.goals[p]||0,d=pillarDaysInWeek(p,ws);
     var pct=g?Math.min(100,Math.round(d/g*100)):0;
-    h+='<div class="goalrow'+(g&&d>=g?' hit':'')+'"><span class="gi">'+PIL[p].em+' '+pnm(p)+'</span><div class="tr"><div style="width:'+pct+'%;background:'+PIL[p].hex+'"></div></div><span class="vl">'+d+'/'+g+(g&&d>=g?' \u2705':'')+'</span></div>';
+    h+='<div class="goalrow'+(g&&d>=g?' hit':'')+'"><span class="gi">'+px(PIL[p].ic,14)+' '+pnm(p)+'</span><div class="tr"><div style="width:'+pct+'%;background:'+PIL[p].hex+'"></div></div><span class="vl">'+d+'/'+g+(g&&d>=g?' '+px('check',12):'')+'</span></div>';
   });
   h+='</div>';
   document.getElementById('goalcard').innerHTML=h;
@@ -2341,9 +2496,9 @@ function setTab(t){
 }
 function renderNav(){
   var el=document.getElementById('mainnav');if(!el)return;
-  var tabs=[['main','\uD83C\uDFE0 '+T('main')],['sched','\uD83D\uDCC5 '+T('sched')],['stats','\uD83D\uDCCA '+T('stats')]];
-  PKEYS.forEach(function(p){tabs.push([p,PIL[p].em+' '+pnm(p)])});
-  tabs.push(['rank','\uD83C\uDFC5 '+T('rank')]);
+  var tabs=[['main',''+px('home',15)+" "+T('main')],['sched',''+px('cal',15)+" "+T('sched')],['stats',''+px('stats',15)+" "+T('stats')]];
+  PKEYS.forEach(function(p){tabs.push([p,px(PIL[p].ic,14)+' '+pnm(p)])});
+  tabs.push(['rank',''+px('medal',15)+" "+T('rank')]);
   el.innerHTML=tabs.map(function(x){
     var on=tab===x[0];
     var st=on&&PKEYS.indexOf(x[0])>=0?'border-color:'+PIL[x[0]].hex+';background:'+PIL[x[0]].hex+'22;color:var(--tx)':'';
@@ -2377,8 +2532,8 @@ function renderSched(){
       var de=entries.filter(function(e){return e.entry_date===ds&&visible(e)});
       h+='<div class="day'+(isT?' today':'')+(isS&&!isT?' sel':'')+'" data-d="'+ds+'" ondragover="dragOver(event,this)" ondragleave="this.classList.remove(\'dragover\')" ondrop="dropOn(event,\''+ds+'\')" onclick="pick(\''+ds+'\')">';
       h+='<div class="dh">'+WD[lang][d.getDay()]+'</div>';
-      h+='<div class="dn">'+d.getDate()+(isT?' \u2B50':'')+'</div>';
-      if(isFrozen(ds))h+='<div class="frz">\u2744\uFE0F</div>';
+      h+='<div class="dn">'+d.getDate()+(isT?' '+px('star',11):'')+'</div>';
+      if(isFrozen(ds))h+='<div class="frz">'+px('snow',13)+'</div>';
       h+='<div class="dots">'+de.map(function(e){return '<span class="dot '+(e.status==='planned'?'planned':'')+'" style="background:'+PIL[e.pillar].hex+'"></span>'}).join('')+'</div>';
       h+='<div class="list">'+(de.length?de.map(entHtml).join(''):'<div class="empty">'+T('emptyday')+'</div>')+'</div>';
       if(isT||isS)h+='<textarea class="dnote" rows="2" placeholder="'+T('noteph')+'" onclick="event.stopPropagation()" onchange="saveNote(\''+ds+'\',this.value)">'+esc(notes[ds]||'')+'</textarea>';
@@ -2397,7 +2552,7 @@ function renderSched(){
     for(dd=1;dd<=days;dd++){
       ds=dstr(new Date(anchor.getFullYear(),anchor.getMonth(),dd));
       pts=dayPoints(ds);al=pts===0?0:Math.min(.85,.15+pts/120);
-      h+='<div class="mc'+(ds===today()?' today':'')+'" style="background:rgba(79,156,249,'+al+')" onclick="openDayModal(\''+ds+'\')">'+dd+(notes[ds]?'<span class="nt">\uD83D\uDCDD</span>':'')+(isFrozen(ds)?'<span class="nt">\u2744\uFE0F</span>':'')+'</div>';
+      h+='<div class="mc'+(ds===today()?' today':'')+'" style="background:rgba(79,156,249,'+al+')" onclick="openDayModal(\''+ds+'\')">'+dd+(notes[ds]?'<span class="nt">'+px('exam',11)+'</span>':'')+(isFrozen(ds)?'<span class="nt">'+px('snow',11)+'</span>':'')+'</div>';
     }
     h+='</div>';
   }else{
@@ -2419,14 +2574,14 @@ function renderSched(){
 }
 function pick(ds){selDay=selDay===ds?null:ds;renderSched()}
 function entHtml(e){
-  var chk=e.status==='done'?'\u2705':'\u2B1C';
+  var chk=e.status==='done'?px('check',16):px('boxempty',16);
   return '<div class="ent '+e.status+'" draggable="true" ondragstart="dragStart(event,\''+e.id+'\')">'+
   '<button onclick="event.stopPropagation();toggleDone(\''+e.id+'\')">'+chk+'</button>'+
-  '<span style="font-size:13px">'+PIL[e.pillar].em+'</span>'+
+  '<span>'+px(PIL[e.pillar].ic,15)+'</span>'+
   '<span class="t" onclick="event.stopPropagation();openEdit(\''+e.id+'\')">'+esc(e.title)+'</span>'+
   '<span class="pt">+'+e.points_awarded+'</span>'+
   '<button onclick="event.stopPropagation();openMove(\''+e.id+'\')">\u21C4</button>'+
-  '<button onclick="event.stopPropagation();delEntry(\''+e.id+'\')">\uD83D\uDDD1</button>'+
+  '<button onclick="event.stopPropagation();delEntry(\''+e.id+'\')" aria-label="delete">'+px('trash',14)+'</button>'+
   '</div>';
 }
 
@@ -2436,7 +2591,7 @@ async function toggleDone(id){
   var ns=e.status==='done'?'planned':'done';
   var r=await dbUpdate('activity_entries',id,{status:ns});
   e.status=ns;saveCache();
-  offToast(r,ns==='done'?'+'+e.points_awarded+' XP '+PIL[e.pillar].em+' '+e.title:'\u2212'+e.points_awarded+' XP \u00B7 '+T('backplan'));
+  offToast(r,ns==='done'?'+'+e.points_awarded+' XP '+e.title:'\u2212'+e.points_awarded+' XP \u00B7 '+T('backplan'));
   checkLevelUp();render();
 }
 function delEntry(id){
@@ -2460,7 +2615,7 @@ async function togglePrayer(name){
     var pts=t?t.points:10;
     var r2=await dbInsert('activity_entries',[{pillar:'soul',title:name,entry_date:td,status:'done',points_awarded:pts,activity_type_id:t?t.id:null}]);
     entries=entries.concat(r2.data);saveCache();
-    offToast(r2,'+'+pts+' XP \uD83D\uDD4C '+name);
+    offToast(r2,'+'+pts+' XP \u00B7 '+name);
   }
   checkLevelUp();render();
 }
@@ -2499,59 +2654,59 @@ function openMove(id){
 
 /* ---------- stats ---------- */
 var BADGES=[
-  {em:'\uD83C\uDF31',en:'First Step',ar:'\u0627\u0644\u062E\u0637\u0648\u0629 \u0627\u0644\u0623\u0648\u0644\u0649',den:'Complete 1 activity',dar:'\u0623\u0643\u0645\u0644 \u0646\u0634\u0627\u0637\u0627\u064B \u0648\u0627\u062D\u062F\u0627\u064B',ck:function(){return doneEntries().length>=1}},
-  {em:'\u26A1',en:'Grinder',ar:'\u0645\u062C\u062A\u0647\u062F',den:'50 activities',dar:'50 \u0646\u0634\u0627\u0637',ck:function(){return doneEntries().length>=50}},
-  {em:'\uD83C\uDFAF',en:'Centurion',ar:'\u0627\u0644\u0645\u0626\u0629',den:'100 activities',dar:'100 \u0646\u0634\u0627\u0637',ck:function(){return doneEntries().length>=100}},
-  {em:'\uD83D\uDCAB',en:'Relentless',ar:'\u0644\u0627 \u064A\u062A\u0648\u0642\u0641',den:'250 activities',dar:'250 \u0646\u0634\u0627\u0637',ck:function(){return doneEntries().length>=250}},
-  {em:'\uD83E\uDD49',en:'Rising',ar:'\u0635\u0627\u0639\u062F',den:'500 XP',dar:'500 \u0646\u0642\u0637\u0629',ck:function(){return totalXP()>=500}},
-  {em:'\uD83E\uDD48',en:'Ascending',ar:'\u0645\u062A\u0642\u062F\u0645',den:'1,000 XP',dar:'1000 \u0646\u0642\u0637\u0629',ck:function(){return totalXP()>=1000}},
-  {em:'\uD83E\uDD47',en:'Elite',ar:'\u0646\u062E\u0628\u0629',den:'5,000 XP',dar:'5000 \u0646\u0642\u0637\u0629',ck:function(){return totalXP()>=5000}},
-  {em:'\uD83C\uDF1F',en:'Perfect Day',ar:'\u064A\u0648\u0645 \u0645\u062B\u0627\u0644\u064A',den:'All 4 pillars in a day',dar:'\u0627\u0644\u0623\u0631\u0643\u0627\u0646 \u0627\u0644\u0623\u0631\u0628\u0639\u0629 \u0641\u064A \u064A\u0648\u0645',ck:function(){return Object.keys(perfectDaySet()).length>=1}},
-  {em:'\uD83D\uDD25',en:'On Fire',ar:'\u0645\u0634\u062A\u0639\u0644',den:'7-day perfect streak',dar:'7 \u0623\u064A\u0627\u0645 \u0645\u062B\u0627\u0644\u064A\u0629',ck:function(){return longestPerfect()>=7}},
-  {em:'\uD83D\uDCC5',en:'Committed',ar:'\u0645\u0644\u062A\u0632\u0645',den:'7-day streak',dar:'\u0633\u0644\u0633\u0644\u0629 7 \u0623\u064A\u0627\u0645',ck:function(){return PKEYS.some(function(p){return longestStreak(p)>=7})}},
-  {em:'\uD83D\uDC8E',en:'Unbreakable',ar:'\u0644\u0627 \u064A\u0646\u0643\u0633\u0631',den:'30-day streak',dar:'\u0633\u0644\u0633\u0644\u0629 30 \u064A\u0648\u0645',ck:function(){return PKEYS.some(function(p){return longestStreak(p)>=30})}},
-  {em:'\u2696\uFE0F',en:'Well-Rounded',ar:'\u0645\u062A\u0648\u0627\u0632\u0646',den:'Level 3 in all pillars',dar:'\u0645\u0633\u062A\u0648\u0649 3 \u0641\u064A \u0643\u0644 \u0631\u0643\u0646',ck:function(){return PKEYS.every(function(p){return lvlOf(pillarXP(p))>=3})}},
-  {em:'\uD83D\uDCD6',en:'Reader',ar:'\u0642\u0627\u0631\u0626',den:'100 Quran pages',dar:'100 \u0635\u0641\u062D\u0629 \u0642\u0631\u0622\u0646',ck:function(){return quranPages()>=100}},
-  {em:'\uD83D\uDD4B',en:'Khatma',ar:'\u062E\u062A\u0645\u0629',den:'Finish the Quran',dar:'\u062E\u062A\u0645 \u0627\u0644\u0642\u0631\u0622\u0646',ck:function(){return quranPages()>=cfg.quran_goal}},
-  {em:'\uD83C\uDFCB\uFE0F',en:'Iron',ar:'\u062D\u062F\u064A\u062F',den:'25 logged exercises',dar:'25 \u062A\u0645\u0631\u064A\u0646 \u0645\u0633\u062C\u0644',ck:function(){return gymSets.length>=25}},
-  {em:'\uD83D\uDCA7',en:'Hydrated',ar:'\u0645\u0631\u0648\u064A',den:'Hit water goal 7 days',dar:'\u0647\u062F\u0641 \u0627\u0644\u0645\u0627\u0621 7 \u0623\u064A\u0627\u0645',ck:function(){return Object.keys(nutri).filter(function(d){return nutri[d].water_ml>=(cfg.water_goal_ml||2000)}).length>=7}},
-  {em:'\uD83E\uDD69',en:'Fueled',ar:'\u0645\u062A\u063A\u0630\u064D',den:'Hit protein goal 7 days',dar:'\u0647\u062F\u0641 \u0627\u0644\u0628\u0631\u0648\u062A\u064A\u0646 7 \u0623\u064A\u0627\u0645',ck:function(){return Object.keys(nutri).filter(function(d){return nutri[d].protein>=(cfg.protein_goal||120)}).length>=7}}
+  {ic:'sprout',en:'First Step',ar:'\u0627\u0644\u062E\u0637\u0648\u0629 \u0627\u0644\u0623\u0648\u0644\u0649',den:'Complete 1 activity',dar:'\u0623\u0643\u0645\u0644 \u0646\u0634\u0627\u0637\u0627\u064B \u0648\u0627\u062D\u062F\u0627\u064B',ck:function(){return doneEntries().length>=1}},
+  {ic:'bolt',en:'Grinder',ar:'\u0645\u062C\u062A\u0647\u062F',den:'50 activities',dar:'50 \u0646\u0634\u0627\u0637',ck:function(){return doneEntries().length>=50}},
+  {ic:'target',en:'Centurion',ar:'\u0627\u0644\u0645\u0626\u0629',den:'100 activities',dar:'100 \u0646\u0634\u0627\u0637',ck:function(){return doneEntries().length>=100}},
+  {ic:'star2',en:'Relentless',ar:'\u0644\u0627 \u064A\u062A\u0648\u0642\u0641',den:'250 activities',dar:'250 \u0646\u0634\u0627\u0637',ck:function(){return doneEntries().length>=250}},
+  {ic:'medal',en:'Rising',ar:'\u0635\u0627\u0639\u062F',den:'500 XP',dar:'500 \u0646\u0642\u0637\u0629',ck:function(){return totalXP()>=500}},
+  {ic:'medal',en:'Ascending',ar:'\u0645\u062A\u0642\u062F\u0645',den:'1,000 XP',dar:'1000 \u0646\u0642\u0637\u0629',ck:function(){return totalXP()>=1000}},
+  {ic:'trophy',en:'Elite',ar:'\u0646\u062E\u0628\u0629',den:'5,000 XP',dar:'5000 \u0646\u0642\u0637\u0629',ck:function(){return totalXP()>=5000}},
+  {ic:'star',en:'Perfect Day',ar:'\u064A\u0648\u0645 \u0645\u062B\u0627\u0644\u064A',den:'All 4 pillars in a day',dar:'\u0627\u0644\u0623\u0631\u0643\u0627\u0646 \u0627\u0644\u0623\u0631\u0628\u0639\u0629 \u0641\u064A \u064A\u0648\u0645',ck:function(){return Object.keys(perfectDaySet()).length>=1}},
+  {ic:'fire',en:'On Fire',ar:'\u0645\u0634\u062A\u0639\u0644',den:'7-day perfect streak',dar:'7 \u0623\u064A\u0627\u0645 \u0645\u062B\u0627\u0644\u064A\u0629',ck:function(){return longestPerfect()>=7}},
+  {ic:'cal',en:'Committed',ar:'\u0645\u0644\u062A\u0632\u0645',den:'7-day streak',dar:'\u0633\u0644\u0633\u0644\u0629 7 \u0623\u064A\u0627\u0645',ck:function(){return PKEYS.some(function(p){return longestStreak(p)>=7})}},
+  {ic:'gem',en:'Unbreakable',ar:'\u0644\u0627 \u064A\u0646\u0643\u0633\u0631',den:'30-day streak',dar:'\u0633\u0644\u0633\u0644\u0629 30 \u064A\u0648\u0645',ck:function(){return PKEYS.some(function(p){return longestStreak(p)>=30})}},
+  {ic:'scale',en:'Well-Rounded',ar:'\u0645\u062A\u0648\u0627\u0632\u0646',den:'Level 3 in all pillars',dar:'\u0645\u0633\u062A\u0648\u0649 3 \u0641\u064A \u0643\u0644 \u0631\u0643\u0646',ck:function(){return PKEYS.every(function(p){return lvlOf(pillarXP(p))>=3})}},
+  {ic:'book',en:'Reader',ar:'\u0642\u0627\u0631\u0626',den:'100 Quran pages',dar:'100 \u0635\u0641\u062D\u0629 \u0642\u0631\u0622\u0646',ck:function(){return quranPages()>=100}},
+  {ic:'kaaba',en:'Khatma',ar:'\u062E\u062A\u0645\u0629',den:'Finish the Quran',dar:'\u062E\u062A\u0645 \u0627\u0644\u0642\u0631\u0622\u0646',ck:function(){return quranPages()>=cfg.quran_goal}},
+  {ic:'barbell',en:'Iron',ar:'\u062D\u062F\u064A\u062F',den:'25 logged exercises',dar:'25 \u062A\u0645\u0631\u064A\u0646 \u0645\u0633\u062C\u0644',ck:function(){return gymSets.length>=25}},
+  {ic:'drop',en:'Hydrated',ar:'\u0645\u0631\u0648\u064A',den:'Hit water goal 7 days',dar:'\u0647\u062F\u0641 \u0627\u0644\u0645\u0627\u0621 7 \u0623\u064A\u0627\u0645',ck:function(){return Object.keys(nutri).filter(function(d){return nutri[d].water_ml>=(cfg.water_goal_ml||2000)}).length>=7}},
+  {ic:'meat',en:'Fueled',ar:'\u0645\u062A\u063A\u0630\u064D',den:'Hit protein goal 7 days',dar:'\u0647\u062F\u0641 \u0627\u0644\u0628\u0631\u0648\u062A\u064A\u0646 7 \u0623\u064A\u0627\u0645',ck:function(){return Object.keys(nutri).filter(function(d){return nutri[d].protein>=(cfg.protein_goal||120)}).length>=7}}
 ];
 function renderStats(){
   var v=document.getElementById('view-stats'),i;
   var xp=totalXP();
   var h='<div class="statrow">';
   h+='<div class="mini"><div class="big" style="color:var(--gold)">'+xp+'</div><div class="lbl">'+T('totalxp')+'</div></div>';
-  h+='<div class="mini"><div class="big">\uD83D\uDD25 '+perfectStreak()+'</div><div class="lbl">'+T('perfstreak')+'</div></div>';
+  h+='<div class="mini"><div class="big">'+px('fire',17)+' '+perfectStreak()+'</div><div class="lbl">'+T('perfstreak')+'</div></div>';
   h+='<div class="mini"><div class="big">'+doneEntries().length+'</div><div class="lbl">'+T('actsdone')+'</div></div>';
   h+='<div class="mini"><div class="big">'+dayPoints(today())+'</div><div class="lbl">'+T('xptoday')+'</div></div>';
   h+='</div>';
   /* season */
   var sxp=seasonXP(),tgt=cfg.season_target||1500,dl=seasonDaysLeft();
-  h+='<div class="section"><h2>\uD83C\uDFC1 '+T('season')+'</h2><canvas id="seasonring" width="180" height="180"></canvas>'+
+  h+='<div class="section"><h2>'+px('flag',16)+" "+T('season')+'</h2><canvas id="seasonring" width="180" height="180"></canvas>'+
   '<p class="muted" style="text-align:center">'+sxp+' / '+tgt+' XP \u00B7 '+dl+' '+T('dayleft')+'</p>'+
   '<div class="mrow"><button class="no" onclick="newSeason()">'+T('startseason')+'</button></div></div>';
   /* pillars */
   h+='<div class="grid4">';
   PKEYS.forEach(function(p){
     var pxp=pillarXP(p),pl=lvlOf(pxp),base=xpForLvl(pl),next=xpForLvl(pl+1);
-    h+='<div class="pcard"><span class="stk">\uD83D\uDD25 '+streak(p)+'</span><div class="em">'+PIL[p].em+'</div><h3>'+pnm(p)+'</h3><div class="plvl">'+T('lvl')+' '+pl+' \u00B7 '+lvlTitle(pl)+'</div><div class="ppts">'+pxp+' XP</div><div class="pbar"><div style="width:'+Math.min(100,Math.round((pxp-base)/(next-base)*100))+'%;background:'+PIL[p].hex+'"></div></div></div>';
+    h+='<div class="pcard"><span class="stk">'+px('fire',13)+' '+streak(p)+'</span><div class="em">'+px(PIL[p].ic,30)+'</div><h3>'+pnm(p)+'</h3><div class="plvl">'+T('lvl')+' '+pl+' \u00B7 '+lvlTitle(pl)+'</div><div class="ppts">'+pxp+' XP</div><div class="pbar"><div style="width:'+Math.min(100,Math.round((pxp-base)/(next-base)*100))+'%;background:'+PIL[p].hex+'"></div></div></div>';
   });
   h+='</div>';
-  h+='<div class="section"><h2>\uD83C\uDFAE '+T('radar')+'</h2><canvas id="radar" width="320" height="290"></canvas></div>';
+  h+='<div class="section"><h2>'+px('pad',16)+" "+T('radar')+'</h2><canvas id="radar" width="320" height="290"></canvas></div>';
   /* recap */
   var ws=weekStart(new Date()),lw=addDays(ws,-7);
   var tw=weekXP(ws),lwx=weekXP(lw);
   var order=PKEYS.slice().sort(function(a,b){return weekXP(ws,b)-weekXP(ws,a)});
-  h+='<div class="section"><h2>\uD83D\uDCCB '+T('recap')+'</h2>';
-  h+='<p class="muted">'+tw+' XP \u00B7 '+T('strongest')+': '+PIL[order[0]].em+' '+pnm(order[0])+' \u00B7 '+T('weakest')+': '+PIL[order[3]].em+' '+pnm(order[3])+'</p>';
+  h+='<div class="section"><h2>'+px('clip',16)+" "+T('recap')+'</h2>';
+  h+='<p class="muted">'+tw+' XP \u00B7 '+T('strongest')+': '+pnm(order[0])+' \u00B7 '+T('weakest')+': '+pnm(order[3])+'</p>';
   h+='<p class="muted" style="margin-top:6px">'+T('vslast')+': <span class="'+(tw>lwx?'up':tw<lwx?'down':'same')+'">'+(tw>=lwx?'\u25B2 +':'\u25BC ')+(tw-lwx)+' XP</span></p></div>';
   /* compare */
-  h+='<div class="section"><h2>\u2696\uFE0F '+T('compare')+'</h2>';
+  h+='<div class="section"><h2>'+px('scale',16)+' '+T('compare')+'</h2>';
   var mxw=Math.max.apply(null,PKEYS.map(function(p){return Math.max(weekXP(ws,p),weekXP(lw,p))}).concat([1]));
   PKEYS.forEach(function(p){
     var a=weekXP(ws,p),b=weekXP(lw,p),d=a-b;
-    h+='<div class="cmp"><span class="nm">'+PIL[p].em+' '+pnm(p)+'</span><span class="tw">'+
+    h+='<div class="cmp"><span class="nm">'+px(PIL[p].ic,14)+' '+pnm(p)+'</span><span class="tw">'+
     '<span class="bar" style="width:'+Math.max(2,a/mxw*100)+'%;background:'+PIL[p].hex+'"></span>'+
     '<span class="bar" style="width:'+Math.max(2,b/mxw*100)+'%;background:var(--card2)"></span></span>'+
     '<span class="dl '+(d>0?'up':d<0?'down':'same')+'">'+(d>0?'+':'')+d+'</span></div>';
@@ -2559,14 +2714,14 @@ function renderStats(){
   h+='</div>';
   /* balance */
   var mx=Math.max.apply(null,PKEYS.map(pillarXP).concat([1]));
-  h+='<div class="section"><h2>\uD83D\uDCCA '+T('balance')+'</h2>';
+  h+='<div class="section"><h2>'+px('stats',16)+' '+T('balance')+'</h2>';
   PKEYS.forEach(function(p){
-    h+='<div class="barrow"><span class="nm">'+PIL[p].em+' '+pnm(p)+'</span><div class="tr"><div style="width:'+Math.round(pillarXP(p)/mx*100)+'%;background:'+PIL[p].hex+'"></div></div><span class="vl">'+pillarXP(p)+'</span></div>';
+    h+='<div class="barrow"><span class="nm">'+px(PIL[p].ic,14)+' '+pnm(p)+'</span><div class="tr"><div style="width:'+Math.round(pillarXP(p)/mx*100)+'%;background:'+PIL[p].hex+'"></div></div><span class="vl">'+pillarXP(p)+'</span></div>';
   });
   h+='</div>';
   /* quran */
   var qp=quranPages(),qg=cfg.quran_goal||604;
-  h+='<div class="section"><h2>\uD83D\uDCD6 '+T('quran')+'</h2>';
+  h+='<div class="section"><h2>'+px('book',16)+' '+T('quran')+'</h2>';
   h+='<div class="barrow"><span class="nm">'+qp+' '+T('pages')+'</span><div class="tr"><div style="width:'+Math.min(100,Math.round(qp/qg*100))+'%;background:var(--soul)"></div></div><span class="vl">'+Math.max(0,qg-qp)+'</span></div>';
   h+='<p class="muted">'+Math.max(0,qg-qp)+' '+T('pages')+' '+T('khatma')+'</p>';
   h+='<div class="mrow"><button class="ok" onclick="openQuran()">'+T('logread')+'</button></div></div>';
@@ -2574,10 +2729,10 @@ function renderStats(){
   var wk=[],ck=[],pk=[];
   for(i=6;i>=0;i--){var nd=dstr(new Date(Date.now()-i*86400000)),nn=nut(nd);wk.push(nn.water_ml);ck.push(nn.calories);pk.push(nn.protein)}
   var avg=function(a){return Math.round(a.reduce(function(x,y){return x+y},0)/a.length)};
-  h+='<div class="section"><h2>\u2764\uFE0F '+T('health')+' \u00B7 '+T('avg7')+'</h2><div class="recs">';
-  h+='<div class="rec"><div class="rv">\uD83D\uDCA7 '+avg(wk)+'ml</div><div class="rl">'+T('water')+'</div></div>';
-  h+='<div class="rec"><div class="rv">\uD83C\uDF7D\uFE0F '+avg(ck)+'</div><div class="rl">'+T('calories')+'</div></div>';
-  h+='<div class="rec"><div class="rv">\uD83E\uDD69 '+avg(pk)+T('grams')+'</div><div class="rl">'+T('protein')+'</div></div>';
+  h+='<div class="section"><h2>'+px('heart',16)+' '+T('health')+' \u00B7 '+T('avg7')+'</h2><div class="recs">';
+  h+='<div class="rec"><div class="rv">'+px('drop',15)+' '+avg(wk)+'ml</div><div class="rl">'+T('water')+'</div></div>';
+  h+='<div class="rec"><div class="rv">'+px('plate',15)+' '+avg(ck)+'</div><div class="rl">'+T('calories')+'</div></div>';
+  h+='<div class="rec"><div class="rv">'+px('meat',15)+' '+avg(pk)+T('grams')+'</div><div class="rl">'+T('protein')+'</div></div>';
   h+='<div class="rec"><div class="rv">'+wk.filter(function(x){return x>=(cfg.water_goal_ml||2000)}).length+'/7</div><div class="rl">'+T('watergoal')+'</div></div>';
   h+='</div><div style="display:flex;gap:4px;align-items:flex-end;height:80px;margin-top:12px">';
   var wmax=Math.max.apply(null,wk.concat([cfg.water_goal_ml||2000]));
@@ -2587,23 +2742,23 @@ function renderStats(){
   }
   h+='</div></div>';
   /* prayer calendar */
-  h+='<div class="section"><h2>\uD83D\uDD4B '+T('prayercal')+'</h2><div class="pcal">'+prayerCalHtml()+'</div></div>';
+  h+='<div class="section"><h2>'+px('kaaba',16)+" "+T('prayercal')+'</h2><div class="pcal">'+prayerCalHtml()+'</div></div>';
   /* achievements */
-  h+='<div class="section"><h2>\uD83C\uDFC6 '+T('achievements')+'</h2><div class="badges">';
+  h+='<div class="section"><h2>'+px('trophy',16)+' '+T('achievements')+'</h2><div class="badges">';
   BADGES.forEach(function(b){
-    h+='<div class="badge '+(b.ck()?'unlocked':'locked')+'"><span class="be">'+b.em+'</span><div class="bn">'+(lang==='ar'?b.ar:b.en)+'</div><div class="bd">'+(lang==='ar'?b.dar:b.den)+'</div></div>';
+    h+='<div class="badge '+(b.ck()?'unlocked':'locked')+'"><span class="be">'+px(b.ic,24)+'</span><div class="bn">'+(lang==='ar'?b.ar:b.en)+'</div><div class="bd">'+(lang==='ar'?b.dar:b.den)+'</div></div>';
   });
   h+='</div></div>';
   /* records */
   var bd=bestDay();
-  h+='<div class="section"><h2>\uD83D\uDCDC '+T('records')+'</h2><div class="recs">';
-  PKEYS.forEach(function(p){h+='<div class="rec"><div class="rv">'+PIL[p].em+' '+longestStreak(p)+'d</div><div class="rl">'+T('longest')+' '+pnm(p)+'</div></div>'});
-  h+='<div class="rec"><div class="rv">\uD83C\uDF1F '+longestPerfect()+'d</div><div class="rl">'+T('longest')+' '+T('perfstreak')+'</div></div>';
+  h+='<div class="section"><h2>'+px('scroll',16)+" "+T('records')+'</h2><div class="recs">';
+  PKEYS.forEach(function(p){h+='<div class="rec"><div class="rv">'+px(PIL[p].ic,15)+' '+longestStreak(p)+'d</div><div class="rl">'+T('longest')+' '+pnm(p)+'</div></div>'});
+  h+='<div class="rec"><div class="rv">'+px('star',15)+' '+longestPerfect()+'d</div><div class="rl">'+T('longest')+' '+T('perfstreak')+'</div></div>';
   h+='<div class="rec"><div class="rv">'+(bd.date?bd.xp+' XP':'\u2014')+'</div><div class="rl">'+T('bestday')+(bd.date?' \u00B7 '+bd.date:'')+'</div></div>';
   h+='<div class="rec"><div class="rv">'+activeDays()+'</div><div class="rl">'+T('activedays')+'</div></div>';
   h+='</div></div>';
   /* 14 days */
-  h+='<div class="section"><h2>\uD83D\uDCC8 '+T('last14')+'</h2><div style="display:flex;gap:4px;align-items:flex-end;height:110px">';
+  h+='<div class="section"><h2>'+px('chartup',16)+" "+T('last14')+'</h2><div style="display:flex;gap:4px;align-items:flex-end;height:110px">';
   var vals=[],labs=[];
   for(i=13;i>=0;i--){var dd2=new Date();dd2.setDate(dd2.getDate()-i);vals.push(dayPoints(dstr(dd2)));labs.push(dd2.getDate())}
   var vm=Math.max.apply(null,vals.concat([1]));
@@ -2648,7 +2803,7 @@ function drawRadar(){
     var p=PKEYS[i],a=ang(i),r=R*(pillarXP(p)/mx);
     ctx.beginPath();ctx.arc(cx+Math.cos(a)*r,cy+Math.sin(a)*r,4,0,7);ctx.fillStyle=PIL[p].hex;ctx.fill();
     ctx.fillStyle='#8494ad';ctx.font='12px Segoe UI';ctx.textAlign='center';
-    ctx.fillText(PIL[p].em+' '+pnm(p),cx+Math.cos(a)*(R+26),cy+Math.sin(a)*(R+26)+4);
+    ctx.fillText(pnm(p),cx+Math.cos(a)*(R+26),cy+Math.sin(a)*(R+26)+4);
   }
 }
 function drawSeason(){
@@ -2672,7 +2827,7 @@ function newSeason(){
 /* ---------- modals ---------- */
 function openAdd(ds){
   var h='<h2>'+T('add')+'</h2><label>'+T('pillar')+'</label><div class="pillsel" id="psel">';
-  PKEYS.forEach(function(p){h+='<button data-p="'+p+'" onclick="selP(\''+p+'\')">'+PIL[p].em+'<br>'+pnm(p)+'</button>'});
+  PKEYS.forEach(function(p){h+='<button data-p="'+p+'" onclick="selP(\''+p+'\')">'+px(PIL[p].ic,18)+'<br>'+pnm(p)+'</button>'});
   h+='</div><label>'+T('activity')+'</label><select id="atype" onchange="custChk()"></select>';
   h+='<div id="custwrap" class="hidden"><label>'+T('ctitle')+'</label><input id="ctitle"><label>'+T('points')+'</label><input id="cpts" type="number" value="10"></div>';
   h+='<label>'+T('date')+'</label><input id="adate" type="date" value="'+(ds||today())+'">';
@@ -2704,7 +2859,7 @@ async function saveAdd(){
   for(var i=0;i<n;i++)rows.push({pillar:curP,title:title,entry_date:addDays(ds,7*i),status:i===0?st:'planned',points_awarded:pts,activity_type_id:tid});
   var r=await dbInsert('activity_entries',rows);
   entries=r.data.concat(entries);saveCache();
-  offToast(r,n>1?T('added')+' '+n+'\u00D7 '+title:(st==='done'?'+'+pts+' XP '+PIL[curP].em+' '+title:T('added')+' \u00B7 '+title));
+  offToast(r,n>1?T('added')+' '+n+'\u00D7 '+title:(st==='done'?'+'+pts+' XP \u00B7 '+title:T('added')+' \u00B7 '+title));
   closeModal();checkLevelUp();render();
 }
 function openEdit(id){
@@ -2732,22 +2887,22 @@ function openDayModal(ds){
   h+=de.length?de.map(entHtml).join(''):'<p class="confmsg">'+T('emptyday')+'</p>';
   h+='<label>'+T('notes')+'</label><textarea rows="3" placeholder="'+T('noteph')+'" onchange="saveNote(\''+ds+'\',this.value)">'+esc(notes[ds]||'')+'</textarea>';
   h+='<label>'+T('freeze')+'</label>';
-  if(isFrozen(ds))h+='<button class="menuitem" onclick="unfreeze(\''+ds+'\')">\u2744\uFE0F '+T('frozen')+'</button>';
+  if(isFrozen(ds))h+='<button class="menuitem" onclick="unfreeze(\''+ds+'\')">'+px('snow',14)+' '+T('frozen')+'</button>';
   else if(frozenWk)h+='<p class="muted">'+T('freezeused')+'</p>';
-  else h+='<button class="menuitem" onclick="freezeDay(\''+ds+'\')">\u2744\uFE0F '+T('freezeon')+'</button>';
+  else h+='<button class="menuitem" onclick="freezeDay(\''+ds+'\')">'+px('snow',14)+' '+T('freezeon')+'</button>';
   h+='<div class="mrow"><button class="no" onclick="closeModal()">'+T('close')+'</button><button class="ok" onclick="closeModal();openAdd(\''+ds+'\')">+ '+T('add')+'</button></div>';
   showModal(h);
 }
 async function freezeDay(ds){
   var f=Object.assign({},cfg.freezes);f[ds]=true;
-  if(await saveCfg({freezes:f})){toast('\u2744\uFE0F '+T('frozen'));closeModal();render()}
+  if(await saveCfg({freezes:f})){toast(T('frozen'),'snow');closeModal();render()}
 }
 async function unfreeze(ds){
   var f=Object.assign({},cfg.freezes);delete f[ds];
   if(await saveCfg({freezes:f})){toast(T('removed'));closeModal();render()}
 }
 function openQuran(){
-  var h='<h2>\uD83D\uDCD6 '+T('logread')+'</h2><label>'+T('date')+'</label><input id="qd" type="date" value="'+today()+'">'+
+  var h='<h2>'+px('book',14)+' '+T('logread')+'</h2><label>'+T('date')+'</label><input id="qd" type="date" value="'+today()+'">'+
   '<label>'+T('pages')+'</label><input id="qp" type="number" value="5">'+
   '<label>'+T('surah')+'</label><input id="qs">'+
   '<label>'+T('juz')+'</label><input id="qj" type="number" min="1" max="30">'+
@@ -2763,28 +2918,28 @@ async function saveQuran(){
   var pts=t?t.points:15;
   var e=await dbInsert('activity_entries',[{pillar:'soul',title:'Quran '+row.pages+'p',entry_date:row.entry_date,status:'done',points_awarded:pts,activity_type_id:t?t.id:null}]);
   entries=entries.concat(e.data);saveCache();
-  offToast(e,'+'+pts+' XP \uD83D\uDCD6 '+row.pages+' '+T('pages'));
+  offToast(e,'+'+pts+' XP \u00B7 '+row.pages+' '+T('pages'));
   closeModal();checkLevelUp();render();
 }
 function openMenu(){
-  var h='<h2>\u2699 '+T('settings')+'</h2>'+
-  '<button class="menuitem" onclick="openTypes()">\uD83D\uDCCB '+T('manage')+'</button>'+
-  '<button class="menuitem" onclick="openPrefs()">\uD83C\uDF9B '+T('prefs')+'</button>'+
+  var h='<h2>'+px('gear',16)+" "+T('settings')+'</h2>'+
+  '<button class="menuitem" onclick="openTypes()">'+px('clip',15)+' '+T('manage')+'</button>'+
+  '<button class="menuitem" onclick="openPrefs()">'+px('slid',15)+' '+T('prefs')+'</button>'+
   '<button class="menuitem" onclick="closeModal();logout()">\u2192 '+T('signout')+'</button>'+
   '<div class="mrow"><button class="no" onclick="closeModal()">'+T('close')+'</button></div>';
   showModal(h);
 }
 function openPrefs(){
-  var h='<h2>\uD83C\uDF9B '+T('prefs')+'</h2>'+
+  var h='<h2>'+px('slid',15)+' '+T('prefs')+'</h2>'+
   '<label>'+T('lang')+'</label><select id="plang"><option value="en"'+(lang==='en'?' selected':'')+'>English</option><option value="ar"'+(lang==='ar'?' selected':'')+'>\u0627\u0644\u0639\u0631\u0628\u064A\u0629</option></select>'+
   '<label>'+T('locnow')+'</label>'+
-  '<button class="menuitem" onclick="closeModal();redetect()">\uD83C\uDF10 '+T('autoloc')+'</button>'+
-  '<button class="menuitem" onclick="closeModal();gpsLocate()">\uD83D\uDCCD '+T('gpsloc')+'</button>'+
+  '<button class="menuitem" onclick="closeModal();redetect()">'+px('globe',15)+' '+T('autoloc')+'</button>'+
+  '<button class="menuitem" onclick="closeModal();gpsLocate()">'+px('pin',15)+' '+T('gpsloc')+'</button>'+
   '<label>'+T('city')+'</label><input id="pcity" value="'+esc(cfg.city)+'">'+
   '<label>'+T('country')+'</label><input id="pcountry" value="'+esc(cfg.country)+'">'+
   '<label>'+T('goals')+'</label>';
   PKEYS.forEach(function(p){
-    h+='<div class="goalrow"><span class="gi">'+PIL[p].em+' '+pnm(p)+'</span><input type="number" min="0" max="7" id="g_'+p+'" value="'+(cfg.goals[p]||0)+'" style="width:70px"></div>';
+    h+='<div class="goalrow"><span class="gi">'+px(PIL[p].ic,14)+' '+pnm(p)+'</span><input type="number" min="0" max="7" id="g_'+p+'" value="'+(cfg.goals[p]||0)+'" style="width:70px"></div>';
   });
   h+='<label>'+T('stepsgoal')+'</label><input id="psteps" type="number" value="'+stepsGoal()+'">';
   h+='<label>'+T('semstart')+'</label><input id="psem" type="date" value="'+(cfg.semester_start||'2026-08-23')+'">'+
@@ -2821,11 +2976,11 @@ async function savePrefs(){
   toast(T('saved'));closeModal();render();
 }
 function openTypes(){
-  var h='<h2>\uD83D\uDCCB '+T('manage')+'</h2>';
+  var h='<h2>'+px('clip',15)+' '+T('manage')+'</h2>';
   PKEYS.forEach(function(p){
-    h+='<label>'+PIL[p].em+' '+pnm(p)+'</label>';
+    h+='<label>'+px(PIL[p].ic,13)+' '+pnm(p)+'</label>';
     activeTypes(p).forEach(function(t){
-      h+='<div class="typerow"><span class="t">'+esc(t.name)+'</span><span class="p">+'+t.points+'</span><button onclick="delType(\''+t.id+'\')">\uD83D\uDDD1</button></div>';
+      h+='<div class="typerow"><span class="t">'+esc(t.name)+'</span><span class="p">+'+t.points+'</span><button onclick="delType(\''+t.id+'\')" aria-label="delete">'+px('trash',14)+'</button></div>';
     });
   });
   h+='<label>'+T('addnew')+'</label><select id="ntp">'+PKEYS.map(function(p){return '<option value="'+p+'">'+pnm(p)+'</option>'}).join('')+'</select>'+
@@ -2856,25 +3011,25 @@ function onboard(step){
   document.getElementById('auth').classList.remove('hidden');
   var b=document.getElementById('authbox'),h='';
   if(step===0){
-    h='<h1>\uD83D\uDC4B '+T('welcome')+'</h1><p>'+T('obtag')+'</p>'+
+    h='<h1>'+px('wave',20)+' '+T('welcome')+'</h1><p>'+T('obtag')+'</p>'+
     '<label style="color:var(--dim);font-size:12px;display:block;margin-bottom:6px">'+T('oblang')+'</label>'+
     '<select id="ob_lang" style="width:100%;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:10px;color:var(--tx);margin-bottom:12px"><option value="en"'+(lang==='en'?' selected':'')+'>English</option><option value="ar"'+(lang==='ar'?' selected':'')+'>\u0627\u0644\u0639\u0631\u0628\u064A\u0629</option></select>'+
     '<button class="main" onclick="obStep(0)">'+T('obnext')+'</button>';
   }else if(step===1){
-    h='<h1>\uD83D\uDD4B</h1><p>'+T('obcity')+'</p>'+
-    '<button class="alt" style="border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:12px" onclick="obDetect()">\uD83C\uDF10 '+T('autoloc')+'</button>'+
+    h='<h1>'+px('kaaba',26)+'</h1><p>'+T('obcity')+'</p>'+
+    '<button class="alt" style="border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:12px" onclick="obDetect()">'+px('globe',15)+' '+T('autoloc')+'</button>'+
     '<input id="ob_city" value="'+esc(cfg.city)+'" placeholder="'+T('city')+'">'+
     '<input id="ob_country" value="'+esc(cfg.country)+'" placeholder="'+T('country')+'">'+
     '<button class="main" onclick="obStep(1)">'+T('obnext')+'</button>';
   }else{
-    h='<h1>\uD83C\uDFAF</h1><p>'+T('obgoals')+'</p>';
+    h='<h1>'+px('target',26)+'</h1><p>'+T('obgoals')+'</p>';
     PKEYS.forEach(function(p){
-      h+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span style="flex:1;font-size:14px">'+PIL[p].em+' '+pnm(p)+'</span>'+
+      h+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span style="flex:1;font-size:14px">'+px(PIL[p].ic,14)+' '+pnm(p)+'</span>'+
       '<input type="number" min="0" max="7" id="ob_'+p+'" value="'+(cfg.goals[p]||0)+'" style="width:70px;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:8px;color:var(--tx)"></div>';
     });
-    h+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span style="flex:1;font-size:14px">\uD83D\uDCA7 '+T('watergoal')+'</span>'+
+    h+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span style="flex:1;font-size:14px">'+px('drop',14)+' '+T('watergoal')+'</span>'+
     '<input type="number" id="ob_water" value="'+(cfg.water_goal_ml||2000)+'" style="width:90px;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:8px;color:var(--tx)"></div>';
-    h+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span style="flex:1;font-size:14px">\uD83C\uDF7D\uFE0F '+T('caloriegoal')+'</span>'+
+    h+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span style="flex:1;font-size:14px">'+px('plate',14)+' '+T('caloriegoal')+'</span>'+
     '<input type="number" id="ob_cal" value="'+(cfg.calorie_goal||2200)+'" style="width:90px;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:8px;color:var(--tx)"></div>';
     h+='<button class="main" style="margin-top:10px" onclick="obStep(2)">'+T('obdone')+'</button>';
   }
@@ -2898,7 +3053,7 @@ async function obStep(step){
       water_goal_ml:(wEl?parseInt(wEl.value):0)||2000,calorie_goal:(cEl?parseInt(cEl.value):0)||2200});
     document.getElementById('auth').classList.add('hidden');
     document.getElementById('app').classList.remove('hidden');
-    render();loadPrayerTimes();toast('\u26A1 '+T('welcome'));
+    render();loadPrayerTimes();toast(T('welcome'),'bolt');
   }
 }
 
