@@ -1159,8 +1159,12 @@ function renderRank(){
   h+='<div class="mrow" style="margin:12px 0"><button class="ok" onclick="openLiftLog(null)">\u2795 '+T('loglift')+'</button></div>';
   h+='<h3 class="sh">'+T('liftrank')+'</h3>';
   LIFTS.forEach(function(l){h+=liftRowHtml(l)});
-  h+='<h3 class="sh">'+T('accessories')+' \u00B7 '+T('pushday')+'</h3>';
-  ACCESSORIES.forEach(function(l){h+=accRowHtml(l)});
+  ['push','pull','legs'].forEach(function(g){
+    var list=ACCESSORIES.filter(function(l){return l.g===g});
+    if(!list.length)return;
+    h+='<h3 class="sh">'+T('accessories')+' \u00B7 '+T(g+'day')+'</h3>';
+    list.forEach(function(l){h+=accRowHtml(l)});
+  });
   h+='</div>';
   h+='<div class="section"><h3 class="sh">'+T('alllifts')+'</h3><div class="ladder">';
   var o=overallRank();
@@ -1239,9 +1243,13 @@ function openLiftLog(k){
     '<optgroup label="'+T('ranked')+'">'+LIFTS.map(function(l){
       return '<option value="'+l.k+'"'+(k===l.k?' selected':'')+'>'+l.em+' '+liftName(l.k)+'</option>';
     }).join('')+'</optgroup>'+
-    '<optgroup label="'+T('accessories')+' \u00B7 '+T('pushday')+'">'+ACCESSORIES.map(function(l){
-      return '<option value="'+l.k+'"'+(k===l.k?' selected':'')+'>'+l.em+' '+liftName(l.k)+'</option>';
-    }).join('')+'</optgroup></select>';
+    ['push','pull','legs'].map(function(g){
+      var list=ACCESSORIES.filter(function(x){return x.g===g});
+      if(!list.length)return '';
+      return '<optgroup label="'+T(g+'day')+'">'+list.map(function(l){
+        return '<option value="'+l.k+'"'+(k===l.k?' selected':'')+'>'+l.em+' '+liftName(l.k)+'</option>';
+      }).join('')+'</optgroup>';
+    }).join('')+'</select>';
   h+='<label>'+T('date')+'</label><input id="lf_d" type="date" value="'+today()+'">';
   h+='<div class="frow"><div><label>'+T('weight')+'</label><input id="lf_w" type="number" step="0.5" placeholder="100"></div>'+
      '<div><label>'+T('reps')+'</label><input id="lf_r" type="number" value="5"></div></div>';
@@ -1302,19 +1310,25 @@ var RANKS=[
 /* e1RM as a multiple of body weight, at the START of each rank */
 var LIFTS=[
  {k:'bench',   n:'Bench Press',   ar:'\u0628\u0646\u0634 \u0628\u0631\u0633',        em:'\uD83C\uDFCB\uFE0F', g:'push', std:[0.25,0.50,0.75,1.00,1.25,1.50,1.75,2.00,2.25]},
- {k:'squat',   n:'Squat',         ar:'\u0633\u0643\u0648\u0627\u062A',                em:'\uD83E\uDDB5', std:[0.50,0.75,1.25,1.50,1.75,2.00,2.25,2.50,2.75]},
- {k:'deadlift',n:'Deadlift',      ar:'\u062F\u064A\u062F \u0644\u064A\u0641\u062A',    em:'\u26D3\uFE0F', std:[0.50,1.00,1.50,1.75,2.00,2.25,2.50,2.75,3.00]},
+ {k:'squat',   n:'Squat',         ar:'\u0633\u0643\u0648\u0627\u062A',                em:'\uD83E\uDDB5', g:'legs', std:[0.50,0.75,1.25,1.50,1.75,2.00,2.25,2.50,2.75]},
+ {k:'deadlift',n:'Deadlift',      ar:'\u062F\u064A\u062F \u0644\u064A\u0641\u062A',    em:'\u26D3\uFE0F', g:'pull', std:[0.50,1.00,1.50,1.75,2.00,2.25,2.50,2.75,3.00]},
  {k:'ohp',     n:'Overhead Press',ar:'\u0636\u063A\u0637 \u0643\u062A\u0641',          em:'\uD83D\uDCAA', g:'push', std:[0.20,0.35,0.50,0.65,0.80,0.95,1.10,1.25,1.40]},
- {k:'row',     n:'Barbell Row',   ar:'\u062A\u062C\u062F\u064A\u0641',                em:'\uD83D\uDEA3', std:[0.30,0.50,0.75,1.00,1.20,1.40,1.60,1.80,2.00]}
+ {k:'row',     n:'Barbell Row',   ar:'\u062A\u062C\u062F\u064A\u0641',                em:'\uD83D\uDEA3', g:'pull', std:[0.30,0.50,0.75,1.00,1.20,1.40,1.60,1.80,2.00]}
 ];
 /* tracked but not ranked - machines and cables don't map to bodyweight standards */
 var ACCESSORIES=[
  {k:'incline_machine',n:'Incline Bench Press (Machine)',ar:'\u0628\u0646\u0634 \u0639\u0644\u0648\u064A \u062C\u0647\u0627\u0632',em:'\uD83C\uDFCB\uFE0F',g:'push'},
  {k:'fly_cable',      n:'Chest Fly (Cable)',           ar:'\u062A\u0641\u062A\u064A\u062D \u0635\u062F\u0631 \u0643\u064A\u0628\u0644',em:'\uD83E\uDD41',g:'push'},
- {k:'db_shoulder',    n:'Dumbbell Shoulder Press',      ar:'\u0636\u063A\u0637 \u0643\u062A\u0641 \u062F\u0645\u0628\u0644',em:'\uD83D\uDCAA',g:'push'},
+ {k:'lateral_raise',  n:'Lateral Raise',                ar:'\u0631\u0641\u0639 \u062C\u0627\u0646\u0628\u064A',em:'\uD83E\uDD3C',g:'push'},
  {k:'front_raise',    n:'Front Raise',                  ar:'\u0631\u0641\u0639 \u0623\u0645\u0627\u0645\u064A',em:'\uD83D\uDD3C',g:'push'},
  {k:'skullcrusher',   n:'Skull Crushers (Barbell)',     ar:'\u0633\u0643\u0644 \u0643\u0631\u0634\u0631',em:'\u2620\uFE0F',g:'push'},
- {k:'pushdown',       n:'Tricep Pushdown (Cable)',      ar:'\u062A\u0631\u0627\u064A \u0628\u0648\u0634 \u062F\u0627\u0648\u0646',em:'\uD83D\uDD3D',g:'push'}
+ {k:'pushdown',       n:'Tricep Pushdown (Cable)',      ar:'\u062A\u0631\u0627\u064A \u0628\u0648\u0634 \u062F\u0627\u0648\u0646',em:'\uD83D\uDD3D',g:'push'},
+ {k:'latpulldown',    n:'Lat Pulldown',                 ar:'\u0633\u062D\u0628 \u0623\u0631\u0636\u064A \u0639\u0644\u0648\u064A',em:'\uD83E\uDDD7',g:'pull'},
+ {k:'row_cable',      n:'Seated Row (Cable)',           ar:'\u062A\u062C\u062F\u064A\u0641 \u0643\u064A\u0628\u0644',em:'\uD83D\uDEA3',g:'pull'},
+ {k:'reverse_fly',    n:'Reverse Fly',                  ar:'\u062A\u0641\u062A\u064A\u062D \u0639\u0643\u0633\u064A',em:'\uD83E\uDD8B',g:'pull'},
+ {k:'barbell_curl',   n:'Barbell Curl',                 ar:'\u0628\u0627\u064A \u0628\u0627\u0631',em:'\uD83D\uDCAA',g:'pull'},
+ {k:'hammer_curl',    n:'Dumbbell Hammer Curl',         ar:'\u0647\u0627\u0645\u0631 \u0643\u064A\u0631\u0644',em:'\uD83D\uDD28',g:'pull'},
+ {k:'wrist_curl',     n:'Forearm Barbell Curl',         ar:'\u0633\u0648\u0627\u0639\u062F \u0628\u0627\u0631',em:'\uD83E\uDD1A',g:'pull'}
 ];
 function allLifts(){return LIFTS.concat(ACCESSORIES)}
 function liftDef(k){return allLifts().find(function(x){return x.k===k})}
