@@ -437,7 +437,9 @@ rank:'Gym Rank',overall:'Overall',loglift:'Log lift',e1rm:'Est. 1RM',bodyweight:
 liftsex:'Standards',male:'Male',female:'Female',lp:'LP',tonext:'to {r}',maxrank:'Max rank',
 history:'History',nolifts:'No lifts logged yet',setbw:'Set your body weight to get ranked',
 best:'Best',latest:'Latest',improve:'{n} kg since start',firstlog:'First entry',
-liftrank:'Lift ranks',alllifts:'All lifts',delset:'Delete this entry?',
+liftrank:'Ranked lifts',alllifts:'All lifts',delset:'Delete this entry?',
+accessories:'Accessories',pushday:'Push',pullday:'Pull',legday:'Legs',ranked:'Ranked',
+noaccessory:'Not logged yet',addcustom:'Custom exercise',customname:'Exercise name',
 rk_wood:'Wood',rk_bronze:'Bronze',rk_silver:'Silver',rk_gold:'Gold',rk_platinum:'Platinum',
 rk_diamond:'Diamond',rk_champion:'Champion',rk_titan:'Titan',rk_olympian:'Olympian',
 notes:'Reflection',noteph:'How did today go?',
@@ -503,7 +505,9 @@ rank:'\u062A\u0635\u0646\u064A\u0641 \u0627\u0644\u0642\u0648\u0629',overall:'\u
 liftsex:'\u0627\u0644\u0645\u0639\u0627\u064A\u064A\u0631',male:'\u0630\u0643\u0631',female:'\u0623\u0646\u062B\u0649',lp:'\u0646\u0642\u0637\u0629',tonext:'\u0644\u0640 {r}',maxrank:'\u0623\u0639\u0644\u0649 \u062A\u0635\u0646\u064A\u0641',
 history:'\u0627\u0644\u0633\u062C\u0644',nolifts:'\u0644\u0627 \u062A\u0648\u062C\u062F \u0631\u0641\u0639\u0627\u062A',setbw:'\u0623\u062F\u062E\u0644 \u0648\u0632\u0646 \u062C\u0633\u0645\u0643 \u0644\u0644\u062A\u0635\u0646\u064A\u0641',
 best:'\u0627\u0644\u0623\u0641\u0636\u0644',latest:'\u0627\u0644\u0623\u062E\u064A\u0631',improve:'{n} \u0643\u062C\u0645 \u0645\u0646\u0630 \u0627\u0644\u0628\u062F\u0627\u064A\u0629',firstlog:'\u0623\u0648\u0644 \u062A\u0633\u062C\u064A\u0644',
-liftrank:'\u062A\u0635\u0646\u064A\u0641 \u0627\u0644\u062A\u0645\u0627\u0631\u064A\u0646',alllifts:'\u0643\u0644 \u0627\u0644\u062A\u0645\u0627\u0631\u064A\u0646',delset:'\u062D\u0630\u0641 \u0647\u0630\u0627 \u0627\u0644\u0633\u062C\u0644\u061F',
+liftrank:'\u062A\u0645\u0627\u0631\u064A\u0646 \u0645\u0635\u0646\u0641\u0629',alllifts:'\u0643\u0644 \u0627\u0644\u062A\u0635\u0646\u064A\u0641\u0627\u062A',delset:'\u062D\u0630\u0641 \u0647\u0630\u0627 \u0627\u0644\u0633\u062C\u0644\u061F',
+accessories:'\u062A\u0645\u0627\u0631\u064A\u0646 \u0645\u0633\u0627\u0639\u062F\u0629',pushday:'\u062F\u0641\u0639',pullday:'\u0633\u062D\u0628',legday:'\u0623\u0631\u062C\u0644',ranked:'\u0645\u0635\u0646\u0641',
+noaccessory:'\u0644\u0645 \u064A\u0633\u062C\u0644 \u0628\u0639\u062F',addcustom:'\u062A\u0645\u0631\u064A\u0646 \u0645\u062E\u0635\u0635',customname:'\u0627\u0633\u0645 \u0627\u0644\u062A\u0645\u0631\u064A\u0646',
 rk_wood:'\u062E\u0634\u0628',rk_bronze:'\u0628\u0631\u0648\u0646\u0632',rk_silver:'\u0641\u0636\u064A',rk_gold:'\u0630\u0647\u0628\u064A',rk_platinum:'\u0628\u0644\u0627\u062A\u064A\u0646',
 rk_diamond:'\u0645\u0627\u0633',rk_champion:'\u0628\u0637\u0644',rk_titan:'\u062C\u0628\u0627\u0631',rk_olympian:'\u0623\u0648\u0644\u0645\u0628\u064A',
 notes:'\u062A\u0623\u0645\u0644 \u0627\u0644\u064A\u0648\u0645',noteph:'\u0643\u064A\u0641 \u0643\u0627\u0646 \u064A\u0648\u0645\u0643\u061F',
@@ -1130,6 +1134,20 @@ function liftRowHtml(l){
   h+='</div>';
   return h;
 }
+function accRowHtml(l){
+  var b=bestLift(l.k),hist=liftHistory(l.k);
+  if(!b)return '<div class="liftrow empty" onclick="openLiftLog(\''+l.k+'\')">'+
+    '<span class="lem">'+l.em+'</span><div class="li"><b>'+liftName(l.k)+'</b>'+
+    '<div class="lm">'+T('noaccessory')+'</div></div><span class="ladd">+</span></div>';
+  var first=hist[0],gain=Math.round((b.row.weight-first.weight)*10)/10;
+  var h='<div class="liftrow" onclick="openLiftHistory(\''+l.k+'\')">';
+  h+='<span class="lem">'+l.em+'</span>';
+  h+='<div class="li"><b>'+liftName(l.k)+'</b>';
+  h+='<div class="lm">'+T('best')+' '+b.row.weight+'kg \u00D7 '+b.row.reps+
+     (gain>0?' \u00B7 <span class="up">\u2191'+gain+'kg</span>':'')+' \u00B7 '+hist.length+'\u00D7</div>';
+  h+='</div><div class="lrk" style="color:var(--gold)">'+b.row.weight+'<br><span>kg</span></div></div>';
+  return h;
+}
 function renderRank(){
   var el=document.getElementById('rankcard');if(!el)return;
   if(tab!=='rank'){el.innerHTML='';return}
@@ -1141,6 +1159,8 @@ function renderRank(){
   h+='<div class="mrow" style="margin:12px 0"><button class="ok" onclick="openLiftLog(null)">\u2795 '+T('loglift')+'</button></div>';
   h+='<h3 class="sh">'+T('liftrank')+'</h3>';
   LIFTS.forEach(function(l){h+=liftRowHtml(l)});
+  h+='<h3 class="sh">'+T('accessories')+' \u00B7 '+T('pushday')+'</h3>';
+  ACCESSORIES.forEach(function(l){h+=accRowHtml(l)});
   h+='</div>';
   h+='<div class="section"><h3 class="sh">'+T('alllifts')+'</h3><div class="ladder">';
   var o=overallRank();
@@ -1153,10 +1173,12 @@ function renderRank(){
   el.innerHTML=h;
 }
 function liftHistoryHtml(k){
-  var l=liftDef(k),bw=bodyWeight(),hist=liftHistory(k).slice().reverse();
-  var b=bestLift(k),r=b&&bw?rankOf(k,b.e1,bw):null;
+  var bw=bodyWeight(),hist=liftHistory(k).slice().reverse();
+  var b=bestLift(k),r=b&&bw&&isRanked(k)?rankOf(k,b.e1,bw):null;
   var h='<div class="cdhead"><button class="bk" onclick="closeLift()">\u2190</button>'+
-    '<div><div class="cc2">'+l.em+' '+T('history')+'</div><h2>'+liftName(k)+'</h2></div></div>';
+    '<div><div class="cc2">'+liftEmoji(k)+' '+T('history')+'</div><h2>'+liftName(k)+'</h2></div></div>';
+  if(!r&&b)h+='<div class="rankcard sm"><div class="rname" style="color:var(--gold)">'+b.row.weight+'kg \u00D7 '+b.row.reps+'</div>'+
+    '<div class="rlp">'+T('best')+' \u00B7 '+T('e1rm')+' '+b.e1+'kg</div></div>';
   if(r){
     var R=RANKS[r.rank];
     h+='<div class="rankcard sm" style="background:radial-gradient(120% 100% at 50% 0%,'+R.c2+'44,transparent 70%),var(--card2);border-color:'+R.c+'44">'+
@@ -1213,9 +1235,13 @@ async function saveBodyWeight(){
 }
 function openLiftLog(k){
   var h='<h2>\uD83C\uDFCB\uFE0F '+T('loglift')+'</h2>';
-  h+='<label>'+T('exercise')+'</label><select id="lf_k">'+LIFTS.map(function(l){
-    return '<option value="'+l.k+'"'+(k===l.k?' selected':'')+'>'+l.em+' '+liftName(l.k)+'</option>';
-  }).join('')+'</select>';
+  h+='<label>'+T('exercise')+'</label><select id="lf_k">'+
+    '<optgroup label="'+T('ranked')+'">'+LIFTS.map(function(l){
+      return '<option value="'+l.k+'"'+(k===l.k?' selected':'')+'>'+l.em+' '+liftName(l.k)+'</option>';
+    }).join('')+'</optgroup>'+
+    '<optgroup label="'+T('accessories')+' \u00B7 '+T('pushday')+'">'+ACCESSORIES.map(function(l){
+      return '<option value="'+l.k+'"'+(k===l.k?' selected':'')+'>'+l.em+' '+liftName(l.k)+'</option>';
+    }).join('')+'</optgroup></select>';
   h+='<label>'+T('date')+'</label><input id="lf_d" type="date" value="'+today()+'">';
   h+='<div class="frow"><div><label>'+T('weight')+'</label><input id="lf_w" type="number" step="0.5" placeholder="100"></div>'+
      '<div><label>'+T('reps')+'</label><input id="lf_r" type="number" value="5"></div></div>';
@@ -1234,7 +1260,7 @@ async function saveLift(){
   closeModal();
   var bw=bodyWeight();
   var prevBest=bestLift(k);
-  var prevRank=prevBest&&bw?rankOf(k,prevBest.e1,bw):null;
+  var prevRank=prevBest&&bw&&isRanked(k)?rankOf(k,prevBest.e1,bw):null;
   var row={entry_date:d,exercise:k,sets:sets,reps:reps,weight:w};
   var r=await dbInsert('gym_sets',[row]);
   gymSets=gymSets.concat(r.data);
@@ -1245,7 +1271,7 @@ async function saveLift(){
     entry_date:d,status:'done',points_awarded:pts,activity_type_id:t?t.id:null}]);
   entries=entries.concat(e.data);saveCache();
   var newE=e1RM(w,reps);
-  var newRank=bw?rankOf(k,Math.max(newE,prevBest?prevBest.e1:0),bw):null;
+  var newRank=bw&&isRanked(k)?rankOf(k,Math.max(newE,prevBest?prevBest.e1:0),bw):null;
   if(newRank&&prevRank&&newRank.idx>prevRank.idx){
     offToast(r,'\uD83C\uDFC5 '+rankName(newRank.rank)+' '+['I','II','III'][newRank.tier-1]+'! +'+pts+' XP');
   }else if(!prevBest||newE>prevBest.e1){
@@ -1275,14 +1301,26 @@ var RANKS=[
 ];
 /* e1RM as a multiple of body weight, at the START of each rank */
 var LIFTS=[
- {k:'bench',   n:'Bench Press',   ar:'\u0628\u0646\u0634 \u0628\u0631\u0633',        em:'\uD83C\uDFCB\uFE0F', std:[0.25,0.50,0.75,1.00,1.25,1.50,1.75,2.00,2.25]},
+ {k:'bench',   n:'Bench Press',   ar:'\u0628\u0646\u0634 \u0628\u0631\u0633',        em:'\uD83C\uDFCB\uFE0F', g:'push', std:[0.25,0.50,0.75,1.00,1.25,1.50,1.75,2.00,2.25]},
  {k:'squat',   n:'Squat',         ar:'\u0633\u0643\u0648\u0627\u062A',                em:'\uD83E\uDDB5', std:[0.50,0.75,1.25,1.50,1.75,2.00,2.25,2.50,2.75]},
  {k:'deadlift',n:'Deadlift',      ar:'\u062F\u064A\u062F \u0644\u064A\u0641\u062A',    em:'\u26D3\uFE0F', std:[0.50,1.00,1.50,1.75,2.00,2.25,2.50,2.75,3.00]},
- {k:'ohp',     n:'Overhead Press',ar:'\u0636\u063A\u0637 \u0643\u062A\u0641',          em:'\uD83D\uDCAA', std:[0.20,0.35,0.50,0.65,0.80,0.95,1.10,1.25,1.40]},
+ {k:'ohp',     n:'Overhead Press',ar:'\u0636\u063A\u0637 \u0643\u062A\u0641',          em:'\uD83D\uDCAA', g:'push', std:[0.20,0.35,0.50,0.65,0.80,0.95,1.10,1.25,1.40]},
  {k:'row',     n:'Barbell Row',   ar:'\u062A\u062C\u062F\u064A\u0641',                em:'\uD83D\uDEA3', std:[0.30,0.50,0.75,1.00,1.20,1.40,1.60,1.80,2.00]}
 ];
-function liftDef(k){return LIFTS.find(function(x){return x.k===k})}
+/* tracked but not ranked - machines and cables don't map to bodyweight standards */
+var ACCESSORIES=[
+ {k:'incline_machine',n:'Incline Bench Press (Machine)',ar:'\u0628\u0646\u0634 \u0639\u0644\u0648\u064A \u062C\u0647\u0627\u0632',em:'\uD83C\uDFCB\uFE0F',g:'push'},
+ {k:'fly_cable',      n:'Chest Fly (Cable)',           ar:'\u062A\u0641\u062A\u064A\u062D \u0635\u062F\u0631 \u0643\u064A\u0628\u0644',em:'\uD83E\uDD41',g:'push'},
+ {k:'db_shoulder',    n:'Dumbbell Shoulder Press',      ar:'\u0636\u063A\u0637 \u0643\u062A\u0641 \u062F\u0645\u0628\u0644',em:'\uD83D\uDCAA',g:'push'},
+ {k:'front_raise',    n:'Front Raise',                  ar:'\u0631\u0641\u0639 \u0623\u0645\u0627\u0645\u064A',em:'\uD83D\uDD3C',g:'push'},
+ {k:'skullcrusher',   n:'Skull Crushers (Barbell)',     ar:'\u0633\u0643\u0644 \u0643\u0631\u0634\u0631',em:'\u2620\uFE0F',g:'push'},
+ {k:'pushdown',       n:'Tricep Pushdown (Cable)',      ar:'\u062A\u0631\u0627\u064A \u0628\u0648\u0634 \u062F\u0627\u0648\u0646',em:'\uD83D\uDD3D',g:'push'}
+];
+function allLifts(){return LIFTS.concat(ACCESSORIES)}
+function liftDef(k){return allLifts().find(function(x){return x.k===k})}
+function isRanked(k){return LIFTS.some(function(x){return x.k===k})}
 function liftName(k){var l=liftDef(k);return l?(lang==='ar'?l.ar:l.n):k}
+function liftEmoji(k){var l=liftDef(k);return l?l.em:'\uD83C\uDFCB\uFE0F'}
 function rankName(i){return T('rk_'+RANKS[i].k)}
 /* Epley, capped: singles stay honest, high reps don't inflate */
 function e1RM(w,reps){
