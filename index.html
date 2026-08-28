@@ -1159,10 +1159,11 @@ function renderRank(){
   h+='<div class="mrow" style="margin:12px 0"><button class="ok" onclick="openLiftLog(null)">\u2795 '+T('loglift')+'</button></div>';
   h+='<h3 class="sh">'+T('liftrank')+'</h3>';
   LIFTS.forEach(function(l){h+=liftRowHtml(l)});
+  var GRP={push:'pushday',pull:'pullday',legs:'legday'};
   ['push','pull','legs'].forEach(function(g){
     var list=ACCESSORIES.filter(function(l){return l.g===g});
     if(!list.length)return;
-    h+='<h3 class="sh">'+T('accessories')+' \u00B7 '+T(g+'day')+'</h3>';
+    h+='<h3 class="sh">'+T('accessories')+' \u00B7 '+T(GRP[g])+'</h3>';
     list.forEach(function(l){h+=accRowHtml(l)});
   });
   h+='</div>';
@@ -1246,7 +1247,8 @@ function openLiftLog(k){
     ['push','pull','legs'].map(function(g){
       var list=ACCESSORIES.filter(function(x){return x.g===g});
       if(!list.length)return '';
-      return '<optgroup label="'+T(g+'day')+'">'+list.map(function(l){
+      var GL={push:'pushday',pull:'pullday',legs:'legday'};
+      return '<optgroup label="'+T(GL[g])+'">'+list.map(function(l){
         return '<option value="'+l.k+'"'+(k===l.k?' selected':'')+'>'+l.em+' '+liftName(l.k)+'</option>';
       }).join('')+'</optgroup>';
     }).join('')+'</select>';
@@ -1328,7 +1330,12 @@ var ACCESSORIES=[
  {k:'reverse_fly',    n:'Reverse Fly',                  ar:'\u062A\u0641\u062A\u064A\u062D \u0639\u0643\u0633\u064A',em:'\uD83E\uDD8B',g:'pull'},
  {k:'barbell_curl',   n:'Barbell Curl',                 ar:'\u0628\u0627\u064A \u0628\u0627\u0631',em:'\uD83D\uDCAA',g:'pull'},
  {k:'hammer_curl',    n:'Dumbbell Hammer Curl',         ar:'\u0647\u0627\u0645\u0631 \u0643\u064A\u0631\u0644',em:'\uD83D\uDD28',g:'pull'},
- {k:'wrist_curl',     n:'Forearm Barbell Curl',         ar:'\u0633\u0648\u0627\u0639\u062F \u0628\u0627\u0631',em:'\uD83E\uDD1A',g:'pull'}
+ {k:'wrist_curl',     n:'Forearm Barbell Curl',         ar:'\u0633\u0648\u0627\u0639\u062F \u0628\u0627\u0631',em:'\uD83E\uDD1A',g:'pull'},
+ {k:'rdl',            n:'Romanian Deadlift',            ar:'\u0631\u0648\u0645\u0627\u0646\u064A \u062F\u064A\u062F\u0644\u064A\u0641\u062A',em:'\uD83C\uDFCB\uFE0F',g:'legs'},
+ {k:'leg_ext',        n:'Leg Extension',                ar:'\u062A\u0645\u062F\u064A\u062F \u0627\u0644\u0633\u0627\u0642',em:'\uD83E\uDDB5',g:'legs'},
+ {k:'leg_curl',       n:'Leg Curl',                     ar:'\u062B\u0646\u064A \u0627\u0644\u0633\u0627\u0642',em:'\uD83E\uDDB5',g:'legs'},
+ {k:'calf_standing',  n:'Standing Calf Raise',          ar:'\u0633\u0645\u0627\u0646\u0629 \u0648\u0642\u0648\u0641',em:'\uD83E\uDDB6',g:'legs'},
+ {k:'calf_seated',    n:'Seated Calf Raise',            ar:'\u0633\u0645\u0627\u0646\u0629 \u062C\u0644\u0648\u0633',em:'\uD83E\uDDB6',g:'legs'}
 ];
 function allLifts(){return LIFTS.concat(ACCESSORIES)}
 function liftDef(k){return allLifts().find(function(x){return x.k===k})}
