@@ -51,7 +51,7 @@ header{display:flex;align-items:center;gap:8px;padding:11px 14px}
 .mainnav::-webkit-scrollbar{display:none}
 .mainnav button{flex:0 0 auto;background:var(--card);border:1px solid var(--line);color:var(--dim);border-radius:18px;padding:8px 13px;font-size:12px;font-weight:600;white-space:nowrap}
 .mainnav button.on{color:var(--tx);background:var(--card2);border-color:var(--accent)}
-main{padding:0 16px 90px;max-width:1000px;margin:0 auto}
+main{padding:14px 16px 90px;max-width:1000px;margin:0 auto}
 .section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
 .section h2{font-size:15px;margin-bottom:12px}
 .muted{color:var(--dim);font-size:13px;line-height:1.5}
@@ -345,7 +345,12 @@ main{padding:0 16px 90px;max-width:1000px;margin:0 auto}
 .section{border-radius:var(--r-l);border-color:var(--line);box-shadow:var(--shadow);padding:16px;margin-bottom:16px}
 .section h2{font-size:15px;font-weight:700;letter-spacing:.2px;margin-bottom:12px}
 .sh{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--faint);font-weight:800}
-.topbar{background:rgba(10,14,22,.82);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%)}
+.topbar{background:rgba(10,14,22,.82);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
+  /* installed PWA runs viewport-fit=cover, so the header would sit under the status bar */
+  padding-top:env(safe-area-inset-top)}
+/* breathing room between the sticky header block and the page content */
+main{padding-top:20px}
+.hcard:first-child,.section:first-child,.quest:first-child{margin-top:2px}
 
 /* ---- stat numerals read as data, not prose ---- */
 .lvlbadge,.rv,.he,.lrk,.rlp,.rname,.btier,.cstat,.abspct,.gs,.qn{font-variant-numeric:tabular-nums}
