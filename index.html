@@ -319,6 +319,10 @@ main{padding:14px 16px 90px;max-width:1000px;margin:0 auto}
 .typerow .t{flex:1}
 .typerow .p{color:var(--gold);font-weight:700;font-size:12px}
 .typerow button{background:none;border:none;font-size:14px}
+/* icon-only controls need a finger-sized hit area, not an icon-sized one */
+.typerow button,.erow button[aria-label]{min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;border-radius:var(--r-s)}
+@media (hover:hover){.typerow button:hover,.erow button[aria-label]:hover{background:var(--card2)}}
+.typerow button:focus-visible,.erow button[aria-label]:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .menuitem{display:flex;align-items:center;gap:10px;background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:8px;font-size:14px;width:100%;text-align:start}
 .daypick{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
 .daypick button{background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:8px 2px;font-size:11px}
@@ -2427,16 +2431,59 @@ function toast(msg){
 var _confirmFn=null;
 function confirmBox(title,msg,okLabel,fn){
   _confirmFn=fn;
-  showModal('<h2>'+title+'</h2><p class="confmsg">'+msg+'</p>'+
+  showModalConfirm('<h2>'+title+'</h2><p class="confmsg">'+msg+'</p>'+
   '<div class="mrow"><button class="no" onclick="closeModal()">'+T('cancel')+'</button>'+
   '<button class="danger" onclick="runConfirm()">'+okLabel+'</button></div>');
 }
+function showModalConfirm(h){showModal(h,true)}
 function runConfirm(){var f=_confirmFn;_confirmFn=null;closeModal();if(f)f()}
-function showModal(html){
-  document.getElementById('mboxc').innerHTML=html;
-  document.getElementById('modal').classList.remove('hidden');
+var _lastFocus=null;
+var _modalDismissible=true;
+var _backdropClose=false;
+/* dism=false for modals holding unsaved input: those close only via a button */
+function showModal(html,dism){
+  _lastFocus=document.activeElement;
+  _modalDismissible=(dism!==false);
+  _backdropClose=(dism===true);
+  var c=document.getElementById('mboxc');
+  c.innerHTML=html;
+  var m=document.getElementById('modal');
+  m.classList.remove('hidden');
+  m.setAttribute('role','dialog');
+  m.setAttribute('aria-modal','true');
+  var f=c.querySelector('input,select,textarea,button');
+  if(f&&f.focus)setTimeout(function(){try{f.focus()}catch(e){}},30);
 }
-function closeModal(){document.getElementById('modal').classList.add('hidden')}
+function modalOpen(){return !document.getElementById('modal').classList.contains('hidden')}
+function closeModal(){
+  document.getElementById('modal').classList.add('hidden');
+  _modalDismissible=true;_backdropClose=false;
+  var el=_lastFocus;_lastFocus=null;
+  if(el&&el.focus&&document.body.contains(el)){try{el.focus()}catch(e){}}
+}
+/* keeps Tab inside the open dialog so focus cannot land on the page behind it */
+function trapTab(e){
+  var c=document.getElementById('mboxc');
+  var n=c.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])');
+  if(!n.length)return;
+  var first=n[0],last=n[n.length-1];
+  if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}
+  else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}
+}
+document.addEventListener('keydown',function(e){
+  var k=e.key;
+  if(k==='Escape'){
+    var lv=document.getElementById('lvlup');
+    if(lv&&!lv.classList.contains('hidden')){lv.classList.add('hidden');return}
+    if(modalOpen()&&_modalDismissible){_confirmFn=null;closeModal()}
+    return;
+  }
+  if(k==='Tab'&&modalOpen())trapTab(e);
+});
+/* backdrop click closes only dismissible dialogs */
+document.getElementById('modal').addEventListener('click',function(e){
+  if(e.target===this&&_backdropClose){_confirmFn=null;closeModal()}
+});
 function checkLevelUp(){
   var l=lvlOf(totalXP());
   if(prevLvl!==null&&l>prevLvl)showLevelUp(l);
