@@ -768,9 +768,14 @@ pull:{p:{o:PXO,a:'var(--study)',b:'#2a5da8'},g:[
 foot:{p:{o:PXO,a:'#f4c98a',b:'#d9a05f'},g:[
 '............','...oo.......','..oaao......','..oaaao.....','..oaaao.....','..oaaaoo....','..oaaaaoo...','..oaaaaaoo..','.oaaaaaaaoo.','.obbbbbbbbo.','..oooooooo..','............']}
 };
+var PXC={};
 function px(n,sz,style){
   var d=PX[n];if(!d)return '';
   sz=sz||16;
+  /* sprites are static, so identical name+size+style always yields the same
+     markup: cache it instead of rebuilding 144 cells on every render */
+  var ck=n+'|'+sz+'|'+(style||'');
+  if(PXC[ck]!==undefined)return PXC[ck];
   var o='<svg class="px" width="'+sz+'" height="'+sz+'" viewBox="0 0 12 12" shape-rendering="crispEdges" aria-hidden="true"'+(style?' style="'+style+'"':'')+'>';
   for(var y=0;y<12;y++){var row=d.g[y];
     for(var x=0;x<12;x++){var ch=row[x];if(ch==='.'){continue}
@@ -778,7 +783,8 @@ function px(n,sz,style){
       o+='<rect x="'+x+'" y="'+y+'" width="'+run+'" height="1" fill="'+(d.p[ch]||'#f0f')+'"/>';
       x+=run-1;
     }}
-  return o+'</svg>';
+  PXC[ck]=o+'</svg>';
+  return PXC[ck];
 }
 var PIL={study:{ic:'book',hex:'#4f9cf9'},gym:{ic:'heart',hex:'#ff6b4a'},social:{ic:'people',hex:'#34d399'},soul:{ic:'mosque',hex:'#a78bfa'}};
 var PKEYS=['study','gym','social','soul'];
@@ -1034,6 +1040,9 @@ async function dbInsert(table,rows){
   if(isOnline()){
     var r=await sb.from(table).insert(rows).select();
     if(!r.error)return{data:r.data||rows,offline:false};
+    /* 23505 = unique violation: the row is already there, so retrying can
+       never succeed. Queueing it would poison the sync queue forever. */
+    if(r.error&&r.error.code==='23505')return{data:[],offline:false,dup:true};
   }
   enqueue({op:'insert',table:table,rows:rows});
   return{data:rows,offline:true};
@@ -1705,12 +1714,17 @@ var MYCAL=[
  {d:'2026-12-27',e:'2027-01-09',k:'vacation',nc:true}
 ];
 async function seedCalendar(){
+  /* same reasoning as seedCourses: check against the database, not memory */
+  if(isOnline()&&user){
+    var fa=await sb.from('academic_events').select('*');
+    if(!fa.error&&fa.data)acadEvents=fa.data;
+  }
   var rows=MYCAL.filter(function(x){
     return !acadEvents.some(function(e){return e.start_date===x.d&&e.kind===x.k});
   }).map(function(x){return{start_date:x.d,end_date:x.e,kind:x.k,no_class:x.nc,title_ar:'',title_en:''}});
   if(rows.length){
     var r=await dbInsert('academic_events',rows);
-    acadEvents=acadEvents.concat(r.data);
+    if(r.data&&r.data.length)acadEvents=acadEvents.concat(r.data);
   }
   if(!cfg.calendar_seeded)await saveCfg({calendar_seeded:true});
   saveCache();
@@ -1797,12 +1811,25 @@ var MYCOURSES=[
 /* fills in anything missing; safe to re-run, resumes after an interrupted seed */
 async function seedCourses(){
   var added=0;
+  /* trusting the in-memory arrays is what allowed the schedule to be seeded
+     twice: re-read the real rows before deciding what is missing */
+  if(isOnline()&&user){
+    var fc=await sb.from('courses').select('*');
+    if(!fc.error&&fc.data)courses=fc.data;
+    var fs=await sb.from('course_sessions').select('*');
+    if(!fs.error&&fs.data)csessions=fs.data;
+  }
   for(var i=0;i<MYCOURSES.length;i++){
     var c=MYCOURSES[i];
     var ex=courses.find(function(x){return x.code===c.code});
     if(!ex){
       var r=await dbInsert('courses',[{code:c.code,name:c.name,kind:c.kind,credits:c.credits,sort:c.sort}]);
-      ex=r.data[0];courses=courses.concat(r.data);added++;
+      if(r.data&&r.data.length){ex=r.data[0];courses=courses.concat(r.data);added++}
+      else if(isOnline()&&user){
+        var rc=await sb.from('courses').select('*').eq('code',c.code);
+        if(!rc.error&&rc.data&&rc.data.length){ex=rc.data[0];courses=courses.concat(rc.data)}
+      }
+      if(!ex)continue;
     }
     var have=csessions.filter(function(x){return x.course_id===ex.id});
     var miss=c.ses.filter(function(x){
@@ -1810,7 +1837,7 @@ async function seedCourses(){
     }).map(function(x){return{course_id:ex.id,activity:x.a,section:x.sec,weekday:x.d,start_time:x.s,end_time:x.e}});
     if(miss.length){
       var r2=await dbInsert('course_sessions',miss);
-      csessions=csessions.concat(r2.data);added+=miss.length;
+      if(r2.data&&r2.data.length){csessions=csessions.concat(r2.data);added+=r2.data.length}
     }
   }
   if(!cfg.courses_seeded)await saveCfg({courses_seeded:true});
