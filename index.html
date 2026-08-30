@@ -527,6 +527,11 @@ done:'Done (award points now)',planned:'Planned',repeat:'Repeat weekly (same wee
 custom:'Custom...',ctitle:'Custom title',points:'Points',save:'Save',cancel:'Cancel',close:'Close',del:'Delete',remove:'Remove',
 edit:'Edit Activity',title:'Title',move:'Move to day',
 settings:'Settings',manage:'Manage Activities',prefs:'Preferences',signout:'Sign out',addnew:'Add new',actname:'Activity name',
+gpatitle:'Projected GPA',gpasub:'{n} of {c} credits graded',gpaof:'of 5.00',
+gpanodata:'No graded work yet. Add scores to see a projected GPA.',
+proj:'Projected',floorlbl:'floor',ceillbl:'max',
+needlbl:'Need on remaining:',lostfinal:'Barred from final: {n} marks unreachable',
+final:'Final Exam',
 lang:'Language',city:'City',country:'Country',goals:'Weekly goals per pillar',seasontarget:'Season XP target',qurangoal:'Quran goal (pages)',startseason:'Start new season',
 totalxp:'Total XP',perfstreak:'Perfect Day Streak',actsdone:'Activities Done',xptoday:'XP Today',
 radar:'Pillar Radar',balance:'Pillar Balance',achievements:'Achievements',records:'Records',last14:'Last 14 Days',
@@ -1883,7 +1888,7 @@ function actName(a){return T(a)||a}
 
 
 /* ---------- course events (deadlines, exams, grades) ---------- */
-var EKINDS=['homework','quiz','exam','project','other'];
+var EKINDS=['homework','quiz','exam','final','project','other'];
 var EEMO={homework:'pencil',quiz:'quest',exam:'exam',project:'folder',other:'pushpin'};
 var EHUE={homework:'#4f9cf9',quiz:'#fbbf24',exam:'#ff6b4a',project:'#a78bfa',other:'#8494ad'};
 function eventsFor(cid){
@@ -1910,6 +1915,66 @@ function dueColor(e){
   if(n<0)return '#ff6b4a';
   if(n<=2)return '#fbbf24';
   return 'var(--dim)';
+}
+/* KSU official 5.00 scale (dar.ksu.edu.sa). F is 1.00, not 0: this is
+   specific to the Saudi 5-point system and is deliberate, not a bug. */
+var GRADES=[
+ {min:95,g:'A+',pts:5.00},{min:90,g:'A',pts:4.75},
+ {min:85,g:'B+',pts:4.50},{min:80,g:'B',pts:4.00},
+ {min:75,g:'C+',pts:3.50},{min:70,g:'C',pts:3.00},
+ {min:65,g:'D+',pts:2.50},{min:60,g:'D',pts:2.00},
+ {min:0,  g:'F', pts:1.00}
+];
+function gradeFor(pct){
+  for(var i=0;i<GRADES.length;i++){if(pct>=GRADES[i].min)return GRADES[i]}
+  return GRADES[GRADES.length-1];
+}
+/* denial (hirman) bars the student from the FINAL only, so those marks
+   become unreachable; it is not an automatic fail of the whole course */
+function courseProjection(cid){
+  var g=courseGrade(cid);if(!g)return null;
+  var st=courseStats(cid);
+  var denied=st.risk==='over';
+  var lostFinal=0;
+  if(denied){
+    eventsFor(cid).forEach(function(e){
+      if(e.kind==='final'&&e.max_score&&e.score==null)lostFinal+=Number(e.max_score);
+    });
+  }
+  var reachable=Math.max(0,100-lostFinal);
+  /* projected: performance on graded work, extrapolated over what is reachable */
+  var rate=g.scoredMax>0?g.earned/g.scoredMax:null;
+  var projected=rate==null?null:Math.round(Math.min(reachable,rate*reachable)*10)/10;
+  var ceiling=Math.round(Math.min(reachable,g.earned+(reachable-g.scoredMax))*10)/10;
+  var r=function(n){return Math.round(n*10)/10};
+  return{banked:g.earned,scoredMax:g.scoredMax,projected:projected,
+    ceiling:ceiling,reachable:reachable,denied:denied,lostFinal:r(lostFinal),
+    remaining:r(Math.max(0,reachable-g.scoredMax)),
+    grade:projected==null?null:gradeFor(projected)};
+}
+/* marks still needed on ungraded work to land each grade band */
+function needFor(cid){
+  var pj=courseProjection(cid);if(!pj||pj.remaining<=0)return [];
+  var out=[];
+  GRADES.forEach(function(gr){
+    if(gr.min<=0)return;
+    var need=gr.min-pj.banked;
+    if(need<=0||need>pj.remaining)return;
+    out.push({g:gr.g,need:Math.round(need*10)/10,
+      pctOfRest:Math.round(need/pj.remaining*100)});
+  });
+  return out.slice(0,3);
+}
+function semesterGPA(){
+  var qp=0,cr=0,n=0;
+  courses.forEach(function(c){
+    var pj=courseProjection(c.id);
+    if(!pj||pj.projected==null)return;
+    var cd=Number(c.credits)||3;
+    qp+=pj.grade.pts*cd;cr+=cd;n++;
+  });
+  if(!cr)return null;
+  return{gpa:Math.round(qp/cr*100)/100,credits:cr,counted:n,total:courses.length};
 }
 /* weighted grade from everything scored so far */
 /* every course is worth 100 marks; each graded item adds to the running total */
@@ -2175,8 +2240,21 @@ function todayClassesHtml(){
   if(!list.length)return '<p class="muted">'+T('noclasses')+'</p>';
   return list.map(function(ses){return classRow(ses,ds,true)}).join('');
 }
+function gpaCardHtml(){
+  var sg=semesterGPA();
+  if(!sg)return '<div class="crow"><div class="cs"><span class="muted">'+
+    px('stats',12)+' '+T('gpanodata')+'</span></div></div>';
+  var h='<div class="crow" style="border-inline-start:3px solid var(--gold)">';
+  h+='<div class="ch"><span class="cn">'+px('stats',13)+' '+T('gpatitle')+
+     '<br><span style="font-size:10px;font-weight:600;color:var(--dim)">'+
+     T('gpasub',{n:sg.counted,c:sg.credits})+'</span></span>'+
+     '<span class="cp" style="color:var(--gold);text-align:right">'+sg.gpa.toFixed(2)+
+     '<br><span style="font-size:9px;font-weight:600;color:var(--dim)">'+T('gpaof')+'</span></span></div>';
+  h+='</div>';
+  return h;
+}
 function coursesHtml(){
-  var h='';
+  var h=gpaCardHtml();
   if(coursesIncomplete())h+='<div class="crow" style="border-inline-start:3px solid #fbbf24"><div class="cs"><span class="warn">'+px('warn',13)+' '+T('missingcourses')+'</span>'+
   '<button class="cb" onclick="repairCourses()">'+T('repair')+'</button></div></div>';
   courses.slice().sort(function(a,b){return a.sort-b.sort}).forEach(function(c){
@@ -2190,6 +2268,19 @@ function coursesHtml(){
       (g?' \u00B7 '+px('stats',11)+' '+g.earned+'/100':'')+(ev?' \u00B7 '+px('clock',11)+' '+ev:'')+'</span>';
     h+='<span class="'+(st.risk==='over'?'bad':st.risk==='near'?'warn':'')+'">'+
       (st.risk==='over'?px('warn',12)+' '+T('denied'):T('canmiss',{n:st.left})+' \u00B7 '+T('limitlbl',{n:st.limit}))+'</span></div>';
+    var pj=courseProjection(c.id);
+    if(pj&&pj.projected!=null){
+      h+='<div class="cs"><span style="color:var(--dim)">'+T('proj')+' <b style="color:var(--gold)">'+
+        pj.grade.g+'</b> '+pj.projected+'/100 \u00B7 '+T('floorlbl')+' '+pj.banked+
+        ' \u00B7 '+T('ceillbl')+' '+pj.ceiling+'</span>';
+      if(pj.denied&&pj.lostFinal>0)h+='<span class="bad">'+px('warn',12)+' '+T('lostfinal',{n:pj.lostFinal})+'</span>';
+      h+='</div>';
+      var nf=needFor(c.id);
+      if(nf.length){
+        var parts=nf.map(function(x){return x.g+': '+x.need+' ('+x.pctOfRest+'%)'});
+        h+='<div class="cs"><span style="color:var(--dim);font-size:10px">'+T('needlbl')+' '+parts.join(' \u00B7 ')+'</span></div>';
+      }
+    }
     h+='</div>';
   });
   return h;
