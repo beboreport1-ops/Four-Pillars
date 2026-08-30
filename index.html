@@ -527,6 +527,9 @@ done:'Done (award points now)',planned:'Planned',repeat:'Repeat weekly (same wee
 custom:'Custom...',ctitle:'Custom title',points:'Points',save:'Save',cancel:'Cancel',close:'Close',del:'Delete',remove:'Remove',
 edit:'Edit Activity',title:'Title',move:'Move to day',
 settings:'Settings',manage:'Manage Activities',prefs:'Preferences',signout:'Sign out',addnew:'Add new',actname:'Activity name',
+focus:'Focus session',focussub:'Earn study XP for uninterrupted work',
+focusrun:'Focus running',focushint:'Keep the app closed if you like, the clock is absolute',
+focusdone:'Focus {n}m',focusxp:'Focus complete +{n} XP',min:'min',
 duesoon:'Due soon',duetoday:'Today',duetomorrow:'Tomorrow',dueindays:'in {n} days',
 exportics:'Export timetable',icsdone:'Exported {n} sessions',icsfail:'Export failed',
 nosessions:'No sessions to export',
@@ -2209,7 +2212,7 @@ function renderStudy(){
   '<button class="'+(studyView==='tt'?'on':'')+'" onclick="setStudyView(\'tt\')">'+px('cal',14)+" "+T('timetable')+'</button>'+
   '<button class="'+(studyView==='cal'?'on':'')+'" onclick="setStudyView(\'cal\')">'+px('cal',14)+" "+T('calendar')+'</button>'+
   '</div>';
-  if(studyView==='today')h+=todayClassesHtml();
+  if(studyView==='today')h+=focusCardHtml()+todayClassesHtml();
   else if(studyView==='events')h+=eventsHtml();
   else if(studyView==='courses')h+=coursesHtml();
   else if(studyView==='cal')h+=calendarHtml();
@@ -2236,9 +2239,74 @@ function classRow(ses,ds,interactive){
   h+='</div>';
   return h;
 }
+/* focus timer: stores the wall-clock end instant, never a tick count, so
+   backgrounding or closing the app cannot make it drift */
+var FKEY='fp_focus',_ftick=null;
+function focusState(){
+  try{var s=JSON.parse(localStorage.getItem(FKEY)||'null');
+    if(!s||!s.end)return null;return s}catch(e){return null}
+}
+function focusLeft(){
+  var s=focusState();if(!s)return 0;
+  return Math.max(0,Math.ceil((s.end-Date.now())/1000));
+}
+function fmtLeft(sec){
+  var m=Math.floor(sec/60),ss=sec%60;
+  return (m<10?'0':'')+m+':'+(ss<10?'0':'')+ss;
+}
+function startFocus(mins){
+  localStorage.setItem(FKEY,JSON.stringify({end:Date.now()+mins*60000,mins:mins}));
+  focusTick();render();
+}
+function cancelFocus(){
+  localStorage.removeItem(FKEY);
+  if(_ftick){clearInterval(_ftick);_ftick=null}
+  render();
+}
+async function finishFocus(mins){
+  localStorage.removeItem(FKEY);
+  if(_ftick){clearInterval(_ftick);_ftick=null}
+  var pts=Math.max(5,Math.round(mins/25*10));
+  var r=await dbInsert('activity_entries',[{pillar:'study',
+    title:T('focusdone',{n:mins}),entry_date:today(),status:'done',points_awarded:pts}]);
+  if(r.data&&r.data.length){entries=entries.concat(r.data);saveCache()}
+  toast(T('focusxp',{n:pts}),'target');
+  checkLevelUp();render();
+}
+function focusTick(){
+  var s=focusState();
+  if(!s){if(_ftick){clearInterval(_ftick);_ftick=null}return}
+  var left=focusLeft();
+  if(left<=0){finishFocus(s.mins||25);return}
+  var el=document.getElementById('ftime');
+  if(el)el.textContent=fmtLeft(left);
+  if(!_ftick)_ftick=setInterval(focusTick,1000);
+}
+/* recompute from the clock whenever the tab comes back, instead of trusting
+   that setInterval kept firing while backgrounded */
+document.addEventListener('visibilitychange',function(){
+  if(!document.hidden)focusTick();
+});
+function focusCardHtml(){
+  var s=focusState();
+  var h='<div class="crow" style="border-inline-start:3px solid var(--study)">';
+  if(s){
+    h+='<div class="ch"><span class="cn">'+px('target',13)+' '+T('focusrun')+
+       '</span><span class="cp" id="ftime" style="color:var(--study)">'+fmtLeft(focusLeft())+'</span></div>';
+    h+='<div class="cs"><span style="color:var(--dim);font-size:10px">'+T('focushint')+'</span>'+
+       '<button class="cb" onclick="cancelFocus()">'+T('cancel')+'</button></div>';
+  }else{
+    h+='<div class="ch"><span class="cn">'+px('target',13)+' '+T('focus')+
+       '<br><span style="font-size:10px;font-weight:600;color:var(--dim)">'+T('focussub')+'</span></span></div>';
+    h+='<div class="cs" style="gap:6px">'+
+       '<button class="cb" onclick="startFocus(25)">25 '+T('min')+'</button>'+
+       '<button class="cb" onclick="startFocus(50)">50 '+T('min')+'</button></div>';
+  }
+  return h+'</div>';
+}
 function todayClassesHtml(){
   var ds=today(),r=noClassReason(ds);
-  if(r)return '<div class="crow" style="border-inline-start:3px solid var(--soul)"><div class="cn">'+px('umbrella',15)+' '+T('noclassday',{r:r})+'</div></div>';
+  if(r)return focusCardHtml()+'<div class="crow" style="border-inline-start:3px solid var(--soul)"><div class="cn">'+px('umbrella',15)+' '+T('noclassday',{r:r})+'</div></div>';
   var list=sessionsOn(ds);
   if(!list.length)return '<p class="muted">'+T('noclasses')+'</p>';
   return list.map(function(ses){return classRow(ses,ds,true)}).join('');
@@ -3265,9 +3333,8 @@ async function doInstall(){
 if('serviceWorker' in navigator)window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})});
 
 /* ---------- boot ---------- */
-document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal()});
 sb.auth.onAuthStateChange(function(ev){if(ev==='PASSWORD_RECOVERY')showRecover()});
-applyLang();renderAuth();
+applyLang();renderAuth();focusTick();
 if(location.hash.indexOf('type=recovery')>=0)showRecover();else init();
 </script>
 </body>
