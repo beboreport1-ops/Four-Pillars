@@ -527,6 +527,9 @@ done:'Done (award points now)',planned:'Planned',repeat:'Repeat weekly (same wee
 custom:'Custom...',ctitle:'Custom title',points:'Points',save:'Save',cancel:'Cancel',close:'Close',del:'Delete',remove:'Remove',
 edit:'Edit Activity',title:'Title',move:'Move to day',
 settings:'Settings',manage:'Manage Activities',prefs:'Preferences',signout:'Sign out',addnew:'Add new',actname:'Activity name',
+duesoon:'Due soon',duetoday:'Today',duetomorrow:'Tomorrow',dueindays:'in {n} days',
+exportics:'Export timetable',icsdone:'Exported {n} sessions',icsfail:'Export failed',
+nosessions:'No sessions to export',
 gpatitle:'Projected GPA',gpasub:'{n} of {c} credits graded',gpaof:'of 5.00',
 gpanodata:'No graded work yet. Add scores to see a projected GPA.',
 proj:'Projected',floorlbl:'floor',ceillbl:'max',
@@ -1889,7 +1892,7 @@ function actName(a){return T(a)||a}
 
 /* ---------- course events (deadlines, exams, grades) ---------- */
 var EKINDS=['homework','quiz','exam','final','project','other'];
-var EEMO={homework:'pencil',quiz:'quest',exam:'exam',project:'folder',other:'pushpin'};
+var EEMO={homework:'pencil',quiz:'quest',exam:'exam',final:'exam',project:'folder',other:'pushpin'};
 var EHUE={homework:'#4f9cf9',quiz:'#fbbf24',exam:'#ff6b4a',project:'#a78bfa',other:'#8494ad'};
 function eventsFor(cid){
   return cevents.filter(function(e){return e.course_id===cid})
@@ -2287,13 +2290,61 @@ function coursesHtml(){
 }
 function ttNav(d){ttAnchor.setDate(ttAnchor.getDate()+7*d);renderStudy()}
 function ttToday(){ttAnchor=new Date();renderStudy()}
+/* ICS export: weekly recurrence per session, local floating times so the
+   file does not depend on the calendar app shipping a tz database */
+function icsEsc(s){return String(s==null?'':s).replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\n/g,'\\n')}
+function icsStamp(ds,tm){return ds.replace(/-/g,'')+'T'+String(tm||'00:00').replace(':','')+'00'}
+function firstOnOrAfter(ds,wd){
+  var d=new Date(ds+'T00:00:00');
+  var diff=(wd-d.getDay()+7)%7;
+  d.setDate(d.getDate()+diff);
+  return dstr(d);
+}
+function buildICS(){
+  var start=semStart(),weeks=semWeeks();
+  var until=addDays(start,weeks*7-1);
+  var L2=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Four Pillars//EN','CALSCALE:GREGORIAN'];
+  var n=0;
+  csessions.forEach(function(ses){
+    var c=courses.find(function(x){return x.id===ses.course_id});
+    var first=firstOnOrAfter(start,ses.weekday);
+    if(first>until)return;
+    n++;
+    L2.push('BEGIN:VEVENT');
+    L2.push('UID:fp-'+ses.id+'@fourpillars');
+    L2.push('DTSTART:'+icsStamp(first,ses.start_time));
+    L2.push('DTEND:'+icsStamp(first,ses.end_time));
+    L2.push('RRULE:FREQ=WEEKLY;UNTIL='+icsStamp(until,'23:59'));
+    L2.push('SUMMARY:'+icsEsc((c?c.code+' - '+c.name:'Class')+' ('+(ses.activity||'')+')'));
+    if(ses.room)L2.push('LOCATION:'+icsEsc(ses.room));
+    L2.push('DESCRIPTION:'+icsEsc('Section '+(ses.section||'')));
+    L2.push('END:VEVENT');
+  });
+  L2.push('END:VCALENDAR');
+  return{text:L2.join('\r\n'),count:n};
+}
+function exportICS(){
+  var r=buildICS();
+  if(!r.count){toast(T('nosessions'),'warn');return}
+  try{
+    var blob=new Blob([r.text],{type:'text/calendar;charset=utf-8'});
+    var url=URL.createObjectURL(blob);
+    var a=document.createElement('a');
+    a.href=url;a.download='four-pillars-timetable.ics';
+    document.body.appendChild(a);a.click();
+    document.body.removeChild(a);
+    setTimeout(function(){URL.revokeObjectURL(url)},2000);
+    toast(T('icsdone',{n:r.count}),'check');
+  }catch(e){toast(T('icsfail'),'warn')}
+}
 function timetableHtml(){
   var ws=weekStart(ttAnchor),td=today();
   var h='<div class="ttnav"><button class="iconbtn" onclick="ttNav(-1)">\u2190</button>'+
   '<b>'+new Date(ws+'T00:00:00').toLocaleDateString(locale(),{month:'short',day:'numeric'})+' \u2013 '+
   new Date(addDays(ws,4)+'T00:00:00').toLocaleDateString(locale(),{month:'short',day:'numeric'})+'</b>'+
   '<button class="iconbtn" onclick="ttNav(1)">\u2192</button>'+
-  '<button class="iconbtn" style="border-color:var(--gold);color:var(--gold)" onclick="ttToday()">'+T('today')+'</button></div>';
+  '<button class="iconbtn" style="border-color:var(--gold);color:var(--gold)" onclick="ttToday()">'+T('today')+'</button>'+
+  '<button class="iconbtn" onclick="exportICS()" aria-label="'+T('exportics')+'">'+px('down',13)+'</button></div>';
   for(var d=0;d<5;d++){
     var ds=addDays(ws,d),isT=ds===td;
     var dt=new Date(ds+'T00:00:00');
@@ -2525,6 +2576,45 @@ function renderHeader(){
   document.getElementById('hxp').style.width=Math.min(100,Math.round((xp-base)/(next-base)*100))+'%';
   document.getElementById('hxpt').textContent=xp+' XP \u00B7 '+(next-xp)+' \u2192 LV'+(l+1);
 }
+/* next few days of graded work, surfaced on Main so deadlines are not
+   buried inside the Study tab */
+function upcomingEvents(days){
+  var td=today(),lim=addDays(td,days==null?3:days);
+  return cevents.filter(function(e){
+    return !e.done&&e.due_date&&e.due_date>=td&&e.due_date<=lim;
+  }).sort(function(a,b){
+    if(a.due_date!==b.due_date)return a.due_date<b.due_date?-1:1;
+    return (a.due_time||'')<(b.due_time||'')?-1:1;
+  });
+}
+function dueLabel(ds){
+  var td=today();
+  if(ds===td)return T('duetoday');
+  if(ds===addDays(td,1))return T('duetomorrow');
+  var n=Math.round((new Date(ds+'T00:00:00')-new Date(td+'T00:00:00'))/86400000);
+  return T('dueindays',{n:n});
+}
+function deadlineStripHtml(){
+  var up=upcomingEvents(3);
+  if(!up.length)return '';
+  var h='<div class="quest" style="margin-top:10px"><div class="qtop"><h2>'+
+    px('clock',15)+' '+T('duesoon')+'</h2><span class="qcount">'+up.length+'</span></div>';
+  up.slice(0,4).forEach(function(e){
+    var c=courses.find(function(x){return x.id===e.course_id});
+    var urgent=e.due_date===today();
+    h+='<div class="crow tap" style="border-inline-start:3px solid '+(urgent?'#ff6b4a':'#fbbf24')+
+       ';margin-top:6px" onclick="openEvent(\''+e.id+'\')">'+
+       '<div class="ch"><span class="cn" style="overflow-wrap:anywhere">'+
+       px(EEMO[e.kind]||'pushpin',12)+' '+esc(e.title||T(e.kind))+
+       (c?'<br><span style="font-size:10px;font-weight:600;color:var(--dim)">'+esc(c.code)+'</span>':'')+
+       '</span><span class="cp" style="color:'+(urgent?'#ff6b4a':'#fbbf24')+
+       ';text-align:right;font-size:11px">'+dueLabel(e.due_date)+
+       (e.due_time?'<br><span style="font-size:9px;color:var(--dim)">'+fmt12(e.due_time)+'</span>':'')+
+       '</span></div></div>';
+  });
+  h+='</div>';
+  return h;
+}
 function renderQuest(){
   if(tab!=='main')return;
   var td=today();
@@ -2556,6 +2646,7 @@ function renderQuest(){
     h+='<button class="'+cls+'" onclick="togglePrayer(\''+pr[0]+'\')">'+(e?px('check',12)+' ':'')+pr[0]+'<small>'+pr[1]+'</small>'+tm+'</button>';
   });
   h+='</div></div>';
+  h+=deadlineStripHtml();
   document.getElementById('questcard').innerHTML=h;
 }
 function renderGoals(){
@@ -2893,7 +2984,7 @@ function drawRadar(){
   for(var i=0;i<4;i++){
     var p=PKEYS[i],a=ang(i),r=R*(pillarXP(p)/mx);
     ctx.beginPath();ctx.arc(cx+Math.cos(a)*r,cy+Math.sin(a)*r,4,0,7);ctx.fillStyle=PIL[p].hex;ctx.fill();
-    ctx.fillStyle='#8494ad';ctx.font='12px Segoe UI';ctx.textAlign='center';
+    ctx.fillStyle='#8494ad';ctx.font="12px system-ui,-apple-system,'Segoe UI',sans-serif";ctx.textAlign='center';
     ctx.fillText(pnm(p),cx+Math.cos(a)*(R+26),cy+Math.sin(a)*(R+26)+4);
   }
 }
@@ -2906,7 +2997,7 @@ function drawSeason(){
   ctx.beginPath();ctx.arc(cx,cy,R,-Math.PI/2,-Math.PI/2+Math.PI*2*pct);
   var g=ctx.createLinearGradient(0,0,180,180);g.addColorStop(0,'#fbbf24');g.addColorStop(1,'#f59e0b');
   ctx.strokeStyle=g;ctx.lineWidth=14;ctx.lineCap='round';ctx.stroke();
-  ctx.fillStyle='#e8eefb';ctx.font='bold 26px Segoe UI';ctx.textAlign='center';
+  ctx.fillStyle='#e8eefb';ctx.font="bold 26px system-ui,-apple-system,'Segoe UI',sans-serif";ctx.textAlign='center';
   ctx.fillText(Math.round(pct*100)+'%',cx,cy+9);
 }
 function newSeason(){
