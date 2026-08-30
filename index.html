@@ -34,7 +34,6 @@ button{cursor:pointer;font-family:inherit;color:inherit}
 .authbox .main{width:100%;background:var(--accent);border:none;border-radius:10px;padding:12px;color:#fff;font-size:15px;font-weight:600}
 .authbox .alt{width:100%;background:none;border:none;color:var(--dim);margin-top:10px;font-size:13px}
 #authmsg{color:var(--gold);font-size:13px;text-align:center;margin-top:10px;min-height:18px}
-.langlink{background:none;border:none;color:var(--dim);font-size:12px;font-weight:600;text-decoration:underline;padding:6px;margin-top:4px}
 .topbar{position:sticky;top:0;z-index:50;background:rgba(11,15,23,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 header{display:flex;align-items:center;gap:8px;padding:11px 14px}
 .lvlbadge{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#1a1200;font-weight:800;border-radius:8px;padding:3px 9px;font-size:12px;white-space:nowrap;flex:0 0 auto}
@@ -356,8 +355,7 @@ main{padding-top:20px}
 .hcard:first-child,.section:first-child,.quest:first-child{margin-top:2px}
 
 /* ---- stat numerals read as data, not prose ---- */
-.lvlbadge,.rv,.he,.lrk,.rlp,.rname,.btier,.cstat,.abspct,.gs,.qn{font-variant-numeric:tabular-nums}
-
+.lvlbadge,.rv,.he,.lrk,.rlp,.rname,.btier,.cstat,.abspct,.gs,
 /* ---- nav: pill tabs, real touch targets ---- */
 .mainnav{padding:6px 10px 10px;gap:6px}
 .mainnav button{min-height:40px;border-radius:999px;padding:8px 14px;font-size:12.5px;transition:background var(--dur),color var(--dur),border-color var(--dur)}
@@ -495,7 +493,7 @@ signin:'Sign In',create:'Create Account',newhere:'New here? Create account',have
 checkmail:'Check your email to confirm, then sign in.',resetsent:'Reset link sent \u2014 check your email.',typeemail:'Type your email above first, then tap Forgot password.',
 newpass:'New Password',setnew:'Set a new password for your account',updatepw:'Update Password',pwshort:'Password must be at least 6 characters.',pwdone:'Password updated!',
 sched:'Schedule',stats:'Stats',week:'Week',month:'Month',year:'Year',today:'Today',
-quest:'Today\u2019s Quest',pillars:'pillars',all:'All',
+quest:'Today\u2019s Quest',pillars:'pillars',
 study:'Studying',gym:'Health',social:'Social',soul:'Soul',
 main:'Main',todayplan:'Today',
 ofsem:'of semester',calendar:'Calendar',ttip:'Tap Present on any class to mark it absent',missingcourses:'Some courses are missing',repair:'Fix',
@@ -537,20 +535,18 @@ gpatitle:'Projected GPA',gpasub:'{n} of {c} credits graded',gpaof:'of 5.00',
 gpanodata:'No graded work yet. Add scores to see a projected GPA.',
 proj:'Projected',floorlbl:'floor',ceillbl:'max',
 needlbl:'Need on remaining:',lostfinal:'Barred from final: {n} marks unreachable',
-final:'Final Exam',
-lang:'Language',city:'City',country:'Country',goals:'Weekly goals per pillar',seasontarget:'Season XP target',qurangoal:'Quran goal (pages)',startseason:'Start new season',
+final:'Final Exam',city:'City',country:'Country',goals:'Weekly goals per pillar',seasontarget:'Season XP target',qurangoal:'Quran goal (pages)',startseason:'Start new season',
 totalxp:'Total XP',perfstreak:'Perfect Day Streak',actsdone:'Activities Done',xptoday:'XP Today',
 radar:'Pillar Radar',balance:'Pillar Balance',achievements:'Achievements',records:'Records',last14:'Last 14 Days',
 season:'Season',dayleft:'days left',
-quran:'Quran Progress',pages:'pages',logread:'Log reading',surah:'Surah (optional)',juz:'Juz (optional)',khatma:'to khatma',
-gymlog:'Gym Log',exercise:'Exercise',sets:'Sets',reps:'Reps',weight:'Weight (kg)',addset:'Log lift',pr:'PR',
+quran:'Quran Progress',pages:'pages',logread:'Log reading',surah:'Surah (optional)',juz:'Juz (optional)',khatma:'to khatma',exercise:'Exercise',sets:'Sets',reps:'Reps',weight:'Weight (kg)',pr:'PR',
 rank:'Gym Rank',overall:'Overall',loglift:'Log lift',e1rm:'Est. 1RM',bodyweight:'Body weight (kg)',
 liftsex:'Standards',male:'Male',female:'Female',lp:'LP',tonext:'to {r}',maxrank:'Max rank',
 history:'History',nolifts:'No lifts logged yet',setbw:'Set your body weight to get ranked',
-best:'Best',latest:'Latest',improve:'{n} kg since start',firstlog:'First entry',
+best:'Best',
 liftrank:'Ranked lifts',alllifts:'All lifts',delset:'Delete this entry?',
 accessories:'Accessories',pushday:'Push',pullday:'Pull',legday:'Legs',ranked:'Ranked',
-noaccessory:'Not logged yet',addcustom:'Custom exercise',customname:'Exercise name',
+noaccessory:'Not logged yet',
 rk_wood:'Wood',rk_bronze:'Bronze',rk_silver:'Silver',rk_gold:'Gold',rk_platinum:'Platinum',
 rk_diamond:'Diamond',rk_champion:'Champion',rk_titan:'Titan',rk_olympian:'Olympian',
 notes:'Reflection',noteph:'How did today go?',
@@ -561,15 +557,14 @@ emptyday:'Nothing planned. Tap + Add to start.',
 signoutq:'Sign out?',signoutm:'You\u2019ll need your email and password to get back in. Your data stays safe.',
 delq:'Delete activity?',delm:'Remove <b>{t}</b> from {d}?',dellost:' You\u2019ll lose the {p} XP it earned.',
 remq:'Remove activity type?',remm:'Remove <b>{t}</b> (+{p})? Past entries and XP stay \u2014 you just won\u2019t see it when adding new ones.',
-welcome:'Welcome',obtag:'Let\u2019s set up your four pillars',obnext:'Next',obdone:'Start',oblang:'Pick your language',obcity:'Your city (for prayer times)',obgoals:'How many days a week for each pillar?',
+welcome:'Welcome',obtag:'Let\u2019s set up your four pillars',obnext:'Next',obdone:'Start',obcity:'Your city (for prayer times)',obgoals:'How many days a week for each pillar?',
 install:'Install app',installed:'Added to home screen',
 autoloc:'Detect my location',gpsloc:'Use GPS (precise)',locfail:'Couldn\u2019t detect location \u2014 set your city manually.',locdenied:'Location permission denied.',gpsok:'Location updated',locnow:'Location',
 saved:'Saved',deleted:'Deleted',added:'Added',removed:'Removed',nameFirst:'Type a name first',
 backplan:'back to planned',unlogged:'unlogged',
 strongest:'Strongest',weakest:'Needs work',vslast:'vs last week',
 lvl:'Level',bestday:'Best day',activedays:'Active days',longest:'Longest',streak:'streak',
-offline:'Offline',pending:'{n} to sync',synced:'Synced {n} change(s)',offlinemode:'Offline \u2014 changes save on this device',savedoff:'saved offline',}};
-var lang='en';
+offline:'Offline',pending:'{n} to sync',synced:'Synced {n} change(s)',offlinemode:'Offline \u2014 changes save on this device',savedoff:'saved offline'}};
 function T(k,vars){
   var s=L.en[k]||k;
   if(vars)Object.keys(vars).forEach(function(v){s=s.split('{'+v+'}').join(vars[v])});
@@ -1621,9 +1616,6 @@ function liftHistory(k){
   return gymSets.filter(function(g){return g.exercise===k})
     .slice().sort(function(a,b){return a.entry_date<b.entry_date?-1:a.entry_date>b.entry_date?1:0});
 }
-function loggedLifts(){
-  return LIFTS.filter(function(l){return gymSets.some(function(g){return g.exercise===l.k})});
-}
 /* overall = average tier index across ranked lifts */
 function overallRank(){
   var bw=bodyWeight();if(!bw)return null;
@@ -2646,7 +2638,10 @@ function renderHeader(){
 }
 /* next few days of graded work, surfaced on Main so deadlines are not
    buried inside the Study tab */
-function upcomingEvents(days){
+/* window-based lookahead for the Main strip. Deliberately NOT named
+   upcomingEvents: that name is taken by a count-based helper used by the
+   Deadlines view, and redefining it silently shadowed the original. */
+function eventsDueWithin(days){
   var td=today(),lim=addDays(td,days==null?3:days);
   return cevents.filter(function(e){
     return !e.done&&e.due_date&&e.due_date>=td&&e.due_date<=lim;
@@ -2655,15 +2650,14 @@ function upcomingEvents(days){
     return (a.due_time||'')<(b.due_time||'')?-1:1;
   });
 }
-function dueLabel(ds){
+function dueLabelShort(ds){
   var td=today();
   if(ds===td)return T('duetoday');
   if(ds===addDays(td,1))return T('duetomorrow');
-  var n=Math.round((new Date(ds+'T00:00:00')-new Date(td+'T00:00:00'))/86400000);
-  return T('dueindays',{n:n});
+  return T('dueindays',{n:daysTo(ds)});
 }
 function deadlineStripHtml(){
-  var up=upcomingEvents(3);
+  var up=eventsDueWithin(3);
   if(!up.length)return '';
   var h='<div class="quest" style="margin-top:10px"><div class="qtop"><h2>'+
     px('clock',15)+' '+T('duesoon')+'</h2><span class="qcount">'+up.length+'</span></div>';
@@ -2676,7 +2670,7 @@ function deadlineStripHtml(){
        px(EEMO[e.kind]||'pushpin',12)+' '+esc(e.title||T(e.kind))+
        (c?'<br><span style="font-size:10px;font-weight:600;color:var(--dim)">'+esc(c.code)+'</span>':'')+
        '</span><span class="cp" style="color:'+(urgent?'#ff6b4a':'#fbbf24')+
-       ';text-align:right;font-size:11px">'+dueLabel(e.due_date)+
+       ';text-align:right;font-size:11px">'+dueLabelShort(e.due_date)+
        (e.due_time?'<br><span style="font-size:9px;color:var(--dim)">'+fmt12(e.due_time)+'</span>':'')+
        '</span></div></div>';
   });
