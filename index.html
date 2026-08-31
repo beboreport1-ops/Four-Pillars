@@ -5,8 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0b0f17">
 <title>Four Pillars</title>
+<meta name="description" content="A private personal-development tracker: study, gym, social and soul, with XP, streaks, a university semester manager and a gym strength ladder.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://beboreport1-ops.github.io/Four-Pillars/">
+<link rel="icon" href="icon-192.png" type="image/png">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Four Pillars">
+<meta property="og:title" content="Four Pillars">
+<meta property="og:description" content="Level up your life: Study, Gym, Social, Soul.">
+<meta property="og:url" content="https://beboreport1-ops.github.io/Four-Pillars/">
+<meta property="og:image" content="https://beboreport1-ops.github.io/Four-Pillars/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Four Pillars, with bars in the study, gym, social and soul colours.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Four Pillars">
+<meta name="twitter:description" content="Level up your life: Study, Gym, Social, Soul.">
+<meta name="twitter:image" content="https://beboreport1-ops.github.io/Four-Pillars/og.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -525,9 +542,9 @@ ev_start:'Semester starts',ev_holiday:'National Day holiday',ev_break:'Autumn br
 ev_deadline:'Last day to withdraw',ev_exams:'Final exams',ev_vacation:'Mid-year vacation',courses:'My Courses',todayclasses:'Today\u2019s Classes',timetable:'Timetable',attendance:'Attendance',
 present:'Present',absent:'Absent',lecture:'Lecture',tutorial:'Tutorial',lab:'Lab',section:'Section',
 noclasses:'No classes today',held:'held',canmiss:'Can miss {n} more',denied:'Denial risk!',
-week:'Week',weekof:'Week {n} of {t}',semstart:'Semester start',semweeks:'Semester weeks',abslimit:'Denial limit (%)',
+weekof:'Week {n} of {t}',semstart:'Semester start',semweeks:'Semester weeks',abslimit:'Denial limit (%)',
 markedabsent:'Marked absent',markedpresent:'Back to present',required:'Required',elective:'Elective',
-hours:'hrs',ofsem:'of semester',limitlbl:'limit {n}',
+hours:'hrs',limitlbl:'limit {n}',
 quickadd:'Quick log',thisweek:'This week',
 health:'Health Today',water:'Water',calories:'Calories',protein:'Protein',addmeal:'Add meal',
 kcal:'kcal',grams:'g',bottlesize:'Bottle size (ml)',
@@ -537,12 +554,12 @@ weekgoals:'Weekly Goals',goalmet:'Goal met',
 add:'Add Activity',pillar:'Pillar',activity:'Activity',date:'Date',status:'Status',
 done:'Done (award points now)',planned:'Planned',repeat:'Repeat weekly (same weekday)',norepeat:'No repeat',forwk:'For {n} weeks',
 custom:'Custom...',ctitle:'Custom title',points:'Points',save:'Save',cancel:'Cancel',close:'Close',del:'Delete',remove:'Remove',
-edit:'Edit Activity',title:'Title',move:'Move to day',
+edit:'Edit Activity',move:'Move to day',type:'Type',
 settings:'Settings',manage:'Manage Activities',prefs:'Preferences',signout:'Sign out',addnew:'Add new',actname:'Activity name',
 focus:'Focus session',focussub:'Earn study XP for uninterrupted work',
 focusrun:'Focus running',focushint:'Keep the app closed if you like, the clock is absolute',
 focusdone:'Focus {n}m',focusxp:'Focus complete +{n} XP',min:'min',
-duesoon:'Due soon',duetoday:'Today',duetomorrow:'Tomorrow',dueindays:'in {n} days',
+duesoon:'Due soon',duetoday:'Today',dueindays:'in {n} days',
 exportics:'Export timetable',icsdone:'Exported {n} sessions',icsfail:'Export failed',
 nosessions:'No sessions to export',
 gpatitle:'Projected GPA',gpasub:'{n} of {c} credits graded',gpaof:'of 5.00',
@@ -2888,6 +2905,13 @@ function renderGoals(){
   document.getElementById('goalcard').innerHTML=h;
 }
 function visible(e){return pFilter==='all'||e.pillar===pFilter}
+/* browser history and tab strip read better with a per-view title */
+function docTitle(){
+  var base=T('title');
+  var names={main:T('main'),sched:T('sched'),stats:T('stats'),rank:T('rank')};
+  var n=PKEYS.indexOf(tab)>=0?pnm(tab):names[tab];
+  document.title=n?n+' \u00B7 '+base:base;
+}
 function setTab(t){
   tab=t;openLift=null;
   var pill=PKEYS.indexOf(t)>=0;
@@ -2900,6 +2924,7 @@ function setTab(t){
   document.getElementById('view-stats').classList.toggle('hidden',t!=='stats');
   var cb=document.getElementById('calblock');if(cb)cb.classList.toggle('hidden',t!=='sched');
   window.scrollTo({top:0});
+  docTitle();
   render();
 }
 function renderNav(){
@@ -3272,7 +3297,7 @@ async function saveAdd(){
 }
 function openEdit(id){
   var e=entries.find(function(x){return x.id===id});if(!e)return;
-  var h='<h2>'+T('edit')+'</h2><label>'+T('title')+'</label><input id="etitle" value="'+esc(e.title)+'">'+
+  var h='<h2>'+T('edit')+'</h2><label>'+T('eventtitle')+'</label><input id="etitle" value="'+esc(e.title)+'">'+
   '<label>'+T('points')+'</label><input id="epts" type="number" value="'+e.points_awarded+'">'+
   '<label>'+T('date')+'</label><input id="edate" type="date" value="'+e.entry_date+'">'+
   '<label>'+T('status')+'</label><select id="estat"><option value="done"'+(e.status==='done'?' selected':'')+'>'+'Done'+'</option><option value="planned"'+(e.status==='planned'?' selected':'')+'>'+T('planned')+'</option></select>'+
