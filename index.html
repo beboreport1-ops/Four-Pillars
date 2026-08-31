@@ -80,6 +80,7 @@ main{padding:14px 16px 90px;max-width:1000px;margin:0 auto}
 .cls.absent{border-inline-start-color:#ff6b4a;opacity:.72}
 .cls.future{opacity:.55}
 .cls .ci{flex:1;min-width:0}
+.cls .ci.tap{cursor:pointer}
 .cls .cc{font-size:12px;font-weight:800;color:var(--study);letter-spacing:.2px}
 .cls .cnm{font-size:13px;font-weight:600;line-height:1.35;margin-top:1px;overflow-wrap:anywhere}
 .cls .cm{font-size:11px;color:var(--dim);margin-top:2px}
@@ -2218,9 +2219,12 @@ function classRow(ses,ds,interactive){
   var cls='cls'+(abs?' absent':'')+(passed?'':' future');
   var style=c?'border-inline-start-color:'+(abs?'#ff6b4a':'var(--study)'):'';
   var h='<div class="'+cls+'" style="'+style+'">';
-  h+='<div class="ci"><div class="cc">'+esc(c?c.code:'')+'</div>'+
+  var _cid=c?c.id:'';
+  h+='<div class="ci'+(c?' tap':'')+'"'+(c?' onclick="openCourseView(\''+_cid+'\')"':'')+'>'+
+  '<div class="cc">'+esc(c?c.code:'')+'</div>'+
   '<div class="cnm">'+esc(c?c.name:'')+'</div>'+
-  '<div class="cm">'+actName(ses.activity)+' \u00B7 '+T('section')+' '+esc(ses.section||'')+'</div></div>';
+  '<div class="cm">'+actName(ses.activity)+' \u00B7 '+T('section')+' '+esc(ses.section||'')+
+  (ses.room?' \u00B7 '+px('pin',11)+' '+esc(ses.room):'')+'</div></div>';
   h+='<div class="ct">'+fmt12(ses.start_time)+'<br>'+fmt12(ses.end_time)+'</div>';
   if(interactive){
     var ah=abs?absHours(ses,ds):0;
@@ -2298,7 +2302,7 @@ function focusCardHtml(){
 }
 function todayClassesHtml(){
   var ds=today(),r=noClassReason(ds);
-  if(r)return focusCardHtml()+'<div class="crow" style="border-inline-start:3px solid var(--soul)"><div class="cn">'+px('umbrella',15)+' '+T('noclassday',{r:r})+'</div></div>';
+  if(r)return '<div class="crow" style="border-inline-start:3px solid var(--soul)"><div class="cn">'+px('umbrella',15)+' '+T('noclassday',{r:r})+'</div></div>';
   var list=sessionsOn(ds);
   if(!list.length)return '<p class="muted">'+T('noclasses')+'</p>';
   return list.map(function(ses){return classRow(ses,ds,true)}).join('');
