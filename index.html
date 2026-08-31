@@ -80,6 +80,14 @@ main{padding:14px 16px 90px;max-width:1000px;margin:0 auto}
 .cls.absent{border-inline-start-color:#ff6b4a;opacity:.72}
 .cls.future{opacity:.55}
 .cls .ci{flex:1;min-width:0}
+.wrow{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.wrow select{flex:0 0 88px;min-width:0}
+.wrow .wt{flex:1;min-width:0}
+.wrow .wm{flex:0 0 62px;text-align:center}
+.wrow .wx{flex:0 0 auto;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);background:var(--card2);border-radius:8px;color:var(--dim)}
+.wrow .wsc{flex:0 0 auto;min-width:34px;text-align:center;font-size:11px;font-weight:800;color:var(--gold)}
+.wtot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);margin-top:8px;padding-top:8px;font-size:12px;font-weight:700;color:var(--dim)}
+.wtot b{font-size:16px}
 .cls .ci.tap{cursor:pointer}
 .cls .cc{font-size:12px;font-weight:800;color:var(--study);letter-spacing:.2px}
 .cls .cnm{font-size:13px;font-weight:600;line-height:1.35;margin-top:1px;overflow-wrap:anywhere}
@@ -504,6 +512,7 @@ duedate:'Date',duetime:'Time',score:'Score',maxscore:'Out of',room:'Room',
 noevents:'Nothing scheduled',upcomingev:'Upcoming',pastev:'Past',
 addscore:'Enter score',setroom:'Set room',overdue:'Overdue',dueintoday:'Today',duetomorrow:'Tomorrow',
 eventtitle:'Title',sessions:'Classes',
+weights:'Grade weights',addrow:'Add item',wtotal:'Total',wlocked:'Clear the score first to remove a graded item',wempty:'Add at least one item',wsaved:'Weights saved',wover:'Over 100',wunder:'{n} left',
 deleteev:'Delete this item?',
 howmany:'How many hours did the teacher count?',onehr:'1 hour',twohr:'{n} hours',countedas:'counted as {n}',
 markabsent:'Mark absent',noclassday:'No classes \u00B7 {r}',daysleft:'in {n} days',daysago:'{n} days ago',
@@ -2140,6 +2149,130 @@ function gradeCardHtml(cid,g){
   h+='</div>';
   return h;
 }
+/* Grade weights editor. There is no separate weight column: every course is
+   worth 100 marks and each item's max_score IS its weight, so this edits
+   max_score in bulk. Keep it that way; two sources of truth would drift. */
+var WCID=null,WROWS=[],WORIG=[];
+var WTPL=[{k:'final',m:'40'},{k:'exam',m:'20'},{k:'homework',m:'10'},
+          {k:'project',m:'20'},{k:'quiz',m:'5'},{k:'quiz',m:'5'}];
+function wRowHtml(r,i){
+  var h='<div class="wrow">';
+  h+='<select id="w_k'+i+'" aria-label="'+T('type')+'">'+EKINDS.map(function(k){
+    return '<option value="'+k+'"'+(r.kind===k?' selected':'')+'>'+T(k)+'</option>';
+  }).join('')+'</select>';
+  h+='<input class="wt" id="w_t'+i+'" value="'+esc(r.title||'')+'" placeholder="'+T('eventtitle')+'">';
+  h+='<input class="wm" id="w_m'+i+'" type="number" step="0.5" min="0" value="'+esc(r.max||'')+'" oninput="wRecalc()" aria-label="'+T('marks')+'">';
+  if(r.score!=null)h+='<span class="wsc" title="'+T('score')+'">'+esc(r.score)+'</span>';
+  else h+='<button class="wx" onclick="wDel('+i+')" aria-label="'+T('remove')+'">'+px('cross',12)+'</button>';
+  h+='</div>';
+  return h;
+}
+function wSync(){
+  for(var i=0;i<WROWS.length;i++){
+    var k=document.getElementById('w_k'+i),tt=document.getElementById('w_t'+i),m=document.getElementById('w_m'+i);
+    if(k)WROWS[i].kind=k.value;
+    if(tt)WROWS[i].title=tt.value;
+    if(m)WROWS[i].max=m.value;
+  }
+}
+function wRecalc(){
+  var s=0;
+  for(var i=0;i<WROWS.length;i++){
+    var m=document.getElementById('w_m'+i);
+    var v=m?parseFloat(m.value):NaN;
+    if(!isNaN(v))s+=v;
+  }
+  s=Math.round(s*10)/10;
+  var el=document.getElementById('w_sum');
+  if(el){
+    el.textContent=s;
+    el.style.color=s===100?'#34d399':s>100?'#ff6b4a':'#fbbf24';
+  }
+  var n=document.getElementById('w_note');
+  if(n)n.textContent=s===100?'':(s>100?T('wover'):T('wunder',{n:Math.round((100-s)*10)/10}));
+  return s;
+}
+function wPaint(){
+  var c=document.getElementById('w_rows');
+  if(c)c.innerHTML=WROWS.map(wRowHtml).join('');
+  wRecalc();
+}
+function wAdd(){
+  wSync();
+  WROWS.push({id:null,kind:'homework',title:'',max:'',score:null});
+  wPaint();
+}
+function wDel(i){
+  wSync();
+  if(WROWS[i]&&WROWS[i].score!=null){toast(T('wlocked'));return}
+  WROWS.splice(i,1);
+  wPaint();
+}
+function openWeights(cid){
+  var c=courses.find(function(x){return x.id===cid});
+  if(!c)return;
+  WCID=cid;
+  WORIG=eventsFor(cid).map(function(e){
+    return{id:e.id,kind:e.kind,title:e.title||'',max:e.max_score!=null?String(e.max_score):'',score:e.score};
+  });
+  WROWS=WORIG.map(function(r){return Object.assign({},r)});
+  if(!WROWS.length)WROWS=WTPL.map(function(x){return{id:null,kind:x.k,title:'',max:x.m,score:null}});
+  var h='<h2>'+px('stats',16)+' '+T('weights')+'</h2>';
+  h+='<p class="confmsg">'+esc(c.code)+'<br><span style="color:var(--dim)">'+esc(c.name)+'</span></p>';
+  h+='<div id="w_rows"></div>';
+  h+='<div class="mrow"><button class="no" onclick="wAdd()">'+px('plus',13)+' '+T('addrow')+'</button></div>';
+  h+='<div class="wtot"><span>'+T('wtotal')+' <span id="w_note" style="color:var(--dim);font-weight:600"></span></span>'+
+     '<span><b id="w_sum">0</b> / 100</span></div>';
+  h+='<div class="mrow"><button class="no" onclick="closeModal()">'+T('cancel')+'</button>'+
+     '<button class="ok" onclick="saveWeights()">'+T('save')+'</button></div>';
+  showModal(h,false);
+  wPaint();
+}
+async function saveWeights(){
+  wSync();
+  var cid=WCID,rows=WROWS.slice(),orig=WORIG.slice();
+  var keep={},ins=[],ups=[],dels=[],i;
+  for(i=0;i<rows.length;i++){
+    var r=rows[i];
+    var mv=parseFloat(r.max);
+    var maxv=isNaN(mv)?null:mv;
+    var ttl=(r.title||'').trim();
+    if(r.id){
+      keep[r.id]=true;
+      var o=null,j;
+      for(j=0;j<orig.length;j++)if(orig[j].id===r.id)o=orig[j];
+      var omax=o&&o.max!==''?parseFloat(o.max):null;
+      if(!o||o.kind!==r.kind||(o.title||'')!==ttl||omax!==maxv)
+        ups.push({id:r.id,patch:{kind:r.kind,title:ttl,max_score:maxv}});
+    }else if(maxv!=null&&maxv>0){
+      ins.push({course_id:cid,kind:r.kind,title:ttl,due_date:studyEnd(),
+        due_time:null,max_score:maxv,score:null,done:false});
+    }
+  }
+  for(i=0;i<orig.length;i++)if(!keep[orig[i].id])dels.push(orig[i].id);
+  closeModal();
+  var off=false;
+  for(i=0;i<dels.length;i++){
+    var rd=await dbDelete('course_events',dels[i]);
+    if(rd&&rd.offline)off=true;
+    cevents=cevents.filter(function(x){return x.id!==dels[i]});
+  }
+  for(i=0;i<ups.length;i++){
+    var ru=await dbUpdate('course_events',ups[i].id,ups[i].patch);
+    if(ru&&ru.offline)off=true;
+    var ix=cevents.findIndex(function(x){return x.id===ups[i].id});
+    if(ix>=0)cevents[ix]=Object.assign({},cevents[ix],ups[i].patch);
+  }
+  if(ins.length){
+    var ri=await dbInsert('course_events',ins);
+    if(ri&&ri.offline)off=true;
+    if(ri&&ri.data&&ri.data.length)cevents=cevents.concat(ri.data);
+  }
+  WCID=null;WROWS=[];WORIG=[];
+  saveCache();
+  offToast({offline:off},T('wsaved'),'check');
+  render();
+}
 function courseDetailHtml(cid){
   var c=courses.find(function(x){return x.id===cid});
   if(!c){openCourse=null;return coursesHtml()}
@@ -2153,6 +2286,7 @@ function courseDetailHtml(cid){
     '<div class="rec"><div class="rv" style="color:'+col+'">'+st.left+'</div><div class="rl">'+T('canmiss',{n:''}).replace('{n}','').trim()+'</div></div>'+
     '</div>';
   h+=gradeCardHtml(cid,g);
+  h+='<div class="mrow" style="margin-top:-2px"><button class="no" onclick="openWeights(\''+cid+'\')">'+px('stats',13)+' '+T('weights')+'</button></div>';
   h+='<h3 style="font-size:12px;color:var(--dim);margin:10px 0 6px">'+T('sessions')+'</h3>';
   courseSessions(cid).sort(function(a,b){return a.weekday-b.weekday||toMins(a.start_time)-toMins(b.start_time)}).forEach(function(ses){
     h+='<div class="srow"><div class="si"><b>'+WD[ses.weekday]+'</b> '+fmt12(ses.start_time)+' \u2013 '+fmt12(ses.end_time)+
