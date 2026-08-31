@@ -62,7 +62,7 @@ header{display:flex;align-items:center;gap:8px;padding:11px 14px}
 .netbadge.off{border-color:#ff6b4a;color:#ff6b4a}
 .netbadge.pend{border-color:var(--gold);color:var(--gold)}
 .iconbtn{background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:13px;flex:0 0 auto}
-.mainnav{display:flex;gap:6px;padding:0 14px 10px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.mainnav{display:flex;gap:6px;padding:0 14px 10px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 14px,#000 calc(100% - 14px),transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 14px,#000 calc(100% - 14px),transparent 100%)}
 .mainnav::-webkit-scrollbar{display:none}
 .mainnav button{flex:0 0 auto;background:var(--card);border:1px solid var(--line);color:var(--dim);border-radius:18px;padding:8px 13px;font-size:12px;font-weight:600;white-space:nowrap}
 .mainnav button.on{color:var(--tx);background:var(--card2);border-color:var(--accent)}
@@ -277,6 +277,11 @@ main{padding:14px 16px 90px;max-width:1000px;margin:0 auto}
 .badge.locked{opacity:.35;filter:grayscale(1)}
 .badge.unlocked{border-color:var(--gold);box-shadow:0 0 12px rgba(251,191,36,.12)}
 .recs{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.recs.r3{grid-template-columns:repeat(3,1fr);gap:8px}
+.recs.r3 .rec{padding:10px 6px}
+.recs.r3 .rl{line-height:1.25}
+.gempty{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;min-height:52px;background:none;border:1px dashed var(--line2);border-radius:10px;color:var(--dim);font-size:13px;font-weight:600}
+.gempty:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .rec{background:var(--card2);border-radius:10px;padding:10px;text-align:center}
 .rec .rv{font-size:17px;font-weight:800}
 .rec .rl{font-size:11px;color:var(--dim);margin-top:2px}
@@ -541,7 +546,7 @@ todayis:'Today',nextevent:'Next',
 ev_start:'Semester starts',ev_holiday:'National Day holiday',ev_break:'Autumn break',ev_resume:'Classes resume',
 ev_deadline:'Last day to withdraw',ev_exams:'Final exams',ev_vacation:'Mid-year vacation',courses:'My Courses',todayclasses:'Today\u2019s Classes',timetable:'Timetable',attendance:'Attendance',
 present:'Present',absent:'Absent',lecture:'Lecture',tutorial:'Tutorial',lab:'Lab',section:'Section',
-noclasses:'No classes today',held:'held',canmiss:'Can miss {n} more',denied:'Denial risk!',
+noclasses:'No classes today',held:'held',canmiss:'Can miss {n} more',canmisslbl:'Can miss (hrs)',gsetup:'Set grade weights',denied:'Denial risk!',
 weekof:'Week {n} of {t}',semstart:'Semester start',semweeks:'Semester weeks',abslimit:'Denial limit (%)',
 markedabsent:'Marked absent',markedpresent:'Back to present',required:'Required',elective:'Elective',
 hours:'hrs',limitlbl:'limit {n}',
@@ -775,6 +780,8 @@ var tab='main',view='week',anchor=new Date(),selDay=null,signup=false,curP='stud
 
 function dstr(d){var y=d.getFullYear(),m=('0'+(d.getMonth()+1)).slice(-2),dd=('0'+d.getDate()).slice(-2);return y+'-'+m+'-'+dd}
 function today(){return dstr(new Date())}
+/* short tick on physical-feeling actions. No-op where unsupported. */
+function haptic(ms){try{if(navigator.vibrate)navigator.vibrate(ms||10)}catch(e){}}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
 function weekKey(ds){var d=new Date(ds+'T00:00:00');d.setDate(d.getDate()-d.getDay());return dstr(d)}
 function addDays(ds,n){var d=new Date(ds+'T00:00:00');d.setDate(d.getDate()+n);return dstr(d)}
@@ -1884,6 +1891,7 @@ function sessionsOn(ds){
   return csessions.filter(function(x){return x.weekday===wd}).sort(function(a,b){return a.start_time<b.start_time?-1:1});
 }
 function toggleAbsent(sid,ds){
+  haptic(12);
   var ses=csessions.find(function(x){return x.id===sid});
   var rec=absRec(sid,ds);
   if(!rec&&ses&&sessionHours(ses)>1){askAbsHours(ses,ds);return}
@@ -2161,6 +2169,10 @@ function gradeCardHtml(cid,g){
   var pct=g?g.earned:0;
   var col=pct>=85?'#34d399':pct>=70?'#fbbf24':pct>0?'#4f9cf9':'var(--dim)';
   var h='<div class="gcard">';
+  if(!g){
+    h+='<button class="gempty" onclick="openWeights(\''+cid+'\')">'+px('stats',14)+' '+T('gsetup')+'</button></div>';
+    return h;
+  }
   h+='<div class="gtop"><span class="gnum" style="color:'+col+'">'+pct+'</span><span class="gden">/ 100</span>';
   h+='</div>';
   h+='<div class="gbar">';
@@ -2305,13 +2317,13 @@ function courseDetailHtml(cid){
   var col=st.risk==='over'?'#ff6b4a':st.risk==='near'?'#fbbf24':'#34d399';
   var h='<div class="cdhead"><button class="bk" onclick="closeCourseView()">\u2190</button>'+
     '<div><div class="cc2">'+esc(c.code)+'</div><h2>'+esc(c.name)+'</h2></div></div>';
-  h+='<div class="recs" style="margin-bottom:12px">'+
+  h+='<div class="recs r3" style="margin-bottom:12px">'+
     '<div class="rec"><div class="rv" style="color:'+col+'">'+st.absPct+'%</div><div class="rl">'+T('absent')+'</div></div>'+
     '<div class="rec"><div class="rv">'+st.absent+'/'+st.total+'</div><div class="rl">'+T('hours')+'</div></div>'+
-    '<div class="rec"><div class="rv" style="color:'+col+'">'+st.left+'</div><div class="rl">'+T('canmiss',{n:''}).replace('{n}','').trim()+'</div></div>'+
+    '<div class="rec"><div class="rv" style="color:'+col+'">'+st.left+'</div><div class="rl">'+T('canmisslbl')+'</div></div>'+
     '</div>';
   h+=gradeCardHtml(cid,g);
-  h+='<div class="mrow" style="margin-top:-2px"><button class="no" onclick="openWeights(\''+cid+'\')">'+px('stats',13)+' '+T('weights')+'</button></div>';
+  if(g)h+='<div class="mrow" style="margin-top:-2px"><button class="no" onclick="openWeights(\''+cid+'\')">'+px('stats',13)+' '+T('weights')+'</button></div>';
   h+='<h3 style="font-size:12px;color:var(--dim);margin:10px 0 6px">'+T('sessions')+'</h3>';
   courseSessions(cid).sort(function(a,b){return a.weekday-b.weekday||toMins(a.start_time)-toMins(b.start_time)}).forEach(function(ses){
     h+='<div class="srow"><div class="si"><b>'+WD[ses.weekday]+'</b> '+fmt12(ses.start_time)+' \u2013 '+fmt12(ses.end_time)+
@@ -2342,7 +2354,7 @@ function renderStudy(){
   var a=allStats();
   var h='<div class="section"><div class="qtop"><h2>'+px('grad',16)+' '+T('attendance')+'</h2>'+
   '<span class="qcount">'+T('weekof',{n:semWeekNum(),t:totalStudyWeeks()})+'</span></div>';
-  h+='<div class="recs" style="margin-bottom:12px">'+
+  h+='<div class="recs r3" style="margin-bottom:12px">'+
   '<div class="rec"><div class="rv" style="color:'+(a.pct>=90?'#34d399':a.pct>=76?'#fbbf24':'#ff6b4a')+'">'+a.pct+'%</div><div class="rl">'+T('present')+' \u00B7 '+T('ofsem')+'</div></div>'+
   '<div class="rec"><div class="rv">'+a.absent+' <span style="font-size:11px;color:var(--dim)">/ '+a.total+'</span></div><div class="rl">'+T('absent')+' ('+a.absPct+'%)</div></div>'+
   '<div class="rec"><div class="rv">'+a.held+'</div><div class="rl">'+T('held')+'</div></div>'+
@@ -2790,7 +2802,7 @@ document.getElementById('modal').addEventListener('click',function(e){
 });
 function checkLevelUp(){
   var l=lvlOf(totalXP());
-  if(prevLvl!==null&&l>prevLvl)showLevelUp(l);
+  if(prevLvl!==null&&l>prevLvl){haptic([18,60,18,60,40]);showLevelUp(l)}
   prevLvl=l;
 }
 function showLevelUp(l){
@@ -2805,6 +2817,8 @@ function setAccent(p){document.documentElement.style.setProperty('--accent',p===
 /* ---------- render ---------- */
 function render(){
   renderHeader();renderNav();
+  var _fb=document.getElementById('fab');
+  if(_fb)_fb.classList.toggle('hidden',tab==='study'&&!!openCourse);
   if(tab==='main'){renderQuest();renderGoals();renderToday();return}
   if(tab==='rank'){renderRank();return}
   if(tab==='stats'){renderStats();return}
@@ -2937,6 +2951,8 @@ function renderNav(){
     var st=on&&PKEYS.indexOf(x[0])>=0?'border-color:'+PIL[x[0]].hex+';background:'+PIL[x[0]].hex+'22;color:var(--tx)':'';
     return '<button class="'+(on?'on':'')+'" style="'+st+'" onclick="setTab(\''+x[0]+'\')">'+x[1]+'</button>';
   }).join('');
+  var _on=el.querySelector('button.on');
+  if(_on)el.scrollLeft=Math.max(0,_on.offsetLeft-(el.clientWidth-_on.offsetWidth)/2);
 }
 function setView(v){view=v;anchor=new Date();selDay=null;
   ['week','month','year'].forEach(function(x){document.getElementById('vt-'+x).classList.toggle('on',x===v)});
@@ -3021,6 +3037,7 @@ function entHtml(e){
 /* ---------- actions ---------- */
 async function toggleDone(id){
   var e=entries.find(function(x){return x.id===id});if(!e)return;
+  haptic(12);
   var ns=e.status==='done'?'planned':'done';
   var r=await dbUpdate('activity_entries',id,{status:ns});
   e.status=ns;saveCache();
