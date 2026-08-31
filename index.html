@@ -82,9 +82,7 @@ main{padding:14px 16px 90px;max-width:1000px;margin:0 auto}
 .cls.now,.cls.next{opacity:1}
 .cls.now{background:linear-gradient(90deg,rgba(251,191,36,.14),var(--card2) 62%)}
 .cls.next{background:linear-gradient(90deg,rgba(79,156,249,.12),var(--card2) 62%)}
-.cls .nb{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.4px;border-radius:4px;padding:1px 5px;margin-inline-start:6px}
-.cls.now .nb{background:var(--gold);color:#1a1200}
-.cls.next .nb{background:#4f9cf9;color:#0d1526}
+
 .cls .ci{flex:1;min-width:0}
 .wrow{display:flex;align-items:center;gap:6px;margin-bottom:6px}
 .wrow select{flex:0 0 88px;min-width:0}
@@ -517,7 +515,7 @@ remaining:'{n} marks left to plan',overplanned:'Over 100 by {n}',homework:'Homew
 duedate:'Date',duetime:'Time',score:'Score',maxscore:'Out of',room:'Room',
 noevents:'Nothing scheduled',upcomingev:'Upcoming',pastev:'Past',
 addscore:'Enter score',setroom:'Set room',overdue:'Overdue',dueintoday:'Today',duetomorrow:'Tomorrow',
-eventtitle:'Title',sessions:'Classes',nowlbl:'NOW',nextlbl:'NEXT',
+eventtitle:'Title',sessions:'Classes',
 weights:'Grade weights',addrow:'Add item',wtotal:'Total',wlocked:'Clear the score first to remove a graded item',wempty:'Add at least one item',wsaved:'Weights saved',wover:'Over 100',wunder:'{n} left',
 deleteev:'Delete this item?',
 howmany:'How many hours did the teacher count?',onehr:'1 hour',twohr:'{n} hours',countedas:'counted as {n}',
@@ -2386,7 +2384,6 @@ function classRow(ses,ds,interactive){
   '<div class="cc">'+esc(c?c.code:'')+'</div>'+
   '<div class="cnm">'+esc(c?c.name:'')+'</div>'+
   '<div class="cm">'+actName(ses.activity)+' \u00B7 '+T('section')+' '+esc(ses.section||'')+
-  (hot?'<span class="nb">'+(nw.live?T('nowlbl'):T('nextlbl'))+'</span>':'')+
   (ses.room?' \u00B7 '+px('pin',11)+' '+esc(ses.room):'')+'</div></div>';
   h+='<div class="ct">'+fmt12(ses.start_time)+'<br>'+fmt12(ses.end_time)+'</div>';
   if(interactive){
