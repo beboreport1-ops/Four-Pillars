@@ -2317,7 +2317,9 @@ async function saveWeights(){
       if(!o||o.kind!==r.kind||(o.title||'')!==ttl||omax!==maxv)
         ups.push({id:r.id,patch:{kind:r.kind,title:ttl,max_score:maxv}});
     }else if(maxv!=null&&maxv>0){
-      ins.push({course_id:cid,kind:r.kind,title:ttl,due_date:studyEnd(),
+      /* no date by default: this editor defines the marks split, not a
+         schedule. Real dates get set in Deadlines. */
+      ins.push({course_id:cid,kind:r.kind,title:ttl,due_date:null,
         due_time:null,max_score:maxv,score:null,done:false});
     }
   }
