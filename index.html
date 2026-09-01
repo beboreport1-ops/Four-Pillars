@@ -2325,7 +2325,7 @@ async function saveWeights(){
   }
   for(i=0;i<orig.length;i++)if(!keep[orig[i].id])dels.push(orig[i].id);
   closeModal();
-  var off=false;
+  var off=false,perm=false;
   for(i=0;i<dels.length;i++){
     var rd=await dbDelete('course_events',dels[i]);
     if(rd&&rd.offline)off=true;
@@ -2334,17 +2334,19 @@ async function saveWeights(){
   for(i=0;i<ups.length;i++){
     var ru=await dbUpdate('course_events',ups[i].id,ups[i].patch);
     if(ru&&ru.offline)off=true;
+    if(ru&&ru.perm)perm=true;
     var ix=cevents.findIndex(function(x){return x.id===ups[i].id});
     if(ix>=0)cevents[ix]=Object.assign({},cevents[ix],ups[i].patch);
   }
   if(ins.length){
     var ri=await dbInsert('course_events',ins);
     if(ri&&ri.offline)off=true;
+    if(ri&&ri.perm)perm=true;
     if(ri&&ri.data&&ri.data.length)cevents=cevents.concat(ri.data);
   }
   WCID=null;WROWS=[];WORIG=[];
   saveCache();
-  offToast({offline:off},T('wsaved'),'check');
+  offToast({offline:off,perm:perm},T('wsaved'),'check');
   render();
 }
 function courseDetailHtml(cid){
