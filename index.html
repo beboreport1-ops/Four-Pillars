@@ -343,6 +343,7 @@ main{padding:14px 16px 90px;max-width:1000px;margin:0 auto}
 .mbox input:disabled{opacity:.45}
 .ckrow{display:flex;align-items:center;gap:8px;min-height:34px;margin:8px 0 0;font-size:12px;color:var(--dim)}
 .ckrow:focus-within{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .pillsel{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
 .pillsel button{background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:8px 4px;font-size:12px}
 .mrow{display:flex;gap:8px;margin-top:16px}
@@ -542,7 +543,7 @@ duedate:'Date',duetime:'Time',nodateyet:'Date not decided yet',nodate:'No date',
 noevents:'Nothing scheduled',upcomingev:'Upcoming',pastev:'Past',
 addscore:'Enter score',setroom:'Set room',overdue:'Overdue',dueintoday:'Today',duetomorrow:'Tomorrow',
 eventtitle:'Title',sessions:'Classes',
-weights:'Grade weights',addrow:'Add item',wtotal:'Total',wlocked:'Clear the score first to remove a graded item',wempty:'Add at least one item',wsaved:'Weights saved',wover:'Over 100',wunder:'{n} left',
+weights:'Grade weights',addrow:'Add item',wtotal:'Total',wlocked:'Clear the score first to remove a graded item',wsaved:'Weights saved',wover:'Over 100',wunder:'{n} left',
 deleteev:'Delete this item?',
 howmany:'How many hours did the teacher count?',onehr:'1 hour',twohr:'{n} hours',countedas:'counted as {n}',
 markabsent:'Mark absent',noclassday:'No classes \u00B7 {r}',daysleft:'in {n} days',daysago:'{n} days ago',
@@ -787,6 +788,8 @@ function today(){return dstr(new Date())}
 /* short tick on physical-feeling actions. No-op where unsupported. */
 function haptic(ms){try{if(navigator.vibrate)navigator.vibrate(ms||10)}catch(e){}}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function courseOf(id){return courses.find(function(x){return x.id===id})}
+function entryOf(id){return entries.find(function(x){return x.id===id})}
 function weekKey(ds){var d=new Date(ds+'T00:00:00');d.setDate(d.getDate()-d.getDay());return dstr(d)}
 function addDays(ds,n){var d=new Date(ds+'T00:00:00');d.setDate(d.getDate()+n);return dstr(d)}
 
@@ -863,6 +866,7 @@ async function init(){
   if(isOnline()&&coursesIncomplete())seedCourses().then(function(n){if(n)render()});
   if(isOnline()&&acadEvents.length<MYCAL.length)seedCalendar().then(function(n){if(n)render()});
   render();netBadge();flushQueue(true);
+  cleanPrayerCache();
   loadPrayerTimes();
   setInterval(function(){if(isOnline()&&getQ().length)flushQueue(true)},60000);
   /* the NOW/NEXT marker is computed at render time, so nudge it once a minute */
@@ -1115,6 +1119,15 @@ function gpsLocate(){
     prayerTimes=null;await loadPrayerTimes(true);
     toast(T('gpsok'),'pin');
   },function(){toast(T('locdenied'))},{timeout:8000});
+}
+function cleanPrayerCache(){
+  try{
+    var tag=today();
+    for(var i=localStorage.length-1;i>=0;i--){
+      var k=localStorage.key(i);
+      if(k&&k.indexOf('fp_pt_')===0&&k.slice(-tag.length)!==tag)localStorage.removeItem(k);
+    }
+  }catch(e){}
 }
 async function loadPrayerTimes(force){
   var geo=null;
@@ -1431,11 +1444,10 @@ function renderRank(){
   h+='<div class="mrow" style="margin:12px 0"><button class="ok" onclick="openLiftLog(null)">'+px('plus',14)+' '+T('loglift')+'</button></div>';
   h+='<h3 class="sh">'+T('liftrank')+'</h3>';
   LIFTS.forEach(function(l){h+=liftRowHtml(l)});
-  var GRP={push:'pushday',pull:'pullday',legs:'legday'};
   ['push','pull','legs'].forEach(function(g){
     var list=ACCESSORIES.filter(function(l){return l.g===g});
     if(!list.length)return;
-    h+='<h3 class="sh">'+T('accessories')+' \u00B7 '+T(GRP[g])+'</h3>';
+    h+='<h3 class="sh">'+T('accessories')+' \u00B7 '+T(ACCGRP[g])+'</h3>';
     list.forEach(function(l){h+=accRowHtml(l)});
   });
   h+='</div>';
@@ -1519,8 +1531,7 @@ function openLiftLog(k){
     ['push','pull','legs'].map(function(g){
       var list=ACCESSORIES.filter(function(x){return x.g===g});
       if(!list.length)return '';
-      var GL={push:'pushday',pull:'pullday',legs:'legday'};
-      return '<optgroup label="'+T(GL[g])+'">'+list.map(function(l){
+      return '<optgroup label="'+T(ACCGRP[g])+'">'+list.map(function(l){
         return '<option value="'+l.k+'"'+(k===l.k?' selected':'')+'>'+liftName(l.k)+'</option>';
       }).join('')+'</optgroup>';
     }).join('')+'</select>';
@@ -1612,6 +1623,7 @@ var ACCESSORIES=[
 function allLifts(){return LIFTS.concat(ACCESSORIES)}
 function liftDef(k){return allLifts().find(function(x){return x.k===k})}
 function isRanked(k){return LIFTS.some(function(x){return x.k===k})}
+var ACCGRP={push:'pushday',pull:'pullday',legs:'legday'};
 function liftName(k){var l=liftDef(k);return l?l.n:k}
 function liftIcon(k){var l=liftDef(k);return px(l?l.ic:'barbell',18)}
 function rankName(i){return T('rk_'+RANKS[i].k)}
@@ -1869,7 +1881,7 @@ function absHours(ses,ds){
 /* hours an absence costs: what the teacher counted, else the full block */
 function courseSessions(cid){return csessions.filter(function(x){return x.course_id===cid})}
 function courseStats(cid){
-  var c=courses.find(function(x){return x.id===cid});
+  var c=courseOf(cid);
   var total=(c?c.credits:3)*semWeeks();
   var held=0,abs=0;
   courseSessions(cid).forEach(function(ses){
@@ -1907,7 +1919,7 @@ function toggleAbsent(sid,ds){
   applyAbsent(sid,ds,null);
 }
 function askAbsHours(ses,ds){
-  var c=courses.find(function(x){return x.id===ses.course_id});
+  var c=courseOf(ses.course_id);
   var full=sessionHours(ses);
   var h='<h2>'+T('markabsent')+'</h2>';
   h+='<p class="confmsg">'+esc(c?c.code+' \u00B7 '+c.name:'')+'<br><span style="color:var(--gold)">'+fmt12(ses.start_time)+' \u2013 '+fmt12(ses.end_time)+'</span></p>';
@@ -2123,7 +2135,7 @@ function delEvent(id){
 }
 function openScore(id){
   var e=cevents.find(function(x){return x.id===id});if(!e)return;
-  var c=courses.find(function(x){return x.id===e.course_id});
+  var c=courseOf(e.course_id);
   var h='<h2>'+T('addscore')+'</h2>';
   h+='<p class="confmsg">'+px(EEMO[e.kind],14)+' '+esc(e.title||T(e.kind))+'<br><span style="color:var(--dim)">'+esc(c?c.code:'')+'</span></p>';
   h+='<div class="frow"><div><label>'+T('score')+'</label><input id="sc_v" type="number" step="0.5" value="'+(e.score!=null?e.score:'')+'"></div>'+
@@ -2149,7 +2161,7 @@ async function toggleEventDone(id){
 }
 function openRoom(sid){
   var ses=csessions.find(function(x){return x.id===sid});if(!ses)return;
-  var c=courses.find(function(x){return x.id===ses.course_id});
+  var c=courseOf(ses.course_id);
   var h='<h2>'+T('setroom')+'</h2>';
   h+='<p class="confmsg">'+esc(c?c.code:'')+' \u00B7 '+actName(ses.activity)+'<br><span style="color:var(--gold)">'+fmt12(ses.start_time)+'</span></p>';
   h+='<label>'+T('room')+'</label><input id="rm_v" value="'+esc(ses.room||'')+'" placeholder="'+T('room')+'">';
@@ -2169,7 +2181,7 @@ async function saveRoom(sid){
 function openCourseView(cid){openCourse=cid;renderStudy();window.scrollTo({top:0})}
 function closeCourseView(){openCourse=null;renderStudy();window.scrollTo({top:0})}
 function evRowHtml(e,showCourse){
-  var c=courses.find(function(x){return x.id===e.course_id});
+  var c=courseOf(e.course_id);
   var col=EHUE[e.kind]||'#8494ad';
   var h='<div class="evrow'+(e.done?' done':'')+'" style="border-inline-start-color:'+col+'">';
   h+='<span class="ee" onclick="toggleEventDone(\''+e.id+'\')">'+(e.done?px('check',15):px(EEMO[e.kind],15))+'</span>';
@@ -2281,7 +2293,7 @@ function wDel(i){
   wPaint();
 }
 function openWeights(cid){
-  var c=courses.find(function(x){return x.id===cid});
+  var c=courseOf(cid);
   if(!c)return;
   WCID=cid;
   WORIG=eventsFor(cid).map(function(e){
@@ -2350,7 +2362,7 @@ async function saveWeights(){
   render();
 }
 function courseDetailHtml(cid){
-  var c=courses.find(function(x){return x.id===cid});
+  var c=courseOf(cid);
   if(!c){openCourse=null;return coursesHtml()}
   var st=courseStats(cid),g=courseGrade(cid);
   var col=st.risk==='over'?'#ff6b4a':st.risk==='near'?'#fbbf24':'#34d399';
@@ -2440,7 +2452,7 @@ function nowSession(ds){
   return null;
 }
 function classRow(ses,ds,interactive){
-  var c=courses.find(function(x){return x.id===ses.course_id});
+  var c=courseOf(ses.course_id);
   var abs=isAbsent(ses.id,ds),passed=classPassed(ds,ses.end_time);
   var nw=nowSession(ds),hot=nw&&nw.id===ses.id;
   var cls='cls'+(abs?' absent':'')+(passed?'':' future')+(hot?(nw.live?' now':' next'):'');
@@ -2598,7 +2610,7 @@ function buildICS(){
   var L2=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Four Pillars//EN','CALSCALE:GREGORIAN'];
   var n=0;
   csessions.forEach(function(ses){
-    var c=courses.find(function(x){return x.id===ses.course_id});
+    var c=courseOf(ses.course_id);
     var first=firstOnOrAfter(start,ses.weekday);
     if(first>until)return;
     n++;
@@ -2896,7 +2908,7 @@ function deadlineStripHtml(){
   var h='<div class="quest" style="margin-top:10px"><div class="qtop"><h2>'+
     px('clock',15)+' '+T('duesoon')+'</h2><span class="qcount">'+up.length+'</span></div>';
   up.slice(0,4).forEach(function(e){
-    var c=courses.find(function(x){return x.id===e.course_id});
+    var c=courseOf(e.course_id);
     var urgent=e.due_date===today();
     h+='<div class="crow tap" style="border-inline-start:3px solid '+(urgent?'#ff6b4a':'#fbbf24')+
        ';margin-top:6px" onclick="openEvent(\''+e.id+'\')">'+
@@ -3075,7 +3087,7 @@ function entHtml(e){
 
 /* ---------- actions ---------- */
 async function toggleDone(id){
-  var e=entries.find(function(x){return x.id===id});if(!e)return;
+  var e=entryOf(id);if(!e)return;
   haptic(12);
   var ns=e.status==='done'?'planned':'done';
   var r=await dbUpdate('activity_entries',id,{status:ns});
@@ -3084,7 +3096,7 @@ async function toggleDone(id){
   checkLevelUp();render();
 }
 function delEntry(id){
-  var e=entries.find(function(x){return x.id===id});if(!e)return;
+  var e=entryOf(id);if(!e)return;
   var m=T('delm',{t:esc(e.title),d:e.entry_date})+(e.status==='done'?T('dellost',{p:e.points_awarded}):'');
   confirmBox(T('delq'),m,T('del'),async function(){
     var r=await dbDelete('activity_entries',id);
@@ -3124,12 +3136,12 @@ async function dropOn(ev,ds){
   await moveEntry(dragId,ds);dragId=null;
 }
 async function moveEntry(id,ds){
-  var e=entries.find(function(x){return x.id===id});if(!e||e.entry_date===ds)return;
+  var e=entryOf(id);if(!e||e.entry_date===ds)return;
   var r=await dbUpdate('activity_entries',id,{entry_date:ds});
   e.entry_date=ds;saveCache();offToast(r,T('saved')+' \u2192 '+ds);render();
 }
 function openMove(id){
-  var e=entries.find(function(x){return x.id===id});if(!e)return;
+  var e=entryOf(id);if(!e)return;
   var st=new Date(e.entry_date+'T00:00:00');st.setDate(st.getDate()-st.getDay());
   var h='<h2>'+T('move')+'</h2><p class="confmsg">'+esc(e.title)+'</p><div class="daypick" style="margin-top:12px">';
   for(var i=0;i<7;i++){
@@ -3352,7 +3364,7 @@ async function saveAdd(){
   closeModal();checkLevelUp();render();
 }
 function openEdit(id){
-  var e=entries.find(function(x){return x.id===id});if(!e)return;
+  var e=entryOf(id);if(!e)return;
   var h='<h2>'+T('edit')+'</h2><label>'+T('eventtitle')+'</label><input id="etitle" value="'+esc(e.title)+'">'+
   '<label>'+T('points')+'</label><input id="epts" type="number" value="'+e.points_awarded+'">'+
   '<label>'+T('date')+'</label><input id="edate" type="date" value="'+e.entry_date+'">'+
@@ -3361,7 +3373,7 @@ function openEdit(id){
   showModal(h);
 }
 async function saveEdit(id){
-  var e=entries.find(function(x){return x.id===id});if(!e)return;
+  var e=entryOf(id);if(!e)return;
   var up={title:document.getElementById('etitle').value.trim()||e.title,
     points_awarded:parseInt(document.getElementById('epts').value)||e.points_awarded,
     entry_date:document.getElementById('edate').value||e.entry_date,
