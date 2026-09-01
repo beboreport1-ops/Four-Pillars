@@ -339,6 +339,10 @@ main{padding:14px 16px 90px;max-width:1000px;margin:0 auto}
 .mbox h2{font-size:16px;margin-bottom:14px}
 .mbox label{font-size:12px;color:var(--dim);display:block;margin:10px 0 4px}
 .mbox input,.mbox select,.mbox textarea{width:100%;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:10px;color:var(--tx);font-size:14px;font-family:inherit}
+.mbox input[type=checkbox]{width:18px;height:18px;flex:0 0 auto;padding:0;accent-color:var(--accent)}
+.mbox input:disabled{opacity:.45}
+.ckrow{display:flex;align-items:center;gap:8px;min-height:34px;margin:8px 0 0;font-size:12px;color:var(--dim)}
+.ckrow:focus-within{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
 .pillsel{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
 .pillsel button{background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:8px 4px;font-size:12px}
 .mrow{display:flex;gap:8px;margin-top:16px}
@@ -534,7 +538,7 @@ main:'Main',todayplan:'Today',
 ofsem:'of semester',calendar:'Calendar',ttip:'Tap Present on any class to mark it absent',missingcourses:'Some courses are missing',repair:'Fix',
 events:'Deadlines',addevent:'Add',optl:'optional',steps:'Steps',stepsgoal:'Daily steps goal',howmanysteps:'How many steps?',stepsgoalhit:'Steps goal!',marks:'Marks (out of 100)',
 remaining:'{n} marks left to plan',overplanned:'Over 100 by {n}',homework:'Homework',quiz:'Quiz',exam:'Exam',project:'Project',other:'Other',
-duedate:'Date',duetime:'Time',score:'Score',maxscore:'Out of',room:'Room',
+duedate:'Date',duetime:'Time',nodateyet:'Date not decided yet',nodate:'No date',datereq:'Database needs a date',savefail:'Not saved',score:'Score',maxscore:'Out of',room:'Room',
 noevents:'Nothing scheduled',upcomingev:'Upcoming',pastev:'Past',
 addscore:'Enter score',setroom:'Set room',overdue:'Overdue',dueintoday:'Today',duetomorrow:'Tomorrow',
 eventtitle:'Title',sessions:'Classes',
@@ -1016,6 +1020,9 @@ async function dbInsert(table,rows){
     /* 23505 = unique violation: the row is already there, so retrying can
        never succeed. Queueing it would poison the sync queue forever. */
     if(r.error&&r.error.code==='23505')return{data:[],offline:false,dup:true};
+    /* 23502 = not-null violation. Also permanent: the column rejects the
+       value, so every retry fails identically. Never queue it. */
+    if(r.error&&r.error.code==='23502')return{data:[],offline:false,perm:true};
   }
   enqueue({op:'insert',table:table,rows:rows});
   return{data:rows,offline:true};
@@ -1024,6 +1031,8 @@ async function dbUpdate(table,id,patch){
   if(isOnline()){
     var r=await sb.from(table).update(patch).eq('id',id);
     if(!r.error)return{offline:false};
+    /* permanent constraint failures must not enter the retry queue */
+    if(r.error&&(r.error.code==='23502'||r.error.code==='23505'))return{offline:false,perm:true};
   }
   enqueue({op:'update',table:table,id:id,patch:patch});
   return{offline:true};
@@ -1057,7 +1066,7 @@ async function dbUpsert(table,row){
   q.push({op:'upsert',table:table,row:row});setQ(q);
   return{offline:true};
 }
-function offToast(res,msg,ic){if(res&&res.offline)toast(msg+' \u00B7 '+T('savedoff'),'offline');else toast(msg,ic)}
+function offToast(res,msg,ic){if(res&&res.perm)toast(T('savefail'),'warn');else if(res&&res.offline)toast(msg+' \u00B7 '+T('savedoff'),'offline');else toast(msg,ic)}
 window.addEventListener('online',function(){netBadge();flushQueue()});
 window.addEventListener('offline',function(){netBadge();toast(T('offlinemode'),'offline')});
 
@@ -1932,9 +1941,15 @@ function actName(a){return T(a)||a}
 var EKINDS=['homework','quiz','exam','final','project','other'];
 var EEMO={homework:'pencil',quiz:'quest',exam:'exam',final:'exam',project:'folder',other:'pushpin'};
 var EHUE={homework:'#4f9cf9',quiz:'#fbbf24',exam:'#ff6b4a',project:'#a78bfa',other:'#8494ad'};
+/* undated items sort last: they have no place on a timeline */
+function cmpDue(a,b){
+  if(!a.due_date&&!b.due_date)return 0;
+  if(!a.due_date)return 1;
+  if(!b.due_date)return -1;
+  return a.due_date<b.due_date?-1:a.due_date>b.due_date?1:0;
+}
 function eventsFor(cid){
-  return cevents.filter(function(e){return e.course_id===cid})
-    .sort(function(a,b){return a.due_date<b.due_date?-1:a.due_date>b.due_date?1:0});
+  return cevents.filter(function(e){return e.course_id===cid}).sort(cmpDue);
 }
 function upcomingEvents(days){
   var td=today();
@@ -1943,8 +1958,9 @@ function upcomingEvents(days){
     .slice(0,days||99);
 }
 function dueLabel(e){
-  var n=daysTo(e.due_date);
   if(e.done)return px('check',13);
+  if(!e.due_date)return T('nodate');
+  var n=daysTo(e.due_date);
   if(n<0)return T('overdue');
   if(n===0)return T('dueintoday');
   if(n===1)return T('duetomorrow');
@@ -1952,6 +1968,7 @@ function dueLabel(e){
 }
 function dueColor(e){
   if(e.done)return '#34d399';
+  if(!e.due_date)return 'var(--dim)';
   var n=daysTo(e.due_date);
   if(n<0)return '#ff6b4a';
   if(n<=2)return '#fbbf24';
@@ -2037,25 +2054,39 @@ function courseGrade(cid){
     unplanned:r(100-planned),
     pct:r(earned)};                         /* course is out of 100 */
 }
+/* the checkbox is the only way to clear a date: mobile date pickers often
+   offer no clear action. Time is cleared with it, a time with no date is
+   meaningless. */
+function evNoDate(){
+  var ck=document.getElementById('ev_nodate'),d=document.getElementById('ev_date'),tm=document.getElementById('ev_time');
+  if(!ck||!d||!tm)return;
+  d.disabled=ck.checked;tm.disabled=ck.checked;
+  if(ck.checked){d.value='';tm.value=''}
+  else if(!d.value)d.value=today();
+}
 async function saveEvent(){
   var cid=document.getElementById('ev_course').value;
-  var d=document.getElementById('ev_date').value;
-  if(!cid||!d){toast('!','warn');return}
+  var ck=document.getElementById('ev_nodate');
+  var nod=!!(ck&&ck.checked);
+  var d=nod?null:document.getElementById('ev_date').value;
+  if(!cid||(!nod&&!d)){toast('!','warn');return}
   var row={course_id:cid,kind:document.getElementById('ev_kind').value,
     title:document.getElementById('ev_title').value.trim(),
-    due_date:d,due_time:document.getElementById('ev_time').value||null,
+    due_date:d||null,due_time:nod?null:(document.getElementById('ev_time').value||null),
     max_score:parseFloat(document.getElementById('ev_max').value)||null};
   var id=document.getElementById('ev_id').value;
   closeModal();
   if(id){
     var r=await dbUpdate('course_events',id,row);
+    if(r&&r.perm){toast(T('datereq'),'warn');return}
     var i=cevents.findIndex(function(x){return x.id===id});
     if(i>=0)cevents[i]=Object.assign({},cevents[i],row);
     offToast(r,'OK','check');
   }else{
     var r2=await dbInsert('course_events',[row]);
+    if(r2&&r2.perm){toast(T('datereq'),'warn');return}
     cevents=cevents.concat(r2.data);
-    offToast(r,T('added'),'check');
+    offToast(r2,T('added'),'check');
   }
   saveCache();render();
 }
@@ -2072,8 +2103,10 @@ function openEvent(id,cid){
     return '<option value="'+k+'"'+(e&&e.kind===k?' selected':'')+'>'+T(k)+'</option>';
   }).join('')+'</select>';
   h+='<label>'+T('eventtitle')+'</label><input id="ev_title" value="'+esc(e?e.title:'')+'" placeholder="'+T('eventtitle')+'">';
-  h+='<div class="frow"><div><label>'+T('duedate')+'</label><input id="ev_date" type="date" value="'+(e?e.due_date:today())+'"></div>'+
-  '<div><label>'+T('duetime')+' ('+T('optl')+')</label><input id="ev_time" type="time" value="'+(e&&e.due_time?e.due_time:'')+'"></div></div>';
+  var nod=!!(e&&!e.due_date);
+  h+='<div class="frow"><div><label>'+T('duedate')+'</label><input id="ev_date" type="date"'+(nod?' disabled':'')+' value="'+(e?(e.due_date||''):today())+'"></div>'+
+  '<div><label>'+T('duetime')+' ('+T('optl')+')</label><input id="ev_time" type="time"'+(nod?' disabled':'')+' value="'+(e&&e.due_time?e.due_time:'')+'"></div></div>';
+  h+='<label class="ckrow"><input type="checkbox" id="ev_nodate"'+(nod?' checked':'')+' onchange="evNoDate()"> '+T('nodateyet')+'</label>';
   h+='<label>'+T('marks')+'</label><input id="ev_max" type="number" step="0.5" value="'+(e&&e.max_score!=null?e.max_score:'')+'" placeholder="20">';
   h+='<div class="mrow"><button class="no" onclick="closeModal()">'+T('cancel')+'</button>'+
   '<button class="ok" onclick="saveEvent()">'+T('save')+'</button></div>';
@@ -2143,7 +2176,7 @@ function evRowHtml(e,showCourse){
   h+='<div class="ei" onclick="openEvent(\''+e.id+'\')">';
   h+='<div class="et">'+esc(e.title||T(e.kind))+'</div>';
   h+='<div class="em">'+(showCourse&&c?esc(c.code)+' \u00B7 ':'')+T(e.kind)+
-     ' \u00B7 '+e.due_date+(e.due_time?' '+fmt12(e.due_time):'')+
+     ' \u00B7 '+(e.due_date?e.due_date+(e.due_time?' '+fmt12(e.due_time):''):T('nodate'))+
      (e.max_score&&e.score==null?' \u00B7 /'+e.max_score:'')+'</div>';
   h+='</div>';
   h+='<div class="ed" style="color:'+dueColor(e)+'">'+dueLabel(e)+'</div>';
@@ -2155,13 +2188,15 @@ function evRowHtml(e,showCourse){
 }
 function eventsHtml(){
   var td=today();
-  var up=cevents.filter(function(e){return !e.done&&e.due_date>=td}).sort(function(a,b){return a.due_date<b.due_date?-1:1});
-  var od=cevents.filter(function(e){return !e.done&&e.due_date<td}).sort(function(a,b){return a.due_date>b.due_date?-1:1});
+  var up=cevents.filter(function(e){return !e.done&&e.due_date&&e.due_date>=td}).sort(cmpDue);
+  var od=cevents.filter(function(e){return !e.done&&e.due_date&&e.due_date<td}).sort(function(a,b){return a.due_date>b.due_date?-1:1});
+  var nd=cevents.filter(function(e){return !e.done&&!e.due_date});
   var pa=cevents.filter(function(e){return e.done}).sort(function(a,b){return a.due_date>b.due_date?-1:1}).slice(0,12);
   var h='<div class="mrow" style="margin-bottom:10px"><button class="ok" onclick="openEvent(null,null)">'+px('plus',14)+' '+T('addevent')+'</button></div>';
   if(od.length){h+='<h3 style="font-size:12px;color:var(--gym);margin:10px 0 6px">'+px('warn',14)+' '+T('overdue')+'</h3>';h+=od.map(function(e){return evRowHtml(e,true)}).join('')}
   h+='<h3 style="font-size:12px;color:var(--dim);margin:12px 0 6px">'+T('upcomingev')+'</h3>';
   h+=up.length?up.map(function(e){return evRowHtml(e,true)}).join(''):'<p class="muted">'+T('noevents')+'</p>';
+  if(nd.length){h+='<h3 style="font-size:12px;color:var(--dim);margin:14px 0 6px">'+T('nodate')+'</h3>';h+=nd.map(function(e){return evRowHtml(e,true)}).join('')}
   if(pa.length){h+='<h3 style="font-size:12px;color:var(--dim);margin:14px 0 6px">'+T('pastev')+'</h3>';h+=pa.map(function(e){return evRowHtml(e,true)}).join('')}
   return h;
 }
@@ -2519,7 +2554,7 @@ function coursesHtml(){
     h+='<div class="crow tap" style="border-inline-start:3px solid '+col+'" onclick="openCourseView(\''+c.id+'\')">';
     h+='<div class="ch"><span class="cn" style="overflow-wrap:anywhere"><span style="color:var(--study)">'+esc(c.code)+'</span><br>'+esc(c.name)+'</span><span class="cp" style="color:'+col+';text-align:right">'+st.absPct+'%<br><span style="font-size:9px;font-weight:600;color:var(--dim)">'+T('absent')+' / '+(cfg.absence_limit||25)+'%</span></span></div>';
     h+='<div class="cbar"><div style="width:'+Math.min(100,Math.round(st.absent/(st.limit||1)*100))+'%;background:'+col+'"></div></div>';
-    var g=courseGrade(c.id),ev=eventsFor(c.id).filter(function(e){return !e.done&&e.due_date>=today()}).length;
+    var g=courseGrade(c.id),ev=eventsFor(c.id).filter(function(e){return !e.done&&(!e.due_date||e.due_date>=today())}).length;
     h+='<div class="cs"><span>'+T(c.kind)+' \u00B7 '+st.absent+'/'+st.total+' '+T('hours')+
       (g?' \u00B7 '+px('stats',11)+' '+g.earned+'/100':'')+(ev?' \u00B7 '+px('clock',11)+' '+ev:'')+'</span>';
     h+='<span class="'+(st.risk==='over'?'bad':st.risk==='near'?'warn':'')+'">'+
