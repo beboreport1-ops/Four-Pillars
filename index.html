@@ -30,7 +30,7 @@
 <style>
 :root{
   --bg:#0a0e16;--card:#121a27;--card2:#1a2434;--line:#263349;--line2:#31415c;
-  --tx:#e9eef8;--dim:#96a5c0;--faint:#5d6c87;
+  --tx:#e9eef8;--dim:#96a5c0;--faint:#8290ab;
   --study:#4f9cf9;--gym:#ff6b4a;--social:#34d399;--soul:#a78bfa;
   --study-soft:rgba(79,156,249,.14);--gym-soft:rgba(255,107,74,.14);
   --social-soft:rgba(52,211,153,.14);--soul-soft:rgba(167,139,250,.14);
@@ -347,6 +347,12 @@ main{padding:14px 16px 90px;max-width:1000px;margin:0 auto}
 .pillsel{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
 .pillsel button{background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:8px 4px;font-size:12px}
 .mrow{display:flex;gap:8px;margin-top:16px}
+.prplace{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.prplace button{display:flex;flex-direction:column;align-items:center;gap:4px;background:var(--card2);border:1px solid var(--line);border-radius:var(--r-m);padding:16px 8px;min-height:112px;justify-content:center;transition:border-color var(--dur),background var(--dur)}
+.prplace button b{font-size:14px;color:var(--tx)}
+.prplace button small{font-size:11px;color:var(--dim);line-height:1.3}
+.prplace button .pts{font-size:11px;font-weight:800;color:var(--soul)}
+.prplace button:hover,.prplace button:focus-visible{border-color:var(--soul);background:rgba(167,139,250,.12)}
 .mrow button{flex:1;border:none;border-radius:10px;padding:11px;font-size:14px;font-weight:600}
 .mrow .ok{background:var(--accent);color:#fff}
 .mrow .no{background:var(--card2);color:var(--dim)}
@@ -395,7 +401,7 @@ main{padding-top:20px}
 .hcard:first-child,.section:first-child,.quest:first-child{margin-top:2px}
 
 /* ---- stat numerals read as data, not prose ---- */
-.lvlbadge,.rv,.he,.lrk,.rlp,.rname,.btier,.cstat,.abspct,.gs,
+.lvlbadge,.rv,.he,.lrk,.rlp,.rname,.btier,.cstat,.abspct,.gs{font-variant-numeric:tabular-nums}
 /* ---- nav: pill tabs, real touch targets ---- */
 .mainnav{padding:6px 10px 10px;gap:6px}
 .mainnav button{min-height:40px;border-radius:999px;padding:8px 14px;font-size:12.5px;transition:background var(--dur),color var(--dur),border-color var(--dur)}
@@ -603,6 +609,7 @@ install:'Install app',installed:'Added to home screen',
 autoloc:'Detect my location',gpsloc:'Use GPS (precise)',locfail:'Couldn\u2019t detect location \u2014 set your city manually.',locdenied:'Location permission denied.',gpsok:'Location updated',locnow:'Location',
 saved:'Saved',deleted:'Deleted',added:'Added',removed:'Removed',nameFirst:'Type a name first',
 backplan:'back to planned',unlogged:'unlogged',
+prwhere:'Where did you pray?',prhome:'Home',prmosque:'Mosque',prjamaah:'In congregation',pralone:'On your own',
 strongest:'Strongest',weakest:'Needs work',vslast:'vs last week',
 lvl:'Level',bestday:'Best day',activedays:'Active days',longest:'Longest',streak:'streak',
 offline:'Offline',pending:'{n} to sync',synced:'Synced {n} change(s)',offlinemode:'Offline \u2014 changes save on this device',savedoff:'saved offline'}};
@@ -770,6 +777,7 @@ function px(n,sz,style){
 var PIL={study:{ic:'book',hex:'#4f9cf9'},gym:{ic:'heart',hex:'#ff6b4a'},social:{ic:'people',hex:'#34d399'},soul:{ic:'mosque',hex:'#a78bfa'}};
 var PKEYS=['study','gym','social','soul'];
 function pnm(p){return T(p)}
+var PRPTS={home:10,mosque:20};
 var PRAYERS=[['Fajr','\u0627\u0644\u0641\u062C\u0631'],['Dhuhr','\u0627\u0644\u0638\u0647\u0631'],['Asr','\u0627\u0644\u0639\u0635\u0631'],['Maghrib','\u0627\u0644\u0645\u063A\u0631\u0628'],['Isha','\u0627\u0644\u0639\u0634\u0627\u0621']];
 var WD=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 
@@ -2778,7 +2786,7 @@ function renderPillar(){
       var e=entries.find(function(x){return x.entry_date===td&&x.pillar==='soul'&&x.title===pr[0]&&x.status==='done'});
       var cls='pray'+(e?' done':'');
       var tm=prayerTimes&&prayerTimes[pr[0]]?'<span class="tm">'+fmt12(prayerTimes[pr[0]])+'</span>':'';
-      h+='<button class="'+cls+'" onclick="togglePrayer(\''+pr[0]+'\')">'+(e?px('check',12)+' ':'')+pr[0]+tm+'</button>';
+      h+='<button class="'+cls+'" onclick="togglePrayer(\''+pr[0]+'\')">'+(e?px('check',12)+' ':'')+prayerMark(e)+pr[0]+tm+'</button>';
     });
     h+='</div>';
     var qp=quranPages(),qg=cfg.quran_goal||604;
@@ -2951,7 +2959,7 @@ function renderQuest(){
       if(toMins(prayerTimes[pr[0]])>minsNow()&&!e)cls+=' future';
       if(np&&np.cur===pr[0]&&!e)cls+=' now';
     }
-    h+='<button class="'+cls+'" onclick="togglePrayer(\''+pr[0]+'\')">'+(e?px('check',12)+' ':'')+pr[0]+'<small>'+pr[1]+'</small>'+tm+'</button>';
+    h+='<button class="'+cls+'" onclick="togglePrayer(\''+pr[0]+'\')">'+(e?px('check',12)+' ':'')+prayerMark(e)+pr[0]+'<small>'+pr[1]+'</small>'+tm+'</button>';
   });
   h+='</div></div>';
   h+=deadlineStripHtml();
@@ -3111,13 +3119,31 @@ async function togglePrayer(name){
     var r=await dbDelete('activity_entries',e.id);
     entries=entries.filter(function(x){return x.id!==e.id});saveCache();
     offToast(r,'\u2212'+e.points_awarded+' XP \u00B7 '+name+' '+T('unlogged'));
+    checkLevelUp();render();
   }else{
-    var t=types.find(function(x){return x.pillar==='soul'&&x.name===name&&x.active});
-    var pts=t?t.points:10;
-    var r2=await dbInsert('activity_entries',[{pillar:'soul',title:name,entry_date:td,status:'done',points_awarded:pts,activity_type_id:t?t.id:null}]);
-    entries=entries.concat(r2.data);saveCache();
-    offToast(r2,'+'+pts+' XP \u00B7 '+name);
+    askPrayerPlace(name);
   }
+}
+/* two big targets, no confirm step: logging a prayer stays two taps */
+function askPrayerPlace(name){
+  var h='<h2>'+esc(name)+'</h2><p class="confmsg">'+T('prwhere')+'</p>';
+  h+='<div class="prplace">';
+  h+='<button onclick="logPrayer(\''+esc(name)+'\',\'mosque\')">'+px('mosque',22)+'<b>'+T('prmosque')+'</b><small>'+T('prjamaah')+'</small><span class="pts">+'+PRPTS.mosque+' XP</span></button>';
+  h+='<button onclick="logPrayer(\''+esc(name)+'\',\'home\')">'+px('home',22)+'<b>'+T('prhome')+'</b><small>'+T('pralone')+'</small><span class="pts">+'+PRPTS.home+' XP</span></button>';
+  h+='</div>';
+  h+='<div class="mrow"><button class="no" onclick="closeModal()">'+T('cancel')+'</button></div>';
+  showModal(h,true);
+}
+async function logPrayer(name,place){
+  closeModal();
+  var td=today();
+  var e=entries.find(function(x){return x.entry_date===td&&x.pillar==='soul'&&x.title===name&&x.status==='done'});
+  if(e)return;
+  var t=types.find(function(x){return x.pillar==='soul'&&x.name===name&&x.active});
+  var pts=PRPTS[place]||PRPTS.home;
+  var r2=await dbInsert('activity_entries',[{pillar:'soul',title:name,entry_date:td,status:'done',points_awarded:pts,activity_type_id:t?t.id:null,meta:{place:place}}]);
+  entries=entries.concat(r2.data);saveCache();
+  offToast(r2,'+'+pts+' XP \u00B7 '+name+' \u00B7 '+T(place==='mosque'?'prmosque':'prhome'));
   checkLevelUp();render();
 }
 async function saveNote(ds,v){
@@ -3267,6 +3293,11 @@ function renderStats(){
   h+='</div></div>';
   v.innerHTML=h;
   drawRadar();drawSeason();
+}
+/* old entries predate meta.place and render with no marker */
+function prayerMark(e){
+  if(!e||!e.meta||e.meta.place!=='mosque')return '';
+  return px('mosque',10)+' ';
 }
 function prayerCalHtml(){
   var y=anchor.getFullYear(),m=anchor.getMonth();
