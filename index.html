@@ -63,7 +63,7 @@ header{display:flex;align-items:center;gap:8px;padding:11px 14px}
 .lvlbadge{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#1a1200;font-weight:800;border-radius:var(--r-s);padding:3px 9px;font-size:12px;white-space:nowrap;flex:0 0 auto}
 .xpwrap{flex:1 1 auto;min-width:0}
 .xpbar{height:8px;background:var(--card2);border-radius:var(--r-pill);overflow:hidden}
-.xpbar div{height:100%;background:linear-gradient(90deg,#fbbf24,#f59e0b);border-radius:var(--r-pill);transition:width var(--dur-slow)}
+.xpbar div{height:100%;background:linear-gradient(90deg,#fbbf24,#f59e0b);border-radius:var(--r-pill);transition:width var(--dur-slow);position:relative}
 .xptxt{font-size:11px;color:var(--dim);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .netbadge{border:1px solid var(--line);border-radius:var(--r-s);padding:5px 8px;font-size:10px;font-weight:700;white-space:nowrap;background:var(--card2);flex:0 0 auto}
 .netbadge.off{border-color:#ff6b4a;color:#ff6b4a}
@@ -87,7 +87,7 @@ main{padding:14px 16px 90px;max-width:1000px;margin:0 auto}
 .qchip.done{color:var(--tx)}
 .qchip.done .qe{filter:none;opacity:1;transform:scale(1.1)}
 .qbar{height:6px;background:var(--card2);border-radius:var(--r-pill);overflow:hidden;margin-bottom:12px}
-.qbar div{height:100%;background:linear-gradient(90deg,#a78bfa,#fbbf24);border-radius:var(--r-pill);transition:width var(--dur-slow)}
+.qbar div{height:100%;background:linear-gradient(90deg,#a78bfa,#fbbf24);border-radius:var(--r-pill);transition:width var(--dur-slow);position:relative}
 .nextpray{font-size:12px;color:var(--soul);text-align:center;margin-bottom:8px;font-weight:600}
 .prayrow{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
 .pray{background:var(--card2);border:1px solid var(--line);border-radius:var(--r-m);padding:7px 2px;text-align:center;color:var(--dim);font-size:11px;line-height:1.35}
@@ -130,7 +130,7 @@ main{padding:14px 16px 90px;max-width:1000px;margin:0 auto}
 .crow .cp{font-size:15px;font-weight:800}
 .crow .cs{font-size:11px;color:var(--dim);margin-top:3px;display:flex;justify-content:space-between;gap:8px}
 .crow .cbar{height:6px;background:rgba(255,255,255,.07);border-radius:var(--r-pill);margin-top:7px;overflow:hidden}
-.crow .cbar div{height:100%;border-radius:var(--r-pill);transition:width var(--dur-slow)}
+.crow .cbar div{height:100%;border-radius:var(--r-pill);transition:width var(--dur-slow);position:relative}
 .warn{color:#fbbf24;font-weight:700}
 .bad{color:#ff6b4a;font-weight:700}
 .tt{overflow-x:auto;padding-bottom:4px}
@@ -158,7 +158,7 @@ main{padding:14px 16px 90px;max-width:1000px;margin:0 auto}
 .rname{font-size:19px;font-weight:800;letter-spacing:.06em;margin-top:10px}
 .rlp{font-size:11px;color:var(--dim);margin-top:3px;font-weight:600}
 .rbar{height:7px;background:rgba(255,255,255,.08);border-radius:var(--r-pill);margin:11px auto 0;max-width:230px;overflow:hidden}
-.rbar div{height:100%;border-radius:var(--r-pill);transition:width var(--dur-slow)}
+.rbar div{height:100%;border-radius:var(--r-pill);transition:width var(--dur-slow);position:relative}
 .rnext{font-size:11px;color:var(--gold);margin-top:8px;font-weight:700}
 .rankempty{background:var(--card2);border-radius:var(--r-m);padding:20px;text-align:center}
 .rankempty p{color:var(--dim);font-size:13px;margin:0 0 12px}
@@ -225,9 +225,11 @@ main{padding:14px 16px 90px;max-width:1000px;margin:0 auto}
 .pgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .pgc{background:var(--card2);border:1px solid var(--ghost);border-radius:var(--r-m);padding:12px;text-align:start;width:100%;cursor:pointer;color:inherit;transition:border-color var(--dur),box-shadow var(--dur)}
 .pgc:active{border-color:var(--accent)}
+/* glossy streak reused across every progress-bar fill, one rule */
+.xpbar div::after,.qbar div::after,.crow .cbar div::after,.gfill::after,.rbar div::after,.pgoal div::after,.nut .nb div::after,.goalrow .tr div::after,.pcard .pbar div::after,.barrow .tr div::after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.35) 0%,rgba(255,255,255,.08) 45%,transparent 60%)}
 .section::before,.phero::before,.hcard::before,.authbox::before,.mbox::before{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(165deg,rgba(255,255,255,.10) 0%,rgba(255,255,255,.03) 18%,transparent 32%)}
 .pgh{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
-.pgi{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:var(--r-s);flex:0 0 auto}
+.pgi{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:var(--r-s);flex:0 0 auto;box-shadow:inset 0 1px 0 rgba(255,255,255,.18),inset 0 -1px 2px rgba(0,0,0,.18)}
 .pgn{font-family:var(--f-head);font-size:14px;font-weight:700;letter-spacing:-.01em;margin-top:11px}
 .pgv{font-family:var(--f-head);font-size:19px;font-weight:800;letter-spacing:-.02em;margin-top:2px;font-variant-numeric:tabular-nums}
 .pgv span{font-family:var(--f-ui);font-size:11px;font-weight:600;color:var(--dim);letter-spacing:0}
@@ -241,7 +243,7 @@ main{padding:14px 16px 90px;max-width:1000px;margin:0 auto}
 .pstats .v{font-size:19px;font-weight:800}
 .pstats .k{font-size:11px;color:var(--dim)}
 .pgoal{height:8px;background:var(--card2);border-radius:var(--r-pill);overflow:hidden;margin-top:12px}
-.pgoal div{height:100%;border-radius:var(--r-pill);transition:width var(--dur-slow)}
+.pgoal div{height:100%;border-radius:var(--r-pill);transition:width var(--dur-slow);position:relative}
 .pgoaltx{font-size:11px;color:var(--dim);margin-top:5px}
 .qadd{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
 .qadd button{background:var(--card2);border:1px solid var(--line);border-radius:var(--r-l);padding:8px 13px;font-size:12px;font-weight:600}
@@ -260,13 +262,13 @@ main{padding:14px 16px 90px;max-width:1000px;margin:0 auto}
 .nut .nv{font-size:17px;font-weight:800}
 .nut .nl{font-size:11px;color:var(--dim);margin-top:1px}
 .nut .nb{height:5px;background:rgba(255,255,255,.07);border-radius:var(--r-pill);margin-top:7px;overflow:hidden}
-.nut .nb div{height:100%;border-radius:var(--r-pill);transition:width var(--dur-slow)}
+.nut .nb div{height:100%;border-radius:var(--r-pill);transition:width var(--dur-slow);position:relative}
 .hbtns{display:flex;gap:8px}
 .hbtns button{flex:1;background:var(--card2);border:1px solid var(--line);border-radius:var(--r-m);padding:9px;font-size:13px;font-weight:600}
 .goalrow{display:flex;align-items:center;gap:10px;margin-bottom:9px}
 .goalrow .gi{width:96px;font-size:13px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .goalrow .tr{flex:1;height:12px;background:var(--card2);border-radius:var(--r-pill);overflow:hidden}
-.goalrow .tr div{height:100%;border-radius:var(--r-pill);transition:width var(--dur-slow)}
+.goalrow .tr div{height:100%;border-radius:var(--r-pill);transition:width var(--dur-slow);position:relative}
 .goalrow .vl{width:52px;text-align:end;font-size:12px;font-weight:700}
 .goalrow.hit .vl{color:var(--gold)}
 .grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:14px}
@@ -276,7 +278,7 @@ main{padding:14px 16px 90px;max-width:1000px;margin:0 auto}
 .pcard .plvl{font-size:12px;color:var(--dim)}
 .pcard .ppts{font-size:20px;font-weight:800;margin-top:4px}
 .pcard .pbar{height:6px;background:var(--card2);border-radius:var(--r-pill);margin-top:8px;overflow:hidden}
-.pcard .pbar div{height:100%;border-radius:var(--r-pill)}
+.pcard .pbar div{height:100%;border-radius:var(--r-pill);position:relative}
 .pcard .stk{position:absolute;top:12px;inset-inline-end:12px;font-size:12px;background:var(--card2);border-radius:var(--r-s);padding:3px 8px}
 .statrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:14px}
 .mini{background:var(--card);border:1px solid var(--line);border-radius:var(--r-m);padding:14px;text-align:center}
@@ -285,7 +287,7 @@ main{padding:14px 16px 90px;max-width:1000px;margin:0 auto}
 .barrow{display:flex;align-items:center;gap:10px;margin-bottom:10px}
 .barrow .nm{width:100px;font-size:13px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .barrow .tr{flex:1;height:14px;background:var(--card2);border-radius:var(--r-pill);overflow:hidden}
-.barrow .tr div{height:100%;border-radius:var(--r-pill);transition:width var(--dur-slow)}
+.barrow .tr div{height:100%;border-radius:var(--r-pill);transition:width var(--dur-slow);position:relative}
 .barrow .vl{width:64px;text-align:end;font-size:13px;font-weight:700}
 .cmp{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:13px}
 .cmp .nm{width:100px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -379,8 +381,9 @@ main{padding:14px 16px 90px;max-width:1000px;margin:0 auto}
 .prplace button .pts{font-size:11px;font-weight:800;color:var(--soul)}
 .prplace button:hover,.prplace button:focus-visible{border-color:var(--soul);background:rgba(167,139,250,.12)}
 .mrow button{flex:1;border:none;border-radius:var(--r-m);padding:11px;font-size:14px;font-weight:600}
-.mrow .ok{background:var(--accent);color:#fff}
-.mrow .no{background:var(--card2);color:var(--dim)}
+.mrow .ok{background:linear-gradient(180deg,var(--accent),var(--accent-fill));color:#fff}
+.mrow .no{background:rgba(255,255,255,.05);color:var(--dim);border-width:1px;border-style:solid;border-color:var(--edge-hi) var(--edge-lo) var(--edge-lo) var(--edge-hi)}
+.no:active{transform:translateY(1px) scale(.98);background:rgba(255,255,255,.08)}
 .mrow .danger{background:var(--danger);color:#fff}
 .confmsg{font-size:14px;color:var(--dim);line-height:1.5}
 .confmsg b{color:var(--tx)}
@@ -442,7 +445,8 @@ button{transition:background var(--dur),border-color var(--dur),color var(--dur)
 button:active{transform:scale(.97)}
 button:disabled{opacity:.45;pointer-events:none}
 .mrow button{min-height:46px;border-radius:var(--r-m);font-weight:700}
-.mrow .ok{background:var(--accent-fill);color:#fff}
+.mrow .ok{background:linear-gradient(180deg,var(--accent),var(--accent-fill));color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 -2px 4px rgba(0,0,0,.15),0 4px 12px -2px rgba(79,156,249,.4);border:none}
+.ok:active{transform:translateY(1px) scale(.98);box-shadow:inset 0 1px 0 rgba(255,255,255,.2),inset 0 -1px 2px rgba(0,0,0,.15),0 2px 6px -2px rgba(79,156,249,.3)}
 .mrow .danger{background:var(--danger)}
 .menuitem{min-height:48px;border-radius:var(--r-m)}
 @media(hover:hover){
@@ -474,7 +478,8 @@ button:disabled{opacity:.45;pointer-events:none}
 }
 
 /* ---- floating action + toast ---- */
-#fab{width:56px;height:56px;border-radius:var(--r-pill);font-size:26px;background:linear-gradient(160deg,#3a8bee,var(--accent-fill));border:none;color:#fff;box-shadow:0 6px 20px rgba(79,156,249,.4),0 2px 6px rgba(0,0,0,.4)}
+#fab{width:56px;height:56px;border-radius:var(--r-pill);font-size:26px;background:linear-gradient(160deg,#3a8bee,var(--accent-fill));border:none;color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.4),inset 0 -3px 6px rgba(0,0,0,.2),0 6px 20px rgba(79,156,249,.4),0 2px 6px rgba(0,0,0,.4)}
+#fab:active{transform:scale(.94);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),inset 0 -2px 4px rgba(0,0,0,.2),0 3px 10px rgba(79,156,249,.3)}
 #toast{border-radius:var(--r-pill);font-size:13px;font-weight:600;box-shadow:var(--shadow)}
 
 /* ---- rows are comfortable tap targets ---- */
