@@ -40,7 +40,7 @@
   --study-soft:rgba(79,156,249,.14);--gym-soft:rgba(255,107,74,.14);
   --social-soft:rgba(52,211,153,.14);--soul-soft:rgba(167,139,250,.14);
   --gold:#fbbf24;--good:#34d399;--caution:#fbbf24;--bad:#ff6b4a;--accent:#4f9cf9;--accent-fill:#2470d4;--danger:#ef4444;--warn:#f59e0b;--okc:#22c55e;
-  --r-xs:4px;--r-s:8px;--r-m:12px;--r-l:18px;--r-pill:999px;--dur:.18s;--dur-slow:.45s;--accent-glow:rgba(79,156,249,.35);--glass-lo:rgba(18,26,39,.72);--glass-hi:rgba(26,36,52,.88);--ghost:rgba(255,255,255,.08);--blur-lo:blur(16px);--blur-hi:blur(24px);--f-ui:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;--f-head:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --r-xs:4px;--r-s:8px;--r-m:12px;--r-l:18px;--r-pill:999px;--dur:.18s;--dur-slow:.45s;--accent-glow:rgba(79,156,249,.35);--edge-hi:rgba(255,255,255,.16);--edge-lo:rgba(255,255,255,.05);--glass-lo:rgba(18,26,39,.72);--glass-hi:rgba(26,36,52,.88);--ghost:rgba(255,255,255,.08);--blur-lo:blur(16px) saturate(160%);--blur-hi:blur(24px) saturate(160%);--f-ui:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;--f-head:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
   --shadow:0 1px 2px rgba(0,0,0,.35),0 8px 24px -12px rgba(0,0,0,.5);
 }
 html{color-scheme:dark}
@@ -51,7 +51,7 @@ body{background:radial-gradient(140% 60% at 50% -8%,#131c30 0%,var(--bg) 55%) fi
 button{cursor:pointer;font-family:inherit;color:inherit}
 .hidden{display:none!important}
 #auth{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
-.authbox{background:var(--glass-lo);backdrop-filter:var(--blur-lo);-webkit-backdrop-filter:var(--blur-lo);border:1px solid var(--ghost);border-radius:var(--r-l);padding:32px;width:100%;max-width:380px}
+.authbox{background:var(--glass-lo);backdrop-filter:var(--blur-lo) url(#liquidglass);-webkit-backdrop-filter:var(--blur-lo);border-width:1px;border-style:solid;border-color:var(--edge-hi) var(--edge-lo) var(--edge-lo) var(--edge-hi);border-radius:var(--r-l);padding:32px;width:100%;max-width:380px;position:relative}
 .authbox h1{font-size:26px;margin-bottom:6px;text-align:center;font-weight:800;letter-spacing:-.025em}
 .authbox p{color:var(--dim);text-align:center;margin-bottom:20px;font-size:14px}
 .authbox input{width:100%;background:var(--card2);border:1px solid var(--line);border-radius:var(--r-m);padding:12px 14px;color:var(--tx);font-size:15px;margin-bottom:12px}
@@ -74,7 +74,7 @@ header{display:flex;align-items:center;gap:8px;padding:11px 14px}
 .mainnav button{flex:0 0 auto;background:var(--card);border:1px solid var(--line);color:var(--dim);border-radius:var(--r-l);padding:8px 13px;font-size:12px;font-weight:600;white-space:nowrap}
 .mainnav button.on{color:var(--tx);background:var(--card2);border-color:var(--accent)}
 main{padding:14px 16px 90px;max-width:1000px;margin:0 auto}
-.section{background:var(--glass-lo);backdrop-filter:var(--blur-lo);-webkit-backdrop-filter:var(--blur-lo);border:1px solid var(--ghost);border-radius:var(--r-m);padding:16px;margin-bottom:14px}
+.section{background:var(--glass-lo);backdrop-filter:var(--blur-lo);-webkit-backdrop-filter:var(--blur-lo);border-width:1px;border-style:solid;border-color:var(--edge-hi) var(--edge-lo) var(--edge-lo) var(--edge-hi);border-radius:var(--r-m);padding:16px;margin-bottom:14px;position:relative}
 .section h2{font-size:15px;margin-bottom:12px}
 .muted{color:var(--dim);font-size:13px;line-height:1.5}
 .quest{background:linear-gradient(135deg,#131a26,#151d30);border:1px solid var(--line);border-radius:var(--r-m);padding:14px 16px;margin-bottom:14px}
@@ -215,7 +215,7 @@ main{padding:14px 16px 90px;max-width:1000px;margin:0 auto}
 .tap:active{transform:scale(.98)}
 .crow .ttnav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
 .ttnav b{flex:1;text-align:center;font-size:13px}
-.phero{background:var(--glass-lo);backdrop-filter:var(--blur-lo);-webkit-backdrop-filter:var(--blur-lo);border:1px solid var(--ghost);border-radius:var(--r-m);padding:16px;margin-bottom:14px;position:relative;overflow:hidden}
+.phero{background:var(--glass-lo);backdrop-filter:var(--blur-lo) url(#liquidglass);-webkit-backdrop-filter:var(--blur-lo);border-width:1px;border-style:solid;border-color:var(--edge-hi) var(--edge-lo) var(--edge-lo) var(--edge-hi);border-radius:var(--r-m);padding:16px;margin-bottom:14px;position:relative;overflow:hidden}
 .phero:after{content:'';position:absolute;top:-40px;inset-inline-end:-30px;width:130px;height:130px;border-radius:50%;opacity:.11}
 .phero .phero{box-shadow:0 0 24px -6px var(--accent-glow)}
 .pe{font-size:30px}
@@ -225,6 +225,7 @@ main{padding:14px 16px 90px;max-width:1000px;margin:0 auto}
 .pgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .pgc{background:var(--card2);border:1px solid var(--ghost);border-radius:var(--r-m);padding:12px;text-align:start;width:100%;cursor:pointer;color:inherit;transition:border-color var(--dur),box-shadow var(--dur)}
 .pgc:active{border-color:var(--accent)}
+.section::before,.phero::before,.hcard::before,.authbox::before,.mbox::before{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(165deg,rgba(255,255,255,.10) 0%,rgba(255,255,255,.03) 18%,transparent 32%)}
 .pgh{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
 .pgi{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:var(--r-s);flex:0 0 auto}
 .pgn{font-family:var(--f-head);font-size:14px;font-weight:700;letter-spacing:-.01em;margin-top:11px}
@@ -247,7 +248,7 @@ main{padding:14px 16px 90px;max-width:1000px;margin:0 auto}
 .qadd button:active{transform:scale(.96)}
 .qadd .pts{color:var(--gold);font-size:11px}
 .wkentries{margin-top:2px}
-.hcard{background:var(--glass-lo);backdrop-filter:var(--blur-lo);-webkit-backdrop-filter:var(--blur-lo);border:1px solid var(--ghost);border-radius:var(--r-m);padding:14px 16px;margin-bottom:14px}
+.hcard{background:var(--glass-lo);backdrop-filter:var(--blur-lo);-webkit-backdrop-filter:var(--blur-lo);border-width:1px;border-style:solid;border-color:var(--edge-hi) var(--edge-lo) var(--edge-lo) var(--edge-hi);border-radius:var(--r-m);padding:14px 16px;margin-bottom:14px;position:relative}
 .hcard h2{font-size:14px;margin-bottom:10px}
 .wrow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:6px}
 .btl{width:30px;height:38px;border:none;background:none;font-size:22px;line-height:1;opacity:.28;filter:grayscale(1);transition:filter var(--dur),opacity var(--dur);padding:0}
@@ -359,7 +360,7 @@ main{padding:14px 16px 90px;max-width:1000px;margin:0 auto}
 .yd{aspect-ratio:1;border-radius:var(--r-xs);background:var(--card2)}
 #fab{position:fixed;bottom:22px;inset-inline-end:22px;width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#1d4ed8);color:#fff;border:none;font-size:26px;box-shadow:0 8px 24px rgba(29,78,216,.5);z-index:60}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:100;padding:16px}
-.mbox{background:var(--glass-hi);backdrop-filter:var(--blur-hi);-webkit-backdrop-filter:var(--blur-hi);border:1px solid var(--ghost);border-radius:var(--r-l);padding:20px;width:100%;max-width:440px;max-height:88vh;overflow-y:auto}
+.mbox{background:var(--glass-hi);backdrop-filter:var(--blur-hi) url(#liquidglass);-webkit-backdrop-filter:var(--blur-hi);border-width:1px;border-style:solid;border-color:var(--edge-hi) var(--edge-lo) var(--edge-lo) var(--edge-hi);border-radius:var(--r-l);padding:20px;width:100%;max-width:440px;max-height:88vh;overflow-y:auto;position:relative}
 .mbox h2{font-size:16px;margin-bottom:14px}
 .mbox label{font-size:12px;color:var(--dim);display:block;margin:10px 0 4px}
 .mbox input,.mbox select,.mbox textarea{width:100%;background:var(--card2);border:1px solid var(--line);border-radius:var(--r-s);padding:10px;color:var(--tx);font-size:14px;font-family:inherit}
@@ -501,7 +502,8 @@ h2>.msi:first-child{vertical-align:-3px;margin-inline-end:5px}
 </head>
 <body>
 <div id="auth">
-  <div class="authbox" id="authbox"></div>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="liquidglass" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="0.008 0.012" numOctaves="2" seed="7" result="noise"/><feGaussianBlur in="noise" stdDeviation="2" result="blurnoise"/><feDisplacementMap in="SourceGraphic" in2="blurnoise" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
+<div class="authbox" id="authbox"></div>
 </div>
 
 <div id="app" class="hidden">
