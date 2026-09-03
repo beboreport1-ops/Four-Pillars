@@ -653,142 +653,11 @@ var LVLTITLES=['Novice','Apprentice','Fighter','Warrior','Knight','Champion','Ma
    Chars map to palette slots; '.' = transparent.
    Shared outline 'o' everywhere for a cohesive 8-bit language.
    ============================================================ */
-var PXO='#0d1526',PXW='#e9eef8';
-var PX={
-home:{p:{o:PXO,a:'var(--gym)',b:'#c94f33',w:PXW,d:'#5d3a2e'},g:[
-'............','.....oo.....','....oaao....','...oaaaao...','..oaaaaaao..','.oaaaaaaaao.','.oobbbbbboo.','..obbwwbbo..','..obbwwbbo..','..obbddbbo..','..obbddbbo..','..oooooooo..']},
-cal:{p:{o:PXO,a:'var(--study)',b:'#2a5da8',w:PXW,r:'var(--danger)'},g:[
-'............','..o..oo..o..','.oooooooooo.','.orrrrrrrro.','.oooooooooo.','.owwwwwwwwo.','.owaowaowao.','.owwwwwwwwo.','.owaowaowao.','.owwwwwwwwo.','.oooooooooo.','............']},
-stats:{p:{o:PXO,a:'var(--study)',b:'var(--social)',c:'var(--gold)'},g:[
-'............','..........o.','.......oo.o.','.......oa.o.','..oo...oa.o.','..ob...oa.o.','..ob.o.oa.o.','..ob.oc.a.o.','..ob.oc.a.o.','..ob.oc.a.o.','.ooooooooooo','............']},
-book:{p:{o:PXO,a:'var(--study)',b:'#2a5da8',w:PXW},g:[
-'............','..oooooooo..','.oaaaaaaaao.','.oaawwwaaao.','.oaawwwaaao.','.oaaaaaaaao.','.oaawwwaaao.','.oaaaaaaaao.','.obbbbbbbbo.','.obbbbbbbbo.','..oooooooo..','............']},
-heart:{p:{o:PXO,a:'var(--gym)',b:'#c23a22',w:PXW},g:[
-'............','..oo...oo...','.oaao.oaao..','oaawaoaaaao.','oaawaaaaaao.','oaaaaaaaaao.','.oaaaaaaao..','..oaaaaao...','...oaaao....','....oao.....','.....o......','............']},
-people:{p:{o:PXO,a:'var(--social)',b:'#1d9c6c',w:PXW},g:[
-'............','..oo...oo...','.oaao.obbo..','.oaao.obbo..','..oo...oo...','.oooo.oooo..','oaaaaobbbbo.','oaaaaobbbbo.','oaaaaobbbbo.','oaaaaobbbbo.','.oooo.oooo..','............']},
-mosque:{p:{o:PXO,a:'var(--soul)',b:'#7c5fd1',w:PXW,y:'var(--gold)'},g:[
-'.....y......','.....o......','....oao.....','...oaaao....','..oaaaaao...','.oaaaaaaao..','.oooooooo.o.','.obbwwbbo.y.','.obbwwbbo.o.','.obbwwbbo.a.','.obbwwbbo.a.','.oooooooooo.']},
-medal:{p:{o:PXO,a:'var(--gold)',b:'#c98d0a',r:'var(--gym)',w:PXW},g:[
-'..oo....oo..','..oro..oro..','...oro.ro...','...oror.o...','....oooo....','....oooo....','...oaaaao...','..oaawaaao..','..oaawaaao..','..oaaaaaao..','...oaaaao...','....oooo....']},
-trophy:{p:{o:PXO,a:'var(--gold)',b:'#c98d0a',w:PXW},g:[
-'............','.oooooooooo.','.oaaaaaaaao.','oboaaaaaaobo','ob.oaawaao.o','.o.oaawaao.o','....oaaao...','.....oao....','.....obo....','....oaaao...','...oaaaaao..','...ooooooo..']},
-fire:{p:{o:PXO,a:'var(--gym)',b:'var(--warn)',y:'var(--gold)',w:PXW},g:[
-'.....o......','....oao.....','....oao..o..','...oaao.oo..','..oaaaaoao..','..oabbaaao..','.oabyybaao..','.oabyyybao..','.oabywybao..','..obyyybo...','...obbbo....','....ooo.....']},
-snow:{p:{o:'#9fc4ef',a:'#cfe4ff'},g:[
-'.....a......','..a..a..a...','...a.a.a....','....aaa.....','.aaaaoaaaa..','....aaa.....','...a.a.a....','..a..a..a...','.....a......','............','............','............']},
-star:{p:{o:PXO,a:'var(--gold)',b:'#c98d0a',w:PXW},g:[
-'............','.....oo.....','.....oao....','....oaao....','.oooaaaaooo.','.oaaaawaaao.','..oaaawao...','...oaaaao...','...oaaaao...','..oaao.oao..','..oo....oo..','............']},
-check:{p:{o:PXO,a:'var(--okc)',b:'#168947',w:PXW},g:[
-'............','..oooooooo..','.oaaaaaaaao.','.oaaaaaaobo.','.oaaaaaobbo.','.obaaaobbao.','.obboaobbao.','.obbbobbaao.','.oabbbbaaao.','.oaabbaaaao.','..oooooooo..','............']},
-boxempty:{p:{o:'#41546f',a:'#141d2c'},g:[
-'............','..oooooooo..','.oaaaaaaaao.','.oaaaaaaaao.','.oaaaaaaaao.','.oaaaaaaaao.','.oaaaaaaaao.','.oaaaaaaaao.','.oaaaaaaaao.','.oaaaaaaaao.','..oooooooo..','............']},
-cross:{p:{o:PXO,a:'var(--danger)',w:PXW},g:[
-'............','.oo......oo.','oaao....oaao','oaaao..oaaao','.oaaaooaaao.','..oaaaaaao..','...oaaaao...','..oaaaaaao..','.oaaaooaaao.','oaaao..oaaao','oaao....oaao','.oo......oo.']},
-warn:{p:{o:PXO,a:'var(--warn)',b:'#c47a08',d:PXO},g:[
-'.....oo.....','....oaao....','....oaao....','...oaddao...','...oaddao...','..oaaddaao..','..oaaddaao..','.oaaaddaaao.','.oaaaaaaaao.','oaaaaddaaaao','oaaaaaaaaaao','.oooooooooo.']},
-plus:{p:{o:PXO,a:'var(--okc)',w:PXW},g:[
-'............','....oooo....','....oaao....','....oaao....','.oooaaaaooo.','.oaaaaaaaao.','.oaaaaaaaao.','.oooaaaaooo.','....oaao....','....oaao....','....oooo....','............']},
-trash:{p:{o:PXO,a:'#8b9bb5',b:'#5d6c87',r:'var(--danger)'},g:[
-'............','....oooo....','.ooorrrrooo.','.orrrrrrrro.','.oooooooooo.','..oaaaaaao..','..oaobobao..','..oaobobao..','..oaobobao..','..oaobobao..','...oooooo...','............']},
-pin:{p:{o:PXO,a:'var(--gym)',b:'#c94f33',w:PXW},g:[
-'............','...oooo.....','..oaaaao....','.oaawwaao...','.oaawwaao...','.oaaaaaao...','..oaaaao....','...oaao.....','....oao.....','....oo......','...oo.......','..o.........']},
-target:{p:{o:PXO,a:'var(--gym)',w:PXW},g:[
-'............','...oooooo...','..oaaaaaao..','.oaowwwwao..','.oawoooowo..','.oawoaaowo..','.oawoaaowo..','.oawooo.wo..','.oaowwwwao..','..oaaaaaao..','...oooooo...','............']},
-clip:{p:{o:PXO,a:'#8b9bb5',w:PXW,b:'var(--study)'},g:[
-'....oooo....','..ooabbaoo..','.owwoooowwo.','.owwwwwwwwo.','.owbbbbbbwo.','.owwwwwwwwo.','.owbbbbwwwo.','.owwwwwwwwo.','.owbbbbbwwo.','.owwwwwwwwo.','..oooooooo..','............']},
-scroll:{p:{o:PXO,a:'#e8d9b0',b:'#c9b586',w:PXW},g:[
-'............','..ooooooo...','.oaaaaaaoo..','.oabbbbaobo.','.oaaaaaaoo..','.oabbbaao...','.oaaaaaao...','.oabbbbao...','.oaaaaaao...','.ooaaaaoo...','.obooooobo..','..ooooooo...']},
-chartup:{p:{o:PXO,a:'var(--okc)',w:PXW},g:[
-'............','..........o.','........ooa.','.......oaao.','......oaao..','..o..oaao...','.oa.oaao....','.oaoaao.....','.oaaao......','.oaao.......','.ooo........','............']},
-flag:{p:{o:PXO,a:PXW,b:'#141d2c'},g:[
-'.o..........','.oooooooo...','.oabababao..','.obabababo..','.oabababao..','.obabababo..','.oooooooo...','.o..........','.o..........','.o..........','.o..........','.o..........']},
-pad:{p:{o:PXO,a:'#5d6c87',b:'#41546f',r:'var(--gym)',g:'var(--okc)',w:PXW},g:[
-'............','..oooooooo..','.oaaaaaaaao.','oaawaaaaagao','oawwwaargrgo','oaawaaaaagao','oaaaaaaaaaao','.obbo..obbo.','.oo......oo.','............','............','............']},
-grad:{p:{o:PXO,a:'#3d4f6b',b:'#28374e',y:'var(--gold)'},g:[
-'............','.....oo.....','...ooaaoo...','.ooaaaaaaoo.','oaaaaaaaaaao','.ooaaaaaaoo.','...ooaaooyo.','..oaobboayo.','..obbbbbbyo.','...oooooo.o.','..........y.','............']},
-pencil:{p:{o:PXO,a:'var(--warn)',b:'#c47a08',w:'#f4c98a',d:'#3d4f6b'},g:[
-'........oo..','.......oddo.','......oddo..','.....oaao...','....oaao....','...oaao.....','..oaao......','.oaao.......','.owo........','.oo.........','.o..........','............']},
-quest:{p:{o:PXO,a:'var(--soul)',w:PXW},g:[
-'............','...ooooo....','..oaaaaao...','..oao..oao..','.......oao..','......oao...','.....oao....','.....oao....','.....oo.....','............','.....oo.....','.....oo.....']},
-exam:{p:{o:PXO,a:PXW,b:'var(--study)',r:'var(--danger)'},g:[
-'............','..oooooo....','.oaaaaaaoo..','.oaraaaaao..','.oaaabbao...','.oaraaaaao..','.oaaabbbao..','.oaraaaaao..','.oaaabbao...','.oaaaaaaao..','..ooooooo...','............']},
-folder:{p:{o:PXO,a:'var(--gold)',b:'#c98d0a'},g:[
-'............','..ooooo.....','.oaaaaao....','.oaaaaaooooo','.obbbbbbbbbo','.obbbbbbbbbo','.obbbbbbbbbo','.obbbbbbbbbo','.obbbbbbbbbo','.obbbbbbbbbo','..ooooooooo.','............']},
-pushpin:{p:{o:PXO,a:'var(--danger)',b:'#b32d21',w:PXW},g:[
-'............','...oooo.....','..oawwao....','..oaaaao....','..oaaaao....','..obbbbo....','.oaaaaaao...','.oooooooo...','....oo......','....oo......','....o.......','............']},
-clock:{p:{o:PXO,a:PXW,b:'var(--study)',d:'#3d4f6b'},g:[
-'............','...oooooo...','..oaaaaaao..','.oaaaobaaao.','.oaaaobaaao.','.oaaaobbbao.','.oaaaaaaaao.','.oaaaaaaaao.','..oaaaaaao..','...oooooo...','..od....do..','............']},
-gear:{p:{o:PXO,a:'#8b9bb5',b:'#5d6c87',d:'#141d2c'},g:[
-'....o..o....','...oaooao...','..oaaaaaao..','.oaaaaaaaao.','oaaoddddoaao','.oaoddddoao.','.oaoddddoao.','oaaoddddoaao','.oaaaaaaaao.','..oaaaaaao..','...oaooao...','....o..o....']},
-slid:{p:{o:PXO,a:'#8b9bb5',b:'var(--study)'},g:[
-'............','.oooooooooo.','.o...b....o.','.oaaabbaaao.','.o...b....o.','.o........o.','.o......b.o.','.oaaaaabbao.','.o......b.o.','.oooooooooo.','............','............']},
-globe:{p:{o:PXO,a:'var(--study)',b:'#2a5da8',g:'var(--social)'},g:[
-'............','...oooooo...','..oaagggao..','.oaaagggaao.','.ogaaaagggo.','.oggaaaggao.','.oagggaaaao.','.oaagggaaao.','..oaaaggao..','...oooooo...','............','............']},
-drop:{p:{o:PXO,a:'var(--study)',b:'#2a5da8',w:PXW},g:[
-'.....o......','.....oo.....','....oao.....','....oaao....','...oaaao....','..oaaaaao...','.oaaaaaaao..','.oawaaaaao..','.oawaaaaao..','..oaaaaao...','...oaaao....','....ooo.....']},
-bottle:{p:{o:PXO,a:'var(--study)',b:'#2a5da8',w:PXW,c:'#8b9bb5'},g:[
-'....occo....','....occo....','...oooooo...','...oaaaao...','..oaaaaaao..','..oawaaaao..','..oawaaaao..','..oawaaaao..','..oaaaaaao..','..oabbbbao..','..oabbbbao..','...oooooo...']},
-meat:{p:{o:PXO,a:'var(--gym)',b:'#c94f33',w:'#f3d9c9',d:'#e8b090'},g:[
-'............','...ooooo....','..oaaaaao...','.oaaddaaao..','.oadwwdaao..','.oadwwdaaoo.','.oaaddaaobo.','..oaaaaaobo.','...oooooobo.','.........o..','............','............']},
-plate:{p:{o:PXO,a:PXW,b:'#b9c6da',c:'#8b9bb5'},g:[
-'............','.o...ooo..o.','.o..oaaao.o.','.o.oabbbaoo.','.oooabbbao..','.o.oabbbaoo.','.o..oaaao.o.','.o...ooo..o.','.o........o.','............','............','............']},
-shoe:{p:{o:PXO,a:'var(--social)',b:'#1d9c6c',w:PXW},g:[
-'............','............','...oo.......','..oaao......','..oaaoo.....','.oaaaaoo....','.oaawaaoooo.','oaaawaaaaaao','oaaaaaaaaaao','obbbbbbbbbbo','.oooooooooo.','............']},
-scale:{p:{o:PXO,a:'#8b9bb5',b:'var(--gold)'},g:[
-'.....oo.....','..ooobboo...','.ob..oo..bo.','obbbo..obbbo','.obo....obo.','..o......o..','.....oo.....','.....oo.....','.....oo.....','...oooooo...','..oaaaaaao..','...oooooo...']},
-barbell:{p:{o:PXO,a:'#8b9bb5',b:'#41546f',w:PXW},g:[
-'............','.o........o.','oboo....oobo','obao....oabo','obaooooooabo','obaaaaaaaabo','obaooooooabo','obao....oabo','oboo....oobo','.o........o.','............','............']},
-key:{p:{o:PXO,a:'var(--gold)',b:'#c98d0a',w:PXW},g:[
-'............','...oooo.....','..oaaaao....','.oaowwoao...','.oaowwoao...','..oaaaao....','...oaao.....','....oao.....','....oaoo....','....oaao....','....oaoo....','.....oo.....']},
-wave:{p:{o:PXO,a:'#f4c98a',b:'#d9a05f'},g:[
-'............','...o.o.o....','..oaoaoao...','..oaoaoaoo..','..oaaaaaoao.','.ooaaaaaaao.','oaoaaaaaaao.','oaaaaaaaao..','.oaaaaaaao..','..oaaaaao...','...oooooo...','............']},
-bolt:{p:{o:PXO,a:'var(--gold)',b:'#c98d0a',w:PXW},g:[
-'............','......ooo...','.....oaao...','....oaao....','...oaao.....','..oaaaoooo..','.oaaaaaaao..','..ooooaao...','.....oaao...','....oaao....','....oao.....','....oo......']},
-cloud:{p:{o:PXO,a:PXW,b:'#b9c6da'},g:[
-'............','....oooo....','...oaaaao...','..oaaaaaao..','.ooaaaaaaoo.','oaaaaaaaaaao','oaaaaaaaaaao','obbbbbbbbbbo','.oooooooooo.','............','............','............']},
-offline:{p:{o:PXO,a:'#8b9bb5',r:'var(--danger)'},g:[
-'.r........r.','..r......r..','...oooo.r...','..oaaaar....','..oaaraao...','..oaraaao...','..oraaaao...','..raaaaao...','.r.oooo.....','r........r..','............','............']},
-gem:{p:{o:PXO,a:'#6ee7ff',b:'#2facd4',w:PXW},g:[
-'............','..oooooooo..','.oawabbawao.','.oaaabbaaao.','..obaaaabo..','..obaaaabo..','...obaabo...','...obaabo...','....obbo....','....obbo....','.....oo.....','............']},
-sprout:{p:{o:PXO,a:'var(--social)',b:'#1d9c6c',d:'#8a5a3b'},g:[
-'............','..oo........','.oaaoo..oo..','.oaaaao.obo.','..oaaaoobbo.','...ooaaobo..','.....oaoo...','.....oao....','.....oao....','....oddo....','...oddddo...','....oooo....']},
-star2:{p:{o:PXO,a:'var(--soul)',w:PXW},g:[
-'.....oo.....','....oaao....','.....oo.....','.oo......oo.','.oao.oo.oao.','..o.oaao.o..','....oaao....','..o..oo..o..','.oao....oao.','..oo.oo.oo..','....oaao....','.....oo.....']},
-down:{p:{o:PXO,a:'var(--study)',w:PXW},g:[
-'............','....oooo....','....oaao....','....oaao....','....oaao....','.oooaaaooo..','.oaaaaaaao..','..oaaaaao...','...oaaao....','....oao.....','.....o......','............']},
-umbrella:{p:{o:PXO,a:'var(--gym)',b:'#c94f33',w:PXW,y:'var(--gold)'},g:[
-'.....oo.....','...ooaaoo...','..oaawwaao..','.oaaawwaaao.','oaabaawaabao','oooooooooooo','.....oo.....','.....oo.....','.....oo.oo..','.....oo.oo..','......ooo...','............']},
-kaaba:{p:{o:PXO,a:'#232c3b',b:'var(--gold)',d:'#161d29'},g:[
-'............','...oooooo...','..oaaaaaao..','.oaaaaaaaao.','.obbbbbbbbo.','.oaaaaaaaao.','.oaaadaaaao.','.oaaadaaaao.','.oaaadaaaao.','.oaaaaaaaao.','..oooooooo..','............']},
-party:{p:{o:PXO,a:'var(--gold)',b:'var(--gym)',c:'var(--study)',g:'var(--social)'},g:[
-'..........c.','.g...b..c...','...a......g.','.b..ooo...b.','...oaao..a..','...oaaao....','..oaaaao.c..','..oaaaaao...','.oaaaaaao...','.oooooooo...','............','............']},
-leg:{p:{o:PXO,a:'#f4c98a',b:'#d9a05f',w:PXW},g:[
-'............','..ooo.......','.oaaao......','.oaaao......','.oaaao......','.oaaaoo.....','.oaaaaoo....','..oaaaaoo...','...oaaaao...','....oaaaoo..','....obbbbo..','.....oooo...']},
-flex:{p:{o:PXO,a:'#f4c98a',b:'#d9a05f'},g:[
-'............','...oo.......','..oaao......','..oaaoo.....','.ooaaaao....','oaaoaaaao...','oaaooaaaao..','oaao.oaaao..','.oo..oaaao..','.....oaao...','......oo....','............']},
-bench:{p:{o:PXO,a:'#8b9bb5',b:'#41546f',c:'var(--gym)'},g:[
-'............','.o...oo...o.','obo.oaao.obo','oboooaaooobo','obaaaaaaaabo','oboooooooobo','obo.occo.obo','.o..occo..o.','....occo....','...oooooo...','............','............']},
-squat:{p:{o:PXO,a:'#8b9bb5',c:'#f4c98a',b:'#41546f'},g:[
-'............','obooooooooob','obaaaaaaaaob','.o..occ..o..','....occo....','....occo....','...occcco...','..occ..cco..','..occ..cco..','...oo..oo...','............','............']},
-deadlift:{p:{o:PXO,a:'#8b9bb5',b:'#41546f',c:'#f4c98a'},g:[
-'............','....occo....','....occo....','...occcco...','..occ..cco..','..occ..cco..','..occ..cco..','...o....o...','obooooooooob','obaaaaaaaaob','obooooooooob','.o........o.']},
-ohp:{p:{o:PXO,a:'#8b9bb5',b:'#41546f',c:'#f4c98a'},g:[
-'obooooooooob','obaaaaaaaaob','.o..occo..o.','....occo....','....occo....','....occo....','...occcco...','..occ..cco..','..occ..cco..','...oo..oo...','............','............']},
-rowlift:{p:{o:PXO,a:'#8b9bb5',b:'#41546f',c:'#f4c98a'},g:[
-'............','.....occoo..','....occcco..','...occ.oco..','..occ...o...','..occ.......','oboooooooob.','obaaaaaaaob.','oboooooooob.','.o.......o..','............','............']},
-push:{p:{o:PXO,a:'var(--gym)',b:'#c94f33'},g:[
-'............','.oo......oo.','.oao....oao.','.oaao..oaao.','..oao..oao..','..oo....oo..','.oooooooooo.','.oaaaaaaaao.','.obbbbbbbbo.','.oooooooooo.','............','............']},
-pull:{p:{o:PXO,a:'var(--study)',b:'#2a5da8'},g:[
-'.oooooooooo.','.oaaaaaaaao.','.oooooooooo.','..oo....oo..','..oao..oao..','.oaao..oaao.','.oao....oao.','.oo......oo.','............','............','............','............']},
-foot:{p:{o:PXO,a:'#f4c98a',b:'#d9a05f'},g:[
-'............','...oo.......','..oaao......','..oaaao.....','..oaaao.....','..oaaaoo....','..oaaaaoo...','..oaaaaaoo..','.oaaaaaaaoo.','.obbbbbbbbo.','..oooooooo..','............']}
-};
-var PXC={};
-/* v61: retired the pixel-art sprite engine, PX/PXC/PXO/PXW arrays kept
-   (unused) so nothing else in the file needs touching. Every px(name,size)
-   call site now renders a Material Symbols glyph instead, same signature,
-   so this is the one edit that ports all 130+ call sites at once. */
+/* v61: retired the pixel-art sprite engine. Every px(name,size) call site
+   renders a Material Symbols glyph instead, same signature as the old
+   sprite renderer, so this was the one edit that ported all 130+ call
+   sites at once. The sprite data itself (PX/PXO/PXW/PXC) was removed
+   in v63 once confirmed unreferenced. */
 var PXMAP={'barbell':'fitness_center','bench':'fitness_center','bolt':'bolt','book':'menu_book','bottle':'water_drop','boxempty':'inbox','cal':'calendar_month','chartup':'trending_up','check':'check','clip':'assignment','clock':'schedule','cross':'close','deadlift':'fitness_center','down':'expand_more','drop':'water_drop','exam':'edit_note','fire':'local_fire_department','flag':'flag','foot':'directions_walk','gear':'settings','gem':'diamond','globe':'public','grad':'school','heart':'favorite','home':'home','kaaba':'mosque','key':'key','meat':'restaurant','medal':'military_tech','mosque':'mosque','ohp':'fitness_center','pad':'edit_note','party':'celebration','people':'group','pin':'push_pin','plate':'restaurant','plus':'add','pull':'fitness_center','push':'fitness_center','pushpin':'push_pin','rowlift':'fitness_center','scale':'monitor_weight','scroll':'receipt_long','shoe':'directions_walk','slid':'tune','snow':'ac_unit','sprout':'eco','squat':'fitness_center','star':'star','star2':'star','stats':'bar_chart','target':'flag_circle','trash':'delete','trophy':'trophy','umbrella':'umbrella','warn':'warning','wave':'waving_hand'};
 function px(n,sz,style){
   var g=PXMAP[n]||'help';
@@ -2723,8 +2592,8 @@ function calendarHtml(){
     var n=daysTo(r.a);
     var col=ev.kind==='exams'?'#ff6b4a':ev.no_class?'#a78bfa':ev.kind==='deadline'?'#fbbf24':'var(--study)';
     h+='<div class="crow" style="border-inline-start:3px solid '+col+';'+(past?'opacity:.45':'')+(now?';box-shadow:0 0 0 1px '+col:'')+'">';
-    h+='<div class="ch"><span class="cn">'+evTitle(ev)+'</span><span class="cp" style="font-size:12px;color:'+col+'">'+
-      (now?px('star',11)+' '+T('todayis'):n>0?T('daysleft',{n:n}):T('daysago',{n:-n}))+'</span></div>';
+    h+='<div class="ch"><span class="cn">'+evTitle(ev)+'</span><span class="cp">'+
+      tagHtml((now?px('star',11)+' '+T('todayis'):n>0?T('daysleft',{n:n}):T('daysago',{n:-n})),col)+'</span></div>';
     h+='<div class="cs"><span>'+r.a+(ev.end_date&&ev.end_date!==ev.start_date?' \u2192 '+ev.end_date:'')+'</span>'+
       '<span>'+new Date(r.a+'T00:00:00').toLocaleDateString(locale(),{weekday:'long'})+'</span></div>';
     h+='</div>';
