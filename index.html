@@ -8,6 +8,11 @@
 <meta name="description" content="A private personal-development tracker: study, gym, social and soul, with XP, streaks, a university semester manager and a gym strength ladder.">
 <meta name="robots" content="noindex, nofollow">
 <link rel="canonical" href="https://beboreport1-ops.github.io/Four-Pillars/">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={darkMode:"class",theme:{extend:{colors:{study:"#4f9cf9",gym:"#ff6b4a",social:"#34d399",soul:"#a78bfa",gold:"#fbbf24",bg:"#0a0e16"}}}}</script>
+<style>.msi{font-family:"Material Symbols Outlined";font-weight:normal;font-style:normal;font-size:20px;line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;word-wrap:normal;direction:ltr;vertical-align:middle;font-variation-settings:"FILL" 0,"wght" 500,"GRAD" 0,"opsz" 24}
+.msi.fill{font-variation-settings:"FILL" 1,"wght" 500,"GRAD" 0,"opsz" 24}</style>
 <link rel="icon" href="icon-192.png" type="image/png">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -482,8 +487,8 @@ button:disabled{opacity:.45;pointer-events:none}
 
 /* ---- pixel icon system ---- */
 .px{display:inline-block;vertical-align:-2px;flex:0 0 auto}
-h2>.px:first-child{vertical-align:-3px;margin-inline-end:3px}
-.menuitem>.px:first-child{margin-inline-end:2px}
+h2>.msi:first-child{vertical-align:-3px;margin-inline-end:5px}
+.menuitem>.msi:first-child{margin-inline-end:8px}
 
 /* ---- motion respect ---- */
 @media(prefers-reduced-motion:reduce){
@@ -777,22 +782,15 @@ foot:{p:{o:PXO,a:'#f4c98a',b:'#d9a05f'},g:[
 '............','...oo.......','..oaao......','..oaaao.....','..oaaao.....','..oaaaoo....','..oaaaaoo...','..oaaaaaoo..','.oaaaaaaaoo.','.obbbbbbbbo.','..oooooooo..','............']}
 };
 var PXC={};
+/* v61: retired the pixel-art sprite engine, PX/PXC/PXO/PXW arrays kept
+   (unused) so nothing else in the file needs touching. Every px(name,size)
+   call site now renders a Material Symbols glyph instead, same signature,
+   so this is the one edit that ports all 130+ call sites at once. */
+var PXMAP={'barbell':'fitness_center','bench':'fitness_center','bolt':'bolt','book':'menu_book','bottle':'water_drop','boxempty':'inbox','cal':'calendar_month','chartup':'trending_up','check':'check','clip':'assignment','clock':'schedule','cross':'close','deadlift':'fitness_center','down':'expand_more','drop':'water_drop','exam':'edit_note','fire':'local_fire_department','flag':'flag','foot':'directions_walk','gear':'settings','gem':'diamond','globe':'public','grad':'school','heart':'favorite','home':'home','kaaba':'mosque','key':'key','meat':'restaurant','medal':'military_tech','mosque':'mosque','ohp':'fitness_center','pad':'edit_note','party':'celebration','people':'group','pin':'push_pin','plate':'restaurant','plus':'add','pull':'fitness_center','push':'fitness_center','pushpin':'push_pin','rowlift':'fitness_center','scale':'monitor_weight','scroll':'receipt_long','shoe':'directions_walk','slid':'tune','snow':'ac_unit','sprout':'eco','squat':'fitness_center','star':'star','star2':'star','stats':'bar_chart','target':'flag_circle','trash':'delete','trophy':'trophy','umbrella':'umbrella','warn':'warning','wave':'waving_hand'};
 function px(n,sz,style){
-  var d=PX[n];if(!d)return '';
+  var g=PXMAP[n]||'help';
   sz=sz||16;
-  /* sprites are static, so identical name+size+style always yields the same
-     markup: cache it instead of rebuilding 144 cells on every render */
-  var ck=n+'|'+sz+'|'+(style||'');
-  if(PXC[ck]!==undefined)return PXC[ck];
-  var o='<svg class="px" width="'+sz+'" height="'+sz+'" viewBox="0 0 12 12" shape-rendering="crispEdges" aria-hidden="true"'+(style?' style="'+style+'"':'')+'>';
-  for(var y=0;y<12;y++){var row=d.g[y];
-    for(var x=0;x<12;x++){var ch=row[x];if(ch==='.'){continue}
-      var run=1;while(x+run<12&&row[x+run]===ch)run++;
-      o+='<rect x="'+x+'" y="'+y+'" width="'+run+'" height="1" fill="'+(d.p[ch]||'#f0f')+'"/>';
-      x+=run-1;
-    }}
-  PXC[ck]=o+'</svg>';
-  return PXC[ck];
+  return '<span class="msi fill" aria-hidden="true" style="font-size:'+sz+'px'+(style?';'+style:'')+'">'+g+'</span>';
 }
 var PIL={study:{ic:'book',hex:'#4f9cf9'},gym:{ic:'heart',hex:'#ff6b4a'},social:{ic:'people',hex:'#34d399'},soul:{ic:'mosque',hex:'#a78bfa'}};
 var PKEYS=['study','gym','social','soul'];
