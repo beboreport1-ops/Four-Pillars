@@ -586,8 +586,8 @@ final:'Final Exam',city:'City',country:'Country',goals:'Weekly goals per pillar'
 totalxp:'Total XP',perfstreak:'Perfect Day Streak',actsdone:'Activities Done',xptoday:'XP Today',
 radar:'Pillar Radar',balance:'Pillar Balance',achievements:'Achievements',records:'Records',last14:'Last 14 Days',
 season:'Season',dayleft:'days left',
-quran:'Quran Progress',pages:'pages',logread:'Log reading',surah:'Surah (optional)',juz:'Juz (optional)',khatma:'to khatma',exercise:'Exercise',sets:'Sets',reps:'Reps',weight:'Weight (kg)',pr:'PR',
-rank:'Gym Rank',overall:'Overall',loglift:'Log lift',e1rm:'Est. 1RM',bodyweight:'Body weight (kg)',
+quran:'Quran Progress',pages:'pages',logread:'Log reading',surah:'Surah (optional)',juz:'Juz (optional)',khatma:'to khatma',exercise:'Exercise',sets:'Sets',reps:'Reps',weight:'Weight (kg)',weightlb:'Weight (lb)',pr:'PR',
+rank:'Gym Rank',overall:'Overall',loglift:'Log lift',e1rm:'Est. 1RM',bodyweight:'Body weight',
 liftsex:'Standards',male:'Male',female:'Female',lp:'LP',tonext:'to {r}',maxrank:'Max rank',
 history:'History',nolifts:'No lifts logged yet',setbw:'Set your body weight to get ranked',
 best:'Best',
@@ -1419,8 +1419,8 @@ function liftRowHtml(l){
   var h='<div class="liftrow" onclick="openLiftHistory(\''+l.k+'\')">';
   h+=r?badgeHtml(r.rank,r.tier,40):'<span class="lem">'+px(l.ic,22)+'</span>';
   h+='<div class="li"><b>'+liftName(l.k)+'</b>';
-  h+='<div class="lm">'+b.row.weight+'kg \u00D7 '+b.row.reps+' \u00B7 '+T('e1rm')+' '+b.e1+'kg'+
-     (gain>0?' \u00B7 <span class="up">\u2191'+gain+'kg</span>':'')+'</div>';
+  h+='<div class="lm">'+wtBoth(b.row.weight)+' \u00D7 '+b.row.reps+' \u00B7 '+T('e1rm')+' '+wtBoth(b.e1)+
+     (gain>0?' \u00B7 <span class="up">\u2191'+wtBoth(gain)+'</span>':'')+'</div>';
   if(r)h+='<div class="lbar"><div style="width:'+r.lp+'%;background:'+R.c+'"></div></div>';
   h+='</div>';
   if(r)h+='<div class="lrk" style="color:'+R.c+'">'+rankName(r.rank)+'<br><span>'+['I','II','III'][r.tier-1]+' \u00B7 '+r.lp+'</span></div>';
@@ -1436,9 +1436,9 @@ function accRowHtml(l){
   var h='<div class="liftrow" onclick="openLiftHistory(\''+l.k+'\')">';
   h+='<span class="lem">'+px(l.ic,22)+'</span>';
   h+='<div class="li"><b>'+liftName(l.k)+'</b>';
-  h+='<div class="lm">'+T('best')+' '+b.row.weight+'kg \u00D7 '+b.row.reps+
-     (gain>0?' \u00B7 <span class="up">\u2191'+gain+'kg</span>':'')+' \u00B7 '+hist.length+'\u00D7</div>';
-  h+='</div><div class="lrk" style="color:var(--gold)">'+b.row.weight+'<br><span>kg</span></div></div>';
+  h+='<div class="lm">'+T('best')+' '+wtBoth(b.row.weight)+' \u00D7 '+b.row.reps+
+     (gain>0?' \u00B7 <span class="up">\u2191'+wtBoth(gain)+'</span>':'')+' \u00B7 '+hist.length+'\u00D7</div>';
+  h+='</div><div class="lrk" style="color:var(--gold)">'+b.row.weight+'<br><span>kg / '+lbOf(b.row.weight)+'lb</span></div></div>';
   return h;
 }
 function renderRank(){
@@ -1447,7 +1447,7 @@ function renderRank(){
   if(openLift){el.innerHTML='<div class="section">'+liftHistoryHtml(openLift)+'</div>';return}
   var h='<div class="section">';
   h+='<div class="qtop"><h2>'+px('medal',15)+" "+T('rank')+'</h2>'+
-     '<button class="iconbtn" onclick="openBodyWeight()">'+px('scale',14)+' '+(bodyWeight()?bodyWeight()+'kg':T('bodyweight'))+'</button></div>';
+     '<button class="iconbtn" onclick="openBodyWeight()">'+px('scale',14)+' '+(bodyWeight()?wtBoth(bodyWeight()):T('bodyweight'))+'</button></div>';
   h+=rankCardHtml();
   h+='<div class="mrow" style="margin:12px 0"><button class="ok" onclick="openLiftLog(null)">'+px('plus',14)+' '+T('loglift')+'</button></div>';
   h+='<h3 class="sh">'+T('liftrank')+'</h3>';
@@ -1474,16 +1474,16 @@ function liftHistoryHtml(k){
   var b=bestLift(k),r=b&&bw&&isRanked(k)?rankOf(k,b.e1,bw):null;
   var h='<div class="cdhead"><button class="bk" onclick="closeLift()">\u2190</button>'+
     '<div><div class="cc2">'+liftIcon(k)+' '+T('history')+'</div><h2>'+liftName(k)+'</h2></div></div>';
-  if(!r&&b)h+='<div class="rankcard sm"><div class="rname" style="color:var(--gold)">'+b.row.weight+'kg \u00D7 '+b.row.reps+'</div>'+
-    '<div class="rlp">'+T('best')+' \u00B7 '+T('e1rm')+' '+b.e1+'kg</div></div>';
+  if(!r&&b)h+='<div class="rankcard sm"><div class="rname" style="color:var(--gold)">'+wtBoth(b.row.weight)+' \u00D7 '+b.row.reps+'</div>'+
+    '<div class="rlp">'+T('best')+' \u00B7 '+T('e1rm')+' '+wtBoth(b.e1)+'</div></div>';
   if(r){
     var R=RANKS[r.rank];
     h+='<div class="rankcard sm" style="background:radial-gradient(120% 100% at 50% 0%,'+R.c2+'44,transparent 70%),var(--card2);border-color:'+R.c+'44">'+
       badgeHtml(r.rank,r.tier,62)+
       '<div class="rname" style="color:'+R.c+'">'+rankName(r.rank).toUpperCase()+' '+['I','II','III'][r.tier-1]+'</div>'+
-      '<div class="rlp">'+r.lp+' '+T('lp')+' \u00B7 '+T('e1rm')+' '+b.e1+'kg</div>'+
+      '<div class="rlp">'+r.lp+' '+T('lp')+' \u00B7 '+T('e1rm')+' '+wtBoth(b.e1)+'</div>'+
       '<div class="rbar"><div style="width:'+r.lp+'%;background:'+R.c+'"></div></div>'+
-      (r.max?'<div class="rnext">'+T('maxrank')+'</div>':'<div class="rnext">+'+r.needKg+'kg '+T('tonext',{r:r.tier<3?rankName(r.rank)+' '+['I','II','III'][r.tier]:rankName(r.rank+1)})+'</div>')+
+      (r.max?'<div class="rnext">'+T('maxrank')+'</div>':'<div class="rnext">+'+wtBoth(r.needKg)+' '+T('tonext',{r:r.tier<3?rankName(r.rank)+' '+['I','II','III'][r.tier]:rankName(r.rank+1)})+'</div>')+
       '</div>';
   }
   h+='<div class="mrow" style="margin:12px 0"><button class="ok" onclick="openLiftLog(\''+k+'\')">'+px('plus',14)+' '+T('loglift')+'</button></div>';
@@ -1493,7 +1493,7 @@ function liftHistoryHtml(k){
     h+='<div class="spark">';
     vals.forEach(function(v){
       var pc=mx===mn?60:Math.round((v-mn)/(mx-mn)*80)+20;
-      h+='<div class="sb" style="height:'+pc+'%" title="'+v+'kg"></div>';
+      h+='<div class="sb" style="height:'+pc+'%" title="'+wtBoth(v)+'"></div>';
     });
     h+='</div>';
   }
@@ -1505,8 +1505,8 @@ function liftHistoryHtml(k){
     var e=e1RM(g.weight,g.reps);
     h+='<div class="hrow">'+
       '<div class="hd">'+g.entry_date+'</div>'+
-      '<div class="hw"><b>'+g.weight+'kg</b> \u00D7 '+g.reps+(g.sets>1?' \u00B7 '+g.sets+' '+T('sets').toLowerCase():'')+'</div>'+
-      '<div class="he">'+e+'kg'+(bestSoFar[g.id]?' <span class="prtag">'+T('pr')+'</span>':'')+'</div>'+
+      '<div class="hw"><b>'+wtBoth(g.weight)+'</b> \u00D7 '+g.reps+(g.sets>1?' \u00B7 '+g.sets+' '+T('sets').toLowerCase():'')+'</div>'+
+      '<div class="he">'+wtBoth(e)+(bestSoFar[g.id]?' <span class="prtag">'+T('pr')+'</span>':'')+'</div>'+
       '<button class="hx" onclick="delLift(\''+g.id+'\')">\u00D7</button></div>';
   });
   return h;
@@ -1515,7 +1515,8 @@ function openLiftHistory(k){openLift=k;renderRank();window.scrollTo({top:0})}
 function closeLift(){openLift=null;renderRank();window.scrollTo({top:0})}
 function openBodyWeight(){
   var h='<h2>'+px('scale',16)+' '+T('bodyweight')+'</h2>';
-  h+='<label>'+T('bodyweight')+'</label><input id="bw_v" type="number" step="0.5" value="'+(bodyWeight()||'')+'" placeholder="80">';
+  h+='<div class="frow"><div><label>'+T('weight')+'</label><input id="bw_v" type="number" step="0.5" value="'+(bodyWeight()||'')+'" placeholder="80" oninput="unitSync(\'bw_v\',\'bw_l\',\'kg\')"></div>'+
+     '<div><label>'+T('weightlb')+'</label><input id="bw_l" type="number" step="1" value="'+(bodyWeight()?lbOf(bodyWeight()):'')+'" placeholder="176" oninput="unitSync(\'bw_v\',\'bw_l\',\'lb\')"></div></div>';
   h+='<label>'+T('liftsex')+'</label><select id="bw_s"><option value="male"'+(cfg.lift_sex!=='female'?' selected':'')+'>'+T('male')+'</option>'+
      '<option value="female"'+(cfg.lift_sex==='female'?' selected':'')+'>'+T('female')+'</option></select>';
   h+='<div class="mrow"><button class="no" onclick="closeModal()">'+T('cancel')+'</button>'+
@@ -1544,9 +1545,10 @@ function openLiftLog(k){
       }).join('')+'</optgroup>';
     }).join('')+'</select>';
   h+='<label>'+T('date')+'</label><input id="lf_d" type="date" value="'+today()+'">';
-  h+='<div class="frow"><div><label>'+T('weight')+'</label><input id="lf_w" type="number" step="0.5" placeholder="100"></div>'+
-     '<div><label>'+T('reps')+'</label><input id="lf_r" type="number" value="5"></div></div>';
-  h+='<label>'+T('sets')+'</label><input id="lf_s" type="number" value="1">';
+  h+='<div class="frow"><div><label>'+T('weight')+'</label><input id="lf_w" type="number" step="0.5" placeholder="100" oninput="unitSync(\'lf_w\',\'lf_wl\',\'kg\')"></div>'+
+     '<div><label>'+T('weightlb')+'</label><input id="lf_wl" type="number" step="1" placeholder="220" oninput="unitSync(\'lf_w\',\'lf_wl\',\'lb\')"></div></div>';
+  h+='<div class="frow"><div><label>'+T('reps')+'</label><input id="lf_r" type="number" value="5"></div>'+
+     '<div><label>'+T('sets')+'</label><input id="lf_s" type="number" value="1"></div></div>';
   h+='<div class="mrow"><button class="no" onclick="closeModal()">'+T('cancel')+'</button>'+
      '<button class="ok" onclick="saveLift()">'+T('save')+'</button></div>';
   showModal(h);
@@ -1576,7 +1578,7 @@ async function saveLift(){
   if(newRank&&prevRank&&newRank.idx>prevRank.idx){
     offToast(r,rankName(newRank.rank)+' '+['I','II','III'][newRank.tier-1]+'! +'+pts+' XP');
   }else if(!prevBest||newE>prevBest.e1){
-    offToast(r,T('pr')+'! '+newE+'kg \u00B7 +'+pts+' XP','trophy');
+    offToast(r,T('pr')+'! '+wtBoth(newE)+' \u00B7 +'+pts+' XP','trophy');
   }else offToast(r,'+'+pts+' XP','barbell');
   checkLevelUp();render();
 }
@@ -1635,6 +1637,17 @@ var ACCGRP={push:'pushday',pull:'pullday',legs:'legday'};
 function liftName(k){var l=liftDef(k);return l?l.n:k}
 function liftIcon(k){var l=liftDef(k);return px(l?l.ic:'barbell',18)}
 function rankName(i){return T('rk_'+RANKS[i].k)}
+/* kg is the stored unit everywhere; lb is display + input only */
+var LBPK=2.20462;
+function lbOf(kg){return Math.round((kg||0)*LBPK)}
+function kgOf(lb){return Math.round((lb||0)/LBPK*10)/10}
+function wtBoth(kg){return kg+'kg/'+lbOf(kg)+'lb'}
+function unitSync(kgId,lbId,src){
+  var a=document.getElementById(kgId),b=document.getElementById(lbId);
+  if(!a||!b)return;
+  if(src==='kg'){var v=parseFloat(a.value);b.value=v>0?lbOf(v):''}
+  else{var w=parseFloat(b.value);a.value=w>0?kgOf(w):''}
+}
 /* Epley, capped: singles stay honest, high reps don't inflate */
 function e1RM(w,reps){
   if(!w)return 0;
