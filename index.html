@@ -212,6 +212,19 @@ main{padding:14px 16px 90px;max-width:1000px;margin:0 auto}
 .phero:after{content:'';position:absolute;top:-40px;inset-inline-end:-30px;width:130px;height:130px;border-radius:50%;opacity:.11}
 .phero .phero{box-shadow:0 0 24px -6px var(--accent-glow)}
 .pe{font-size:30px}
+/* ---- Main: 2x2 pillar grid. Cards are flat on purpose; the glass
+   .section already wraps them and four more blur layers on the busiest
+   tab is the cheapest way to make this scroll badly. ---- */
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pgc{background:var(--card2);border:1px solid var(--ghost);border-radius:var(--r-m);padding:12px;text-align:start;width:100%;cursor:pointer;color:inherit;transition:border-color var(--dur),box-shadow var(--dur)}
+.pgc:active{border-color:var(--accent)}
+.pgh{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.pgi{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:var(--r-s);flex:0 0 auto}
+.pgn{font-family:var(--f-head);font-size:14px;font-weight:700;letter-spacing:-.01em;margin-top:11px}
+.pgv{font-family:var(--f-head);font-size:19px;font-weight:800;letter-spacing:-.02em;margin-top:2px;font-variant-numeric:tabular-nums}
+.pgv span{font-family:var(--f-ui);font-size:11px;font-weight:600;color:var(--dim);letter-spacing:0}
+.pgd{display:inline-flex;align-items:center;gap:5px;margin-top:9px;padding:3px 8px;border-radius:var(--r-pill);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-variant-numeric:tabular-nums}
+
 .phero h2{font-size:18px;margin:4px 0 2px}
 .phero .sub{font-size:12px;color:var(--dim)}
 .pstats{display:flex;gap:18px;margin-top:12px}
@@ -573,7 +586,7 @@ health:'Health Today',water:'Water',calories:'Calories',protein:'Protein',addmea
 kcal:'kcal',grams:'g',bottlesize:'Bottle size (ml)',
 caloriegoal:'Daily calories goal',proteingoal:'Daily protein goal (g)',watergoal:'Daily water goal (ml)',
 watergoalhit:'Water goal reached!',proteingoalhit:'Protein goal reached!',avg7:'7-day average',optional:'optional',
-weekgoals:'Weekly Goals',goalmet:'Goal met',
+weekgoals:'Weekly Goals',goalmet:'Goal met',pgxp:'XP',pgdays:'days',
 add:'Add Activity',pillar:'Pillar',activity:'Activity',date:'Date',status:'Status',
 done:'Done (award points now)',planned:'Planned',repeat:'Repeat weekly (same weekday)',norepeat:'No repeat',forwk:'For {n} weeks',
 custom:'Custom...',ctitle:'Custom title',points:'Points',save:'Save',cancel:'Cancel',close:'Close',del:'Delete',remove:'Remove',
@@ -3004,16 +3017,38 @@ function renderQuest(){
   h+=deadlineStripHtml();
   document.getElementById('questcard').innerHTML=h;
 }
+/* Radial goal ring. Decorative: the same figure is repeated as text in the
+   .pgd chip below it, so the svg stays aria-hidden. */
+function pillarRing(pct,hex){
+  var C=113.1,p=Math.max(0,Math.min(100,pct)),off=C-(p/100)*C;
+  return '<svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true">'+
+    '<circle cx="22" cy="22" r="18" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="4"></circle>'+
+    '<circle cx="22" cy="22" r="18" fill="none" stroke="'+hex+'" stroke-width="4" '+
+    'stroke-linecap="round" stroke-dasharray="'+C+'" stroke-dashoffset="'+off.toFixed(1)+'" '+
+    'transform="rotate(-90 22 22)"></circle>'+
+    '<text x="22" y="26" text-anchor="middle" font-size="11" font-weight="700" '+
+    'fill="var(--dim)">'+p+'</text></svg>';
+}
 function renderGoals(){
   if(tab!=='main')return;
   var ws=weekStart(new Date());
   var h='<div class="section"><h2>'+px('target',16)+" "+T('weekgoals')+'</h2>';
+  h+='<div class="pgrid">';
   PKEYS.forEach(function(p){
     var g=cfg.goals[p]||0,d=pillarDaysInWeek(p,ws);
     var pct=g?Math.min(100,Math.round(d/g*100)):0;
-    h+='<div class="goalrow'+(g&&d>=g?' hit':'')+'"><span class="gi">'+px(PIL[p].ic,14)+' '+pnm(p)+'</span><div class="tr"><div style="width:'+pct+'%;background:'+PIL[p].hex+'"></div></div><span class="vl">'+d+'/'+g+(g&&d>=g?' '+px('check',12):'')+'</span></div>';
+    var hex=PIL[p].hex,hit=!!(g&&d>=g);
+    var xp=pillarXP(p),lv=lvlOf(xp);
+    h+='<button class="pgc" type="button" onclick="setTab(\''+p+'\')">'+
+      '<div class="pgh"><span class="pgi" style="background:'+hexA(hex,.15)+'">'+px(PIL[p].ic,20)+'</span>'+
+      pillarRing(pct,hex)+'</div>'+
+      '<div class="pgn">'+pnm(p)+'</div>'+
+      '<div class="pgv" style="color:'+hex+'">'+xp+' <span>'+T('pgxp')+' \u00B7 '+T('lvl')+' '+lv+'</span></div>'+
+      '<div class="pgd" style="background:'+hexA(hex,.15)+';border:1px solid '+hexA(hex,.3)+';color:'+hex+'">'+
+      d+'/'+g+' '+T('pgdays')+(hit?' '+px('check',11):'')+'</div>'+
+      '</button>';
   });
-  h+='</div>';
+  h+='</div></div>';
   document.getElementById('goalcard').innerHTML=h;
 }
 function visible(e){return pFilter==='all'||e.pillar===pFilter}
