@@ -1,4 +1,4 @@
-var CACHE='fp-v56';
+var CACHE='fp-v57';
 var ASSETS=['./','./index.html','./manifest.json','./icon-192.png','./icon-512.png','./404.html','./og.png'];
 self.addEventListener('install',function(e){
   self.skipWaiting();
