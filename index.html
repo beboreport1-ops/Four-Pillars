@@ -35,17 +35,19 @@
   --study-soft:rgba(79,156,249,.14);--gym-soft:rgba(255,107,74,.14);
   --social-soft:rgba(52,211,153,.14);--soul-soft:rgba(167,139,250,.14);
   --gold:#fbbf24;--good:#34d399;--caution:#fbbf24;--bad:#ff6b4a;--accent:#4f9cf9;--accent-fill:#2470d4;--danger:#ef4444;--warn:#f59e0b;--okc:#22c55e;
-  --r-xs:4px;--r-s:8px;--r-m:12px;--r-l:18px;--r-pill:999px;--dur:.18s;--dur-slow:.45s;
+  --r-xs:4px;--r-s:8px;--r-m:12px;--r-l:18px;--r-pill:999px;--dur:.18s;--dur-slow:.45s;--f-ui:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;--f-head:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
   --shadow:0 1px 2px rgba(0,0,0,.35),0 8px 24px -12px rgba(0,0,0,.5);
 }
 html{color-scheme:dark}
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,'Segoe UI',sans-serif}
-body{background:radial-gradient(140% 60% at 50% -8%,#131c30 0%,var(--bg) 55%) fixed,var(--bg);color:var(--tx);min-height:100vh;-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased;font-family:system-ui,-apple-system,'Segoe UI',sans-serif}
+@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url('./inter.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Plus Jakarta Sans';font-style:normal;font-weight:200 800;font-display:swap;src:url('./jakarta.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+*{margin:0;padding:0;box-sizing:border-box;font-family:var(--f-ui)}
+body{background:radial-gradient(140% 60% at 50% -8%,#131c30 0%,var(--bg) 55%) fixed,var(--bg);color:var(--tx);min-height:100vh;-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased;font-family:var(--f-ui)}
 button{cursor:pointer;font-family:inherit;color:inherit}
 .hidden{display:none!important}
 #auth{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
 .authbox{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);padding:32px;width:100%;max-width:380px}
-.authbox h1{font-size:26px;margin-bottom:6px;text-align:center}
+.authbox h1{font-size:26px;margin-bottom:6px;text-align:center;font-weight:800;letter-spacing:-.025em}
 .authbox p{color:var(--dim);text-align:center;margin-bottom:20px;font-size:14px}
 .authbox input{width:100%;background:var(--card2);border:1px solid var(--line);border-radius:var(--r-m);padding:12px 14px;color:var(--tx);font-size:15px;margin-bottom:12px}
 .authbox .main{width:100%;background:var(--accent);border:none;border-radius:var(--r-m);padding:12px;color:#fff;font-size:15px;font-weight:600}
@@ -147,7 +149,7 @@ main{padding:14px 16px 90px;max-width:1000px;margin:0 auto}
 /* gym rank */
 .rankcard{position:relative;border:1px solid var(--line);border-radius:var(--r-l);padding:18px 14px;text-align:center;overflow:hidden}
 .rankcard.sm{padding:14px 12px}
-.rname{font-size:19px;font-weight:900;letter-spacing:1.5px;margin-top:10px}
+.rname{font-size:19px;font-weight:800;letter-spacing:.06em;margin-top:10px}
 .rlp{font-size:11px;color:var(--dim);margin-top:3px;font-weight:600}
 .rbar{height:7px;background:rgba(255,255,255,.08);border-radius:var(--r-pill);margin:11px auto 0;max-width:230px;overflow:hidden}
 .rbar div{height:100%;border-radius:var(--r-pill);transition:width var(--dur-slow)}
@@ -392,7 +394,7 @@ main{padding:14px 16px 90px;max-width:1000px;margin:0 auto}
 /* ---- surfaces ---- */
 .section{border-radius:var(--r-l);border-color:var(--line);box-shadow:var(--shadow);padding:16px;margin-bottom:16px}
 .section h2{font-size:15px;font-weight:700;letter-spacing:.2px;margin-bottom:12px}
-.sh{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--faint);font-weight:800}
+.sh{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--faint);font-weight:700}
 .topbar{background:rgba(10,14,22,.82);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
   /* installed PWA runs viewport-fit=cover, so the header would sit under the status bar */
   padding-top:env(safe-area-inset-top)}
@@ -402,6 +404,10 @@ main{padding-top:20px}
 
 /* ---- stat numerals read as data, not prose ---- */
 .lvlbadge,.rv,.he,.lrk,.rlp,.rname,.btier,.gs{font-variant-numeric:tabular-nums}
+/* display face: headings, level/rank names and stat numerals */
+h1,h2,h3,.lvlbadge,.rv,.nv,.lrk,.rname,.btier,.pstats .v,.gs{font-family:var(--f-head);letter-spacing:-.02em}
+/* label face: small uppercase run-in labels */
+.sh,.mbox label{font-family:var(--f-ui)}
 /* ---- nav: pill tabs, real touch targets ---- */
 .mainnav{padding:6px 10px 10px;gap:6px}
 .mainnav button{min-height:40px;border-radius:var(--r-pill);padding:8px 14px;font-size:12.5px;transition:background var(--dur),color var(--dur),border-color var(--dur)}
@@ -874,7 +880,7 @@ async function init(){
   if(isOnline()&&coursesIncomplete())seedCourses().then(function(n){if(n)render()});
   if(isOnline()&&acadEvents.length<MYCAL.length)seedCalendar().then(function(n){if(n)render()});
   render();netBadge();flushQueue(true);
-  cleanPrayerCache();
+  cleanPrayerCache();repaintOnFonts();
   loadPrayerTimes();
   setInterval(function(){if(isOnline()&&getQ().length)flushQueue(true)},60000);
   /* the NOW/NEXT marker is computed at render time, so nudge it once a minute */
@@ -2887,6 +2893,13 @@ function showLevelUp(l){
 function setAccent(p){document.documentElement.style.setProperty('--accent',p==='all'?'#4f9cf9':PIL[p].hex)}
 
 /* ---------- render ---------- */
+/* canvas glyphs are baked at draw time, so repaint once the webfonts land */
+function repaintOnFonts(){
+  try{
+    if(document.fonts&&document.fonts.ready&&document.fonts.ready.then)
+      document.fonts.ready.then(function(){render()});
+  }catch(e){}
+}
 function render(){
   renderHeader();renderNav();
   var _fb=document.getElementById('fab');
@@ -3347,7 +3360,7 @@ function drawRadar(){
   for(var i=0;i<4;i++){
     var p=PKEYS[i],a=ang(i),r=R*(pillarXP(p)/mx);
     ctx.beginPath();ctx.arc(cx+Math.cos(a)*r,cy+Math.sin(a)*r,4,0,7);ctx.fillStyle=PIL[p].hex;ctx.fill();
-    ctx.fillStyle='#8494ad';ctx.font="12px system-ui,-apple-system,'Segoe UI',sans-serif";ctx.textAlign='center';
+    ctx.fillStyle='#8494ad';ctx.font="12px 'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif";ctx.textAlign='center';
     ctx.fillText(pnm(p),cx+Math.cos(a)*(R+26),cy+Math.sin(a)*(R+26)+4);
   }
 }
@@ -3360,7 +3373,7 @@ function drawSeason(){
   ctx.beginPath();ctx.arc(cx,cy,R,-Math.PI/2,-Math.PI/2+Math.PI*2*pct);
   var g=ctx.createLinearGradient(0,0,180,180);g.addColorStop(0,'#fbbf24');g.addColorStop(1,'#f59e0b');
   ctx.strokeStyle=g;ctx.lineWidth=14;ctx.lineCap='round';ctx.stroke();
-  ctx.fillStyle='#e8eefb';ctx.font="bold 26px system-ui,-apple-system,'Segoe UI',sans-serif";ctx.textAlign='center';
+  ctx.fillStyle='#e8eefb';ctx.font="bold 26px 'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif";ctx.textAlign='center';
   ctx.fillText(Math.round(pct*100)+'%',cx,cy+9);
 }
 function newSeason(){
