@@ -1,5 +1,5 @@
-var CACHE='fp-v57';
-var ASSETS=['./','./index.html','./manifest.json','./icon-192.png','./icon-512.png','./404.html','./og.png'];
+var CACHE='fp-v58';
+var ASSETS=['./','./index.html','./manifest.json','./icon-192.png','./icon-512.png','./404.html','./og.png','./inter.woff2','./jakarta.woff2'];
 self.addEventListener('install',function(e){
   self.skipWaiting();
   e.waitUntil(caches.open(CACHE).then(function(c){return c.addAll(ASSETS).catch(function(){})}));
