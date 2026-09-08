@@ -554,6 +554,10 @@ main{max-width:1160px;padding:28px 22px 100px;}
 @media (max-width:700px){.topbar header{grid-template-columns:auto auto 1fr auto;padding:12px 14px 10px;gap:8px}.brandcopy small{display:none}.brandlockup{min-width:0}.brandcopy strong{font-size:.86rem}.xpwrap{grid-column:1 / -1;grid-row:2;max-width:none}.netbadge{display:none}.settings-trigger{padding:7px}.settings-trigger span:last-child{display:none}.mainnav{padding-inline:14px}.mainnav button{font-size:11px;padding:8px 11px}main{padding:18px 14px 88px}.qchips{gap:7px}.qchip{font-size:11px;padding-inline:4px}.pray{font-size:10px}.pray small{font-size:9px}}
 @media (prefers-reduced-motion:no-preference){.glass-enter{animation:rise .45s var(--ease-out) both}@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}.qchip:active,.iconbtn:active,.mainnav button:active{transform:scale(.97)}}
 </style>
+
+<style id="body-rank-v1">
+.body-rank-hero{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:20px 0 14px;padding:18px;border-radius:16px;background:linear-gradient(135deg,rgba(79,156,249,.16),rgba(167,139,250,.13) 50%,rgba(52,211,153,.08));border:1px solid rgba(255,255,255,.11);overflow:hidden}.body-rank-hero h3{margin:5px 0 5px;font:800 1.18rem 'Plus Jakarta Sans';letter-spacing:-.03em}.body-rank-hero p{margin:0;color:var(--dim);font-size:11px;line-height:1.5;max-width:430px}.eyebrow{text-transform:uppercase;letter-spacing:.11em;font-size:9px;font-weight:800;color:#9cb8f7}.body-hero-icon{font-size:48px;color:#a78bfa;filter:drop-shadow(0 0 15px rgba(167,139,250,.45))}.body-map-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}.body-map-panel{position:relative;min-height:295px;background:radial-gradient(circle at 50% 16%,rgba(79,156,249,.15),transparent 58%),rgba(7,13,24,.58);border:1px solid rgba(255,255,255,.1);border-radius:16px;overflow:hidden;padding:12px 8px 5px}.body-map-title{display:flex;align-items:baseline;justify-content:space-between;gap:5px}.body-map-title b{font:800 .82rem 'Plus Jakarta Sans';text-transform:uppercase;letter-spacing:.07em}.body-map-title span{font-size:9px;color:var(--dim);text-align:right}.body-figure{display:block;width:min(100%,180px);height:260px;margin:2px auto 0}.muscle-zone{cursor:pointer;transition:filter .16s ease,stroke-width .16s ease;outline:none}.muscle-zone:hover,.muscle-zone:focus{filter:brightness(1.25) saturate(1.2);stroke:#fff;stroke-width:2.5}.body-rank-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.body-rank-card{min-width:0;padding:12px;border-radius:13px;background:rgba(23,36,58,.86);border:1px solid color-mix(in srgb,var(--rank-color),transparent 66%);box-shadow:inset 0 1px rgba(255,255,255,.05)}.body-rank-head{display:flex;align-items:flex-start;justify-content:space-between;gap:6px}.body-rank-head h4{margin:0;font:800 .83rem 'Plus Jakarta Sans';white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.body-rank-head small{display:block;margin-top:3px;color:var(--dim);font-size:10px}.body-rank-label{color:var(--rank-color);font-size:9px;font-weight:800;text-align:right;white-space:nowrap}.body-rank-sub{min-height:27px;margin-top:8px;color:#c4cee3;font-size:10px;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.body-rank-bar{height:5px;margin-top:9px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}.body-rank-bar span{display:block;height:100%;border-radius:inherit;background:var(--rank-color);box-shadow:0 0 10px color-mix(in srgb,var(--rank-color),transparent 40%)}.body-rank-exercises{margin-top:8px;color:#7787a5;font-size:9px;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.body-rank-note{display:flex;align-items:flex-start;gap:7px;margin-top:13px;padding:10px 11px;border-radius:10px;background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.2);color:#d5caa3;font-size:10px;line-height:1.45}.body-rank-note .material-symbols-outlined{font-size:16px;color:var(--gold);flex:0 0 auto}@media (max-width:700px){.body-rank-hero{padding:15px}.body-rank-hero h3{font-size:1rem}.body-map-grid{gap:8px}.body-map-panel{min-height:247px;padding:10px 4px 2px}.body-figure{height:215px}.body-map-title{display:block}.body-map-title span{display:block;margin-top:3px;text-align:left}.body-rank-grid{grid-template-columns:1fr 1fr;gap:8px}.body-rank-card{padding:10px}.body-rank-head h4{font-size:.75rem}.body-rank-label{font-size:8px}.body-rank-sub{font-size:9px}.body-rank-exercises{font-size:8px}}
+</style>
 </head>
 <body>
 <div id="auth">
@@ -1392,6 +1396,80 @@ function accRowHtml(l){
   h+='</div><div class="lrk" style="color:var(--gold)">'+b.row.weight+'<br><span>kg / '+lbOf(b.row.weight)+'lb</span></div></div>';
   return h;
 }
+
+/* ---------- body-part rank map ---------- */
+var BODY_PARTS=[
+  {k:'chest',n:'Chest',ar:'الصدر',ex:['bench','incline_machine','fly_cable'],front:'chest'},
+  {k:'back',n:'Back',ar:'الظهر',ex:['deadlift','row','latpulldown','row_cable'],back:'back'},
+  {k:'shoulders',n:'Shoulders',ar:'الأكتاف',ex:['ohp','lateral_raise','front_raise','reverse_fly'],front:'shoulders',back:'shoulders'},
+  {k:'arms',n:'Arms',ar:'الذراعان',ex:['barbell_curl','hammer_curl','skullcrusher','pushdown'],front:'arms',back:'arms'},
+  {k:'core',n:'Core',ar:'الجذع',ex:[],front:'core'},
+  {k:'glutes',n:'Glutes',ar:'الألوية',ex:['squat','deadlift','rdl'],back:'glutes'},
+  {k:'quads',n:'Quads',ar:'الفخذ الأمامي',ex:['squat','leg_ext'],front:'quads'},
+  {k:'hamstrings',n:'Hamstrings',ar:'أوتار الركبة',ex:['deadlift','rdl','leg_curl'],back:'hamstrings'},
+  {k:'calves',n:'Calves',ar:'السمانة',ex:['calf_standing','calf_seated'],front:'calves',back:'calves'}
+];
+var BODY_COLORS={unranked:'#43516a',wood:'#a87c4a',bronze:'#e08c4f',silver:'#d5dde6',gold:'#ffd24a',platinum:'#5fe0c0',diamond:'#8ea9ff',champion:'#e879f9',titan:'#ff5f52',olympian:'#7dd3fc'};
+function bodyPartDef(k){return BODY_PARTS.find(function(x){return x.k===k})}
+function bodyPartRank(k){
+  var bw=bodyWeight(),part=bodyPartDef(k),best=null,bestLiftKey=null;
+  if(!part||!bw)return null;
+  part.ex.forEach(function(ex){var b=bestLift(ex);if(b&&(!best||b.e1>best.e1)){best=b;bestLiftKey=ex}});
+  if(!best)return null;
+  var r=rankOf(bestLiftKey,best.e1,bw);
+  if(r)r.exercise=bestLiftKey;
+  return r;
+}
+function bodyPartColor(k){var r=bodyPartRank(k);return r?RANKS[r.rank].c:BODY_COLORS.unranked}
+function bodyPartStatus(k){
+  var r=bodyPartRank(k),part=bodyPartDef(k);
+  if(!r)return{label:'Unranked',sub:part.ex.length?'Log a lift to rank':'No ranked lift yet',color:BODY_COLORS.unranked};
+  return{label:rankName(r.rank)+' '+['I','II','III'][r.tier-1],sub:r.lp+' LP · '+liftName(r.exercise),color:RANKS[r.rank].c,rank:r};
+}
+function bodyMapSvg(side){
+  var front=side==='front',zone=function(k,shape){
+    var c=bodyPartColor(k);
+    return '<path class="muscle-zone" d="'+shape+'" fill="'+c+'" fill-opacity=".92" stroke="#d7e7ff" stroke-opacity=".48" stroke-width="1.5" onclick="toast(\''+bodyPartDef(k).n+' · '+bodyPartStatus(k).label+'\')" tabindex="0" role="button" aria-label="'+bodyPartDef(k).n+' · '+bodyPartStatus(k).label+'"/>';
+  };
+  var s='<svg class="body-figure '+side+'" viewBox="0 0 180 330" aria-label="'+(front?'Front':'Back')+' muscle rank map" role="img">';
+  s+='<circle cx="90" cy="24" r="18" fill="#d4e4df" stroke="#8fa8b4" stroke-width="2"/>';
+  s+='<path d="M78 41 L102 41 L107 59 L73 59Z" fill="#b6c9c7" stroke="#8fa8b4" stroke-width="2"/>';
+  if(front){
+    s+=zone('shoulders','M73 53 Q57 47 45 61 L55 82 L73 74Z')+zone('shoulders','M107 53 Q123 47 135 61 L125 82 L107 74Z');
+    s+=zone('chest','M72 60 Q90 53 108 60 L105 88 Q90 96 75 88Z');
+    s+=zone('arms','M45 62 Q31 78 34 112 L45 126 L53 112 L49 82Z')+zone('arms','M135 62 Q149 78 146 112 L135 126 L127 112 L131 82Z');
+    s+=zone('core','M75 90 Q90 95 105 90 L102 140 Q90 149 78 140Z');
+    s+=zone('quads','M77 143 Q90 148 103 143 L105 204 L92 220 L80 204Z')+zone('quads','M62 143 L78 143 L75 204 L63 218 L55 192Z');
+    s+=zone('quads','M102 143 L118 143 L125 192 L117 218 L105 204Z');
+    s+=zone('calves','M63 220 L76 205 L78 272 L66 286 L57 265Z')+zone('calves','M104 205 L117 220 L123 265 L114 286 L102 272Z');
+  }else{
+    s+=zone('shoulders','M73 53 Q57 47 45 61 L55 82 L73 74Z')+zone('shoulders','M107 53 Q123 47 135 61 L125 82 L107 74Z');
+    s+=zone('back','M74 58 L90 68 L106 58 L111 109 L90 126 L69 109Z');
+    s+=zone('arms','M45 62 Q31 78 34 112 L45 126 L53 112 L49 82Z')+zone('arms','M135 62 Q149 78 146 112 L135 126 L127 112 L131 82Z');
+    s+=zone('glutes','M70 112 Q90 122 110 112 L109 148 Q90 161 71 148Z');
+    s+=zone('hamstrings','M71 149 L89 153 L84 213 L68 219 L62 190Z')+zone('hamstrings','M91 153 L109 149 L118 190 L112 219 L96 213Z');
+    s+=zone('calves','M68 219 L84 213 L79 273 L66 286 L57 265Z')+zone('calves','M96 213 L112 219 L123 265 L114 286 L101 273Z');
+  }
+  s+='<path d="M78 42 L73 53 M102 42 L107 53 M90 42 L90 286" fill="none" stroke="#8fa8b4" stroke-width="2" stroke-opacity=".5"/>';
+  s+='</svg>';return s;
+}
+function bodyRankCard(k){
+  var part=bodyPartDef(k),st=bodyPartStatus(k),r=st.rank;
+  var ex=part.ex.map(function(x){return liftName(x)}).join(' · ');
+  return '<article class="body-rank-card" style="--rank-color:'+st.color+'">'+
+    '<div class="body-rank-head"><div><h4>'+part.n+'</h4><small lang="ar" dir="rtl">'+part.ar+'</small></div><span class="body-rank-label">'+st.label+'</span></div>'+
+    '<div class="body-rank-sub">'+st.sub+'</div><div class="body-rank-bar"><span style="width:'+(r?r.lp:0)+'%"></span></div>'+
+    '<div class="body-rank-exercises">'+(ex||'Needs direct exercise tracking')+'</div></article>';
+}
+function bodyMapHtml(){
+  var h='<div class="body-rank-hero"><div><div class="eyebrow">Muscle-by-muscle progression</div><h3>Every body part has its own rank</h3><p>Ranks are calculated from your best logged exercises and body weight.</p></div><span class="material-symbols-outlined body-hero-icon">accessibility_new</span></div>';
+  h+='<div class="body-map-grid"><div class="body-map-panel"><div class="body-map-title"><b>Front</b><span>Push · legs · core</span></div>'+bodyMapSvg('front')+'</div>';
+  h+='<div class="body-map-panel"><div class="body-map-title"><b>Back</b><span>Pull · posterior chain</span></div>'+bodyMapSvg('back')+'</div></div>';
+  h+='<div class="body-rank-grid">'+BODY_PARTS.map(function(x){return bodyRankCard(x.k)}).join('')+'</div>';
+  h+='<div class="body-rank-note"><span class="material-symbols-outlined">info</span><span>Each zone uses its related exercises. Log a set from the list to replace “Unranked” with a real strength tier.</span></div>';
+  return h;
+}
+
 function renderRank(){
   var el=document.getElementById('rankcard');if(!el)return;
   if(tab!=='rank'){el.innerHTML='';return}
@@ -1401,6 +1479,7 @@ function renderRank(){
      '<button class="iconbtn" onclick="openBodyWeight()">'+px('scale',14)+' '+(bodyWeight()?wtBoth(bodyWeight()):T('bodyweight'))+'</button></div>';
   h+=rankCardHtml();
   h+='<div class="mrow" style="margin:12px 0"><button class="ok" onclick="openLiftLog(null)">'+px('plus',14)+' '+T('loglift')+'</button></div>';
+  h+=bodyMapHtml();
   h+='<h3 class="sh">'+T('liftrank')+'</h3>';
   LIFTS.forEach(function(l){h+=liftRowHtml(l)});
   ['push','pull','legs'].forEach(function(g){
