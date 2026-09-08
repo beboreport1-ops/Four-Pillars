@@ -215,9 +215,11 @@ main{padding:14px 16px 90px;max-width:1000px;margin:0 auto}
 .tap:active{transform:scale(.98)}
 .crow .ttnav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
 .ttnav b{flex:1;text-align:center;font-size:13px}
-.phero{background:var(--glass-lo);backdrop-filter:var(--blur-lo) url(#liquidglass);-webkit-backdrop-filter:var(--blur-lo);border-width:1px;border-style:solid;border-color:var(--edge-hi) var(--edge-lo) var(--edge-lo) var(--edge-hi);border-radius:var(--r-m);padding:16px;margin-bottom:14px;position:relative;overflow:hidden}
+.phero{background:linear-gradient(145deg,#1a1037 0%,#3c1688 42%,#1d6db4 125%);border-width:1px;border-style:solid;border-color:var(--edge-hi) var(--edge-lo) var(--edge-lo) var(--edge-hi);border-radius:var(--r-m);padding:16px;margin-bottom:14px;position:relative;overflow:hidden}
 .phero:after{content:'';position:absolute;top:-40px;inset-inline-end:-30px;width:130px;height:130px;border-radius:50%;opacity:.11}
 .phero .phero{box-shadow:0 0 24px -6px var(--accent-glow)}
+.phero::after{content:'';position:absolute;width:240px;height:160px;inset-inline-end:-50px;top:-40px;background:#a855f7;filter:blur(75px);opacity:.34;pointer-events:none;z-index:0}
+.phero>*{position:relative;z-index:1}
 .pe{font-size:30px}
 /* ---- Main: 2x2 pillar grid. Cards are flat on purpose; the glass
    .section already wraps them and four more blur layers on the busiest
@@ -230,6 +232,9 @@ main{padding:14px 16px 90px;max-width:1000px;margin:0 auto}
 .section::before,.phero::before,.hcard::before,.authbox::before,.mbox::before{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(165deg,rgba(255,255,255,.10) 0%,rgba(255,255,255,.03) 18%,transparent 32%)}
 .pgh{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
 .pgi{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:var(--r-s);flex:0 0 auto;box-shadow:inset 0 1px 0 rgba(255,255,255,.18),inset 0 -1px 2px rgba(0,0,0,.18)}
+.pgring{width:44px;height:44px;flex:0 0 auto;display:grid;place-items:center;border-radius:50%;position:relative;background:conic-gradient(var(--ring) calc(var(--val)*1%),rgba(255,255,255,.06) 0)}
+.pgring::before{content:'';position:absolute;inset:4px;border-radius:50%;background:var(--card2)}
+.pgring span{position:relative;z-index:1;font-family:var(--f-head);font-size:11px;font-weight:700;color:var(--dim);font-variant-numeric:tabular-nums}
 .pgn{font-family:var(--f-head);font-size:14px;font-weight:700;letter-spacing:-.01em;margin-top:11px}
 .pgv{font-family:var(--f-head);font-size:19px;font-weight:800;letter-spacing:-.02em;margin-top:2px;font-variant-numeric:tabular-nums}
 .pgv span{font-family:var(--f-ui);font-size:11px;font-weight:600;color:var(--dim);letter-spacing:0}
@@ -2906,17 +2911,13 @@ function renderQuest(){
   h+=deadlineStripHtml();
   document.getElementById('questcard').innerHTML=h;
 }
-/* Radial goal ring. Decorative: the same figure is repeated as text in the
-   .pgd chip below it, so the svg stays aria-hidden. */
+/* Radial goal ring, CSS conic-gradient (v66, replaced the inline SVG).
+   Decorative: the same figure is repeated as text in the .pgd chip
+   below it, so this stays aria-hidden. */
 function pillarRing(pct,hex){
-  var C=113.1,p=Math.max(0,Math.min(100,pct)),off=C-(p/100)*C;
-  return '<svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true">'+
-    '<circle cx="22" cy="22" r="18" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="4"></circle>'+
-    '<circle cx="22" cy="22" r="18" fill="none" stroke="'+hex+'" stroke-width="4" '+
-    'stroke-linecap="round" stroke-dasharray="'+C+'" stroke-dashoffset="'+off.toFixed(1)+'" '+
-    'transform="rotate(-90 22 22)"></circle>'+
-    '<text x="22" y="26" text-anchor="middle" font-size="11" font-weight="700" '+
-    'fill="var(--dim)">'+p+'</text></svg>';
+  var p=Math.max(0,Math.min(100,pct));
+  return '<div class="pgring" aria-hidden="true" style="--ring:'+hex+';--val:'+p+'">'+
+    '<span>'+p+'</span></div>';
 }
 function renderGoals(){
   if(tab!=='main')return;
