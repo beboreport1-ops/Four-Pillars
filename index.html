@@ -158,6 +158,8 @@ main{padding:14px 16px 90px;max-width:1000px;margin:0 auto}
 .gnote{font-size:10px;color:var(--dim);margin-top:7px}
 
 /* gym rank */
+.volume-rank{display:flex;align-items:center;justify-content:center;gap:12px;margin:14px auto 0;padding:10px 12px;max-width:310px;border:1px solid rgba(255,255,255,.1);border-radius:14px;background:rgba(7,13,24,.38);text-align:left}.volume-badge{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border-radius:10px;color:#fff;font-size:11px;font-weight:900;letter-spacing:.05em;box-shadow:inset 0 1px rgba(255,255,255,.28),0 4px 14px rgba(0,0,0,.2)}.volume-badge .material-symbols-outlined{font-size:18px}.volume-rank-copy{min-width:0}.volume-rank-copy b{display:block;font-size:11px}.volume-rank-copy span{display:block;margin-top:3px;color:var(--dim);font-size:10px}.volume-rank-bar{height:5px;margin-top:7px;width:150px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden}.volume-rank-bar span{display:block;height:100%;border-radius:inherit;background:var(--volume-color);transition:width var(--dur-slow)}
+
 .rankcard{position:relative;border:1px solid var(--ghost);border-radius:var(--r-l);padding:18px 14px;text-align:center;overflow:hidden}
 .rankcard.sm{padding:14px 12px}
 .rname{font-size:19px;font-weight:800;letter-spacing:.06em;margin-top:10px}
@@ -1347,19 +1349,53 @@ function badgeHtml(rankIdx,tier,size){
     '<div class="bhex2" style="background:linear-gradient(160deg,'+R.c2+','+R.c+')"></div>'+
     '<span class="btier">'+['I','II','III'][tier-1]+'</span></div></div>';
 }
+var VOLUME_TIERS=[
+ {k:'bronze',n:'Bronze',min:0,c:'#cd7f32',next:5000},
+ {k:'silver',n:'Silver',min:5000,c:'#d5dde6',next:25000},
+ {k:'gold',n:'Gold',min:25000,c:'#ffd24a',next:100000},
+ {k:'elite',n:'Elite',min:100000,c:'#a78bfa',next:null}
+];
+function totalVolumeKg(){
+  return gymSets.reduce(function(total,g){
+    var w=Number(g.weight)||0,r=Number(g.reps)||0,sets=Number(g.sets)||1;
+    return total+Math.max(0,w*r*sets);
+  },0);
+}
+function formatVolume(kg){
+  if(kg>=1000000)return (kg/1000000).toFixed(1)+'M kg';
+  if(kg>=1000)return (kg/1000).toFixed(1)+'k kg';
+  return Math.round(kg)+' kg';
+}
+function volumeTier(){
+  var total=totalVolumeKg();if(!total)return null;
+  var t=VOLUME_TIERS[0];
+  VOLUME_TIERS.forEach(function(x){if(total>=x.min)t=x});
+  var idx=VOLUME_TIERS.indexOf(t),from=t.min,to=t.next||t.min+100000,progress=t.next?Math.max(0,Math.min(100,Math.round((total-from)/(to-from)*100))):100;
+  return{tier:t,idx:idx,total:total,progress:progress,to:t.next};
+}
+function volumeBadgeHtml(v){
+  if(!v)return '';
+  return '<span class="volume-badge" style="background:linear-gradient(135deg,'+v.tier.c+',rgba(15,23,42,.88))"><span class="material-symbols-outlined">workspace_premium</span>'+v.tier.n+'</span>';
+}
+function volumeSummaryHtml(){
+  var v=volumeTier();if(!v)return '';
+  var next=v.to?formatVolume(v.to-v.total)+' to '+VOLUME_TIERS[v.idx+1].n:'Top volume tier';
+  return '<div class="volume-rank"><div>'+volumeBadgeHtml(v)+'</div><div class="volume-rank-copy"><b>Lifetime volume · '+formatVolume(v.total)+'</b><span>'+next+'</span><div class="volume-rank-bar" style="--volume-color:'+v.tier.c+'"><span style="width:'+v.progress+'%"></span></div></div></div>';
+}
 function rankCardHtml(){
   var bw=bodyWeight();
   if(!bw)return '<div class="rankempty"><p>'+T('setbw')+'</p>'+
-    '<button class="ok" onclick="openBodyWeight()">'+T('bodyweight')+'</button></div>';
+    '<button class="ok" onclick="openBodyWeight()">'+T('bodyweight')+'</button></div>'+volumeSummaryHtml();
   var o=overallRank();
   if(!o)return '<div class="rankempty"><p>'+T('nolifts')+'</p>'+
-    '<button class="ok" onclick="openLiftLog(null)">'+T('loglift')+'</button></div>';
+    '<button class="ok" onclick="openLiftLog(null)">'+T('loglift')+'</button></div>'+volumeSummaryHtml();
   var R=RANKS[o.rank];
   return '<div class="rankcard" style="background:radial-gradient(120% 100% at 50% 0%,'+R.c2+'55,transparent 70%),var(--card2);border-color:'+R.c+'44">'+
     badgeHtml(o.rank,o.tier,86)+
     '<div class="rname" style="color:'+R.c+'">'+rankName(o.rank).toUpperCase()+' '+['I','II','III'][o.tier-1]+'</div>'+
     '<div class="rlp">'+o.lp+' '+T('lp')+' \u00B7 '+T('overall')+'</div>'+
     '<div class="rbar"><div style="width:'+o.lp+'%;background:'+R.c+'"></div></div>'+
+    volumeSummaryHtml()+
     '</div>';
 }
 function liftRowHtml(l){
