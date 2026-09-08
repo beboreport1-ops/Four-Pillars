@@ -1419,10 +1419,11 @@ function liftRowHtml(l){
   return h;
 }
 function accRowHtml(l){
-  var b=bestLift(l.k),hist=liftHistory(l.k),bw=bodyWeight(),r=bw&&isRanked(l.k)?rankOf(l.k,b.e1,bw):null;
+  var b=bestLift(l.k),hist=liftHistory(l.k),bw=bodyWeight(),r=null;
   if(!b)return '<div class="liftrow empty" onclick="openLiftLog(\''+l.k+'\')">'+
     '<span class="lem">'+px(l.ic,22)+'</span><div class="li"><b>'+liftName(l.k)+'</b>'+
     '<div class="lm">'+T('noaccessory')+'</div></div><span class="ladd">+</span></div>';
+  r=bw&&isRanked(l.k)?rankOf(l.k,b.e1,bw):null;
   var first=hist[0],gain=Math.round((b.row.weight-first.weight)*10)/10;
   var h='<div class="liftrow" onclick="openLiftHistory(\''+l.k+'\')">';
   h+=r?badgeHtml(r.rank,r.tier,40):'<span class="lem">'+px(l.ic,22)+'</span>';
