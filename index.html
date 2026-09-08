@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0b0f17">
-<title>Four Pillars</title>
+<title>LifeQuest · Four Pillars</title>
 <meta name="description" content="A private personal-development tracker: study, gym, social and soul, with XP, streaks, a university semester manager and a gym strength ladder.">
 <meta name="robots" content="noindex, nofollow">
 <link rel="canonical" href="https://beboreport1-ops.github.io/Four-Pillars/">
@@ -17,7 +17,7 @@
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Four Pillars">
+<meta property="og:site_name" content="LifeQuest · Four Pillars">
 <meta property="og:title" content="Four Pillars">
 <meta property="og:description" content="Level up your life: Study, Gym, Social, Soul.">
 <meta property="og:url" content="https://beboreport1-ops.github.io/Four-Pillars/">
@@ -515,6 +515,45 @@ h2>.msi:first-child{vertical-align:-3px;margin-inline-end:5px}
   *,*::before,*::after{animation:none!important;transition:none!important}
 }
 </style>
+
+<style id="lifequest-v69-redesign">
+/* LifeQuest v69 visual system: the existing data/runtime layer remains intact. */
+:root{
+  --bg:#070b13;--card:#101928;--card2:#17243a;--line:#253653;--line2:#3a4d70;
+  --tx:#f7f8fc;--dim:#9aa9c5;--faint:#6f7f9c;--gold:#fbbf24;
+  --study:#4f9cf9;--gym:#ff6b4a;--social:#34d399;--soul:#a78bfa;
+  --edge-hi:rgba(255,255,255,.17);--edge-lo:rgba(255,255,255,.06);
+  --glass-lo:rgba(14,23,38,.78);--glass-hi:rgba(25,38,59,.94);
+  --shadow:0 18px 50px -26px rgba(0,0,0,.85),0 1px 0 rgba(255,255,255,.04) inset;
+  --ease-out:cubic-bezier(.23,1,.32,1);
+}
+html{background:var(--bg)}
+body{background:radial-gradient(75% 38% at 50% -5%,rgba(168,85,247,.33),transparent 65%),radial-gradient(50% 28% at 88% 18%,rgba(79,156,249,.18),transparent 75%),var(--bg);}
+#app{min-height:100vh}
+.topbar{position:sticky;top:0;z-index:50;background:linear-gradient(135deg,rgba(25,14,56,.96),rgba(57,21,128,.96) 48%,rgba(16,79,141,.96));border-bottom:1px solid rgba(255,255,255,.14);box-shadow:0 15px 40px rgba(0,0,0,.28);backdrop-filter:blur(22px) saturate(160%);}
+.topbar::before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 0 40%,rgba(255,255,255,.055) 47%,transparent 53%);pointer-events:none;}
+.topbar header{max-width:1160px;margin:auto;display:grid;grid-template-columns:auto auto minmax(180px,1fr) auto auto;align-items:center;gap:14px;padding:14px 22px 12px;}
+.brandlockup{display:flex;align-items:center;gap:10px;color:var(--tx);text-decoration:none;min-width:150px;}
+.brandcrest{display:flex;align-items:end;gap:3px;height:31px;transform:skewY(-17deg);}
+.brandcrest i{display:block;width:7px;height:24px;border-radius:2px 2px 0 0;background:linear-gradient(#d9c0ff,#4f9cf9);box-shadow:0 0 14px rgba(122,91,255,.58);}
+.brandcrest i:nth-child(2){height:31px;background:linear-gradient(#f7e4ff,#4f9cf9);}.brandcrest i:nth-child(3){height:21px;}
+.brandcopy{display:grid;gap:3px;line-height:1}.brandcopy strong{font:800 1rem/1 'Plus Jakarta Sans';letter-spacing:-.04em}.brandcopy small{font:700 .53rem/1 Inter;color:#c9d2ec;letter-spacing:.14em;}
+.lvlbadge{display:inline-flex;align-items:center;gap:5px;border-radius:10px;padding:8px 10px;box-shadow:0 0 20px rgba(251,191,36,.14) inset,0 6px 18px rgba(0,0,0,.14);}
+.lvlbadge .msi{font-size:16px;color:var(--gold)}
+.xpwrap{max-width:440px;justify-self:stretch}.xpbar{height:11px;background:rgba(8,18,38,.62);border-color:rgba(220,231,255,.34);box-shadow:inset 0 3px 10px rgba(0,0,0,.35)}.xpbar div{background:linear-gradient(90deg,#1caafa,#8768ef);box-shadow:0 0 15px rgba(79,156,249,.92),inset 0 2px rgba(255,255,255,.52)}.xptxt{font-size:10px;margin-top:6px;color:#dfe7fb}
+.netbadge{justify-self:end}.settings-trigger{display:inline-flex;align-items:center;gap:6px;background:rgba(18,27,44,.42);border-color:rgba(255,255,255,.16);padding:8px 10px;border-radius:10px;color:#dce6ff}.settings-trigger .msi{font-size:18px}.settings-trigger span:last-child{font-size:11px}
+.mainnav{max-width:1160px;margin:auto;padding:0 22px 13px;gap:7px}.mainnav button{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.13);padding:8px 13px;transition:transform .18s var(--ease-out),background .18s var(--ease-out),border-color .18s var(--ease-out)}.mainnav button:hover{transform:translateY(-1px);background:rgba(255,255,255,.14)}.mainnav button.on{background:rgba(18,28,47,.82);border-color:var(--study);box-shadow:0 0 18px rgba(79,156,249,.22)}
+main{max-width:1160px;padding:28px 22px 100px;}
+.section,.quest,.gcard,.rankcard,.ttday,.cls,.crow{background:linear-gradient(145deg,rgba(25,39,62,.83),rgba(10,19,32,.9));border-color:var(--edge-hi) var(--edge-lo) var(--edge-lo) var(--edge-hi);box-shadow:var(--shadow);}
+.section{padding:20px;margin-bottom:18px}.section h2{font:800 1rem/1.2 'Plus Jakarta Sans';text-transform:uppercase;letter-spacing:.06em}.quest{padding:20px;margin-bottom:18px}.qtop{margin-bottom:16px}.qtop h2{font:800 1rem/1.2 'Plus Jakarta Sans';text-transform:uppercase;letter-spacing:.06em}.qcount{font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+.qchips{gap:10px}.qchip{min-height:48px;border:0;border-radius:12px;box-shadow:inset 0 1px rgba(255,255,255,.24),0 7px 15px rgba(0,0,0,.12);color:#fff!important}.qchip:nth-child(1){background:var(--study)}.qchip:nth-child(2){background:var(--gym)}.qchip:nth-child(3){background:var(--social)}.qchip:nth-child(4){background:var(--soul)}.qchip .qe{color:#fff;filter:none;opacity:.92}
+.qbar{height:8px;margin:14px 0}.qbar div{background:linear-gradient(90deg,var(--soul),var(--gold));box-shadow:inset 0 2px rgba(255,255,255,.35),0 0 12px rgba(251,191,36,.35)}
+.nextpray{font-size:11px;text-transform:uppercase;letter-spacing:.05em}.pray{background:rgba(8,18,33,.7);border-color:rgba(139,155,189,.22);padding:12px 4px 11px;box-shadow:inset 0 1px rgba(255,255,255,.04)}.pray.now{border-color:var(--gold);box-shadow:0 0 18px rgba(251,191,36,.25)}
+#goalcard>.section,#todaycard>.section{height:100%}
+@media (min-width:800px){#view-main{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr);gap:18px;align-items:start}#view-main>#questcard{grid-row:span 2}#view-main>#questcard .prayrow{gap:8px}.section{margin-bottom:0}.quest{margin-bottom:0}.qchips{grid-template-columns:repeat(2,1fr)}.qchip{justify-content:flex-start;padding-left:14px}.prayrow{gap:8px}}
+@media (max-width:700px){.topbar header{grid-template-columns:auto auto 1fr auto;padding:12px 14px 10px;gap:8px}.brandcopy small{display:none}.brandlockup{min-width:0}.brandcopy strong{font-size:.86rem}.xpwrap{grid-column:1 / -1;grid-row:2;max-width:none}.netbadge{display:none}.settings-trigger{padding:7px}.settings-trigger span:last-child{display:none}.mainnav{padding-inline:14px}.mainnav button{font-size:11px;padding:8px 11px}main{padding:18px 14px 88px}.qchips{gap:7px}.qchip{font-size:11px;padding-inline:4px}.pray{font-size:10px}.pray small{font-size:9px}}
+@media (prefers-reduced-motion:no-preference){.glass-enter{animation:rise .45s var(--ease-out) both}@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}.qchip:active,.iconbtn:active,.mainnav button:active{transform:scale(.97)}}
+</style>
 </head>
 <body>
 <div id="auth">
@@ -525,10 +564,14 @@ h2>.msi:first-child{vertical-align:-3px;margin-inline-end:5px}
 <div id="app" class="hidden">
 <div class="topbar">
   <header>
-    <span class="lvlbadge" id="hlvl">LV 1</span>
+    <a class="brandlockup" href="#" onclick="setTab('main');return false" aria-label="LifeQuest main hub">
+      <span class="brandcrest" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="brandcopy"><strong>LIFEQUEST</strong><small>FOUR PILLARS</small></span>
+    </a>
+    <span class="lvlbadge" id="hlvl"><span class="msi fill" aria-hidden="true">workspace_premium</span> LV 1</span>
     <div class="xpwrap"><div class="xpbar"><div id="hxp" style="width:0%"></div></div><div class="xptxt" id="hxpt"></div></div>
     <button id="netbadge" class="netbadge hidden" onclick="flushQueue()"></button>
-    <button class="iconbtn" onclick="openMenu()">&#9881;</button>
+    <button class="iconbtn settings-trigger" onclick="openMenu()" aria-label="Open settings"><span class="msi" aria-hidden="true">settings</span><span>Settings</span></button>
   </header>
   <nav id="mainnav" class="mainnav"></nav>
 </div>
