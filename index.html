@@ -3758,7 +3758,7 @@ async function doInstall(){
   document.getElementById('install').classList.add('hidden');
   toast(T('installed'));
 }
-if('serviceWorker' in navigator)window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})});
+if('serviceWorker' in navigator)window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js?v=78',{updateViaCache:'none'}).catch(function(){})});
 
 /* ---------- boot ---------- */
 sb.auth.onAuthStateChange(function(ev){if(ev==='PASSWORD_RECOVERY')showRecover()});
