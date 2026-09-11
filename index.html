@@ -1470,7 +1470,11 @@ function bodyMapHtml(){
   return h;
 }
 
-function rankRenderFallback(){return '<div class="section"><div class="rankcard"><div class="rankempty"><div class="rname" style="color:var(--gold)">'+px('medal',28)+' '+T('rank')+'</div><p>Gym Rank is ready. Log a lift or set your body weight to see your rank.</p><button class="ok" onclick="openLiftLog(null)">'+px('plus',14)+' '+T('loglift')+'</button></div></div></div>'}
+function rankRenderFallback(){
+  var h='<div class="section"><div class="rankcard"><div class="rankempty"><div class="rname" style="color:var(--gold)">'+px('medal',28)+' '+T('rank')+'</div><p>Gym Rank is ready. Log a lift or set your body weight to see your rank.</p><button class="ok" onclick="openLiftLog(null)">'+px('plus',14)+' '+T('loglift')+'</button></div></div>';
+  try{h+=bodyMapHtml()}catch(e){console.error('Body map render failed',e)}
+  return h+'</div>';
+}
 function renderRank(){
   var el=document.getElementById('rankcard');if(!el)return;
   if(tab!=='rank'){el.innerHTML='';return}
