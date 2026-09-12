@@ -541,7 +541,7 @@ body{background:radial-gradient(75% 38% at 50% -5%,rgba(168,85,247,.33),transpar
 .lvlbadge{display:inline-flex;align-items:center;gap:5px;border-radius:10px;padding:8px 10px;box-shadow:0 0 20px rgba(251,191,36,.14) inset,0 6px 18px rgba(0,0,0,.14);}
 .lvlbadge .msi{font-size:16px;color:var(--gold)}
 .xpwrap{max-width:440px;justify-self:stretch}.xpbar{height:11px;background:rgba(8,18,38,.62);border-color:rgba(220,231,255,.34);box-shadow:inset 0 3px 10px rgba(0,0,0,.35)}.xpbar div{background:linear-gradient(90deg,#1caafa,#8768ef);box-shadow:0 0 15px rgba(79,156,249,.92),inset 0 2px rgba(255,255,255,.52)}.xptxt{font-size:10px;margin-top:6px;color:#dfe7fb}
-.netbadge{justify-self:end}.settings-trigger{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:44px;min-height:42px;background:linear-gradient(145deg,rgba(51,72,111,.92),rgba(22,34,58,.96));border:1px solid rgba(214,227,255,.35);padding:8px 12px;border-radius:12px;color:#f3f7ff;box-shadow:inset 0 1px rgba(255,255,255,.16),0 6px 18px rgba(0,0,0,.2);position:relative;z-index:2}.settings-trigger:hover{background:linear-gradient(145deg,rgba(70,96,145,.98),rgba(27,43,73,.98));border-color:rgba(214,227,255,.58)}.settings-trigger .msi{font-size:20px}.settings-trigger span:last-child{font-size:11px;font-weight:800}
+.netbadge{justify-self:end}.settings-trigger{display:inline-flex;align-items:center;gap:6px;background:rgba(18,27,44,.42);border-color:rgba(255,255,255,.16);padding:8px 10px;border-radius:10px;color:#dce6ff}.settings-trigger .msi{font-size:18px}.settings-trigger span:last-child{font-size:11px}
 .mainnav{max-width:1160px;margin:auto;padding:0 22px 13px;gap:7px}.mainnav button{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.13);padding:8px 13px;transition:transform .18s var(--ease-out),background .18s var(--ease-out),border-color .18s var(--ease-out)}.mainnav button:hover{transform:translateY(-1px);background:rgba(255,255,255,.14)}.mainnav button.on{background:rgba(18,28,47,.82);border-color:var(--study);box-shadow:0 0 18px rgba(79,156,249,.22)}
 main{max-width:1160px;padding:28px 22px 100px;}
 .section,.quest,.gcard,.rankcard,.ttday,.cls,.crow{background:linear-gradient(145deg,rgba(25,39,62,.83),rgba(10,19,32,.9));border-color:var(--edge-hi) var(--edge-lo) var(--edge-lo) var(--edge-hi);box-shadow:var(--shadow);}
@@ -551,7 +551,7 @@ main{max-width:1160px;padding:28px 22px 100px;}
 .nextpray{font-size:11px;text-transform:uppercase;letter-spacing:.05em}.pray{background:rgba(8,18,33,.7);border-color:rgba(139,155,189,.22);padding:12px 4px 11px;box-shadow:inset 0 1px rgba(255,255,255,.04)}.pray.now{border-color:var(--gold);box-shadow:0 0 18px rgba(251,191,36,.25)}
 #goalcard>.section,#todaycard>.section{height:100%}
 @media (min-width:800px){#view-main{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr);gap:18px;align-items:start}#view-main>#questcard{grid-row:span 2}#view-main>#questcard .prayrow{gap:8px}.section{margin-bottom:0}.quest{margin-bottom:0}.qchips{grid-template-columns:repeat(2,1fr)}.qchip{justify-content:flex-start;padding-left:14px}.prayrow{gap:8px}}
-@media (max-width:700px){.topbar header{grid-template-columns:auto auto 1fr auto;padding:12px 14px 10px;gap:8px}.brandcopy small{display:none}.brandlockup{min-width:0}.brandcopy strong{font-size:.86rem}.xpwrap{grid-column:1 / -1;grid-row:2;max-width:none}.netbadge{display:none}.settings-trigger{width:42px;min-width:42px;height:42px;padding:0}.settings-trigger span:last-child{display:none}.mainnav{padding-inline:14px}.mainnav button{font-size:11px;padding:8px 11px}main{padding:18px 14px 88px}.qchips{gap:7px}.qchip{font-size:11px;padding-inline:4px}.pray{font-size:10px}.pray small{font-size:9px}}
+@media (max-width:700px){.topbar header{grid-template-columns:auto auto 1fr auto;padding:12px 14px 10px;gap:8px}.brandcopy small{display:none}.brandlockup{min-width:0}.brandcopy strong{font-size:.86rem}.xpwrap{grid-column:1 / -1;grid-row:2;max-width:none}.netbadge{display:none}.settings-trigger{padding:7px}.settings-trigger span:last-child{display:none}.mainnav{padding-inline:14px}.mainnav button{font-size:11px;padding:8px 11px}main{padding:18px 14px 88px}.qchips{gap:7px}.qchip{font-size:11px;padding-inline:4px}.pray{font-size:10px}.pray small{font-size:9px}}
 @media (prefers-reduced-motion:no-preference){.glass-enter{animation:rise .45s var(--ease-out) both}@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}.qchip:active,.iconbtn:active,.mainnav button:active{transform:scale(.97)}}
 </style>
 
@@ -1470,17 +1470,11 @@ function bodyMapHtml(){
   return h;
 }
 
-function rankRenderFallback(){
-  var h='<div class="section"><div class="rankcard"><div class="rankempty"><div class="rname" style="color:var(--gold)">'+px('medal',28)+' '+T('rank')+'</div><p>Gym Rank is ready. Log a lift or set your body weight to see your rank.</p><button class="ok" onclick="openLiftLog(null)">'+px('plus',14)+' '+T('loglift')+'</button></div></div>';
-  try{h+=bodyMapHtml()}catch(e){console.error('Body map render failed',e)}
-  return h+'</div>';
-}
 function renderRank(){
   var el=document.getElementById('rankcard');if(!el)return;
   if(tab!=='rank'){el.innerHTML='';return}
-  try{
-    if(openLift){el.innerHTML='<div class="section">'+liftHistoryHtml(openLift)+'</div>';return}
-    var h='<div class="section">';
+  if(openLift){el.innerHTML='<div class="section">'+liftHistoryHtml(openLift)+'</div>';return}
+  var h='<div class="section">';
   h+='<div class="qtop"><h2>'+px('medal',15)+" "+T('rank')+'</h2>'+
      '<button class="iconbtn" onclick="openBodyWeight()">'+px('scale',14)+' '+(bodyWeight()?wtBoth(bodyWeight()):T('bodyweight'))+'</button></div>';
   h+=rankCardHtml();
@@ -1502,12 +1496,8 @@ function renderRank(){
     h+='<div class="lad'+(on?' on':'')+'">'+badgeHtml(i,on?o.tier:3,38)+
        '<span style="color:'+(on?R.c:'var(--dim)')+'">'+rankName(i)+'</span></div>';
   });
-    h+='</div></div>';
-    el.innerHTML=h;
-  }catch(e){
-    console.error('Gym Rank render failed',e);
-    el.innerHTML=rankRenderFallback();
-  }
+  h+='</div></div>';
+  el.innerHTML=h;
 }
 function liftHistoryHtml(k){
   var bw=bodyWeight(),hist=liftHistory(k).slice().reverse();
@@ -1700,7 +1690,11 @@ function sexFactor(){return cfg.lift_sex==='female'?0.72:1}
 /* → {idx 0-26, rank 0-8, tier 1-3, lp 0-100, next, needKg} */
 function rankOf(liftKey,e1,bw){
   var l=liftDef(liftKey);
-  if(!l||!bw||!e1)return null;
+  /* liftDef also resolves accessories, which carry no strength standards.
+     Without this guard l.std.map() throws and the whole Rank tab renders
+     empty, because renderRank assigns innerHTML only after every helper
+     has returned. */
+  if(!l||!l.std||!bw||!e1)return null;
   var std=l.std.map(function(x){return x*sexFactor()*bw});
   var ratio=e1;
   if(ratio<std[0]){
@@ -3758,7 +3752,7 @@ async function doInstall(){
   document.getElementById('install').classList.add('hidden');
   toast(T('installed'));
 }
-if('serviceWorker' in navigator)window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js?v=78',{updateViaCache:'none'}).catch(function(){})});
+if('serviceWorker' in navigator)window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})});
 
 /* ---------- boot ---------- */
 sb.auth.onAuthStateChange(function(ev){if(ev==='PASSWORD_RECOVERY')showRecover()});
