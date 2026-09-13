@@ -555,9 +555,7 @@ main{max-width:1160px;padding:28px 22px 100px;}
 @media (prefers-reduced-motion:no-preference){.glass-enter{animation:rise .45s var(--ease-out) both}@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}.qchip:active,.iconbtn:active,.mainnav button:active{transform:scale(.97)}}
 </style>
 
-<style id="body-rank-v1">
-.body-rank-hero{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:20px 0 14px;padding:18px;border-radius:16px;background:linear-gradient(135deg,rgba(79,156,249,.16),rgba(167,139,250,.13) 50%,rgba(52,211,153,.08));border:1px solid rgba(255,255,255,.11);overflow:hidden}.body-rank-hero h3{margin:5px 0 5px;font:800 1.18rem 'Plus Jakarta Sans';letter-spacing:-.03em}.body-rank-hero p{margin:0;color:var(--dim);font-size:11px;line-height:1.5;max-width:430px}.eyebrow{text-transform:uppercase;letter-spacing:.11em;font-size:9px;font-weight:800;color:#9cb8f7}.body-hero-icon{font-size:48px;color:#a78bfa;filter:drop-shadow(0 0 15px rgba(167,139,250,.45))}.body-map-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}.body-map-panel{position:relative;min-height:295px;background:radial-gradient(circle at 50% 16%,rgba(79,156,249,.15),transparent 58%),rgba(7,13,24,.58);border:1px solid rgba(255,255,255,.1);border-radius:16px;overflow:hidden;padding:12px 8px 5px}.body-map-title{display:flex;align-items:baseline;justify-content:space-between;gap:5px}.body-map-title b{font:800 .82rem 'Plus Jakarta Sans';text-transform:uppercase;letter-spacing:.07em}.body-map-title span{font-size:9px;color:var(--dim);text-align:right}.body-figure{display:block;width:min(100%,180px);height:260px;margin:2px auto 0}.muscle-zone{cursor:pointer;transition:filter .16s ease,stroke-width .16s ease;outline:none}.muscle-zone:hover,.muscle-zone:focus{filter:brightness(1.25) saturate(1.2);stroke:#fff;stroke-width:2.5}.body-rank-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.body-rank-card{min-width:0;padding:12px;border-radius:13px;background:rgba(23,36,58,.86);border:1px solid color-mix(in srgb,var(--rank-color),transparent 66%);box-shadow:inset 0 1px rgba(255,255,255,.05)}.body-rank-head{display:flex;align-items:flex-start;justify-content:space-between;gap:6px}.body-rank-head h4{margin:0;font:800 .83rem 'Plus Jakarta Sans';white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.body-rank-head small{display:block;margin-top:3px;color:var(--dim);font-size:10px}.body-rank-label{color:var(--rank-color);font-size:9px;font-weight:800;text-align:right;white-space:nowrap}.body-rank-sub{min-height:27px;margin-top:8px;color:#c4cee3;font-size:10px;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.body-rank-bar{height:5px;margin-top:9px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}.body-rank-bar span{display:block;height:100%;border-radius:inherit;background:var(--rank-color);box-shadow:0 0 10px color-mix(in srgb,var(--rank-color),transparent 40%)}.body-rank-exercises{margin-top:8px;color:#7787a5;font-size:9px;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.body-rank-note{display:flex;align-items:flex-start;gap:7px;margin-top:13px;padding:10px 11px;border-radius:10px;background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.2);color:#d5caa3;font-size:10px;line-height:1.45}.body-rank-note .material-symbols-outlined{font-size:16px;color:var(--gold);flex:0 0 auto}@media (max-width:700px){.body-rank-hero{padding:15px}.body-rank-hero h3{font-size:1rem}.body-map-grid{gap:8px}.body-map-panel{min-height:247px;padding:10px 4px 2px}.body-figure{height:215px}.body-map-title{display:block}.body-map-title span{display:block;margin-top:3px;text-align:left}.body-rank-grid{grid-template-columns:1fr 1fr;gap:8px}.body-rank-card{padding:10px}.body-rank-head h4{font-size:.75rem}.body-rank-label{font-size:8px}.body-rank-sub{font-size:9px}.body-rank-exercises{font-size:8px}}
-</style>
+
 </head>
 <body>
 <div id="auth">
@@ -584,9 +582,6 @@ main{max-width:1160px;padding:28px 22px 100px;}
     <div id="questcard"></div>
     <div id="goalcard"></div>
     <div id="todaycard"></div>
-  </div>
-  <div id="view-rank" class="hidden">
-    <div id="rankcard"></div>
   </div>
   <div id="view-pillar" class="hidden">
     <div id="pillarpanel"></div>
@@ -682,7 +677,7 @@ season:'Season',dayleft:'days left',
 quran:'Quran Progress',pages:'pages',logread:'Log reading',surah:'Surah (optional)',juz:'Juz (optional)',khatma:'to khatma',exercise:'Exercise',sets:'Sets',reps:'Reps',weight:'Weight (kg)',weightlb:'Weight (lb)',pr:'PR',
 rank:'Gym Rank',overall:'Overall',loglift:'Log lift',e1rm:'Est. 1RM',bodyweight:'Body weight',
 liftsex:'Standards',male:'Male',female:'Female',lp:'LP',tonext:'to {r}',maxrank:'Max rank',
-history:'History',nolifts:'No lifts logged yet',setbw:'Set your body weight to get ranked',
+history:'History',nolifts:'No lifts logged yet',lifts:'Lifts',delete:'Delete',setbw:'Set your body weight to get ranked',
 best:'Best',
 liftrank:'Ranked lifts',alllifts:'All lifts',delset:'Delete this entry?',
 accessories:'Accessories',pushday:'Push',pullday:'Pull',legday:'Legs',ranked:'Ranked',
@@ -1320,7 +1315,35 @@ function renderHealth(){
   h+='</div>';
   h+='<div class="hbtns"><button onclick="openMeal()">'+px('plate',16)+" "+T('addmeal')+'</button></div>';
   h+='</div>';
+  h+=liftsCardHtml();
   el.innerHTML=h;
+}
+/* Lift logging lives here now that the Gym Rank tab is gone. Deliberately
+   no ranks, badges or standards: just the record of what was lifted. */
+function liftsCardHtml(){
+  var bw=bodyWeight();
+  var h='<div class="hcard"><div class="qtop"><h2>'+px('barbell',16)+' '+T('lifts')+'</h2>'+
+    '<button class="iconbtn" onclick="openBodyWeight()">'+px('scale',14)+' '+
+    (bw?wtBoth(bw):T('bodyweight'))+'</button></div>';
+  var rows=gymSets.slice().sort(function(a,b){
+    return a.entry_date<b.entry_date?1:a.entry_date>b.entry_date?-1:0;
+  }).slice(0,12);
+  if(!rows.length){
+    h+='<p class="muted">'+T('nolifts')+'</p>';
+  }else{
+    rows.forEach(function(g){
+      var w=Number(g.weight),e=e1RM(w,Number(g.reps));
+      h+='<div class="hrow"><span class="hd">'+esc(g.entry_date)+'</span>'+
+        '<div class="hw"><b>'+wtBoth(w)+'</b> \u00D7 '+esc(String(g.reps))+
+        ' \u00D7 '+esc(String(g.sets))+'<div class="sm">'+esc(liftName(g.exercise))+'</div></div>'+
+        '<div class="he">'+T('e1rm')+' '+wtBoth(e)+'</div>'+
+        '<button class="hx" aria-label="'+T('delete')+'" onclick="delLift(\''+g.id+'\')">\u00D7</button></div>';
+    });
+  }
+  h+='<div class="mrow" style="margin-top:10px"><button class="ok" onclick="openLiftLog(null)">'+
+    px('plus',14)+' '+T('loglift')+'</button></div>';
+  h+='</div>';
+  return h;
 }
 
 function renderToday(){
@@ -1338,211 +1361,9 @@ function renderToday(){
 
 
 /* ---------- gym rank UI ---------- */
-var openLift=null;
-function badgeHtml(rankIdx,tier,size){
-  var R=RANKS[rankIdx],sz=size||64;
-  var wings=rankIdx>=4?'<div class="bwing l"></div><div class="bwing r"></div>':'';
-  return '<div class="badge3" style="width:'+sz+'px;height:'+sz+'px">'+wings+
-    '<div class="bhex" style="background:linear-gradient(160deg,'+R.c+','+R.c2+')">'+
-    '<div class="bhex2" style="background:linear-gradient(160deg,'+R.c2+','+R.c+')"></div>'+
-    '<span class="btier">'+['I','II','III'][tier-1]+'</span></div></div>';
-}
-function rankCardHtml(){
-  var bw=bodyWeight();
-  if(!bw)return '<div class="rankempty"><p>'+T('setbw')+'</p>'+
-    '<button class="ok" onclick="openBodyWeight()">'+T('bodyweight')+'</button></div>';
-  var o=overallRank();
-  if(!o)return '<div class="rankempty"><p>'+T('nolifts')+'</p>'+
-    '<button class="ok" onclick="openLiftLog(null)">'+T('loglift')+'</button></div>';
-  var R=RANKS[o.rank];
-  return '<div class="rankcard" style="background:radial-gradient(120% 100% at 50% 0%,'+R.c2+'55,transparent 70%),var(--card2);border-color:'+R.c+'44">'+
-    badgeHtml(o.rank,o.tier,86)+
-    '<div class="rname" style="color:'+R.c+'">'+rankName(o.rank).toUpperCase()+' '+['I','II','III'][o.tier-1]+'</div>'+
-    '<div class="rlp">'+o.lp+' '+T('lp')+' \u00B7 '+T('overall')+'</div>'+
-    '<div class="rbar"><div style="width:'+o.lp+'%;background:'+R.c+'"></div></div>'+
-    '</div>';
-}
-function liftRowHtml(l){
-  var bw=bodyWeight(),b=bestLift(l.k);
-  var hist=liftHistory(l.k);
-  if(!b)return '<div class="liftrow empty" onclick="openLiftLog(\''+l.k+'\')">'+
-    '<span class="lem">'+px(l.ic,22)+'</span><div class="li"><b>'+liftName(l.k)+'</b>'+
-    '<div class="lm">'+T('nolifts')+'</div></div><span class="ladd">+</span></div>';
-  var r=bw?rankOf(l.k,b.e1,bw):null;
-  var R=r?RANKS[r.rank]:null;
-  var first=hist[0],gain=Math.round((b.e1-e1RM(first.weight,first.reps))*10)/10;
-  var h='<div class="liftrow" onclick="openLiftHistory(\''+l.k+'\')">';
-  h+=r?badgeHtml(r.rank,r.tier,40):'<span class="lem">'+px(l.ic,22)+'</span>';
-  h+='<div class="li"><b>'+liftName(l.k)+'</b>';
-  h+='<div class="lm">'+wtBoth(b.row.weight)+' \u00D7 '+b.row.reps+' \u00B7 '+T('e1rm')+' '+wtBoth(b.e1)+
-     (gain>0?' \u00B7 <span class="up">\u2191'+wtBoth(gain)+'</span>':'')+'</div>';
-  if(r)h+='<div class="lbar"><div style="width:'+r.lp+'%;background:'+R.c+'"></div></div>';
-  h+='</div>';
-  if(r)h+='<div class="lrk" style="color:'+R.c+'">'+rankName(r.rank)+'<br><span>'+['I','II','III'][r.tier-1]+' \u00B7 '+r.lp+'</span></div>';
-  h+='</div>';
-  return h;
-}
-function accRowHtml(l){
-  var b=bestLift(l.k),hist=liftHistory(l.k);
-  if(!b)return '<div class="liftrow empty" onclick="openLiftLog(\''+l.k+'\')">'+
-    '<span class="lem">'+px(l.ic,22)+'</span><div class="li"><b>'+liftName(l.k)+'</b>'+
-    '<div class="lm">'+T('noaccessory')+'</div></div><span class="ladd">+</span></div>';
-  var first=hist[0],gain=Math.round((b.row.weight-first.weight)*10)/10;
-  var h='<div class="liftrow" onclick="openLiftHistory(\''+l.k+'\')">';
-  h+='<span class="lem">'+px(l.ic,22)+'</span>';
-  h+='<div class="li"><b>'+liftName(l.k)+'</b>';
-  h+='<div class="lm">'+T('best')+' '+wtBoth(b.row.weight)+' \u00D7 '+b.row.reps+
-     (gain>0?' \u00B7 <span class="up">\u2191'+wtBoth(gain)+'</span>':'')+' \u00B7 '+hist.length+'\u00D7</div>';
-  h+='</div><div class="lrk" style="color:var(--gold)">'+b.row.weight+'<br><span>kg / '+lbOf(b.row.weight)+'lb</span></div></div>';
-  return h;
-}
 
 /* ---------- body-part rank map ---------- */
-var BODY_PARTS=[
-  {k:'chest',n:'Chest',ar:'الصدر',ex:['bench','incline_machine','fly_cable'],front:'chest'},
-  {k:'back',n:'Back',ar:'الظهر',ex:['deadlift','row','latpulldown','row_cable'],back:'back'},
-  {k:'shoulders',n:'Shoulders',ar:'الأكتاف',ex:['ohp','lateral_raise','front_raise','reverse_fly'],front:'shoulders',back:'shoulders'},
-  {k:'arms',n:'Arms',ar:'الذراعان',ex:['barbell_curl','hammer_curl','skullcrusher','pushdown'],front:'arms',back:'arms'},
-  {k:'core',n:'Core',ar:'الجذع',ex:[],front:'core'},
-  {k:'glutes',n:'Glutes',ar:'الألوية',ex:['squat','deadlift','rdl'],back:'glutes'},
-  {k:'quads',n:'Quads',ar:'الفخذ الأمامي',ex:['squat','leg_ext'],front:'quads'},
-  {k:'hamstrings',n:'Hamstrings',ar:'أوتار الركبة',ex:['deadlift','rdl','leg_curl'],back:'hamstrings'},
-  {k:'calves',n:'Calves',ar:'السمانة',ex:['calf_standing','calf_seated'],front:'calves',back:'calves'}
-];
-var BODY_COLORS={unranked:'#43516a',wood:'#a87c4a',bronze:'#e08c4f',silver:'#d5dde6',gold:'#ffd24a',platinum:'#5fe0c0',diamond:'#8ea9ff',champion:'#e879f9',titan:'#ff5f52',olympian:'#7dd3fc'};
-function bodyPartDef(k){return BODY_PARTS.find(function(x){return x.k===k})}
-function bodyPartRank(k){
-  var bw=bodyWeight(),part=bodyPartDef(k),best=null,bestLiftKey=null;
-  if(!part||!bw)return null;
-  part.ex.forEach(function(ex){var b=bestLift(ex);if(b&&(!best||b.e1>best.e1)){best=b;bestLiftKey=ex}});
-  if(!best)return null;
-  var r=rankOf(bestLiftKey,best.e1,bw);
-  if(r)r.exercise=bestLiftKey;
-  return r;
-}
-function bodyPartColor(k){var r=bodyPartRank(k);return r?RANKS[r.rank].c:BODY_COLORS.unranked}
-function bodyPartStatus(k){
-  var r=bodyPartRank(k),part=bodyPartDef(k);
-  if(!r)return{label:'Unranked',sub:part.ex.length?'Log a lift to rank':'No ranked lift yet',color:BODY_COLORS.unranked};
-  return{label:rankName(r.rank)+' '+['I','II','III'][r.tier-1],sub:r.lp+' LP · '+liftName(r.exercise),color:RANKS[r.rank].c,rank:r};
-}
-function bodyMapSvg(side){
-  var front=side==='front',zone=function(k,shape){
-    var c=bodyPartColor(k);
-    return '<path class="muscle-zone" d="'+shape+'" fill="'+c+'" fill-opacity=".92" stroke="#d7e7ff" stroke-opacity=".48" stroke-width="1.5" onclick="toast(\''+bodyPartDef(k).n+' · '+bodyPartStatus(k).label+'\')" tabindex="0" role="button" aria-label="'+bodyPartDef(k).n+' · '+bodyPartStatus(k).label+'"/>';
-  };
-  var s='<svg class="body-figure '+side+'" viewBox="0 0 180 330" aria-label="'+(front?'Front':'Back')+' muscle rank map" role="img">';
-  s+='<circle cx="90" cy="24" r="18" fill="#d4e4df" stroke="#8fa8b4" stroke-width="2"/>';
-  s+='<path d="M78 41 L102 41 L107 59 L73 59Z" fill="#b6c9c7" stroke="#8fa8b4" stroke-width="2"/>';
-  if(front){
-    s+=zone('shoulders','M73 53 Q57 47 45 61 L55 82 L73 74Z')+zone('shoulders','M107 53 Q123 47 135 61 L125 82 L107 74Z');
-    s+=zone('chest','M72 60 Q90 53 108 60 L105 88 Q90 96 75 88Z');
-    s+=zone('arms','M45 62 Q31 78 34 112 L45 126 L53 112 L49 82Z')+zone('arms','M135 62 Q149 78 146 112 L135 126 L127 112 L131 82Z');
-    s+=zone('core','M75 90 Q90 95 105 90 L102 140 Q90 149 78 140Z');
-    s+=zone('quads','M77 143 Q90 148 103 143 L105 204 L92 220 L80 204Z')+zone('quads','M62 143 L78 143 L75 204 L63 218 L55 192Z');
-    s+=zone('quads','M102 143 L118 143 L125 192 L117 218 L105 204Z');
-    s+=zone('calves','M63 220 L76 205 L78 272 L66 286 L57 265Z')+zone('calves','M104 205 L117 220 L123 265 L114 286 L102 272Z');
-  }else{
-    s+=zone('shoulders','M73 53 Q57 47 45 61 L55 82 L73 74Z')+zone('shoulders','M107 53 Q123 47 135 61 L125 82 L107 74Z');
-    s+=zone('back','M74 58 L90 68 L106 58 L111 109 L90 126 L69 109Z');
-    s+=zone('arms','M45 62 Q31 78 34 112 L45 126 L53 112 L49 82Z')+zone('arms','M135 62 Q149 78 146 112 L135 126 L127 112 L131 82Z');
-    s+=zone('glutes','M70 112 Q90 122 110 112 L109 148 Q90 161 71 148Z');
-    s+=zone('hamstrings','M71 149 L89 153 L84 213 L68 219 L62 190Z')+zone('hamstrings','M91 153 L109 149 L118 190 L112 219 L96 213Z');
-    s+=zone('calves','M68 219 L84 213 L79 273 L66 286 L57 265Z')+zone('calves','M96 213 L112 219 L123 265 L114 286 L101 273Z');
-  }
-  s+='<path d="M78 42 L73 53 M102 42 L107 53 M90 42 L90 286" fill="none" stroke="#8fa8b4" stroke-width="2" stroke-opacity=".5"/>';
-  s+='</svg>';return s;
-}
-function bodyRankCard(k){
-  var part=bodyPartDef(k),st=bodyPartStatus(k),r=st.rank;
-  var ex=part.ex.map(function(x){return liftName(x)}).join(' · ');
-  return '<article class="body-rank-card" style="--rank-color:'+st.color+'">'+
-    '<div class="body-rank-head"><div><h4>'+part.n+'</h4><small lang="ar" dir="rtl">'+part.ar+'</small></div><span class="body-rank-label">'+st.label+'</span></div>'+
-    '<div class="body-rank-sub">'+st.sub+'</div><div class="body-rank-bar"><span style="width:'+(r?r.lp:0)+'%"></span></div>'+
-    '<div class="body-rank-exercises">'+(ex||'Needs direct exercise tracking')+'</div></article>';
-}
-function bodyMapHtml(){
-  var h='<div class="body-rank-hero"><div><div class="eyebrow">Muscle-by-muscle progression</div><h3>Every body part has its own rank</h3><p>Ranks are calculated from your best logged exercises and body weight.</p></div><span class="material-symbols-outlined body-hero-icon">accessibility_new</span></div>';
-  h+='<div class="body-map-grid"><div class="body-map-panel"><div class="body-map-title"><b>Front</b><span>Push · legs · core</span></div>'+bodyMapSvg('front')+'</div>';
-  h+='<div class="body-map-panel"><div class="body-map-title"><b>Back</b><span>Pull · posterior chain</span></div>'+bodyMapSvg('back')+'</div></div>';
-  h+='<div class="body-rank-grid">'+BODY_PARTS.map(function(x){return bodyRankCard(x.k)}).join('')+'</div>';
-  h+='<div class="body-rank-note"><span class="material-symbols-outlined">info</span><span>Each zone uses its related exercises. Log a set from the list to replace “Unranked” with a real strength tier.</span></div>';
-  return h;
-}
 
-function renderRank(){
-  var el=document.getElementById('rankcard');if(!el)return;
-  if(tab!=='rank'){el.innerHTML='';return}
-  if(openLift){el.innerHTML='<div class="section">'+liftHistoryHtml(openLift)+'</div>';return}
-  var h='<div class="section">';
-  h+='<div class="qtop"><h2>'+px('medal',15)+" "+T('rank')+'</h2>'+
-     '<button class="iconbtn" onclick="openBodyWeight()">'+px('scale',14)+' '+(bodyWeight()?wtBoth(bodyWeight()):T('bodyweight'))+'</button></div>';
-  h+=rankCardHtml();
-  h+='<div class="mrow" style="margin:12px 0"><button class="ok" onclick="openLiftLog(null)">'+px('plus',14)+' '+T('loglift')+'</button></div>';
-  h+=bodyMapHtml();
-  h+='<h3 class="sh">'+T('liftrank')+'</h3>';
-  LIFTS.forEach(function(l){h+=liftRowHtml(l)});
-  ['push','pull','legs'].forEach(function(g){
-    var list=ACCESSORIES.filter(function(l){return l.g===g});
-    if(!list.length)return;
-    h+='<h3 class="sh">'+T('accessories')+' \u00B7 '+T(ACCGRP[g])+'</h3>';
-    list.forEach(function(l){h+=accRowHtml(l)});
-  });
-  h+='</div>';
-  h+='<div class="section"><h3 class="sh">'+T('alllifts')+'</h3><div class="ladder">';
-  var o=overallRank();
-  RANKS.forEach(function(R,i){
-    var on=o&&o.rank===i;
-    h+='<div class="lad'+(on?' on':'')+'">'+badgeHtml(i,on?o.tier:3,38)+
-       '<span style="color:'+(on?R.c:'var(--dim)')+'">'+rankName(i)+'</span></div>';
-  });
-  h+='</div></div>';
-  el.innerHTML=h;
-}
-function liftHistoryHtml(k){
-  var bw=bodyWeight(),hist=liftHistory(k).slice().reverse();
-  var b=bestLift(k),r=b&&bw&&isRanked(k)?rankOf(k,b.e1,bw):null;
-  var h='<div class="cdhead"><button class="bk" onclick="closeLift()">\u2190</button>'+
-    '<div><div class="cc2">'+liftIcon(k)+' '+T('history')+'</div><h2>'+liftName(k)+'</h2></div></div>';
-  if(!r&&b)h+='<div class="rankcard sm"><div class="rname" style="color:var(--gold)">'+wtBoth(b.row.weight)+' \u00D7 '+b.row.reps+'</div>'+
-    '<div class="rlp">'+T('best')+' \u00B7 '+T('e1rm')+' '+wtBoth(b.e1)+'</div></div>';
-  if(r){
-    var R=RANKS[r.rank];
-    h+='<div class="rankcard sm" style="background:radial-gradient(120% 100% at 50% 0%,'+R.c2+'44,transparent 70%),var(--card2);border-color:'+R.c+'44">'+
-      badgeHtml(r.rank,r.tier,62)+
-      '<div class="rname" style="color:'+R.c+'">'+rankName(r.rank).toUpperCase()+' '+['I','II','III'][r.tier-1]+'</div>'+
-      '<div class="rlp">'+r.lp+' '+T('lp')+' \u00B7 '+T('e1rm')+' '+wtBoth(b.e1)+'</div>'+
-      '<div class="rbar"><div style="width:'+r.lp+'%;background:'+R.c+'"></div></div>'+
-      (r.max?'<div class="rnext">'+T('maxrank')+'</div>':'<div class="rnext">+'+wtBoth(r.needKg)+' '+T('tonext',{r:r.tier<3?rankName(r.rank)+' '+['I','II','III'][r.tier]:rankName(r.rank+1)})+'</div>')+
-      '</div>';
-  }
-  h+='<div class="mrow" style="margin:12px 0"><button class="ok" onclick="openLiftLog(\''+k+'\')">'+px('plus',14)+' '+T('loglift')+'</button></div>';
-  if(hist.length>1){
-    var vals=hist.slice().reverse().map(function(g){return e1RM(g.weight,g.reps)});
-    var mx=Math.max.apply(null,vals),mn=Math.min.apply(null,vals);
-    h+='<div class="spark">';
-    vals.forEach(function(v){
-      var pc=mx===mn?60:Math.round((v-mn)/(mx-mn)*80)+20;
-      h+='<div class="sb" style="height:'+pc+'%" title="'+wtBoth(v)+'"></div>';
-    });
-    h+='</div>';
-  }
-  h+='<h3 class="sh">'+T('history')+' \u00B7 '+hist.length+'</h3>';
-  var prevBest=0;
-  var asc=liftHistory(k),bestSoFar={};
-  asc.forEach(function(g){var e=e1RM(g.weight,g.reps);bestSoFar[g.id]=e>prevBest;if(e>prevBest)prevBest=e});
-  hist.forEach(function(g){
-    var e=e1RM(g.weight,g.reps);
-    h+='<div class="hrow">'+
-      '<div class="hd">'+g.entry_date+'</div>'+
-      '<div class="hw"><b>'+wtBoth(g.weight)+'</b> \u00D7 '+g.reps+(g.sets>1?' \u00B7 '+g.sets+' '+T('sets').toLowerCase():'')+'</div>'+
-      '<div class="he">'+wtBoth(e)+(bestSoFar[g.id]?' <span class="prtag">'+T('pr')+'</span>':'')+'</div>'+
-      '<button class="hx" onclick="delLift(\''+g.id+'\')">\u00D7</button></div>';
-  });
-  return h;
-}
-function openLiftHistory(k){openLift=k;renderRank();window.scrollTo({top:0})}
-function closeLift(){openLift=null;renderRank();window.scrollTo({top:0})}
 function openBodyWeight(){
   var h='<h2>'+px('scale',16)+' '+T('bodyweight')+'</h2>';
   h+='<div class="frow"><div><label>'+T('weight')+'</label><input id="bw_v" type="number" step="0.5" value="'+(bodyWeight()||'')+'" placeholder="80" oninput="unitSync(\'bw_v\',\'bw_l\',\'kg\')"></div>'+
@@ -1665,7 +1486,6 @@ function liftDef(k){return allLifts().find(function(x){return x.k===k})}
 function isRanked(k){return LIFTS.some(function(x){return x.k===k})}
 var ACCGRP={push:'pushday',pull:'pullday',legs:'legday'};
 function liftName(k){var l=liftDef(k);return l?l.n:k}
-function liftIcon(k){var l=liftDef(k);return px(l?l.ic:'barbell',18)}
 function rankName(i){return T('rk_'+RANKS[i].k)}
 /* kg is the stored unit everywhere; lb is display + input only */
 var LBPK=2.20462;
@@ -1690,10 +1510,8 @@ function sexFactor(){return cfg.lift_sex==='female'?0.72:1}
 /* → {idx 0-26, rank 0-8, tier 1-3, lp 0-100, next, needKg} */
 function rankOf(liftKey,e1,bw){
   var l=liftDef(liftKey);
-  /* liftDef also resolves accessories, which carry no strength standards.
-     Without this guard l.std.map() throws and the whole Rank tab renders
-     empty, because renderRank assigns innerHTML only after every helper
-     has returned. */
+  /* liftDef also resolves accessories, which carry no strength standards,
+     so l.std can be undefined. Guard rather than assume. */
   if(!l||!l.std||!bw||!e1)return null;
   var std=l.std.map(function(x){return x*sexFactor()*bw});
   var ratio=e1;
@@ -1730,24 +1548,7 @@ function bestLift(k){
   });
   return best;
 }
-function liftHistory(k){
-  return gymSets.filter(function(g){return g.exercise===k})
-    .slice().sort(function(a,b){return a.entry_date<b.entry_date?-1:a.entry_date>b.entry_date?1:0});
-}
 /* overall = average tier index across ranked lifts */
-function overallRank(){
-  var bw=bodyWeight();if(!bw)return null;
-  var idxs=[];
-  LIFTS.forEach(function(l){
-    var b=bestLift(l.k);if(!b)return;
-    var r=rankOf(l.k,b.e1,bw);if(r)idxs.push(r.idx);
-  });
-  if(!idxs.length)return null;
-  var avg=idxs.reduce(function(a,b){return a+b},0)/idxs.length;
-  var idx=Math.round(avg);
-  return{idx:idx,rank:Math.floor(idx/3),tier:idx%3+1,
-    lp:Math.round((avg-Math.floor(avg))*100),count:idxs.length};
-}
 
 /* ---------- academic calendar ---------- */
 var MYCAL=[
@@ -2999,7 +2800,6 @@ function render(){
   var _fb=document.getElementById('fab');
   if(_fb)_fb.classList.toggle('hidden',tab==='study'&&!!openCourse);
   if(tab==='main'){renderQuest();renderGoals();renderToday();return}
-  if(tab==='rank'){renderRank();return}
   if(tab==='stats'){renderStats();return}
   if(PKEYS.indexOf(tab)>=0){renderPillar();renderStudy();renderHealth();return}
   if(tab==='sched')renderSched();
@@ -3121,17 +2921,16 @@ function visible(e){return pFilter==='all'||e.pillar===pFilter}
 /* browser history and tab strip read better with a per-view title */
 function docTitle(){
   var base=T('title');
-  var names={main:T('main'),sched:T('sched'),stats:T('stats'),rank:T('rank')};
+  var names={main:T('main'),sched:T('sched'),stats:T('stats')};
   var n=PKEYS.indexOf(tab)>=0?pnm(tab):names[tab];
   document.title=n?n+' \u00B7 '+base:base;
 }
 function setTab(t){
-  tab=t;openLift=null;
+  tab=t;
   var pill=PKEYS.indexOf(t)>=0;
   pFilter=pill?t:'all';
   setAccent(pill?t:'all');
   document.getElementById('view-main').classList.toggle('hidden',t!=='main');
-  document.getElementById('view-rank').classList.toggle('hidden',t!=='rank');
   document.getElementById('view-pillar').classList.toggle('hidden',!pill);
   document.getElementById('view-sched').classList.toggle('hidden',t!=='sched');
   document.getElementById('view-stats').classList.toggle('hidden',t!=='stats');
@@ -3144,7 +2943,6 @@ function renderNav(){
   var el=document.getElementById('mainnav');if(!el)return;
   var tabs=[['main',''+px('home',15)+" "+T('main')],['sched',''+px('cal',15)+" "+T('sched')],['stats',''+px('stats',15)+" "+T('stats')]];
   PKEYS.forEach(function(p){tabs.push([p,px(PIL[p].ic,14)+' '+pnm(p)])});
-  tabs.push(['rank',''+px('medal',15)+" "+T('rank')]);
   el.innerHTML=tabs.map(function(x){
     var on=tab===x[0];
     var st=on&&PKEYS.indexOf(x[0])>=0?'border-color:'+PIL[x[0]].hex+';background:'+PIL[x[0]].hex+'22;color:var(--tx)':'';
