@@ -677,7 +677,7 @@ season:'Season',dayleft:'days left',
 quran:'Quran Progress',pages:'pages',logread:'Log reading',surah:'Surah (optional)',juz:'Juz (optional)',khatma:'to khatma',exercise:'Exercise',sets:'Sets',reps:'Reps',weight:'Weight (kg)',weightlb:'Weight (lb)',pr:'PR',
 rank:'Gym Rank',overall:'Overall',loglift:'Log lift',e1rm:'Est. 1RM',bodyweight:'Body weight',
 liftsex:'Standards',male:'Male',female:'Female',lp:'LP',tonext:'to {r}',maxrank:'Max rank',
-history:'History',nolifts:'No lifts logged yet',lifts:'Lifts',delete:'Delete',setbw:'Set your body weight to get ranked',
+history:'History',nolifts:'No lifts logged yet',screenerr:'This screen failed to load',lifts:'Lifts',delete:'Delete',setbw:'Set your body weight to get ranked',
 best:'Best',
 liftrank:'Ranked lifts',alllifts:'All lifts',delset:'Delete this entry?',
 accessories:'Accessories',pushday:'Push',pullday:'Pull',legday:'Legs',ranked:'Ranked',
@@ -2795,14 +2795,49 @@ function repaintOnFonts(){
       document.fonts.ready.then(function(){render()});
   }catch(e){}
 }
+/* Every renderer builds one big string and assigns innerHTML only at the end,
+   so a single throw leaves its container empty with nothing on screen to say
+   why. That hid a real bug for four rounds. safeRender turns a silent blank
+   screen into a readable error, which matters because there is no console
+   available to whoever is debugging this remotely. */
+function safeRender(name,fn,containerId){
+  try{ fn(); }
+  catch(e){
+    var el=containerId?document.getElementById(containerId):null;
+    if(el){
+      el.innerHTML='';
+      var box=document.createElement('div');
+      box.className='section';
+      var h=document.createElement('h2');
+      h.textContent=T('screenerr');
+      var p1=document.createElement('p');
+      p1.className='muted';
+      p1.textContent=name+': '+(e&&e.message?e.message:String(e));
+      box.appendChild(h); box.appendChild(p1);
+      el.appendChild(box);
+    }
+    if(window.console&&console.error)console.error(name,e);
+  }
+}
 function render(){
-  renderHeader();renderNav();
+  safeRender('renderHeader',renderHeader,null);
+  safeRender('renderNav',renderNav,'mainnav');
   var _fb=document.getElementById('fab');
   if(_fb)_fb.classList.toggle('hidden',tab==='study'&&!!openCourse);
-  if(tab==='main'){renderQuest();renderGoals();renderToday();return}
-  if(tab==='stats'){renderStats();return}
-  if(PKEYS.indexOf(tab)>=0){renderPillar();renderStudy();renderHealth();return}
-  if(tab==='sched')renderSched();
+  if(tab==='main'){
+    safeRender('renderQuest',renderQuest,'questcard');
+    safeRender('renderGoals',renderGoals,'goalcard');
+    safeRender('renderToday',renderToday,'todaycard');
+    return;
+  }
+  if(tab==='stats'){safeRender('renderStats',renderStats,'statscard');return}
+  if(PKEYS.indexOf(tab)>=0){
+    safeRender('renderPillar',renderPillar,'pillarpanel');
+    safeRender('renderStudy',renderStudy,'studycard');
+    safeRender('renderHealth',renderHealth,'healthcard');
+    return;
+  }
+  if(tab==='sched')safeRender('renderSched',renderSched,'calblock');
 }
 function renderHeader(){
   var xp=totalXP(),l=lvlOf(xp),base=xpForLvl(l),next=xpForLvl(l+1);
