@@ -641,7 +641,7 @@ totalxp:'Total XP',perfstreak:'Perfect Day Streak',actsdone:'Activities Done',xp
 radar:'Pillar Radar',balance:'Pillar Balance',achievements:'Achievements',records:'Records',last14:'Last 14 Days',
 season:'Season',dayleft:'days left',
 quran:'Quran Progress',pages:'pages',logread:'Log reading',surah:'Surah (optional)',juz:'Juz (optional)',khatma:'to khatma',exercise:'Exercise',sets:'Sets',reps:'Reps',weight:'Weight (kg)',weightlb:'Weight (lb)',pr:'PR',loglift:'Log lift',e1rm:'Est. 1RM',bodyweight:'Body weight',
-liftsex:'Standards',male:'Male',female:'Female',nolifts:'No lifts logged yet',screenerr:'This screen failed to load',lifts:'Lifts',delete:'Delete',delset:'Delete this entry?',pushday:'Push',pullday:'Pull',legday:'Legs',ranked:'Ranked',
+liftsex:'Standards',male:'Male',female:'Female',nolifts:'No lifts logged yet',sempre:'Starts in {n} days',semdone:'Semester over',sembreak:'Break week',screenerr:'This screen failed to load',lifts:'Lifts',delete:'Delete',delset:'Delete this entry?',pushday:'Push',pullday:'Pull',legday:'Legs',ranked:'Ranked',
 rk_wood:'Wood',rk_bronze:'Bronze',rk_silver:'Silver',rk_gold:'Gold',rk_platinum:'Platinum',
 rk_diamond:'Diamond',rk_champion:'Champion',rk_titan:'Titan',rk_olympian:'Olympian',
 notes:'Reflection',noteph:'How did today go?',
@@ -1587,6 +1587,21 @@ function semWeekNum(){
   return 0;
 }
 function totalStudyWeeks(){return studyWeekStarts().length}
+/* Study header badge: which teaching week we are in, with its date range.
+   semWeekNum() returns 0 both before the semester starts and after it ends,
+   so those two cases are separated here rather than showing "Week 0". */
+function semWeekBadge(){
+  var td=today(),n=semWeekNum(),tot=totalStudyWeeks();
+  if(td<semStart())return{txt:T('sempre',{n:daysTo(semStart())}),col:'var(--dim)'};
+  if(td>studyEnd())return{txt:T('semdone'),col:'var(--good)'};
+  if(!n)return{txt:T('sembreak'),col:'var(--caution)'};
+  var ws=studyWeekStarts()[n-1];
+  var a=new Date(ws+'T00:00:00'),b=new Date(addDays(ws,4)+'T00:00:00');
+  var o={month:'short',day:'numeric'};
+  return{txt:T('weekof',{n:n,t:tot})+' \u00B7 '+
+    a.toLocaleDateString(locale(),o)+' \u2013 '+b.toLocaleDateString(locale(),o),
+    col:'var(--study)'};
+}
 function nextEvent(){
   var td=today(),best=null;
   acadEvents.forEach(function(ev){
@@ -2268,7 +2283,7 @@ function renderStudy(){
   }
   var a=allStats();
   var h='<div class="section"><div class="qtop"><h2>'+px('grad',16)+' '+T('attendance')+'</h2>'+
-  '<span class="qcount">'+T('weekof',{n:semWeekNum(),t:totalStudyWeeks()})+'</span></div>';
+  (function(){var b=semWeekBadge();return tagHtml(b.txt,b.col)})()+'</div>';
   h+='<div class="recs r3" style="margin-bottom:12px">'+
   '<div class="rec"><div class="rv" style="color:'+(a.pct>=90?'var(--good)':a.pct>=76?'var(--caution)':'var(--bad)')+'">'+a.pct+'%</div><div class="rl">'+T('present')+' \u00B7 '+T('ofsem')+'</div></div>'+
   '<div class="rec"><div class="rv">'+a.absent+' <span style="font-size:11px;color:var(--dim)">/ '+a.total+'</span></div><div class="rl">'+T('absent')+' ('+a.absPct+'%)</div></div>'+
